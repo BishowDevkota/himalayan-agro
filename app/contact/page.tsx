@@ -1,5 +1,3 @@
-// import ContactForm from "../components/ContactForm";
-// import ContactHero from "../components/ContactHero";
 
 import ContactForm from "../components/ContactForm";
 import SubHeroSection from "../components/SubHeroSection";
