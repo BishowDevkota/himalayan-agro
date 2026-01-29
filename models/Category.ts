@@ -17,7 +17,5 @@ const CategorySchema: Schema<ICategory> = new mongoose.Schema(
   { timestamps: true }
 );
 
-CategorySchema.index({ name: 1 });
-
 const Category: Model<ICategory> = (mongoose.models.Category as Model<ICategory>) || mongoose.model<ICategory>("Category", CategorySchema);
-export default Category;
+export default Category; 
