@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import UserRow from "./UserRow";
@@ -60,7 +60,7 @@ export default function AdminAuthFallbackClient({ from }: { from: string }) {
   // session once and perform a full navigation only when the server agrees.
   // Also attempt a client-side API fetch (one-shot) to recover the admin UI
   // when SSR requests are being handled without cookies (common with SW/RSC).
-  useState(() => {
+  useEffect(() => {
     let didCheck = false;
     async function verifyAndMaybeLoad() {
       if (didCheck) return;
@@ -76,17 +76,18 @@ export default function AdminAuthFallbackClient({ from }: { from: string }) {
             return;
           }
         }
-        // Server didn't confirm — attempt client-side API fetch as a fallback
-        await fetchUsersClient();
+        // Server didn't confirm — attempt client-side API fetch as a fallback (force)
+        await fetchUsersClient({ force: true });
       } catch (e) {
         // ignore; user can trigger actions manually
       }
     }
-    setTimeout(() => void verifyAndMaybeLoad(), 200);
+    const tid = setTimeout(() => void verifyAndMaybeLoad(), 200);
     return () => {
       didCheck = true;
+      clearTimeout(tid);
     };
-  });
+  }, [status, session, from]);
 
   return (
     <div className="p-12">
