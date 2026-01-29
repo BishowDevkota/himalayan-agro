@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import BeautifulNavbar from "./components/BeautifulNavbar";
+// import BeautifulNavbar from "./components/BeautifulNavbar";
 import SessionProviderClient from "./providers/SessionProviderClient";
 import DevServiceWorkerCleanup from "./components/DevServiceWorkerCleanup";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from "./components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,7 +55,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProviderClient>
-          <BeautifulNavbar />
+          <Navbar />
           {process.env.NODE_ENV !== 'production' && <DevServiceWorkerCleanup />}
           <main>{children}</main>
           <ToastContainer position="top-right" />
