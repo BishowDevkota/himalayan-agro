@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/Navbar";
+import SessionProviderClient from "./providers/SessionProviderClient";
+import DevServiceWorkerCleanup from "./components/DevServiceWorkerCleanup";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +29,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {process.env.NODE_ENV !== 'production' ? (
+          // Inline script runs as early as possible to mute noisy Workbox/_rsc logs
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(() => {
+  try {
+    const FILTER_RE = /workbox|_rsc=|workbox-\w+/i;
+    ['log','info','warn','error','debug'].forEach((m) => {
+      const orig = console[m];
+      console[m] = function(...args){
+        try { if (args.length && typeof args[0] === 'string' && FILTER_RE.test(args[0])) return; } catch(e){}
+        return orig.apply(console, args);
+      };
+    });
+  } catch(e){}
+})();`,
+            }}
+          />
+        ) : null}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <SessionProviderClient>
+          <Navbar />          {process.env.NODE_ENV !== 'production' && <DevServiceWorkerCleanup />}          <main>{children}</main>
+          <ToastContainer position="top-right" />
+        </SessionProviderClient>
       </body>
     </html>
   );

@@ -42,6 +42,12 @@ export default function AdminAuthFallbackClient({ from }: { from: string }) {
     setClientError(null);
     try {
       const res = await fetch('/api/admin/users?clientFallback=1', { credentials: 'include', cache: 'no-store' });
+      if (res.status === 404) {
+        // user-management has been disabled (soft-disable)
+        setClientError('User management disabled');
+        setClientUsers(null);
+        return;
+      }
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
         throw new Error(j?.message || `status:${res.status}`);
@@ -70,9 +76,9 @@ export default function AdminAuthFallbackClient({ from }: { from: string }) {
         const res = await fetch("/api/auth/session", { cache: "no-store", credentials: 'include' });
         if (res.ok) {
           const json = await res.json().catch(() => ({}));
-          if (json?.user?.role === "admin") {
-            // Server already agrees — perform full navigation so SSR renders admin UI
-            window.location.href = from || "/admin/users";
+              if (json?.user?.role === "admin") {
+            // Server already agrees — navigate to admin root (users UI is disabled)
+            window.location.href = from || "/admin";
             return;
           }
         }
@@ -187,8 +193,12 @@ export default function AdminAuthFallbackClient({ from }: { from: string }) {
           </div>
         ) : (
           <div className="mt-3 flex items-center gap-3">
-            <button className="rounded bg-slate-100 text-slate-800 px-3 py-1" onClick={() => fetchUsersClient({ force: true })} disabled={loading}>
-              {loading ? 'Loading…' : 'Load users (client)'}
+            <button
+              className="rounded bg-slate-100 text-slate-800 px-3 py-1"
+              onClick={() => fetchUsersClient({ force: true })}
+              disabled={loading || clientError === 'User management disabled'}
+            >
+              {clientError === 'User management disabled' ? 'User management disabled' : (loading ? 'Loading…' : 'Load users (client)')}
             </button>
             <div className="text-sm text-slate-500">If this succeeds the admin UI will be usable immediately.</div>
           </div>

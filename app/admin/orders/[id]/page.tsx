@@ -1,0 +1,56 @@
+import React from "react";
+import connectToDatabase from "../../../../lib/mongodb";
+import Order from "../../../../models/Order";
+import { getServerSession } from "next-auth/next";
+import authOptions from "../../../../lib/auth";
+
+import AdminOrderActions from "../../../components/admin/AdminOrderActions";
+
+export default async function AdminOrderDetail({ params }: { params: { id: string } }) {
+  const session = (await getServerSession(authOptions as any)) as any;
+  if (!session || session.user?.role !== "admin") return <div className="p-12">Unauthorized</div>;
+
+  await connectToDatabase();
+  const order = await Order.findById(params.id).populate("user", "email name").lean();
+  if (!order) return <div className="p-12">Order not found</div>;
+
+  return (
+    <div className="max-w-5xl mx-auto py-12 px-4">
+      <div className="flex items-start justify-between gap-6">
+        <div className="flex-1">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-semibold">Order #{String(order._id).slice(-8)}</h1>
+              <div className="text-sm text-gray-600">{order.items.length} items • {order.paymentStatus} • {order.orderStatus}</div>
+              <div className="text-sm text-gray-500 mt-2">Customer: {(order.user as any)?.name || (order.user as any)?.email}</div>
+            </div>
+            <div className="text-right">
+              <div className="text-sm">Placed: {new Date(order.createdAt).toLocaleString()}</div>
+              <div className="mt-2 text-lg font-bold">Total: ${order.totalAmount.toFixed(2)}</div>
+            </div>
+          </div>
+
+          <div className="mt-8 space-y-4">
+            {order.items.map((it: any) => (
+              <div key={String(it.product)} className="flex items-center gap-4 border rounded p-3">
+                <div className="flex-1">
+                  <div className="font-medium">{it.name}</div>
+                  <div className="text-sm text-gray-600">Qty: {it.quantity} • ${it.price.toFixed(2)}</div>
+                </div>
+                <div className="text-right">${(it.price * it.quantity).toFixed(2)}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <aside className="w-80">
+          <AdminOrderActions orderId={String(order._id)} initialOrderStatus={order.orderStatus} initialPaymentStatus={order.paymentStatus} />
+        </aside>
+      </div>
+
+      <div className="mt-6">
+        <a className="text-sm text-sky-600" href="/admin/orders">← Back to orders</a>
+      </div>
+    </div>
+  );
+}
