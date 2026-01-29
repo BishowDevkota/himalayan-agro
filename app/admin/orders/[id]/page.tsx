@@ -6,12 +6,16 @@ import authOptions from "../../../../lib/auth";
 
 import AdminOrderActions from "../../../components/admin/AdminOrderActions";
 
-export default async function AdminOrderDetail({ params }: { params: { id: string } }) {
+export default async function AdminOrderDetail({ params }: { params: { id: string } } | { params: Promise<{ id: string }> }) {
+  // `params` can be a Promise in some Next.js runtimes — unwrap safely.
+  const resolvedParams = params instanceof Promise ? await params : params;
+  const id = resolvedParams.id;
+
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session || session.user?.role !== "admin") return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const order = await Order.findById(params.id).populate("user", "email name").lean();
+  const order = await Order.findById(id).populate("user", "email name").lean();
   if (!order) return <div className="p-12">Order not found</div>;
 
   return (
@@ -23,10 +27,15 @@ export default async function AdminOrderDetail({ params }: { params: { id: strin
               <h1 className="text-2xl font-semibold">Order #{String(order._id).slice(-8)}</h1>
               <div className="text-sm text-gray-600">{order.items.length} items • {order.paymentStatus} • {order.orderStatus}</div>
               <div className="text-sm text-gray-500 mt-2">Customer: {(order.user as any)?.name || (order.user as any)?.email}</div>
-            </div>
-            <div className="text-right">
-              <div className="text-sm">Placed: {new Date(order.createdAt).toLocaleString()}</div>
-              <div className="mt-2 text-lg font-bold">Total: ${order.totalAmount.toFixed(2)}</div>
+              <div className="mt-2 text-sm">Payment method: <span className="font-medium">{order.paymentMethod || 'cod'}</span></div>
+              {order.shippingAddress && (
+                <div className="mt-2 text-sm text-gray-600">
+                  <div>{order.shippingAddress.name}</div>
+                  <div>{order.shippingAddress.line1}</div>
+                  <div>{order.shippingAddress.city} {order.shippingAddress.postalCode}</div>
+                  <div>Phone: {order.shippingAddress.phone}</div>
+                </div>
+              )}
             </div>
           </div>
 

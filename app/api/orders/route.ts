@@ -69,16 +69,39 @@ export async function POST(req: Request) {
       total += prod.price * qty;
     }
 
+    // accept optional shipping/payment info (for now only COD supported)
+    const paymentMethod = body.paymentMethod === 'cod' ? 'cod' : 'cod';
+    const shipping = body.shippingAddress && typeof body.shippingAddress === 'object' ? body.shippingAddress : undefined;
+
+    // basic validation for COD: require name and line1 and phone
+    if (paymentMethod === 'cod') {
+      if (!shipping || !shipping.name || !shipping.line1 || !shipping.phone) {
+        throw new Error('Shipping name, address line1 and phone are required for Cash-on-delivery');
+      }
+    }
+
+    // determine a proper user _id for the order (session user may be a minimal object)
+    let userIdForOrder: any = user.id;
+    if (!/^[0-9a-fA-F]{24}$/.test(String(userIdForOrder || ""))) {
+      // try to resolve by email to a real user _id
+      const User = (await import('../../../models/User')).default;
+      const found = await User.findOne({ email: user.email }).lean();
+      if (found && found._id) userIdForOrder = found._id;
+      else throw new Error('Unable to resolve user for order');
+    }
+
     const order = await Order.create({
-      user: user.id,
+      user: userIdForOrder,
       items: orderItems,
       totalAmount: Math.round(total * 100) / 100,
+      paymentMethod,
+      shippingAddress: shipping,
       paymentStatus: "pending",
       orderStatus: "pending",
     });
 
     // clear cart
-    await Cart.deleteOne({ user: user.id });
+    await Cart.deleteOne({ user: userIdForOrder });
 
     return NextResponse.json(order, { status: 201 });
   } catch (err: any) {

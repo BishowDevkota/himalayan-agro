@@ -24,6 +24,7 @@ export default async function AdminOrdersPage() {
               <div>
                 <div className="font-medium">Order #{String(o._id).slice(-6)}</div>
                 <div className="text-sm text-gray-600">{o.items.length} items • {o.paymentStatus} • {o.orderStatus}</div>
+                <div className="text-sm text-gray-500 mt-1">Payment: {o.paymentMethod || 'cod'}{o.shippingAddress?.phone ? ` • ${o.shippingAddress.phone}` : ''}</div>
               </div>
               <div className="text-right text-sm">
                 <div>{new Date(o.createdAt).toLocaleString()}</div>
