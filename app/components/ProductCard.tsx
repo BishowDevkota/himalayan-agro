@@ -17,6 +17,7 @@ export default function ProductCard({ product }: { product: any }) {
         <Link href={`/product/${product._id}`} className="block">
           <h3 className="font-medium">{product.name}</h3>
         </Link>
+        {product.brand && <div className="text-xs text-gray-500">{product.brand}</div>}
         <div className="mt-2 flex items-center justify-between">
           <div className="text-sm text-gray-600">${product.price.toFixed(2)}</div>
           <div className="text-xs text-gray-500">{product.stock > 0 ? `In stock (${product.stock})` : "Out of stock"}</div>

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 export default function ProductForm({ initial = null }: { initial?: any }) {
   const [name, setName] = useState(initial?.name || "");
   const [description, setDescription] = useState(initial?.description || "");
+  const [brand, setBrand] = useState(initial?.brand || "");
   const [price, setPrice] = useState(initial?.price || 0);
   const [categories, setCategories] = useState<Array<any>>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
@@ -39,7 +40,7 @@ export default function ProductForm({ initial = null }: { initial?: any }) {
     e.preventDefault();
     setLoading(true);
     try {
-      const payload: any = { name, description, price, images, stock };
+      const payload: any = { name, description, brand, price, images, stock };
       // prefer selected category id (from dropdown). If editing and no selection was changed, preserve initial category.
       if (selectedCategoryId) payload.category = selectedCategoryId;
       else if (initial?.category) payload.category = initial.category;
@@ -62,6 +63,10 @@ export default function ProductForm({ initial = null }: { initial?: any }) {
       <div>
         <label className="block text-sm font-medium">Name</label>
         <input className="mt-1 block w-full rounded border px-3 py-2" value={name} onChange={(e) => setName(e.target.value)} required />
+      </div>
+      <div>
+        <label className="block text-sm font-medium">Brand</label>
+        <input className="mt-1 block w-full rounded border px-3 py-2" value={brand} onChange={(e) => setBrand(e.target.value)} />
       </div>
       <div>
         <label className="block text-sm font-medium">Description</label>

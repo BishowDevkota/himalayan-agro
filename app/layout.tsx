@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "./components/Navbar";
+import BeautifulNavbar from "./components/BeautifulNavbar";
 import SessionProviderClient from "./providers/SessionProviderClient";
 import DevServiceWorkerCleanup from "./components/DevServiceWorkerCleanup";
 import { ToastContainer } from "react-toastify";
@@ -54,7 +54,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProviderClient>
-          <Navbar />          {process.env.NODE_ENV !== 'production' && <DevServiceWorkerCleanup />}          <main>{children}</main>
+          <BeautifulNavbar />
+          {process.env.NODE_ENV !== 'production' && <DevServiceWorkerCleanup />}
+          <main>{children}</main>
           <ToastContainer position="top-right" />
         </SessionProviderClient>
       </body>

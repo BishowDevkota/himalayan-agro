@@ -16,7 +16,7 @@ async function main() {
   console.log("Connected to MongoDB for seeding");
 
   const userSchema = new mongoose.Schema({ name: String, email: { type: String, unique: true }, password: String, role: { type: String, default: 'user' } }, { timestamps: true });
-  const productSchema = new mongoose.Schema({ name: String, description: String, price: Number, category: String, images: [String], stock: Number, isActive: Boolean }, { timestamps: true });
+  const productSchema = new mongoose.Schema({ name: String, description: String, brand: String, price: Number, category: String, images: [String], stock: Number, isActive: Boolean }, { timestamps: true });
 
   const User = mongoose.models.User || mongoose.model('User', userSchema);
   const Product = mongoose.models.Product || mongoose.model('Product', productSchema);
@@ -35,6 +35,7 @@ async function main() {
       $set: {
         name: 'Demo Product',
         description: 'This is a seeded demo product.',
+        brand: 'DemoBrand',
         price: 19.99,
         category: 'demo',
         images: ['https://res.cloudinary.com/demo/image/upload/sample.jpg'],
@@ -51,6 +52,7 @@ async function main() {
     {
       name: 'Blue T-Shirt',
       description: 'Comfortable cotton t-shirt.',
+      brand: 'Acme Apparel',
       price: 24.99,
       category: 'clothing',
       images: ['https://res.cloudinary.com/demo/image/upload/sample.jpg'],
@@ -60,6 +62,7 @@ async function main() {
     {
       name: 'Stainless Water Bottle',
       description: 'Keeps drinks cold for 24 hours.',
+      brand: 'HydroCorp',
       price: 29.99,
       category: 'accessories',
       images: ['https://res.cloudinary.com/demo/image/upload/sample.jpg'],
@@ -69,6 +72,7 @@ async function main() {
     {
       name: 'Cauliflower (seed)',
       description: 'Seeded cauliflower product for "flower" category example.',
+      brand: 'Seed Co.',
       price: 3.5,
       category: 'flower',
       images: ['https://res.cloudinary.com/demo/image/upload/sample.jpg'],

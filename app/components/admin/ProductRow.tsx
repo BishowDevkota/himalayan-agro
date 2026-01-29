@@ -40,7 +40,7 @@ export default function ProductRow({ product }: { product: any }) {
       <img src={product.images?.[0] || '/placeholder.png'} className="w-20 h-20 object-cover rounded" alt={product.name} />
       <div className="flex-1">
         <div className="font-medium">{product.name}</div>
-        <div className="text-sm text-gray-600">${product.price.toFixed(2)} • {product.category}</div>
+        <div className="text-sm text-gray-600">${product.price.toFixed(2)} • {product.brand ? `${product.brand} • ` : ''}{product.category}</div>
         <div className="text-sm text-gray-500">Stock: {product.stock}</div>
       </div>
       <div className="flex items-center gap-2">

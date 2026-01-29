@@ -32,12 +32,13 @@ export async function POST(req: Request) {
   const payload = {
     name: body.name,
     description: body.description || "",
+    brand: body.brand || "",
     price: Number(body.price) || 0,
     category: body.category || "uncategorized",
     images: Array.isArray(body.images) ? body.images : [],
     stock: Number(body.stock) || 0,
     isActive: body.isActive !== false,
-  };
+  }; 
 
   const product = await Product.create(payload);
 

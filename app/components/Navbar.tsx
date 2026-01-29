@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { useState } from "react";
 
 export default function Navbar() {
   const { data: session } = useSession();
   const role = (session as any)?.user?.role;
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   return (
     <header className="w-full border-b bg-white">
@@ -17,16 +19,15 @@ export default function Navbar() {
         <div className="flex items-center gap-4">
           {session ? (
             <>
-              <Link href="/my-orders" className="text-sm">Orders</Link>
+              {/* Cart stays visible; account actions are behind a hover/click menu */}
               <Link href="/cart" className="text-sm">Cart</Link>
+
               {role === "admin" ? (
-                // use a full navigation so the browser sends the auth cookie and the
-                // server-side render /api requests reliably see the session
+                // keep admin link visible separately
                 <a
                   href="/admin/dashboard"
                   className="text-sm"
                   onClick={(e) => {
-                    // allow meta-click/new-tab; otherwise force a full reload
                     if (!e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
                       e.preventDefault();
                       window.location.href = '/admin/dashboard';
@@ -36,7 +37,29 @@ export default function Navbar() {
                   Admin
                 </a>
               ) : null}
-              <button className="text-sm" onClick={() => signOut()}>Sign out</button>
+
+              <div
+                className="relative"
+                onMouseEnter={() => setUserMenuOpen(true)}
+                onMouseLeave={() => setUserMenuOpen(false)}
+              >
+                <button
+                  className="text-sm inline-flex items-center gap-2 px-2 py-1 rounded-md hover:bg-gray-50"
+                  aria-haspopup="true"
+                  aria-expanded={userMenuOpen}
+                  onClick={() => setUserMenuOpen((v) => !v)}
+                >
+                  Account
+                </button>
+
+                {userMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-44 bg-white border rounded shadow-md py-2 z-30">
+                    <Link href="/my-orders" className="block px-4 py-2 text-sm hover:bg-gray-50">My orders</Link>
+                    <Link href="/profile" className="block px-4 py-2 text-sm hover:bg-gray-50">Account</Link>
+                    <button className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50" onClick={() => signOut()}>Sign out</button>
+                  </div>
+                )}
+              </div>
             </>
           ) : (
             <>
