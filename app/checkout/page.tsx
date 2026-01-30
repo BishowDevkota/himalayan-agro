@@ -9,11 +9,13 @@ export default async function CheckoutPage() {
   if (!session) return <div className="p-12">Please sign in to checkout.</div>;
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4">
-      <h1 className="text-2xl font-semibold">Checkout</h1>
-      <div className="mt-6">
-        {/* client component handles cart fetch & submit */}
-        <CheckoutClient />
+    <div className="bg-white text-black dark:bg-white dark:text-black min-h-screen">
+      <div className="max-w-4xl mx-auto py-12 px-4 text-black dark:text-black">
+        <h1 className="text-2xl font-semibold">Checkout</h1>
+        <div className="mt-6">
+          {/* client component handles cart fetch & submit */}
+          <CheckoutClient />
+        </div>
       </div>
     </div>
   );
