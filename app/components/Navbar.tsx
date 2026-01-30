@@ -131,13 +131,33 @@ export default function Navbar() {
  <img
    src="https://res-console.cloudinary.com/dk7ggjvlw/thumbnails/v1/image/upload/v1769796349/Y3JvcHBlZEltYWdlX3R3bGVrdw==/drilldown"
    alt="Himalayan logo"
+   loading="eager"
    className="sm:hidden h-10 w-auto object-contain transform group-hover:scale-105 transition-transform"
+   onError={(e) => {
+     const img = e.currentTarget as HTMLImageElement;
+     // common issue: `res-console.cloudinary.com` URLs are console-only and can 403 in production —
+     // fall back to local placeholder so the header never appears broken in production.
+     console.warn('Logo failed to load, falling back to placeholder:', img.src);
+     img.onerror = null;
+     img.src = '/placeholder.png';
+     img.classList.remove('object-cover');
+     img.classList.add('object-contain');
+   }}
  />
  {/* desktop / larger screens (keeps existing image) */}
  <img
    src="https://res-console.cloudinary.com/dk7ggjvlw/thumbnails/v1/image/upload/v1769794847/bG9nb19weGx0bTI=/drilldown"
    alt="Himalayan logo"
+   loading="eager"
    className="hidden sm:inline-block w-12 h-12 rounded-lg object-cover transform group-hover:scale-105 transition-transform"
+   onError={(e) => {
+     const img = e.currentTarget as HTMLImageElement;
+     console.warn('Logo failed to load, falling back to placeholder:', img.src);
+     img.onerror = null;
+     img.src = '/placeholder.png';
+     img.classList.remove('object-cover');
+     img.classList.add('object-contain');
+   }}
  />
  <span className="sr-only">Himalayan</span>
  </Link>
