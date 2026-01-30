@@ -3,40 +3,33 @@ import connectToDatabase from "../../../lib/mongodb";
 import Order from "../../../models/Order";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
+import AdminOrdersClient from "../../components/admin/AdminOrdersClient";
+import { serializeMany } from "../../../lib/serialize";
 
 export default async function AdminOrdersPage() {
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session || session.user?.role !== "admin") return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const orders = await Order.find({}).sort({ createdAt: -1 }).limit(50).lean();
+  const orders = await Order.find({}).sort({ createdAt: -1 }).limit(200).lean();
+  const safe = serializeMany(orders as any[]);
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Orders</h1>
-      </div>
-
-      <div className="mt-6 space-y-3">
-        {orders.map((o: any) => (
-          <div key={o._id} className="border rounded p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="font-medium">Order #{String(o._id).slice(-6)}</div>
-                <div className="text-sm text-gray-600">{o.items.length} items • {o.paymentStatus} • {o.orderStatus}</div>
-                <div className="text-sm text-gray-500 mt-1">Payment: {o.paymentMethod || 'cod'}{o.shippingAddress?.phone ? ` • ${o.shippingAddress.phone}` : ''}</div>
-              </div>
-              <div className="text-right text-sm">
-                <div>{new Date(o.createdAt).toLocaleString()}</div>
-                <div className="mt-2">Total: ${o.totalAmount.toFixed(2)}</div>
-                <div className="mt-3">
-                  <a className="text-sm text-sky-600" href={`/admin/orders/${o._id}`}>View</a>
-                </div>
-              </div>
-            </div>
+    <div className="min-h-screen bg-white text-slate-900">
+      <div className="max-w-7xl mx-auto py-12 px-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-semibold text-slate-900">Orders</h1>
+            <p className="mt-1 text-sm text-slate-600">Manage and fulfill recent orders — search, filter and review details.</p>
           </div>
-        ))}
-        {orders.length === 0 && <div className="text-sm text-gray-600">No orders yet.</div>}
+          <div className="flex items-center gap-3">
+            <a href="/admin/orders" className="inline-flex items-center gap-2 rounded-lg border border-gray-100 px-3 py-2 text-sm text-slate-700">Refresh</a>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <AdminOrdersClient initialOrders={safe} />
+        </div>
       </div>
     </div>
   );

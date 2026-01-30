@@ -58,7 +58,7 @@ export default function Products({ products }: { products?: ProductCard[] }) {
         >
           {list.map((product, index) => (
             <div key={product._id} className="product-card flex-none w-[75vw] md:w-[calc(33.333%-16px)] lg:w-[calc(25%-18px)] snap-start bg-white border border-gray-100 group transition-all duration-400 hover:border-[#f29629] hover:shadow-lg">
-              <div className="h-[220px] bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-700" style={{ backgroundImage: `url(${(product.images && product.images[0]) || '/placeholder.png'})` }} />
+              <div className="h-[220px] bg-cover bg-center" style={{ backgroundImage: `url(${(product.images && product.images[0]) || '/placeholder.png'})` }} />
               <div className="p-6 flex flex-col justify-between h-[180px]">
                 <div>
                   <h3 className="text-base font-black uppercase mb-2 text-[#0a0a0a] truncate">{product.name}</h3>

@@ -37,19 +37,23 @@ export default function ImageUpload({ images = [], onChange }: { images?: string
   }
 
   return (
-    <div className="space-y-2">
-      <div className="flex items-center gap-3">
-        <label className="inline-flex items-center gap-2 rounded bg-white border px-3 py-2 cursor-pointer">
-          <input type="file" className="hidden" multiple accept="image/*" onChange={onFiles} />
-          <span className="text-sm">Upload images</span>
-        </label>
-        {uploading && <div className="text-sm text-gray-500">Uploading…</div>}
-      </div>
-      <div className="flex gap-3 mt-2 flex-wrap">
+    <div className="space-y-3">
+      <label className="block">
+        <div className="relative rounded-lg border-2 border-dashed border-gray-200 bg-white/5 p-5 text-center cursor-pointer hover:border-sky-300 transition-colors">
+          <input aria-label="Upload product images" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" multiple accept="image/*" onChange={onFiles} />
+          <div className="flex flex-col items-center justify-center gap-2">
+            <div className="text-sm font-semibold">Upload images</div>
+            <div className="text-xs text-slate-400">PNG, JPG — first image will be primary. Drag & drop supported by your browser.</div>
+            {uploading && <div className="mt-2 text-sm text-slate-500">Uploading…</div>}
+          </div>
+        </div>
+      </label>
+
+      <div className="flex gap-3 mt-3 flex-wrap">
         {images.map((src, i) => (
-          <div key={src + i} className="w-28 h-28 relative border rounded overflow-hidden">
+          <div key={src + i} className="w-28 h-28 relative rounded-lg overflow-hidden shadow-sm border border-gray-100">
             <img src={src} className="w-full h-full object-cover" alt={`img-${i}`} />
-            <button type="button" onClick={() => removeAt(i)} className="absolute top-1 right-1 bg-white/80 rounded-full p-1 text-xs">✕</button>
+            <button type="button" onClick={() => removeAt(i)} className="absolute top-2 right-2 bg-white/90 text-xs rounded-full w-6 h-6 grid place-items-center">✕</button>
           </div>
         ))}
       </div>

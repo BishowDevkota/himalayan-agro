@@ -7,6 +7,7 @@ import DevServiceWorkerCleanup from "./components/DevServiceWorkerCleanup";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -58,6 +59,7 @@ export default function RootLayout({
           <Navbar />
           {process.env.NODE_ENV !== 'production' && <DevServiceWorkerCleanup />}
           <main>{children}</main>
+          <Footer />
           <ToastContainer position="top-right" />
         </SessionProviderClient>
       </body>

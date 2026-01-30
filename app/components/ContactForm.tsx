@@ -34,7 +34,7 @@ export default function ContactForm() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           <div className="flex flex-col">
             <label className={labelClass}>Full Name</label>
-            <input required value={name} onChange={(e) => setName(e.target.value)} className={inputClass} placeholder="John Doe" />
+            <input required value={name} onChange={(e) => setName(e.target.value)} className={inputClass} placeholder="Bishow Devkota" />
           </div>
           <div className="flex flex-col">
             <label className={labelClass}>Email Address</label>

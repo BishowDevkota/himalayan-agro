@@ -136,9 +136,9 @@ export default function ShopFiltersClient({
 
           <div className="flex gap-2">
             <button type="submit" className="px-3 py-2 bg-sky-600 text-white rounded-md text-sm">Apply</button>
-            <button type="button" onClick={() => applyPreset(0, 50)} className="px-3 py-2 border rounded-md text-sm">Under $50</button>
-            <button type="button" onClick={() => applyPreset(50, 200)} className="px-3 py-2 border rounded-md text-sm">$50–$200</button>
-            <button type="button" onClick={() => applyPreset(200, undefined)} className="px-3 py-2 border rounded-md text-sm">Over $200</button>
+            <button type="button" onClick={() => applyPreset(0, 50)} className="px-3 py-2 border rounded-md text-sm">Under ₹50</button>
+            <button type="button" onClick={() => applyPreset(50, 200)} className="px-3 py-2 border rounded-md text-sm">₹50–₹200</button>
+            <button type="button" onClick={() => applyPreset(200, undefined)} className="px-3 py-2 border rounded-md text-sm">Over ₹200</button>
           </div>
         </form>
       </div>

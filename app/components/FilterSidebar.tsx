@@ -21,9 +21,9 @@ export default function FilterSidebar() {
       <div>
         <h3 className="text-sm font-medium text-gray-900 uppercase tracking-wider">Price Range</h3>
         <div className="mt-4 flex flex-col gap-2">
-          <Link href="/shop?minPrice=0&maxPrice=50" className="text-sm text-gray-600 hover:text-blue-600">Under $50</Link>
-          <Link href="/shop?minPrice=50&maxPrice=200" className="text-sm text-gray-600 hover:text-blue-600">$50 to $200</Link>
-          <Link href="/shop?minPrice=200" className="text-sm text-gray-600 hover:text-blue-600">Over $200</Link>
+          <Link href="/shop?minPrice=0&maxPrice=50" className="text-sm text-gray-600 hover:text-blue-600">Under ₹50</Link>
+          <Link href="/shop?minPrice=50&maxPrice=200" className="text-sm text-gray-600 hover:text-blue-600">₹50 to ₹200</Link>
+          <Link href="/shop?minPrice=200" className="text-sm text-gray-600 hover:text-blue-600">Over ₹200</Link>
         </div>
       </div>
     </div>

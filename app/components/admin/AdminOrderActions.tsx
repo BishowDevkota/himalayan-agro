@@ -33,20 +33,20 @@ export default function AdminOrderActions({ orderId, initialOrderStatus, initial
   }
 
   return (
-    <div className="border rounded-lg p-4">
-      <div className="text-sm text-gray-600">Order actions</div>
+    <div className="bg-white border border-gray-100 rounded-lg p-4 text-slate-900 shadow-sm">
+      <div className="text-sm text-slate-600">Order actions</div>
       <div className="mt-3 space-y-3">
         <div>
-          <label className="block text-sm">Order status</label>
-          <select className="mt-1 block w-full rounded border px-3 py-2" value={orderStatus} onChange={(e) => setOrderStatus(e.target.value)}>
+          <label className="block text-sm text-slate-700">Order status</label>
+          <select className="mt-1 block w-full rounded border border-gray-200 px-3 py-2 text-slate-900" value={orderStatus} onChange={(e) => setOrderStatus(e.target.value)}>
             {ORDER_STATUSES.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
           </select>
         </div>
         <div>
-          <label className="block text-sm">Payment status</label>
-          <select className="mt-1 block w-full rounded border px-3 py-2" value={paymentStatus} onChange={(e) => setPaymentStatus(e.target.value)}>
+          <label className="block text-sm text-slate-700">Payment status</label>
+          <select className="mt-1 block w-full rounded border border-gray-200 px-3 py-2 text-slate-900" value={paymentStatus} onChange={(e) => setPaymentStatus(e.target.value)}>
             {PAYMENT_STATUSES.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}

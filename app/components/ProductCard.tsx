@@ -42,7 +42,17 @@ export default function ProductCard({ product }: { product: any }) {
         </div>
 
         {/* Description (separated) */}
-        <p className="mt-3 text-sm text-black leading-relaxed overflow-hidden line-clamp-3">{product.shortDescription || product.description || 'No description available.'}</p>
+        <p
+          className="mt-3 text-sm text-black leading-relaxed overflow-hidden"
+          style={{
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            textOverflow: 'ellipsis',
+          }}
+        >
+          {product.shortDescription || product.description || 'No description available.'}
+        </p>
 
         {/* Single action */}
         <div className="mt-5">
