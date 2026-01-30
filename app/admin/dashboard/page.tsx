@@ -25,7 +25,7 @@ export default async function AdminDashboardPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
             <h1 className="text-3xl font-extrabold leading-tight">Admin dashboard</h1>
-            <p className="mt-2 text-sm text-slate-500">Overview — quick access to orders, products and users.</p>
+            <p className="mt-2 text-sm text-slate-500">Overview — quick access to orders, products, categories and users.</p>
           </div>
 
           <div className="flex items-center gap-3">
@@ -119,6 +119,14 @@ export default async function AdminDashboardPage() {
                 <div className="text-slate-400">→</div>
               </a>
 
+              <a href="/admin/categories" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-lg border border-gray-100 px-4 py-3 hover:shadow-sm">
+                <div>
+                  <div className="text-sm text-slate-600">Categories</div>
+                  <div className="font-medium text-slate-800">Category management</div>
+                </div>
+                <div className="text-slate-400">→</div>
+              </a>
+
               <a href="/admin/orders" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-lg border border-gray-100 px-4 py-3 hover:shadow-sm">
                 <div>
                   <div className="text-sm text-slate-600">Orders</div>
@@ -134,7 +142,7 @@ export default async function AdminDashboardPage() {
                 </div>
                 <div className="text-slate-400">→</div>
               </a>
-            </div>
+            </div> 
 
             <div className="mt-6 border-t pt-4 text-sm text-slate-500">
               <div>Last sync: <span className="font-medium text-slate-700">Jan 30, 2026</span></div>
@@ -145,6 +153,7 @@ export default async function AdminDashboardPage() {
 
         <div className="mt-10 flex gap-3">
           <a className="inline-flex items-center gap-3 rounded-lg bg-sky-600 px-4 py-2 text-white shadow-sm" href="/admin/products">Manage products</a>
+          <a className="inline-flex items-center gap-3 rounded-lg border border-gray-100 px-4 py-2 text-slate-700" href="/admin/categories">Manage categories</a>
           <a className="inline-flex items-center gap-3 rounded-lg border border-gray-100 px-4 py-2 text-slate-700" href="/admin/orders">Manage orders</a>
         </div>
       </div>
