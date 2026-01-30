@@ -4,6 +4,12 @@
   --background: #ffffff;
   --foreground: #171717;
 
+  /* Text color tokens (use these in components for predictable contrast) */
+  --text-primary: #171717; /* main content */
+  --text-secondary: #6b7280; /* muted copy */
+  --text-muted: #9ca3af; /* helper / microcopy */
+  --text-inverse: #ffffff; /* for dark backgrounds */
+
   /* Brand theme (shared) */
   --primary: #2da8da;
   --secondary: #f29629;
@@ -14,23 +20,28 @@
   --card-gray: #f9f9f9;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* make body color explicit (keeps backward compatibility with --foreground) */
+body {
+  color: var(--text-primary);
 }
+
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
+    /* dark theme text tokens */
+    --text-primary: #e6eef6; /* high contrast on dark */
+    --text-secondary: #9aa4ad;
+    --text-muted: #6b7580;
+    --text-inverse: #0a0a0a;
   }
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--text-primary);
   font-family: Arial, Helvetica, sans-serif;
 }
 

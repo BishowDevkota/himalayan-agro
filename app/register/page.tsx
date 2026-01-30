@@ -4,9 +4,12 @@ import authOptions from "../../lib/auth";
 import SignupClient from "../components/SignupClient";
 import { redirect } from "next/navigation";
 
-export default async function RegisterPage({ searchParams }: { searchParams?: { from?: string } }) {
+export default async function RegisterPage({ searchParams }: { searchParams?: { from?: string } | Promise<{ from?: string }> }) {
+  // `searchParams` may be a Promise in the App Router — unwrap it safely (matches /login)
+  const sp = (searchParams && typeof (searchParams as any)?.then === "function") ? await searchParams : (searchParams || {});
+  const from = (sp as any).from || "/";
+
   const session = await getServerSession(authOptions as any);
-  if (session) return redirect((searchParams as any)?.from || "/");
-  const from = (searchParams as any)?.from || "/";
+  if (session) return redirect(from);
   return <SignupClient from={from} />;
 }

@@ -29,6 +29,12 @@ export interface IOrder extends Document {
   orderStatus: OrderStatus;
   createdAt: Date;
   updatedAt: Date;
+
+  // optional UI fields
+  estimatedDelivery?: string;
+  subTotal?: number;
+  shippingCost?: number;
+  tax?: number;
 }
 
 const OrderItemSchema = new mongoose.Schema<IOrderItem>({

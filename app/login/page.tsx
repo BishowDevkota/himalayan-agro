@@ -12,5 +12,9 @@ export default async function LoginPage({ searchParams }: { searchParams?: { fro
   const session = await getServerSession(authOptions as any);
   if (session) return redirect(from);
 
-  return <LoginClient from={from} serverError={rawError} />;
+  return (
+    <div className="min-h-screen bg-white">
+      <LoginClient from={from} serverError={rawError} />
+    </div>
+  );
 }
