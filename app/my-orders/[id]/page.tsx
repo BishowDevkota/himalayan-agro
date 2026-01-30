@@ -4,6 +4,7 @@ import Order from "../../../models/Order";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 import CancelOrderButton from "../../components/CancelOrderButton";
+import PrintInvoiceButton from "../../components/PrintInvoiceButton";
 
 export default async function MyOrderDetail({ params }: { params: { id: string } } | { params: Promise<{ id: string }> }) {
   // `params` can be a Promise in some Next.js runtimes — unwrap it safely.
@@ -102,7 +103,7 @@ export default async function MyOrderDetail({ params }: { params: { id: string }
 
               <div className="mt-6 space-y-3">
                 <CancelOrderButton orderId={String(order._id)} currentStatus={order.orderStatus} />
-                <button className="w-full rounded-lg border border-gray-100 px-4 py-3 text-sm" onClick={() => window.print()}>Download invoice</button>
+                <PrintInvoiceButton />
                 <a className="block text-center text-sm text-sky-600 hover:underline" href="/contact">Contact support</a>
               </div>
             </div>

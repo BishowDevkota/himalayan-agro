@@ -73,6 +73,22 @@ export default function Navbar() {
  const cart = useCart((s) => s.items);
  const cartCount = cart.reduce((s, i) => s + (i.quantity || 0), 0);
  const router = useRouter();
+ // header measurement used to position the mobile menu as a fixed overlay
+ const headerRef = useRef<HTMLElement | null>(null);
+ const [menuTop, setMenuTop] = useState<number>(0);
+ function navigateAndClose(href: string) {
+   setMobileOpen(false);
+   router.push(href);
+ }
+ useEffect(() => {
+   function update() {
+     const h = headerRef.current?.getBoundingClientRect().height ?? 0;
+     setMenuTop(Math.round(h));
+   }
+   update();
+   window.addEventListener('resize', update);
+   return () => window.removeEventListener('resize', update);
+ }, []);
  const [userMenuOpen, setUserMenuOpen] = useState(false);
 
  useEffect(() => {
@@ -106,17 +122,24 @@ export default function Navbar() {
  }, [mobileOpen]);
 
  return (
- <header className="sticky top-0 w-full z-40 backdrop-blur-md bg-white border-b border-blue-100/50 shadow-lg">
+ <header ref={headerRef} className="sticky top-0 w-full z-40 backdrop-blur-md bg-white border-b border-blue-100/50 shadow-lg">
  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
  <div className="flex items-center justify-between gap-4 py-3 sm:py-4">
  {/* Logo */}
- <Link href="/" className="flex items-center gap-2 group">
- <div className="w-10 h-10 rounded-lg bg-linear-to-br from-cyan-600 to-cyan-600 flex items-center justify-center transform group-hover:scale-105 transition-transform">
- <span className="text-white font-bold text-lg">HA</span>
- </div>
- <span className="text-xl font-bold bg-linear-to-r from-cyan-600 to-cyan-600 bg-clip-text text-transparent hidden sm:inline">
- Himalayan
- </span>
+ <Link href="/" className="flex items-center gap-3 group" aria-label="Himalayan — home">
+ {/* mobile-only wordmark */}
+ <img
+   src="https://res-console.cloudinary.com/dk7ggjvlw/thumbnails/v1/image/upload/v1769796349/Y3JvcHBlZEltYWdlX3R3bGVrdw==/drilldown"
+   alt="Himalayan logo"
+   className="sm:hidden h-10 w-auto object-contain transform group-hover:scale-105 transition-transform"
+ />
+ {/* desktop / larger screens (keeps existing image) */}
+ <img
+   src="https://res-console.cloudinary.com/dk7ggjvlw/thumbnails/v1/image/upload/v1769794847/bG9nb19weGx0bTI=/drilldown"
+   alt="Himalayan logo"
+   className="hidden sm:inline-block w-12 h-12 rounded-lg object-cover transform group-hover:scale-105 transition-transform"
+ />
+ <span className="sr-only">Himalayan</span>
  </Link>
 
  {/* Desktop Navigation */}
@@ -281,12 +304,6 @@ export default function Navbar() {
  >
  📦 My Orders
  </button>
- <button
- onClick={() => router.push('/profile')}
- className="w-full text-left px-4 py-3 text-gray-700 hover:text-cyan-600 hover:bg-cyan-50 transition-colors"
- >
- 👤 Account
- </button>
  {role === 'admin' && (
  <button
  onClick={() => router.push('/admin/dashboard')}
@@ -333,17 +350,18 @@ export default function Navbar() {
  ref={mobileMenuRef}
  role="dialog"
  aria-modal="true"
- className="lg:hidden border-t border-blue-100 bg-white/95 backdrop-blur-sm"
+ className="lg:hidden fixed left-0 right-0 z-30 overflow-auto bg-white backdrop-blur-sm shadow-lg"
+ style={{ top: menuTop, height: `calc(100vh - ${menuTop}px)` }}
  >
  <div className="max-w-7xl mx-auto px-4 py-4 space-y-1">
  <button
- onClick={() => router.push('/')}
+ onClick={() => { navigateAndClose('/'); }}
  className="w-full text-left px-4 py-2.5 rounded-lg text-gray-700 hover:text-cyan-600 transition-colors"
  >
  Home
  </button>
  <button
- onClick={() => router.push('/about')}
+ onClick={() => { navigateAndClose('/about'); }}
  className="w-full text-left px-4 py-2.5 rounded-lg text-gray-700 hover:text-cyan-600 transition-colors"
  >
  About
@@ -362,19 +380,19 @@ export default function Navbar() {
  {companyMobileOpen && (
  <div className="pl-4 mt-1 space-y-1">
  <button
- onClick={() => router.push('/')}
+ onClick={() => { navigateAndClose('/'); }}
  className="w-full text-left px-4 py-2 rounded-lg text-sm text-gray-600 hover:text-cyan-600 hover:bg-blue-50 transition-colors"
  >
  Our Mission
  </button>
  <button
- onClick={() => router.push('/')}
+ onClick={() => { navigateAndClose('/'); }}
  className="w-full text-left px-4 py-2 rounded-lg text-sm text-gray-600 hover:text-cyan-600 hover:bg-blue-50 transition-colors"
  >
  Team
  </button>
  <button
- onClick={() => router.push('/')}
+ onClick={() => { navigateAndClose('/'); }}
  className="w-full text-left px-4 py-2 rounded-lg text-sm text-gray-600 hover:text-cyan-600 hover:bg-blue-50 transition-colors"
  >
  Careers
@@ -384,7 +402,7 @@ export default function Navbar() {
  </div>
 
  <button
- onClick={() => router.push('/shop')}
+ onClick={() => { navigateAndClose('/shop'); }}
  className="w-full text-left px-4 py-2.5 rounded-lg text-gray-700 hover:text-cyan-600 transition-colors"
  >
  Shop
@@ -403,19 +421,19 @@ export default function Navbar() {
  {resourcesMobileOpen && (
  <div className="pl-4 mt-1 space-y-1">
  <button
- onClick={() => router.push('/')}
+ onClick={() => { navigateAndClose('/'); }}
  className="w-full text-left px-4 py-2 rounded-lg text-sm text-gray-600 hover:text-cyan-600 hover:bg-blue-50 transition-colors"
  >
  Blog
  </button>
  <button
- onClick={() => router.push('/')}
+ onClick={() => { navigateAndClose('/'); }}
  className="w-full text-left px-4 py-2 rounded-lg text-sm text-gray-600 hover:text-cyan-600 hover:bg-blue-50 transition-colors"
  >
  Documentation
  </button>
  <button
- onClick={() => router.push('/')}
+ onClick={() => { navigateAndClose('/'); }}
  className="w-full text-left px-4 py-2 rounded-lg text-sm text-gray-600 hover:text-cyan-600 hover:bg-blue-50 transition-colors"
  >
  Support
@@ -425,7 +443,7 @@ export default function Navbar() {
  </div>
 
  <button
- onClick={() => router.push('/contact')}
+ onClick={() => { navigateAndClose('/contact'); }}
  className="w-full text-left px-4 py-2.5 rounded-lg text-gray-700 hover:text-cyan-600 transition-colors"
  >
  Contact
@@ -435,13 +453,13 @@ export default function Navbar() {
  {!session && (
  <>
  <button
- onClick={() => router.push('/login')}
+ onClick={() => { navigateAndClose('/login'); }}
  className="block w-full text-center px-4 py-2.5 bg-linear-to-r from-cyan-600 to-cyan-700 text-white font-semibold rounded-lg hover:from-cyan-700 hover:to-cyan-800 transition-all"
  >
  Sign in
  </button>
  <button
- onClick={() => router.push('/register')}
+ onClick={() => { navigateAndClose('/register'); }}
  className="block w-full text-center px-4 py-2.5 border-2 border-cyan-600 text-cyan-600 font-semibold rounded-lg hover:bg-cyan-50 transition-all"
  >
  Create account
@@ -451,27 +469,21 @@ export default function Navbar() {
  {session && (
  <div className="space-y-2">
  <button
- onClick={() => router.push('/my-orders')}
+ onClick={() => { navigateAndClose('/my-orders'); }}
  className="w-full text-left px-4 py-2.5 text-gray-700 hover:text-cyan-600 hover:bg-blue-50 rounded-lg transition-colors"
  >
  My Orders
  </button>
- <button
- onClick={() => router.push('/profile')}
- className="w-full text-left px-4 py-2.5 text-gray-700 hover:text-cyan-600 hover:bg-blue-50 rounded-lg transition-colors"
- >
- Account
- </button>
  {role === 'admin' && (
  <button
- onClick={() => router.push('/admin/dashboard')}
+ onClick={() => { navigateAndClose('/admin/dashboard'); }}
  className="w-full text-left px-4 py-2.5 text-gray-700 hover:text-cyan-600 hover:bg-blue-50 rounded-lg transition-colors"
  >
  Admin Dashboard
  </button>
  )}
  <button
- onClick={() => signOut()}
+ onClick={() => { setMobileOpen(false); signOut(); }}
  className="w-full text-left px-4 py-2.5 text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors font-medium"
  >
  Sign out
