@@ -132,7 +132,7 @@ export default function Navbar() {
    src="/croppedImage.jpeg"
    alt="Himalayan logo"
    loading="eager"
-   className="sm:hidden h-10 w-auto object-contain transform group-hover:scale-105 transition-transform"
+   className="sm:hidden h-14 w-auto object-contain transform group-hover:scale-105 transition-transform"
    onError={(e) => {
      const img = e.currentTarget as HTMLImageElement;
      console.warn('Mobile logo failed to load, falling back to placeholder:', img.src);
@@ -147,7 +147,7 @@ export default function Navbar() {
    src="/logo.jpeg"
    alt="Himalayan logo"
    loading="eager"
-   className="hidden sm:inline-block w-12 h-12 rounded-lg object-cover transform group-hover:scale-105 transition-transform"
+   className="hidden sm:inline-block w-16 h-16 rounded-lg object-cover transform group-hover:scale-105 transition-transform"
    onError={(e) => {
      const img = e.currentTarget as HTMLImageElement;
      console.warn('Desktop logo failed to load, falling back to placeholder:', img.src);
