@@ -142,6 +142,14 @@ body {
 /* mobile panel tweaks */
 #mobile-menu { -webkit-tap-highlight-color: transparent; }
 
+/* page-scoped light theme (override prefers-color-scheme for a single page) */
+.page-white-theme {
+  background: #ffffff !important;
+  color: #0b1720 !important;
+  --background: #ffffff !important;
+  --text-primary: #0b1720 !important;
+}
+
 /* cart badge */
 .cart-badge {
   transition: transform 180ms ease, box-shadow 180ms ease;

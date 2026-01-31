@@ -127,30 +127,14 @@ export default function Navbar() {
  <div className="flex items-center justify-between gap-4 py-3 sm:py-4">
  {/* Logo */}
  <Link href="/" className="flex items-center gap-3 group" aria-label="Himalayan — home">
- {/* mobile-only wordmark (local) */}
- <img
-   src="/croppedImage.jpeg"
-   alt="Himalayan logo"
-   loading="eager"
-   className="sm:hidden h-14 w-auto object-contain transform group-hover:scale-105 transition-transform"
-   onError={(e) => {
-     const img = e.currentTarget as HTMLImageElement;
-     console.warn('Mobile logo failed to load, falling back to placeholder:', img.src);
-     img.onerror = null;
-     img.src = '/placeholder.png';
-     img.classList.remove('object-cover');
-     img.classList.add('object-contain');
-   }}
- />
- {/* desktop / larger screens (keeps existing image) */}
  <img
    src="/logo.jpeg"
    alt="Himalayan logo"
    loading="eager"
-   className="hidden sm:inline-block w-16 h-16 rounded-lg object-cover transform group-hover:scale-105 transition-transform"
+   className="h-14 sm:h-16 w-auto rounded-lg object-contain sm:object-cover transform group-hover:scale-105 transition-transform"
    onError={(e) => {
      const img = e.currentTarget as HTMLImageElement;
-     console.warn('Desktop logo failed to load, falling back to placeholder:', img.src);
+     console.warn('Logo failed to load, falling back to placeholder:', img.src);
      img.onerror = null;
      img.src = '/placeholder.png';
      img.classList.remove('object-cover');
@@ -279,10 +263,10 @@ export default function Navbar() {
  <IconSearch size={20} />
  </button>
 
- {/* Cart Icon */}
+ {/* Cart Icon (desktop & tablet only) */}
  <button
  onClick={() => router.push('/cart')}
- className="relative p-2.5 rounded-lg text-gray-700 hover:text-cyan-600 transition-colors duration-200"
+ className="hidden sm:inline-flex relative p-2.5 rounded-lg text-gray-700 hover:text-cyan-600 transition-colors duration-200"
  aria-label="Shopping cart"
  >
  <IconCart size={20} />
@@ -316,6 +300,13 @@ export default function Navbar() {
  <div className="font-semibold text-sm text-gray-900">{(session as any).user?.name}</div>
  <div className="text-xs text-gray-500">{(session as any).user?.email}</div>
  </div>
+ {/* Mobile-only: surface Cart inside profile dropdown so users can reach it from their account */}
+ <button
+ onClick={() => router.push('/cart')}
+ className="w-full text-left px-4 py-3 text-gray-700 hover:text-cyan-600 hover:bg-cyan-50 transition-colors block sm:hidden"
+ >
+ 🛒 Cart
+ </button>
  <button
  onClick={() => router.push('/my-orders')}
  className="w-full text-left px-4 py-3 text-gray-700 hover:text-cyan-600 hover:bg-cyan-50 transition-colors"
@@ -337,7 +328,7 @@ export default function Navbar() {
  Sign out
  </button>
  </div>
- )}
+ )} 
  </div>
  ) : (
  <button
@@ -487,6 +478,12 @@ export default function Navbar() {
  {session && (
  <div className="space-y-2">
  <button
+ onClick={() => { navigateAndClose('/cart'); }}
+ className="w-full text-left px-4 py-2.5 text-gray-700 hover:text-cyan-600 hover:bg-blue-50 rounded-lg transition-colors"
+ >
+ Cart
+ </button>
+ <button
  onClick={() => { navigateAndClose('/my-orders'); }}
  className="w-full text-left px-4 py-2.5 text-gray-700 hover:text-cyan-600 hover:bg-blue-50 rounded-lg transition-colors"
  >
@@ -507,7 +504,7 @@ export default function Navbar() {
  Sign out
  </button>
  </div>
- )}
+ )} 
  </div>
  </div>
  </div>
