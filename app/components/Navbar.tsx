@@ -127,21 +127,39 @@ export default function Navbar() {
  <div className="flex items-center justify-between gap-4 py-3 sm:py-4">
  {/* Logo */}
  <Link href="/" className="flex items-center gap-3 group" aria-label="Himalayan — home">
- <img
-   src="/logo.jpeg"
-   alt="Himalayan logo"
-   loading="eager"
-   className="h-14 sm:h-16 w-auto rounded-lg object-contain sm:object-cover transform group-hover:scale-105 transition-transform"
-   onError={(e) => {
-     const img = e.currentTarget as HTMLImageElement;
-     console.warn('Logo failed to load, falling back to placeholder:', img.src);
-     img.onerror = null;
-     img.src = '/placeholder.png';
-     img.classList.remove('object-cover');
-     img.classList.add('object-contain');
-   }}
- />
- <span className="sr-only">Himalayan</span>
+   {/* Mobile: wide horizontal logo */}
+   <img
+     src="/wide-logo.jpeg"
+     alt="Himalayan"
+     loading="eager"
+     className="h-10 sm:h-12 w-auto object-contain lg:hidden transform group-hover:scale-105 transition-transform"
+     onError={(e) => {
+       const img = e.currentTarget as HTMLImageElement;
+       console.warn('Logo failed to load, falling back to placeholder:', img.src);
+       img.onerror = null;
+       img.src = '/placeholder.png';
+       img.classList.remove('object-cover');
+       img.classList.add('object-contain');
+     }}
+   />
+
+   {/* Desktop: stacked/square logo */}
+   <img
+     src="/logo.jpeg"
+     alt="Himalayan"
+     loading="eager"
+     className="hidden lg:inline-block h-14 sm:h-16 w-auto rounded-lg object-contain sm:object-cover transform group-hover:scale-105 transition-transform"
+     onError={(e) => {
+       const img = e.currentTarget as HTMLImageElement;
+       console.warn('Logo failed to load, falling back to placeholder:', img.src);
+       img.onerror = null;
+       img.src = '/placeholder.png';
+       img.classList.remove('object-cover');
+       img.classList.add('object-contain');
+     }}
+   />
+
+   <span className="sr-only">Himalayan</span>
  </Link>
 
  {/* Desktop Navigation */}

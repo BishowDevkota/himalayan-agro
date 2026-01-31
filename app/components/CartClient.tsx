@@ -65,63 +65,110 @@ export default function CartClient() {
       </div>
     );
 
-  const total = cart.items.reduce((s: number, it: any) => s + it.product.price * it.quantity, 0);
+  // defensive total: skip items with missing product or invalid price
+  const total = (cart.items || []).reduce((s: number, it: any) => {
+    const price = Number(it?.product?.price ?? 0);
+    const qty = Number(it?.quantity ?? 0);
+    return s + price * qty;
+  }, 0);
+
+  const hasMissingProducts = (cart.items || []).some((it: any) => !it?.product);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-black dark:text-black">
       <div className="lg:col-span-2 space-y-4">
-        {cart.items.map((it: any) => (
-          <article key={it.product._id} className="group bg-white border rounded-2xl shadow-sm overflow-hidden p-4 flex items-start gap-4">
-            <div className="w-28 h-28 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={it.product.images?.[0] || '/placeholder.png'} alt={it.product.name} className="w-full h-full object-cover" />
-            </div>
+        {(cart.items || []).map((it: any, idx: number) => {
+          const prod = it?.product ?? null;
+          const key = it?._id ?? prod?._id ?? `missing-${idx}`;
 
-            <div className="flex-1 min-w-0">
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <div className="text-sm font-semibold text-gray-900 truncate">{it.product.name}</div>
-                  <div className="mt-1 text-xs text-gray-500">{it.product.brand || ''}{it.product.category ? ` • ${it.product.category}` : ''}</div>
+          if (!prod) {
+            return (
+              <article key={key} className="group bg-white border rounded-2xl shadow-sm overflow-hidden p-4 flex items-start gap-4">
+                <div className="w-28 h-28 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0 flex items-center justify-center text-gray-300">
+                  <img src="/placeholder.png" alt="product removed" className="w-full h-full object-cover" />
                 </div>
 
-                <div className="text-right">
-                  <div className="text-sm font-extrabold text-sky-600">₹{it.product.price.toFixed(2)}</div>
-                  <div className="text-xs text-gray-500 mt-1">₹{(it.product.price * it.quantity).toFixed(2)}</div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0">
+                      <div className="text-sm font-semibold text-gray-900 truncate">Product removed</div>
+                      <div className="mt-1 text-xs text-gray-500">This product is no longer available</div>
+                    </div>
+
+                    <div className="text-right">
+                      <div className="text-sm font-extrabold text-sky-600">—</div>
+                      <div className="text-xs text-gray-500 mt-1">—</div>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-2">
+                      <div className="text-sm text-gray-500">Qty: {it.quantity}</div>
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <button className="text-sm text-black hover:underline" onClick={() => remove(it?._id)} disabled={updating}>Remove</button>
+                    </div>
+                  </div>
                 </div>
+              </article>
+            );
+          }
+
+          // product exists — render normally but use safe accessors
+          return (
+            <article key={key} className="group bg-white border rounded-2xl shadow-sm overflow-hidden p-4 flex items-start gap-4">
+              <div className="w-28 h-28 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={prod.images?.[0] || '/placeholder.png'} alt={prod.name || 'product'} className="w-full h-full object-cover" />
               </div>
 
-              <div className="mt-4 flex items-center justify-between gap-4">
-                <div className="flex items-center gap-2">
-                  <button
-                    aria-label={`Decrease quantity for ${it.product.name}`}
-                    className="w-8 h-8 rounded-md border text-gray-700 disabled:opacity-50"
-                    onClick={() => update(it.product._id, Math.max(1, it.quantity - 1))}
-                    disabled={updating || it.quantity <= 1}
-                  >−</button>
-                  <input
-                    className="w-20 rounded-md border px-2 py-1 text-sm text-center"
-                    type="number"
-                    min={1}
-                    value={it.quantity}
-                    onChange={(e) => update(it.product._id, Math.max(1, Number(e.target.value) || 1))}
-                  />
-                  <button
-                    aria-label={`Increase quantity for ${it.product.name}`}
-                    className="w-8 h-8 rounded-md border text-gray-700 disabled:opacity-50"
-                    onClick={() => update(it.product._id, Math.min((it.product.stock || 9999), it.quantity + 1))}
-                    disabled={updating || it.quantity >= (it.product.stock || 9999)}
-                  >+</button>
-                  <div className="text-xs text-gray-500 ml-3">{it.product.stock > 0 ? `${it.product.stock} available` : 'Out of stock'}</div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="min-w-0">
+                    <div className="text-sm font-semibold text-gray-900 truncate">{prod.name}</div>
+                    <div className="mt-1 text-xs text-gray-500">{prod.brand || ''}{prod.category ? ` • ${prod.category}` : ''}</div>
+                  </div>
+
+                  <div className="text-right">
+                    <div className="text-sm font-extrabold text-sky-600">₹{(Number(prod.price) || 0).toFixed(2)}</div>
+                    <div className="text-xs text-gray-500 mt-1">₹{((Number(prod.price) || 0) * Number(it.quantity || 0)).toFixed(2)}</div>
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                  <button className="text-sm text-black hover:underline" onClick={() => remove(it.product._id)} disabled={updating}>Remove</button>
-                  <a href={`/product/${it.product._id}`} className="text-sm text-black hover:underline">View details</a>
+                <div className="mt-4 flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-2">
+                    <button
+                      aria-label={`Decrease quantity for ${prod.name}`}
+                      className="w-8 h-8 rounded-md border text-gray-700 disabled:opacity-50"
+                      onClick={() => update(prod._id, Math.max(1, it.quantity - 1))}
+                      disabled={updating || it.quantity <= 1}
+                    >−</button>
+                    <input
+                      className="w-20 rounded-md border px-2 py-1 text-sm text-center"
+                      type="number"
+                      min={1}
+                      value={it.quantity}
+                      onChange={(e) => update(prod._id, Math.max(1, Number(e.target.value) || 1))}
+                    />
+                    <button
+                      aria-label={`Increase quantity for ${prod.name}`}
+                      className="w-8 h-8 rounded-md border text-gray-700 disabled:opacity-50"
+                      onClick={() => update(prod._id, Math.min((prod.stock || 9999), it.quantity + 1))}
+                      disabled={updating || it.quantity >= (prod.stock || 9999)}
+                    >+</button>
+                    <div className="text-xs text-gray-500 ml-3">{prod.stock > 0 ? `${prod.stock} available` : 'Out of stock'}</div>
+                  </div>
+
+                  <div className="flex items-center gap-4">
+                    <button className="text-sm text-black hover:underline" onClick={() => remove(prod._id)} disabled={updating}>Remove</button>
+                    <a href={`/product/${prod._id}`} className="text-sm text-black hover:underline">View details</a>
+                  </div>
                 </div>
               </div>
-            </div>
-          </article>
-        ))}
+            </article>
+          );
+        })}
 
         <div className="mt-6 flex items-center justify-between">
           <div className="text-sm text-black">Need to change something? <a className="text-sky-600" href="/shop">Continue shopping</a></div>
@@ -139,7 +186,8 @@ export default function CartClient() {
         </div>
 
         <div className="mt-6">
-          <a href="/checkout" className="block w-full text-center rounded-lg bg-sky-600 text-white py-3 text-sm font-medium">Proceed to checkout</a>
+          <a href="/checkout" className={`block w-full text-center rounded-lg ${hasMissingProducts ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-sky-600 text-white'} py-3 text-sm font-medium`} onClick={(e) => hasMissingProducts && e.preventDefault()}>{hasMissingProducts ? 'Remove unavailable items' : 'Proceed to checkout'}</a>
+          {hasMissingProducts && <div className="mt-3 text-sm text-amber-600">Some items were removed — please remove unavailable items before checking out.</div>}
         </div>
 
         <div className="mt-4 text-sm text-gray-500">Shipping & payment on next step. Free returns • Secure payments</div>
