@@ -288,11 +288,11 @@ img.classList.add('object-contain');
 
 
 
-{/* Desktop: stacked/square logo */}
+{/* Desktop: stacked/square logo (use same image as mobile) */}
 
 <img
 
-src="/logo.jpeg"
+src="/wide-logo.jpeg"
 
 alt="Himalayan"
 
