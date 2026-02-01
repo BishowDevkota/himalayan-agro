@@ -7,6 +7,7 @@ import OneStopShop from "./components/home/OneStopShop";
 import Partners from "./components/home/Partheres";
 import connectToDatabase from "../lib/mongodb";
 import Product from "../models/Product";
+import StrategicRoadmap from "./components/home/StrategicRoadmap";
 
 export const metadata = {
   title: "Home",
@@ -48,6 +49,7 @@ export default async function HomePage() {
       <WhatWeDo />
       <Products products={safeProducts} />
       <EcoBalance />
+      <StrategicRoadmap/>
       <OneStopShop/>
       <Partners />
     </main>
