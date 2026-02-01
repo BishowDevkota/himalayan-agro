@@ -13,7 +13,7 @@ export default function AboutPage() {
     <main className="bg-white text-slate-900 selection:bg-sky-100">
       {/* 1. SubHero Section (Existing) */}
       <SubHeroSection
-        title={"About Himalaya Nepal"}
+        title={"About Himalaya Nepal "}
         description={
           "Transitioning from subsistence farming to a competitive, export-oriented industrial system through land consolidation and technology."
         }
