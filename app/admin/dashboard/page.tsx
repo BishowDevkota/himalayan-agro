@@ -3,6 +3,7 @@ import connectToDatabase from "../../../lib/mongodb";
 import User from "../../../models/User";
 import Product from "../../../models/Product";
 import Order from "../../../models/Order";
+import Vendor from "../../../models/Vendor";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 
@@ -13,10 +14,11 @@ export default async function AdminDashboardPage() {
   }
 
   await connectToDatabase();
-  const [users, products, orders] = await Promise.all([
+  const [users, products, orders, vendors] = await Promise.all([
     User.countDocuments({}),
     Product.countDocuments({}),
     Order.countDocuments({}),
+    Vendor.countDocuments({}),
   ]);
 
   return (
@@ -34,7 +36,7 @@ export default async function AdminDashboardPage() {
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
             <div className="flex items-center justify-between">
               <div>
@@ -65,6 +67,17 @@ export default async function AdminDashboardPage() {
                 <div className="mt-2 text-sm text-slate-400">Orders placed (all time)</div>
               </div>
               <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-amber-50 text-amber-600 font-bold">O</div>
+            </div>
+          </div>
+
+          <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-sm text-slate-500">Vendors</div>
+                <div className="mt-2 text-3xl font-extrabold text-slate-900">{vendors}</div>
+                <div className="mt-2 text-sm text-slate-400">Store applications</div>
+              </div>
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 font-bold">V</div>
             </div>
           </div>
         </div>
@@ -139,6 +152,22 @@ export default async function AdminDashboardPage() {
                 <div>
                   <div className="text-sm text-slate-600">Users</div>
                   <div className="font-medium text-slate-800">User management</div>
+                </div>
+                <div className="text-slate-400">→</div>
+              </a>
+
+              <a href="/admin/vendor" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-lg border border-gray-100 px-4 py-3 hover:shadow-sm">
+                <div>
+                  <div className="text-sm text-slate-600">Vendors</div>
+                  <div className="font-medium text-slate-800">Review applications</div>
+                </div>
+                <div className="text-slate-400">→</div>
+              </a>
+
+              <a href="/admin/payment-requests" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-lg border border-gray-100 px-4 py-3 hover:shadow-sm">
+                <div>
+                  <div className="text-sm text-slate-600">Payments</div>
+                  <div className="font-medium text-slate-800">Payment requests</div>
                 </div>
                 <div className="text-slate-400">→</div>
               </a>

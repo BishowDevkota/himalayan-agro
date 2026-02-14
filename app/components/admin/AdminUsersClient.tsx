@@ -26,7 +26,7 @@ export default function AdminUsersClient({
   const [createName, setCreateName] = useState("");
   const [createEmail, setCreateEmail] = useState("");
   const [createPassword, setCreatePassword] = useState("");
-  const [createRole, setCreateRole] = useState<"user" | "admin">("user");
+  const [createRole, setCreateRole] = useState<"user" | "admin" | "vendor">("user");
 
   const fetchUsers = useCallback(async (opts: { page?: number; q?: string } = {}) => {
     setLoading(true);
@@ -106,6 +106,7 @@ export default function AdminUsersClient({
             <select className="bg-transparent text-sm" value={createRole} onChange={(e) => setCreateRole(e.target.value as any)}>
               <option value="user">User</option>
               <option value="admin">Admin</option>
+              <option value="vendor">Vendor</option>
             </select>
             <button className="rounded bg-sky-600 text-white px-3 py-1 text-sm" type="submit" disabled={creating}>{creating ? 'Creating…' : 'Create'}</button>
           </div>

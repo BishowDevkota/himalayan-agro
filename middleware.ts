@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
 
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-  const userProtected = ["/cart", "/checkout", "/my-orders"].some((p) => pathname.startsWith(p));
+  const userProtected = ["/cart", "/checkout", "/my-orders", "/store"].some((p) => pathname.startsWith(p));
   const adminProtected = pathname.startsWith("/admin");
 
   if (adminProtected) {
@@ -52,5 +52,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/cart", "/checkout", "/my-orders", "/admin", "/admin/:path*"]
+  matcher: ["/cart", "/checkout", "/my-orders", "/store", "/store/:path*", "/admin", "/admin/:path*"]
 };

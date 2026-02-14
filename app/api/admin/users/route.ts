@@ -50,7 +50,7 @@ export async function POST(req: Request) {
   const name = (body.name || '').toString().trim();
   const email = (body.email || '').toString().toLowerCase().trim();
   const password = (body.password || '').toString();
-  const role = body.role === 'admin' ? 'admin' : 'user';
+  const role = body.role === 'admin' ? 'admin' : body.role === 'vendor' ? 'vendor' : 'user';
 
   if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     return NextResponse.json({ message: 'Invalid email' }, { status: 400 });

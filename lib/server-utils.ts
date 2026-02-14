@@ -24,3 +24,13 @@ export function requireAdmin(user: any) {
   }
   return user;
 }
+
+export function requireVendor(user: any) {
+  requireUser(user);
+  if (user.role !== "vendor") {
+    const err: any = new Error("Vendor role required");
+    err.status = 403;
+    throw err;
+  }
+  return user;
+}

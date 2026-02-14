@@ -80,8 +80,10 @@ export default function UserActionsClient({ userId, initialRole, initialActive }
     <div className="mt-6 flex gap-3 items-center">
       {role === "admin" ? (
         <button className="rounded bg-amber-50 text-amber-800 px-3 py-1 text-sm" onClick={handleDemote} disabled={loading}>Demote</button>
-      ) : (
+      ) : role === "user" ? (
         <button className="rounded bg-sky-600 text-white px-3 py-1 text-sm" onClick={handlePromote} disabled={loading}>Promote</button>
+      ) : (
+        <div className="rounded bg-emerald-50 text-emerald-700 px-3 py-1 text-sm">Vendor</div>
       )}
 
       <button className={`rounded ${isActive ? 'bg-red-50 text-red-700' : 'bg-emerald-50 text-emerald-700'} px-3 py-1 text-sm`} onClick={handleToggleActive} disabled={loading}>

@@ -28,6 +28,7 @@ export const authOptions: NextAuthOptions = {
         await connectToDatabase();
         const user = await User.findOne({ email }).exec();
         if (!user || !user.password) return null;
+        if (user.isActive === false) return null;
         const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) {
           if (process.env.NODE_ENV !== "production") console.debug("Credentials: password mismatch for", email);

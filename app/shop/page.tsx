@@ -44,6 +44,9 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
             <h1 className="text-3xl font-semibold">Shop</h1>
             <p className="mt-2 text-sm text-gray-600">Browse products — use the filters to narrow results.</p>
           </div>
+            <a className="rounded-lg border border-gray-200 px-4 py-2 text-sm text-slate-700 hover:border-slate-300" href="/register/vendor">
+              Become a vendor
+            </a>
         </div>
 
         {/* top filters (category chips + price) */}
