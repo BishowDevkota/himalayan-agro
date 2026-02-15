@@ -85,7 +85,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
       <div className="bg-white min-h-screen">
         <div className="max-w-7xl mx-auto py-12 px-4">
           <h1 className="text-3xl font-semibold mb-6">Shop</h1>
-          <p className="text-muted-foreground">Products are temporarily unavailable — try again later.</p>
+          <p className="text-muted-foreground">Products are temporarily unavailablee — try again later.</p>
         </div>
       </div>
     );
