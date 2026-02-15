@@ -219,7 +219,7 @@ export default function Hero() {
               className="relative flex items-center justify-center order-1 lg:order-2"
             >
               {/* Central image */}
-              <div className="relative w-full max-w-70 sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto aspect-3/4 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative w-full max-w-[280px] sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
                 <img
                   src={slide.img}
                   alt="Agriculture"
@@ -237,7 +237,7 @@ export default function Hero() {
                 transition={{ duration: 0.6, delay: 0.5 }}
                 className="hidden lg:flex absolute top-16 -left-10 bg-white rounded-xl shadow-lg px-3.5 py-2.5 items-center gap-2.5 z-20 border border-gray-100"
               >
-                <div className="w-9 h-9 rounded-lg bg-[#fef3c7] flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-lg bg-[#fef3c7] flex items-center justify-center flex-shrink-0">
                   <ChartIcon />
                 </div>
                 <div>
@@ -299,7 +299,7 @@ export default function Hero() {
                 transition={{ duration: 0.6, delay: 0.95 }}
                 className="hidden lg:flex absolute bottom-8 -right-6 bg-white rounded-xl shadow-lg px-3.5 py-2.5 items-center gap-2.5 z-20 border border-gray-100"
               >
-                <div className="w-9 h-9 rounded-full bg-[#d1fae5] flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 rounded-full bg-[#d1fae5] flex items-center justify-center flex-shrink-0">
                   <GlobeIcon />
                 </div>
                 <div>

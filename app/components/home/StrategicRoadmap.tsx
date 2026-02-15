@@ -59,7 +59,7 @@ const VerticalRoadmap = () => {
         <div className="relative">
           
           {/* Main Vertical Line */}
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-gray-100 -translate-x-1/2" />
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-0.5 bg-gray-100 -translate-x-1/2" />
 
           <div className="space-y-12">
             {phases.map((phase, idx) => (

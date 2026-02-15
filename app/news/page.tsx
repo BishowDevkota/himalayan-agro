@@ -92,6 +92,11 @@ export default function NewsPage() {
         title="News & Updates"
         description="Stay up to date with the latest developments, milestones, and stories from Himalaya Nepal Agriculture."
         image="https://images.unsplash.com/photo-1504711434969-e33886168d4c?auto=format&fit=crop&q=80&w=2000"
+        tag="Latest From HNA"
+        stats={[
+          { value: "340+", label: "Partner Farms" },
+          { value: "156K", label: "Hectares" },
+        ]}
       />
 
       <div className="max-w-7xl mx-auto px-6 mb-32">

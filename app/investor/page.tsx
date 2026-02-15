@@ -55,6 +55,13 @@ export default function InvestorPage() {
         title="Investor Relations"
         description="Transparent growth. Strategic vision. Join us in transforming Nepal's agricultural future."
         image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2000"
+        tag="Growth & Opportunity"
+        stats={[
+          { value: "NPR 1.2B", label: "FY 2025 Revenue" },
+          { value: "+34%", label: "YoY Growth" },
+        ]}
+        btnText="Contact IR Team"
+        btnHref="/contact"
       />
 
       <div className="max-w-7xl mx-auto px-6 mb-32">
