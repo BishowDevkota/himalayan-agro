@@ -64,15 +64,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
                   Discover premium agricultural products — use filters to find exactly what you need.
                 </p>
               </div>
-              <Link
-                href="/register/vendor"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/15 backdrop-blur-sm text-white text-sm font-medium border border-white/25 hover:bg-white/25 transition-all duration-200 hover:shadow-lg hover:shadow-black/10 flex-shrink-0"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-                Become a Vendor
-              </Link>
+              
             </div>
           </div>
 
