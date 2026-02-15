@@ -1,4 +1,3 @@
-
 import ContactForm from "../components/ContactForm";
 import SubHeroSection from "../components/SubHeroSection";
 
@@ -56,7 +55,7 @@ export default function ContactPage() {
 
         {/* Map Section */}
         <section className="w-full mt-24">
-          <div className="w-full h-[500px] rounded-[3rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 border border-gray-100 shadow-sm">
+          <div className="w-full h-125 rounded-[3rem] overflow-hidden grayscale hover:grayscale-0 transition-all duration-1000 border border-gray-100 shadow-sm">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215!2d-73.987!3d40.758!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDQ1JzI4LjgiTiA3M8KwNTknMTMuMiJX!5e0!3m2!1sen!2sus!4v123456789"
               width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" title="location"

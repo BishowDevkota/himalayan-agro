@@ -8,7 +8,7 @@ export default function ProductCard({ product }: { product: any }) {
 
   return (
     <article className="group bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-colors duration-200 border border-gray-100">
-      <div className="w-full bg-gray-50 overflow-hidden aspect-[4/3] relative">
+      <div className="w-full bg-gray-50 overflow-hidden aspect-4/3 relative">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images?.[0] || "/placeholder.png"}

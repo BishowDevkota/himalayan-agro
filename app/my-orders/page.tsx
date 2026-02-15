@@ -61,7 +61,7 @@ export default async function MyOrdersPage() {
                   </div>
                 </div>
 
-                <div className="flex-shrink-0 flex flex-col items-end gap-3">
+                <div className="shrink-0 flex flex-col items-end gap-3">
                   <a className="inline-flex items-center gap-2 text-sm text-sky-600 font-medium" href={`/my-orders/${o._id}`}>View details</a>
                   <CancelOrderButton orderId={String(o._id)} currentStatus={o.orderStatus} />
                 </div>

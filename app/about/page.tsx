@@ -73,7 +73,7 @@ export default function AboutPage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="relative">
                <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=800" alt="Land Reform" className="rounded-[40px] opacity-80" />
-               <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent" />
+               <div className="absolute inset-0 bg-linear-to-t from-slate-900 to-transparent" />
             </div>
             <div>
               <h2 className="text-3xl font-black mb-6">Land Consolidation & Industrial Zones</h2>
@@ -102,7 +102,7 @@ export default function AboutPage() {
               { title: "CTC & Orthodox Tea", img: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&q=80&w=400", desc: "Global branding under the 'Made in Nepal' quality mark." }
             ].map((product, i) => (
               <div key={i} className="group cursor-pointer">
-                <div className="overflow-hidden rounded-[32px] mb-6 aspect-square">
+                <div className="overflow-hidden rounded-4xl mb-6 aspect-square">
                   <img src={product.img} alt={product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                 </div>
                 <h4 className="text-xl font-bold mb-2">{product.title}</h4>
@@ -182,11 +182,11 @@ export default function AboutPage() {
           <h2 className="text-3xl font-black mb-4">Transparent Governance</h2>
           <p className="text-slate-500 mb-12 max-w-xl mx-auto">Public shareholding ensures the company maintains good relations with the community and ensures accountability.</p>
           <div className="flex flex-col md:flex-row justify-center items-center gap-16">
-            <div className="w-48 h-48 rounded-full border-[12px] border-slate-900 flex items-center justify-center relative">
+            <div className="w-48 h-48 rounded-full border-12 border-slate-900 flex items-center justify-center relative">
               <span className="text-2xl font-black">80%</span>
               <span className="absolute -bottom-8 text-xs font-bold text-slate-400 uppercase">Founders</span>
             </div>
-            <div className="w-48 h-48 rounded-full border-[12px] border-sky-400 flex items-center justify-center relative">
+            <div className="w-48 h-48 rounded-full border-12 border-sky-400 flex items-center justify-center relative">
               <span className="text-2xl font-black">20%</span>
               <span className="absolute -bottom-8 text-xs font-bold text-slate-400 uppercase">Public</span>
             </div>
