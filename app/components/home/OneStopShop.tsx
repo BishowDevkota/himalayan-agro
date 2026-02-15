@@ -31,7 +31,7 @@ const OneStopShop = () => {
 
   return (
     <section className="bg-white py-12 px-[5%]">
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-300 mx-auto">
         
         {/* --- MINIMAL HEADER --- */}
         <div className="flex items-baseline justify-between mb-8 border-b border-black/5 pb-6">
@@ -71,7 +71,7 @@ const OneStopShop = () => {
                 <h3 className="text-lg font-black uppercase tracking-tighter mb-2 text-black">
                   {cat.title}
                 </h3>
-                <p className="text-xs text-gray-500 font-medium leading-snug mb-6 max-w-[200px]">
+                <p className="text-xs text-gray-500 font-medium leading-snug mb-6 max-w-50">
                   {cat.desc}
                 </p>
               </div>

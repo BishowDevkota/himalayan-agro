@@ -45,12 +45,12 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
     return (
       <div className="bg-[#fafbfc] text-gray-900 min-h-screen">
         {/* ── Hero banner ── */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-[#0e7490] via-[#0891b2] to-[#06b6d4]">
+        <section className="relative overflow-hidden bg-linear-to-br from-[#0e7490] via-[#0891b2] to-[#06b6d4]">
           {/* Decorative shapes */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-white/5" />
             <div className="absolute bottom-0 left-0 w-72 h-72 rounded-full bg-white/5 translate-y-1/2 -translate-x-1/3" />
-            <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] rounded-full bg-white/[0.03] -translate-x-1/2 -translate-y-1/2" />
+            <div className="absolute top-1/2 left-1/2 w-150 h-150 rounded-full bg-white/3 -translate-x-1/2 -translate-y-1/2" />
           </div>
 
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
@@ -58,7 +58,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
               <div className="max-w-xl">
                 <p className="text-cyan-100 text-sm font-medium tracking-widest uppercase mb-3">Himalayan Agro</p>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight">
-                  Shop Our Collection
+                  Shop Our Collection page status
                 </h1>
                 <p className="mt-4 text-cyan-100/90 text-base sm:text-lg leading-relaxed">
                   Discover premium agricultural products — use filters to find exactly what you need.
@@ -69,7 +69,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
           </div>
 
           {/* Bottom fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[#fafbfc] to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-linear-to-t from-[#fafbfc] to-transparent" />
         </section>
 
         {/* ── Main content ── */}
@@ -177,7 +177,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
     console.error('ShopPage — DB error (build/runtime):', err);
     return (
       <div className="bg-[#fafbfc] min-h-screen">
-        <section className="bg-gradient-to-br from-[#0e7490] via-[#0891b2] to-[#06b6d4] py-16">
+        <section className="bg-linear-to-br from-[#0e7490] via-[#0891b2] to-[#06b6d4] py-16">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 className="text-3xl sm:text-4xl font-bold text-white">Shop</h1>
           </div>

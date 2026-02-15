@@ -50,6 +50,15 @@ function IconClose({ size = 24 }: { size?: number }) {
   );
 }
 
+function IconStorefront({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 21V13h6v8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 const companyDropdownItems = [
   { label: "Crop Cultivation", href: "/shop", description: "Seeds, fertilizers & crop care" },
   { label: "Dairy & Livestock", href: "/shop", description: "Animal husbandry products" },
@@ -63,9 +72,9 @@ const navLinks = [
   { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
   { label: "Company", href: "#", isDropdown: true },
-  { label: "Investor", href: "/about" },
+  { label: "Investor", href: "/investor" },
   { label: "About", href: "/about" },
-  { label: "News", href: "/about" },
+  { label: "News", href: "/news" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -120,7 +129,7 @@ function NavUnderline() {
   return (
     <motion.span
       layoutId="nav-underline"
-      className="absolute -bottom-1 left-1 right-1 h-[2px] rounded-full"
+      className="absolute -bottom-1 left-1 right-1 h-0.5 rounded-full"
       style={{ backgroundColor: CYAN }}
       transition={{ type: "spring", stiffness: 350, damping: 28 }}
     />
@@ -146,6 +155,7 @@ export default function Navbar() {
   const headerRef = useRef<HTMLElement | null>(null);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
   function navigateAndClose(href: string) {
     setMobileOpen(false);
@@ -186,10 +196,10 @@ export default function Navbar() {
       className={`sticky top-0 w-full z-50 bg-white transition-shadow duration-300 ${scrolled ? "shadow-md" : "shadow-sm"}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-[68px]">
+        <div className="flex items-center justify-between h-16 lg:h-17">
 
           {/*  SECTION 1: Logo  */}
-          <Link href="/" className="flex-shrink-0 flex items-center" aria-label="Home">
+          <Link href="/" className="shrink-0 flex items-center" aria-label="Home">
             <motion.img
               src="/wide-logo.jpeg"
               alt="Himalayan"
@@ -202,55 +212,66 @@ export default function Navbar() {
           </Link>
 
           {/*  SECTION 2: Desktop Nav  */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => {
-              if (link.isDropdown) {
-                return (
-                  <div key={link.label} className="relative" ref={companyRef}
-                    onMouseEnter={() => setCompanyOpen(true)}
-                    onMouseLeave={() => setCompanyOpen(false)}
-                  >
-                    <button
-                      onClick={() => setCompanyOpen((p) => !p)}
-                      className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
+          <nav className="hidden lg:flex items-center gap-1" onMouseLeave={() => setHoveredLink(null)}>
+            {(() => {
+              // Find the FIRST nav link whose href matches the current path — avoids multiple active underlines
+              const activeLabel = navLinks.find(
+                (l) => !l.isDropdown && isActivePath(pathname, l.href)
+              )?.label ?? null;
+              // The underline target: hovered link takes priority, otherwise the active link
+              const underlineTarget = hoveredLink || activeLabel;
+
+              return navLinks.map((link) => {
+                if (link.isDropdown) {
+                  return (
+                    <div key={link.label} className="relative" ref={companyRef}
+                      onMouseEnter={() => { setCompanyOpen(true); setHoveredLink(link.label); }}
+                      onMouseLeave={() => { setCompanyOpen(false); setHoveredLink(null); }}
                     >
-                      {link.label}
-                      <motion.span animate={{ rotate: companyOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
-                        <IconChevronDown size={14} />
-                      </motion.span>
-                    </button>
-                    <AnimatePresence>
-                      {companyOpen && (
-                        <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit"
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-60 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 overflow-hidden"
-                        >
-                          {companyDropdownItems.map((item, idx) => (
-                            <motion.button key={item.label}
-                              initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                              transition={{ delay: idx * 0.03, duration: 0.2 }}
-                              onClick={() => { setCompanyOpen(false); router.push(item.href); }}
-                              className="w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
-                            >
-                              <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
-                              <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
-                            </motion.button>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
+                      <button
+                        onClick={() => setCompanyOpen((p) => !p)}
+                        className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
+                      >
+                        {link.label}
+                        <motion.span animate={{ rotate: companyOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
+                          <IconChevronDown size={14} />
+                        </motion.span>
+                        {underlineTarget === link.label && <NavUnderline />}
+                      </button>
+                      <AnimatePresence>
+                        {companyOpen && (
+                          <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit"
+                            className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-60 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 overflow-hidden"
+                          >
+                            {companyDropdownItems.map((item, idx) => (
+                              <motion.button key={item.label}
+                                initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: idx * 0.03, duration: 0.2 }}
+                                onClick={() => { setCompanyOpen(false); router.push(item.href); }}
+                                className="w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
+                              >
+                                <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
+                                <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
+                              </motion.button>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                }
+                const active = isActivePath(pathname, link.href);
+                return (
+                  <Link key={link.label} href={link.href}
+                    onMouseEnter={() => setHoveredLink(link.label)}
+                    className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 ${active || hoveredLink === link.label ? "text-[#0891b2]" : "text-gray-600 hover:text-[#0891b2]"}`}
+                  >
+                    {link.label}
+                    {underlineTarget === link.label && <NavUnderline />}
+                  </Link>
                 );
-              }
-              const active = isActivePath(pathname, link.href);
-              return (
-                <Link key={link.label} href={link.href}
-                  className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 ${active ? "text-[#0891b2]" : "text-gray-600 hover:text-[#0891b2]"}`}
-                >
-                  {link.label}
-                  {active && <NavUnderline />}
-                </Link>
-              );
-            })}
+              });
+            })()}
           </nav>
 
           {/*  SECTION 3: Right Actions  */}
@@ -268,7 +289,7 @@ export default function Navbar() {
               <AnimatePresence>
                 {cartCount > 0 && (
                   <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
-                    className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1"
+                    className="absolute -top-0.5 -right-0.5 min-w-4.5 h-4.5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1"
                   >{cartCount}</motion.span>
                 )}
               </AnimatePresence>
@@ -311,12 +332,19 @@ export default function Navbar() {
                   onClick={() => router.push("/login")}
                   className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
                 >Login</motion.button>
-                <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}
-                  onClick={() => router.push("/register/vendor")}
-                  className="px-5 py-2 text-sm font-medium text-white bg-[#059669] rounded-full hover:bg-[#047857] transition-colors duration-200 shadow-sm"
-                >Become a Vendor</motion.button>
               </div>
             )}
+
+            {/* Become a Vendor — always visible on desktop, rightmost */}
+            <motion.button
+              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(8,145,178,0.4)" }}
+              whileTap={{ scale: 0.96 }}
+              onClick={() => router.push("/register/vendor")}
+              className="hidden lg:inline-flex items-center gap-1.5 px-5 py-2 text-sm font-semibold text-white rounded-full bg-[#0891b2] hover:bg-[#0e7490] shadow-md shadow-cyan-200/50 transition-all duration-300"
+            >
+              <IconStorefront size={15} />
+              Become a Vendor
+            </motion.button>
 
             {/* Hamburger */}
             <motion.button whileTap={{ scale: 0.88 }}
@@ -352,10 +380,10 @@ export default function Navbar() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="lg:hidden fixed top-0 left-0 bottom-0 z-50 w-[280px] sm:w-[320px] bg-white shadow-2xl flex flex-col"
+              className="lg:hidden fixed top-0 left-0 bottom-0 z-50 w-70 sm:w-[320px] bg-white shadow-2xl flex flex-col"
             >
               {/* Panel header */}
-              <div className="flex items-center justify-between px-5 h-16 border-b border-gray-100 flex-shrink-0">
+              <div className="flex items-center justify-between px-5 h-16 border-b border-gray-100 shrink-0">
                 <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center">
                   <img src="/wide-logo.jpeg" alt="Himalayan" className="h-9 w-auto object-contain"
                     onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.png"; }} />
@@ -426,11 +454,18 @@ export default function Navbar() {
               </nav>
 
               {/* Bottom auth section */}
-              <div className="flex-shrink-0 border-t border-gray-100 p-4 space-y-2">
+              <div className="shrink-0 border-t border-gray-100 p-4 space-y-2">
+                {/* Become a Vendor — always in mobile panel */}
+                <button
+                  onClick={() => navigateAndClose("/register/vendor")}
+                  className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-semibold text-white rounded-full bg-[#0891b2] hover:bg-[#0e7490] shadow-md shadow-cyan-200/50 transition-all duration-300"
+                >
+                  <IconStorefront size={15} />
+                  Become a Vendor
+                </button>
                 {!session ? (
                   <>
                     <button onClick={() => navigateAndClose("/login")} className="block w-full text-center px-4 py-2.5 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition-colors duration-200">Sign in</button>
-                    <button onClick={() => navigateAndClose("/register/vendor")} className="block w-full text-center px-4 py-2.5 text-sm font-medium text-white bg-[#059669] rounded-full hover:bg-[#047857] transition-colors duration-200">Become a Vendor</button>
                   </>
                 ) : (
                   <>
