@@ -1,6 +1,6 @@
 import React from "react";
 import HeroCarousel from "./components/home/Hero";
-import WhatWeDo from "./components/home/WhatWeDo";
+import OurMission from "./components/home/WhatWeDo";
 import Products from "./components/home/Products";
 import EcoBalance from "./components/home/EcoBalance";
 import OneStopShop from "./components/home/OneStopShop";
@@ -46,7 +46,7 @@ export default async function HomePage() {
       <HeroCarousel />
 
       {/* keep the rest of the home content (if any) below the hero */}
-      <WhatWeDo />
+      <OurMission />
       <Products products={safeProducts} />
       <EcoBalance />
       <StrategicRoadmap/>

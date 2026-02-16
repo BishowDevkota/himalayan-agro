@@ -1,87 +1,230 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 
-const services = [
+const pillars = [
   {
-    title: "Integrated Farming",
-    desc: "Developing modern agricultural systems through land consolidation, smart ICT-based farming, and high-yield crop diversification",
+    title: 'Integrated Farming',
+    description:
+      'Building modern agricultural systems through land consolidation, smart ICT-based farming, and high-yield crop diversification across Nepal.',
+    color: '#059669',
+    bgLight: '#ecfdf5',
     icon: (
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-12 h-12">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
       </svg>
     ),
-    delay: "0s",
   },
   {
-    title: "Processing & Branding",
-    desc: "Adding value to local produce through primary processing, international-standard packaging, and 'Made in Nepal' brand identity",
+    title: 'Value Addition',
+    description:
+      'Adding value to local produce through primary processing, international-standard packaging, and a strong "Made in Nepal" brand identity.',
+    color: '#0891b2',
+    bgLight: '#ecfeff',
     icon: (
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-12 h-12">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+      <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
       </svg>
     ),
-    delay: "0.2s",
   },
   {
-    title: "Global Supply Chain",
-    desc: "Bridging the trade deficit by exporting high-value products like cardamom and organic coffee through B2B international networks",
+    title: 'Global Export',
+    description:
+      'Bridging the trade deficit by exporting high-value products like cardamom and organic coffee through B2B international networks.',
+    color: '#d97706',
+    bgLight: '#fffbeb',
     icon: (
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" className="w-12 h-12">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+      <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-2.247m0 0A8.966 8.966 0 013 12c0-1.264.26-2.467.732-3.559" />
       </svg>
     ),
-    delay: "0.4s",
-  }
+  },
+  {
+    title: 'Farmer Empowerment',
+    description:
+      'Uplifting rural communities through training programs, fair trade partnerships, and direct market access for smallholder farmers.',
+    color: '#059669',
+    bgLight: '#ecfdf5',
+    icon: (
+      <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="w-7 h-7">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+      </svg>
+    ),
+  },
 ];
 
-export default function Services() {
-  const [isVisible, setIsVisible] = useState(false);
+const sectionVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12, delayChildren: 0.15 },
+  },
+};
+
+const headingVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: 'easeOut' as const },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 50, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.6, ease: 'easeOut' as const },
+  },
+};
+
+export default function OurMission() {
   const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const isInView = useInView(sectionRef, { once: true, margin: '-60px' });
 
   return (
-    <section ref={sectionRef} className="py-32 px-[5%] bg-white text-center">
-      <div className="max-w-7xl mx-auto">
-        <span className="block font-bold tracking-[3px] text-sm mb-4 text-[#2da8da] uppercase">
-          Our Objectives
-        </span>
-        <h2 className="text-[clamp(2.5rem,5vw,4rem)] font-black uppercase mb-16 text-[#0a0a0a]">
-          Strategic Pillars
-        </h2>
+    <section ref={sectionRef} className="relative bg-white py-20 sm:py-28 lg:py-32 overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-cyan-50 via-transparent to-transparent opacity-60 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-green-50 via-transparent to-transparent opacity-60 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-to-r from-orange-50/30 via-transparent to-cyan-50/30 pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div
-              key={index}
-              style={{ transitionDelay: service.delay }}
-              className={`bg-[#f9f9f9] p-10 md:p-14 text-left border-b-4 border-transparent hover:border-[#2da8da] hover:bg-white hover:shadow-2xl transition-all duration-500 ease-out transform ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
-            >
-              <div className="text-[#2da8da] mb-6">
-                {service.icon}
-              </div>
-              <h3 className="text-2xl font-black uppercase mb-4 text-[#0a0a0a]">
-                {service.title}
-              </h3>
-              <p className="text-[#555] leading-relaxed">
-                {service.desc}
-              </p>
-            </div>
-          ))}
-        </div>
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          variants={sectionVariants}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+        >
+          {/* Section Label */}
+          <motion.div variants={headingVariants} className="text-center mb-5">
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-[#059669]/10 via-[#0891b2]/10 to-[#d97706]/10 text-[#0891b2] text-xs sm:text-sm font-semibold tracking-widest uppercase border border-[#0891b2]/15">
+              <span className="w-2 h-2 rounded-full bg-[#059669] animate-pulse" />
+              Our Mission
+            </span>
+          </motion.div>
+
+          {/* Section Heading */}
+          <motion.h2
+            variants={headingVariants}
+            className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-4"
+            style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+          >
+            Transforming Nepal&apos;s{' '}
+            <span className="relative inline-block">
+              <span className="text-[#059669]">
+                Agriculture
+              </span>
+              <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 200 8" fill="none">
+                <path d="M2 6C50 2 150 2 198 6" stroke="#059669" strokeWidth="3" strokeLinecap="round" />
+              </svg>
+            </span>
+          </motion.h2>
+
+          {/* Decorative divider */}
+          <motion.div
+            variants={headingVariants}
+            className="flex items-center justify-center gap-3 mb-8"
+          >
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#059669]" />
+            <div className="w-2 h-2 rounded-full bg-[#0891b2]" />
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#d97706]" />
+          </motion.div>
+
+          {/* Mission Statement */}
+          <motion.p
+            variants={headingVariants}
+            className="text-center text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-16 sm:mb-20"
+          >
+            Himalaya Nepal Agriculture Company Limited is committed to modernizing
+            Nepal&apos;s agricultural sector through{' '}
+            <span className="font-semibold text-[#059669]">integrated farming</span>,{' '}
+            <span className="font-semibold text-[#0891b2]">value addition</span>,{' '}
+            <span className="font-semibold text-[#d97706]">global export</span>, and{' '}
+            <span className="font-semibold text-[#059669]">farmer empowerment</span>.
+          </motion.p>
+
+          {/* Pillar Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-4">
+            {pillars.map((pillar, index) => (
+              <motion.div
+                key={index}
+                variants={cardVariants}
+                whileHover={{
+                  y: -10,
+                  boxShadow: `0 25px 50px -12px ${pillar.color}22`,
+                  transition: { duration: 0.3, ease: 'easeOut' as const },
+                }}
+                className="group relative bg-white rounded-2xl p-7 sm:p-8 border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden"
+              >
+                {/* Top gradient bar */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-1 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: `linear-gradient(90deg, ${pillar.color}, ${pillar.color}88)` }}
+                />
+
+                {/* Hover background glow */}
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{ background: `radial-gradient(circle at 30% 20%, ${pillar.bgLight}, transparent 70%)` }}
+                />
+
+                {/* Content */}
+                <div className="relative z-10">
+                  {/* Icon with numbered badge */}
+                  <div className="flex items-start justify-between mb-5">
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
+                      style={{
+                        backgroundColor: pillar.bgLight,
+                        color: pillar.color,
+                      }}
+                    >
+                      {pillar.icon}
+                    </div>
+                    <span
+                      className="text-[11px] font-bold tracking-wider mt-1 opacity-40 group-hover:opacity-70 transition-opacity"
+                      style={{ color: pillar.color }}
+                    >
+                      0{index + 1}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3
+                    className="text-lg font-bold text-gray-900 mb-3 tracking-tight group-hover:translate-x-1 transition-transform duration-300"
+                    style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                  >
+                    {pillar.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-sm text-gray-500 leading-relaxed mb-4">
+                    {pillar.description}
+                  </p>
+
+                  {/* Learn more indicator */}
+                  <div
+                    className="flex items-center gap-1.5 text-xs font-semibold opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+                    style={{ color: pillar.color }}
+                  >
+                    <span>Learn more</span>
+                    <svg className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Bottom accent line */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-[3px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                  style={{ backgroundColor: pillar.color }}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

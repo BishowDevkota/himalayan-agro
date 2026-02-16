@@ -125,7 +125,7 @@ export default function Hero() {
   const slide = slides[current];
 
   return (
-    <section className="relative w-full bg-[#f5f0e8] overflow-hidden" style={{ minHeight: 'calc(100vh - 68px)' }}>
+    <section className="relative w-full bg-[#f5f0e8] overflow-hidden h-[calc(100dvh-64px)] min-h-[500px]">
       {/* Background */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -145,8 +145,8 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center" style={{ minHeight: 'calc(100vh - 68px)' }}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center w-full py-12 sm:py-16 lg:py-0">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-14 items-center w-full py-4 sm:py-10 lg:py-0">
 
           {/* === LEFT: Text === */}
           <AnimatePresence mode="wait">
@@ -166,7 +166,7 @@ export default function Hero() {
 
               <motion.h1
                 variants={fadeUpVariants}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-[#2a2018] leading-[1.15] tracking-tight mb-4"
+                className="text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-[#2a2018] leading-[1.12] tracking-tight mb-2 sm:mb-4"
                 style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
               >
                 {slide.title}
@@ -176,7 +176,7 @@ export default function Hero() {
 
               <motion.p
                 variants={fadeUpVariants}
-                className="text-[#6b5e4d] text-sm sm:text-base lg:text-lg leading-relaxed mb-7 max-w-md"
+                className="text-[#6b5e4d] text-xs sm:text-base lg:text-lg leading-relaxed mb-4 sm:mb-7 max-w-md"
               >
                 {slide.subtitle}
               </motion.p>
@@ -196,12 +196,12 @@ export default function Hero() {
               {/* Mobile-only stats row */}
               <motion.div
                 variants={fadeUpVariants}
-                className="flex gap-6 mt-8 lg:hidden"
+                className="flex gap-4 sm:gap-6 mt-4 sm:mt-8 lg:hidden"
               >
                 {slide.stats.map((stat, idx) => (
-                  <div key={idx} className={idx > 0 ? "border-l border-[#d9d0c0] pl-6" : ""}>
-                    <p className="text-2xl font-bold text-[#2a2018]">{stat.value}</p>
-                    <p className="text-xs text-[#8b7e6a] font-medium">{stat.label}</p>
+                  <div key={idx} className={idx > 0 ? "border-l border-[#d9d0c0] pl-4 sm:pl-6" : ""}>
+                    <p className="text-xl sm:text-2xl font-bold text-[#2a2018]">{stat.value}</p>
+                    <p className="text-[10px] sm:text-xs text-[#8b7e6a] font-medium">{stat.label}</p>
                   </div>
                 ))}
               </motion.div>
@@ -219,7 +219,7 @@ export default function Hero() {
               className="relative flex items-center justify-center order-1 lg:order-2"
             >
               {/* Central image */}
-              <div className="relative w-full max-w-[280px] sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative w-full max-w-[180px] sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
                 <img
                   src={slide.img}
                   alt="Agriculture"
