@@ -1,13 +1,78 @@
 import Link from "next/link";
 import SubHeroSection from "../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../components/AnimatedClient";
-import connectToDatabase from "../../lib/mongodb";
-import News from "../../models/News";
-
 export const metadata = {
   title: "News — Himalaya Nepal Agriculture",
-  description: "Latest news, updates, and announcements from Himalaya Nepal Agriculture.",
+  description:
+    "Latest news, updates, and announcements from Himalaya Nepal Agriculture.",
+    };
+
+    const featuredArticle = {
+  title: "Himalaya Nepal Agriculture Expands Precision Farming to 12 New Districts",
+  date: "February 10, 2026",
+  category: "Expansion",
+  excerpt:
+    "Our IoT sensor network now covers over 156,000 hectares across Nepal, bringing real-time soil health monitoring and AI-driven crop recommendations to thousands of smallholder farmers in previously underserved regions.",
+  image:
+    "https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&q=80&w=1200",
 };
+
+const articles = [
+  {
+    title: "Partnership With Global Organic Certification Body Announced",
+    date: "January 28, 2026",
+    category: "Partnership",
+    excerpt:
+      "A new partnership will streamline organic certification for our partner farms, opening doors to premium European and North American markets.",
+    image:
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600",
+  },
+  {
+    title: "FY 2025 Revenue Surpasses NPR 1.2 Billion Mark",
+    date: "January 15, 2026",
+    category: "Financial",
+    excerpt:
+      "Strong demand for export-grade large cardamom and orthodox tea drove a 34% year-over-year revenue increase.",
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
+  },
+  {
+    title: "New Cold-Chain Logistics Hub Opens in Biratnagar",
+    date: "December 20, 2025",
+    category: "Infrastructure",
+    excerpt:
+      "The state-of-the-art facility reduces post-harvest losses by up to 40% and supports year-round export operations.",
+    image:
+      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600",
+  },
+  {
+    title: "Farmer Welfare Fund Distributes NPR 50M in Crop Insurance Payouts",
+    date: "December 5, 2025",
+    category: "Community",
+    excerpt:
+      "Over 2,000 smallholder farmers received insurance payouts following unseasonal rainfall, safeguarding their livelihoods.",
+    image:
+      "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&q=80&w=600",
+  },
+  {
+    title: "AI-Driven Yield Prediction Model Achieves 98% Accuracy",
+    date: "November 18, 2025",
+    category: "Technology",
+    excerpt:
+      "Our machine learning models now predict crop yields with near-perfect accuracy, enabling better resource planning for the upcoming season.",
+    image:
+      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=600",
+  },
+  {
+    title: "Himalaya Nepal Agriculture Wins National Innovation Award",
+    date: "November 2, 2025",
+    category: "Awards",
+    excerpt:
+      "Recognized by the Ministry of Agriculture for pioneering digital logistics and traceability systems in Nepal's agri-export sector.",
+    image:
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
+  },
+];
 
 const categoryColors: Record<string, string> = {
   Expansion: "bg-sky-100 text-sky-700",
@@ -18,35 +83,7 @@ const categoryColors: Record<string, string> = {
   Technology: "bg-cyan-100 text-cyan-700",
   Awards: "bg-yellow-100 text-yellow-700",
 };
-
-function formatDate(dateValue?: string | null) {
-  if (!dateValue) return "";
-  return new Date(dateValue).toLocaleDateString();
-}
-
-function stripHtml(input: string) {
-  return input.replace(/<[^>]*>/g, "").trim();
-}
-
-export default async function NewsPage() {
-  await connectToDatabase();
-  const items = await News.find({ status: "published" })
-    .sort({ publishedAt: -1, createdAt: -1 })
-    .lean();
-
-  const safe = items.map((n: any) => ({
-    _id: String(n._id),
-    title: n.title,
-    slug: n.slug,
-    category: n.category || "News",
-    excerpt: n.excerpt || stripHtml(n.contentHtml || "").slice(0, 160),
-    coverImage: n.coverImage || "",
-    date: formatDate(n.publishedAt ? new Date(n.publishedAt).toISOString() : n.createdAt ? new Date(n.createdAt).toISOString() : null),
-  }));
-
-  const featured = safe[0];
-  const articles = safe.slice(1);
-
+export default function NewsPage() {
   return (
     <main className="bg-white text-slate-900 selection:bg-sky-100">
       <SubHeroSection
@@ -60,92 +97,84 @@ export default async function NewsPage() {
         ]}
       />
 
-      <div className="max-w-7xl mx-auto px-6 mb-32">
+      <div className="max-w-7xl mx-auto px-6 pb-32">
         {/* Featured Article */}
         <AnimatedSection className="mt-24">
           <span className="text-sky-600 font-bold tracking-widest text-xs uppercase mb-4 block">
             Featured Story
           </span>
-          {featured ? (
-            <div className="grid lg:grid-cols-2 gap-10 items-center bg-slate-50/50 border border-slate-100 rounded-[40px] overflow-hidden">
-              <div className="aspect-video lg:aspect-auto lg:h-full overflow-hidden">
-                <img
-                  src={featured.coverImage || "/placeholder.png"}
-                  alt={featured.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="p-8 lg:p-12">
-                <div className="flex items-center gap-3 mb-4">
-                  <span
-                    className={`text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${categoryColors[featured.category] || "bg-slate-100 text-slate-600"}`}
-                  >
-                    {featured.category}
-                  </span>
-                  <span className="text-xs text-slate-400">{featured.date}</span>
+          <div className="grid lg:grid-cols-2 gap-10 items-center bg-slate-50/50 border border-slate-100 rounded-[40px] overflow-hidden">
+            <div className="aspect-video lg:aspect-auto lg:h-full overflow-hidden">
+              <img
+                src={featuredArticle.image}
+                alt={featuredArticle.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="p-8 lg:p-12">
+              <div className="flex items-center gap-3 mb-4">
+                <span
+                  className={`text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${categoryColors[featuredArticle.category] || "bg-slate-100 text-slate-600"}`}
+                >
+                  {featuredArticle.category}
+                </span>
+                <span className="text-xs text-slate-400">
+                  {featuredArticle.date}
+                </span>
                 </div>
                 <h2 className="text-2xl lg:text-3xl font-black leading-tight mb-4">
-                  {featured.title}
-                </h2>
-                <p className="text-slate-500 leading-relaxed mb-6">
-                  {featured.excerpt}
-                </p>
-                <Link href={`/news/${featured.slug}`} className="text-sm font-bold text-[#0891b2] hover:underline">
-                  Read Full Story →
-                </Link>
-              </div>
+                {featuredArticle.title}
+              </h2>
+              <p className="text-slate-500 leading-relaxed mb-6">
+                {featuredArticle.excerpt}
+              </p>
+              <span className="text-sm font-bold text-[#0891b2] hover:underline cursor-pointer">
+                Read Full Story →
+              </span>
             </div>
-          ) : (
-            <div className="rounded-3xl border border-slate-100 p-8 text-sm text-slate-500">
-              No published news yet.
-            </div>
-          )}
-        </AnimatedSection>
+          </div>
+          </AnimatedSection>
 
         {/* All Articles Grid */}
         <AnimatedSection className="mt-24">
           <h2 className="text-3xl font-black mb-12">Latest News</h2>
-          {articles.length === 0 ? (
-            <div className="text-sm text-slate-500">No additional news to show.</div>
-          ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {articles.map((article, i) => (
-                <AnimatedDiv key={article._id + i}>
-                  <article className="group cursor-pointer h-full flex flex-col border border-slate-100 rounded-3xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <div className="aspect-video overflow-hidden">
-                      <img
-                        src={article.coverImage || "/placeholder.png"}
-                        alt={article.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    </div>
-                    <div className="p-6 flex flex-col flex-1">
-                      <div className="flex items-center gap-3 mb-3">
-                        <span
-                          className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${categoryColors[article.category] || "bg-slate-100 text-slate-600"}`}
-                        >
-                          {article.category}
-                        </span>
-                        <span className="text-[11px] text-slate-400">
-                          {article.date}
-                        </span>
-                      </div>
-                      <h3 className="text-lg font-bold leading-snug mb-3 group-hover:text-[#0891b2] transition-colors duration-200">
-                        {article.title}
-                      </h3>
-                      <p className="text-sm text-slate-500 leading-relaxed flex-1">
-                        {article.excerpt}
-                      </p>
-                      <Link href={`/news/${article.slug}`} className="text-sm font-bold text-[#0891b2] mt-4 inline-block">
-                        Read More →
-                      </Link>
-                    </div>
-                  </article>
-                </AnimatedDiv>
-              ))}
-            </div>
-          )}
-        </AnimatedSection>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {articles.map((article, i) => (
+              <AnimatedDiv key={i}>
+                <article className="group cursor-pointer h-full flex flex-col border border-slate-100 rounded-3xl overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                  <div className="aspect-video overflow-hidden">
+                    <img
+                      src={article.image}
+                      alt={article.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                  <div className="p-6 flex flex-col flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span
+                        className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${categoryColors[article.category] || "bg-slate-100 text-slate-600"}`}
+                      >
+                        {article.category}
+                      </span>
+                      <span className="text-[11px] text-slate-400">
+                        {article.date}
+                      </span>
+                         </div>
+                          <h3 className="text-lg font-bold leading-snug mb-3 group-hover:text-[#0891b2] transition-colors duration-200">
+                      {article.title}
+                    </h3>
+                    <p className="text-sm text-slate-500 leading-relaxed flex-1">
+                      {article.excerpt}
+                    </p>
+                    <span className="text-sm font-bold text-[#0891b2] mt-4 inline-block">
+                      Read More →
+                    </span>
+                  </div>
+                </article>
+              </AnimatedDiv>
+            ))}
+          </div>
+          </AnimatedSection>
 
         {/* Newsletter CTA */}
         <AnimatedSection className="mt-32 text-center py-20 px-8 bg-slate-900 rounded-[60px] text-white overflow-hidden relative">
