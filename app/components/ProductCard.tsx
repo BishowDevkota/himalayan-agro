@@ -16,7 +16,7 @@ export default function ProductCard({ product, hideQuickView }: { product: any; 
       className="group relative bg-white rounded-2xl overflow-hidden border border-gray-100 hover:border-[#059669]/20 hover:shadow-xl transition-all duration-300"
     >
       {/* Image */}
-      <div className="relative w-full aspect-[4/3] bg-[#f8faf9] overflow-hidden">
+      <div className="relative w-full aspect-4/3 bg-[#f8faf9] overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={product.images?.[0] || "/placeholder.png"}

@@ -61,12 +61,12 @@ function IconStorefront({ size = 16 }: { size?: number }) {
 }
 
 const companyDropdownItems = [
-  { label: "Crop Cultivation", href: "/shop", description: "Seeds, fertilizers & crop care" },
-  { label: "Dairy & Livestock", href: "/shop", description: "Animal husbandry products" },
-  { label: "Horticulture", href: "/shop", description: "Fruits, flowers & vegetables" },
-  { label: "Organic Farming", href: "/shop", description: "Certified organic supplies" },
-  { label: "Irrigation & Water", href: "/shop", description: "Drip, sprinkler & pumps" },
-  { label: "Agri-Tech Solutions", href: "/shop", description: "IoT sensors & smart tools" },
+  { label: "Crop Cultivation", href: "/company/crop-cultivation", description: "Seeds, fertilizers & crop care" },
+  { label: "Dairy & Livestock", href: "/company/dairy-livestock", description: "Animal husbandry products" },
+  { label: "Horticulture", href: "/company/horticulture", description: "Fruits, flowers & vegetables" },
+  { label: "Organic Farming", href: "/company/organic-farming", description: "Certified organic supplies" },
+  { label: "Irrigation & Water", href: "/company/irrigation-water", description: "Drip, sprinkler & pumps" },
+  { label: "Agri-Tech Solutions", href: "/company/agri-tech", description: "IoT sensors & smart tools" },
 ];
 
 const navLinks = [
