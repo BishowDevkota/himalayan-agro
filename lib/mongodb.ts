@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 declare global {
-  // allow global `mongoose` var across hot-reloads in dev
+  // allow global mongoose var across hot-reloads in dev
   // eslint-disable-next-line @typescript-eslint/naming-convention
   var _mongoose: { conn: typeof mongoose | null; promise: Promise<typeof mongoose> | null } | undefined;
 }
