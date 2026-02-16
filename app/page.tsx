@@ -5,6 +5,8 @@ import Products from "./components/home/Products";
 import CorePillars from "./components/home/CorePillars";
 import EcoBalance from "./components/home/EcoBalance";
 import WhyChooseUs from "./components/home/WhyChooseUs";
+import ImpactVision from "./components/home/ImpactVision";
+import NewsMedia from "./components/home/NewsMedia";
 import OneStopShop from "./components/home/OneStopShop";
 import Partners from "./components/home/Partheres";
 import connectToDatabase from "../lib/mongodb";
@@ -50,11 +52,11 @@ export default async function HomePage() {
       {/* keep the rest of the home content (if any) below the hero */}
       <OurMission />
       <Products products={safeProducts} />
+      {/* <ImpactVision /> */}
       <CorePillars />
       {/* <EcoBalance /> */}
       <WhyChooseUs />
-      
-      
+      <NewsMedia />
     </main>
   );
 }
