@@ -19,8 +19,8 @@ const pillars = [
     title: 'Value Addition',
     description:
       'Adding value to local produce through primary processing, international-standard packaging, and a strong "Made in Nepal" brand identity.',
-    color: '#0891b2',
-    bgLight: '#ecfeff',
+    color: '#059669',
+    bgLight: '#ecfdf5',
     icon: (
       <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
@@ -31,8 +31,8 @@ const pillars = [
     title: 'Global Export',
     description:
       'Bridging the trade deficit by exporting high-value products like cardamom and organic coffee through B2B international networks.',
-    color: '#d97706',
-    bgLight: '#fffbeb',
+    color: '#059669',
+    bgLight: '#ecfdf5',
     icon: (
       <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="w-7 h-7">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5a17.92 17.92 0 01-8.716-2.247m0 0A8.966 8.966 0 013 12c0-1.264.26-2.467.732-3.559" />
@@ -87,9 +87,8 @@ export default function OurMission() {
   return (
     <section ref={sectionRef} className="relative bg-white py-20 sm:py-28 lg:py-32 overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-cyan-50 via-transparent to-transparent opacity-60 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-gradient-to-tr from-green-50 via-transparent to-transparent opacity-60 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-to-r from-orange-50/30 via-transparent to-cyan-50/30 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-green-50 opacity-40 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-green-50 opacity-40 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -99,8 +98,8 @@ export default function OurMission() {
         >
           {/* Section Label */}
           <motion.div variants={headingVariants} className="text-center mb-5">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-[#059669]/10 via-[#0891b2]/10 to-[#d97706]/10 text-[#0891b2] text-xs sm:text-sm font-semibold tracking-widest uppercase border border-[#0891b2]/15">
-              <span className="w-2 h-2 rounded-full bg-[#059669] animate-pulse" />
+            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0891b2]/8 text-[#0891b2] text-xs sm:text-sm font-semibold tracking-widest uppercase border border-[#0891b2]/15">
+              <span className="w-2 h-2 rounded-full bg-[#0891b2] animate-pulse" />
               Our Mission
             </span>
           </motion.div>
@@ -127,9 +126,9 @@ export default function OurMission() {
             variants={headingVariants}
             className="flex items-center justify-center gap-3 mb-8"
           >
-            <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#059669]" />
-            <div className="w-2 h-2 rounded-full bg-[#0891b2]" />
-            <div className="h-px w-12 bg-gradient-to-l from-transparent to-[#d97706]" />
+            <div className="h-px w-12 bg-[#059669]/30" />
+            <div className="w-2 h-2 rounded-full bg-[#059669]" />
+            <div className="h-px w-12 bg-[#059669]/30" />
           </motion.div>
 
           {/* Mission Statement */}
@@ -139,10 +138,10 @@ export default function OurMission() {
           >
             Himalaya Nepal Agriculture Company Limited is committed to modernizing
             Nepal&apos;s agricultural sector through{' '}
-            <span className="font-semibold text-[#059669]">integrated farming</span>,{' '}
-            <span className="font-semibold text-[#0891b2]">value addition</span>,{' '}
-            <span className="font-semibold text-[#d97706]">global export</span>, and{' '}
-            <span className="font-semibold text-[#059669]">farmer empowerment</span>.
+            integrated farming,{' '}
+            value addition,{' '}
+            global export, and{' '}
+            farmer empowerment.
           </motion.p>
 
           {/* Pillar Cards */}
@@ -173,7 +172,7 @@ export default function OurMission() {
                 {/* Content */}
                 <div className="relative z-10">
                   {/* Icon with numbered badge */}
-                  <div className="flex items-start justify-between mb-5">
+                  <div className="mb-5">
                     <div
                       className="w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg"
                       style={{
@@ -183,12 +182,6 @@ export default function OurMission() {
                     >
                       {pillar.icon}
                     </div>
-                    <span
-                      className="text-[11px] font-bold tracking-wider mt-1 opacity-40 group-hover:opacity-70 transition-opacity"
-                      style={{ color: pillar.color }}
-                    >
-                      0{index + 1}
-                    </span>
                   </div>
 
                   {/* Title */}
