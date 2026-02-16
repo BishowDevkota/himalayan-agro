@@ -177,13 +177,15 @@ export default function Products({ products }: { products?: ProductCard[] }) {
                     <div className="text-[15px] font-bold text-gray-800">
                       {typeof product.price === 'number' ? `₹${product.price.toFixed(2)}` : ''}
                     </div>
-                    <a
+                    <motion.a
                       href={`/product/${product._id}`}
-                      className="ml-auto inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-gray-900 text-white text-[11px] font-semibold tracking-wider uppercase transition-all duration-300 hover:bg-[#0891b2]"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="ml-auto inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#0891b2] text-white text-[11px] font-semibold tracking-wider uppercase transition-colors duration-300 hover:bg-[#0e7490] shadow-sm hover:shadow-md"
                     >
                       View
-                      <svg className="w-3 h-3 group-hover:translate-x-0.5 transition-transform duration-300" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
-                    </a>
+                      <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" /></svg>
+                    </motion.a>
                   </div>
                 </div>
 

@@ -2,7 +2,9 @@ import React from "react";
 import HeroCarousel from "./components/home/Hero";
 import OurMission from "./components/home/WhatWeDo";
 import Products from "./components/home/Products";
+import CorePillars from "./components/home/CorePillars";
 import EcoBalance from "./components/home/EcoBalance";
+import WhyChooseUs from "./components/home/WhyChooseUs";
 import OneStopShop from "./components/home/OneStopShop";
 import Partners from "./components/home/Partheres";
 import connectToDatabase from "../lib/mongodb";
@@ -48,10 +50,11 @@ export default async function HomePage() {
       {/* keep the rest of the home content (if any) below the hero */}
       <OurMission />
       <Products products={safeProducts} />
-      <EcoBalance />
-      <StrategicRoadmap/>
-      <OneStopShop/>
-      <Partners />
+      <CorePillars />
+      {/* <EcoBalance /> */}
+      <WhyChooseUs />
+      
+      
     </main>
   );
 }
