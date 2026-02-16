@@ -89,7 +89,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
           {/* Products grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {safeItems.map((p: any) => (
-              <ProductCard key={p._id} product={p} />
+              <ProductCard key={p._id} product={p} hideQuickView />
             ))}
           </div>
 

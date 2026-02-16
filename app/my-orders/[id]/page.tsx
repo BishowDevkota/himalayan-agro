@@ -1,4 +1,5 @@
 import React from "react";
+import mongoose from "mongoose";
 import connectToDatabase from "../../../lib/mongodb";
 import Order from "../../../models/Order";
 import { getServerSession } from "next-auth/next";
@@ -17,7 +18,9 @@ export default async function MyOrderDetail({ params }: { params: { id: string }
   await connectToDatabase();
   const order = await Order.findById(id).lean();
   if (!order) return <div className="p-12">Order not found</div>;
-  if (String(order.user) !== String((session.user as any).id)) return <div className="p-12">Unauthorized</div>;
+  // Allow env-based admin (id "admin") to view any order; otherwise check ownership
+  const isAdmin = (session.user as any).role === "admin";
+  if (!isAdmin && String(order.user) !== String((session.user as any).id)) return <div className="p-12">Unauthorized</div>;
 
   return (
     <main className="min-h-screen bg-white text-slate-900">

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import mongoose from "mongoose";
 import connectToDatabase from "../../../lib/mongodb";
 import Order from "../../../models/Order";
 import Product from "../../../models/Product";
@@ -22,6 +23,9 @@ export async function GET(req: Request) {
   }
 
   requireUser(user);
+  if (!mongoose.Types.ObjectId.isValid(user.id)) {
+    return NextResponse.json({ items: [], meta: { total: 0, page, limit } });
+  }
   const [items, total] = await Promise.all([
     Order.find({ user: user.id }).skip((page - 1) * limit).limit(limit).lean(),
     Order.countDocuments({ user: user.id }),

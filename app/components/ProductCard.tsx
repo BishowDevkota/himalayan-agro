@@ -4,7 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-export default function ProductCard({ product }: { product: any }) {
+export default function ProductCard({ product, hideQuickView }: { product: any; hideQuickView?: boolean }) {
   const price = typeof product.price === 'number' ? `Rs. ${product.price.toLocaleString('en-NP', { minimumFractionDigits: 2 })}` : product.price || '—';
 
   return (
@@ -49,6 +49,7 @@ export default function ProductCard({ product }: { product: any }) {
         )}
 
         {/* Quick view button */}
+        {!hideQuickView && (
         <div className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
           <Link
             href={`/product/${product._id}`}
@@ -61,6 +62,7 @@ export default function ProductCard({ product }: { product: any }) {
             Quick View
           </Link>
         </div>
+        )}
       </div>
 
       {/* Content */}

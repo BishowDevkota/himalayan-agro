@@ -1,4 +1,5 @@
 import React from "react";
+import mongoose from "mongoose";
 import connectToDatabase from "../../lib/mongodb";
 import Order from "../../models/Order";
 import { getServerSession } from "next-auth/next";
@@ -11,7 +12,12 @@ export default async function MyOrdersPage() {
   if (!session) return <div className="p-12">Please sign in to view your orders.</div>;
 
   await connectToDatabase();
-  const orders = await Order.find({ user: session.user.id }).sort({ createdAt: -1 }).lean();
+
+  // Guard: env-based admin has id "admin" which is not a valid ObjectId
+  const userId = session.user.id;
+  const orders = mongoose.Types.ObjectId.isValid(userId)
+    ? await Order.find({ user: userId }).sort({ createdAt: -1 }).lean()
+    : [];
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
