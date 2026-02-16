@@ -58,7 +58,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
               <div className="max-w-xl">
                 <p className="text-cyan-100 text-sm font-medium tracking-widest uppercase mb-3">Himalayan Agro</p>
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight">
-                  Shop Our Collection page status
+                  Shop Our Collection
                 </h1>
                 <p className="mt-4 text-cyan-100/90 text-base sm:text-lg leading-relaxed">
                   Discover premium agricultural products — use filters to find exactly what you need.
