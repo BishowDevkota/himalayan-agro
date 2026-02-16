@@ -16,6 +16,7 @@ export default async function EmployeeDashboardPage() {
   const canProducts = hasPermission(user, "products:read");
   const canVendors = hasPermission(user, "vendors:read");
   const canCategories = hasPermission(user, "categories:read");
+  const canNews = hasPermission(user, "news:read");
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
@@ -57,9 +58,16 @@ export default async function EmployeeDashboardPage() {
               <p className="mt-2 text-sm text-slate-600">Organize and manage product categories.</p>
             </a>
           )}
+
+          {canNews && (
+            <a className="rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow" href="/admin/news">
+              <h2 className="text-lg font-semibold">News</h2>
+              <p className="mt-2 text-sm text-slate-600">Create and manage news articles.</p>
+            </a>
+          )}
         </div>
 
-        {!canPayments && !canProducts && !canVendors && !canCategories && (
+        {!canPayments && !canProducts && !canVendors && !canCategories && !canNews && (
           <div className="mt-10 rounded-2xl border border-gray-100 p-6 text-sm text-slate-600">
             Your account does not have any assigned permissions yet. Ask an admin to assign a role.
           </div>

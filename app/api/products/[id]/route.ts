@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "../../../../lib/mongodb";
 import Product from "../../../../models/Product";
-import { getSessionUser, requireAdmin } from "../../../../lib/server-utils";
+import { getSessionUser } from "../../../../lib/server-utils";
+import { hasPermission } from "../../../../lib/permissions";
 
 export async function GET(req: Request, context: any) {
   const params = context.params instanceof Promise ? await context.params : context.params;
@@ -16,7 +17,9 @@ export async function PATCH(req: Request, context: any) {
   const params = context.params instanceof Promise ? await context.params : context.params;
   const { id } = params;
   const user = await getSessionUser();
-  requireAdmin(user);
+  if (!hasPermission(user, "products:write")) {
+    return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+  }
   const body = await req.json();
   await connectToDatabase();
 
@@ -60,7 +63,9 @@ export async function DELETE(req: Request, context: any) {
   const params = context.params instanceof Promise ? await context.params : context.params;
   const { id } = params;
   const user = await getSessionUser();
-  requireAdmin(user);
+  if (!hasPermission(user, "products:write")) {
+    return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+  }
   await connectToDatabase();
   const deleted = await Product.findByIdAndDelete(id).lean();
   if (!deleted) return NextResponse.json({ message: "Not found" }, { status: 404 });

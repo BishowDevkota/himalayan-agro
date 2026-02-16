@@ -32,7 +32,9 @@ export async function middleware(req: NextRequest) {
       if (!token) return new NextResponse(null, { status: 401 });
       const required = permissionForAdminApi(pathname, req.method);
       if (required) {
-        if (!hasPermission(token as any, required)) return new NextResponse(null, { status: 401 });
+        const requiredList = Array.isArray(required) ? required : [required];
+        const allowed = requiredList.some((perm) => hasPermission(token as any, perm));
+        if (!allowed) return new NextResponse(null, { status: 401 });
         return NextResponse.next();
       }
       if ((token as any).role !== "admin") return new NextResponse(null, { status: 401 });

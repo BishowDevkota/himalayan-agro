@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "../../../lib/mongodb";
 import Product from "../../../models/Product";
-import { getSessionUser, requireAdmin } from "../../../lib/server-utils";
+import { getSessionUser } from "../../../lib/server-utils";
+import { hasPermission } from "../../../lib/permissions";
 
 export async function GET(req: Request) {
   await connectToDatabase();
@@ -25,7 +26,9 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   const user = await getSessionUser();
-  requireAdmin(user);
+  if (!hasPermission(user, "products:write")) {
+    return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+  }
   const body = await req.json();
   await connectToDatabase();
 

@@ -8,6 +8,7 @@ export const EMPLOYEE_ROLE_PERMISSIONS: Record<string, string[]> = {
     "categories:read",
     "categories:write",
   ],
+  reporter: ["news:read", "news:write", "news:delete"],
 };
 
 export const EMPLOYEE_ROLES = Object.keys(EMPLOYEE_ROLE_PERMISSIONS);
@@ -39,6 +40,16 @@ export function hasPermission(user: any, permission: string) {
 export function permissionForAdminApi(pathname: string, method: string) {
   if (!pathname.startsWith("/api/admin")) return null;
 
+  if (pathname.startsWith("/api/admin/news")) {
+    if (method === "GET") return "news:read";
+    if (method === "DELETE") return "news:delete";
+    return "news:write";
+  }
+
+  if (pathname.startsWith("/api/admin/upload")) {
+    return ["products:write", "news:write"];
+  }
+
   if (pathname.startsWith("/api/admin/payment-requests")) {
     return method === "GET" ? "payments:read" : "payments:write";
   }
@@ -59,6 +70,7 @@ export function permissionForAdminApi(pathname: string, method: string) {
 }
 
 export function adminLandingForPermissions(permissions: string[] = []) {
+  if (permissions.includes("news:read")) return "/admin/news";
   if (permissions.includes("payments:read")) return "/admin/payment-requests";
   if (permissions.includes("products:read")) return "/admin/products";
   if (permissions.includes("vendors:read")) return "/admin/vendor";

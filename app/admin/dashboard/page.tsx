@@ -171,6 +171,21 @@ export default async function AdminDashboardPage() {
                 </div>
                 <div className="text-slate-400">→</div>
               </a>
+
+              <a href="/admin/news" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-lg border border-gray-100 px-4 py-3 hover:shadow-sm">
+                <div>
+                  <div className="text-sm text-slate-600">News</div>
+                  <div className="font-medium text-slate-800">Manage news posts</div>
+                </div>
+                <div className="text-slate-400">→</div>
+              </a>
+              <a href="/admin/employees" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-lg border border-gray-100 px-4 py-3 hover:shadow-sm">
+                <div>
+                  <div className="text-sm text-slate-600">Employees</div>
+                  <div className="font-medium text-slate-800">Manage employees</div>
+                </div>
+                <div className="text-slate-400">→</div>
+              </a>
             </div> 
 
             <div className="mt-6 border-t pt-4 text-sm text-slate-500">
