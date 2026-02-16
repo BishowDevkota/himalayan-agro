@@ -17,45 +17,7 @@ export default function ContactPage() {
 
       <main className="max-w-7xl mx-auto px-6 mt-12 lg:mt-20 mb-24">
         <section className="w-full">
-          <div className="flex flex-col md:flex-row bg-white rounded-[2.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.12)] overflow-hidden border border-gray-100">
-
-            {/* Sidebar: Sky Blue #29A8DD */}
-            <div className="md:w-1/3 bg-[#29A8DD] p-10 lg:p-12 text-white flex flex-col justify-between relative overflow-hidden">
-              <div className="absolute -top-12 -right-12 w-48 h-48 bg-white/10 rounded-full" />
-
-              <div className="relative z-10">
-                <h2 className="text-4xl font-black leading-tight mb-6">Reach out<br/>anytime.</h2>
-                <p className="text-white/80 mb-12 font-medium">Ready to take the next step? Our specialists are standing by to assist.</p>
-
-                <div className="space-y-10">
-                  <div className="flex items-center gap-5">
-                    <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-xl">✉️</div>
-                    <div>
-                      <p className="text-[10px] uppercase tracking-widest text-blue-100 font-bold">Email</p>
-                      <p className="text-white font-medium">hello@skystudio.com</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-5">
-                    <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-xl">📍</div>
-                    <div>
-                      <p className="text-[10px] uppercase tracking-widest text-blue-100 font-bold">Office</p>
-                      <p className="text-white font-medium">102 Sky Tower, NY</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="relative z-10 pt-12 flex gap-8">
-                {/* Social links using direct hover color */}
-                <a href="#" className="font-black uppercase text-xs tracking-widest hover:text-[#64cc98] transition-colors duration-300">LinkedIn</a>
-                <a href="#" className="font-black uppercase text-xs tracking-widest hover:text-[#64cc98] transition-colors duration-300">Instagram</a>
-              </div>
-            </div>
-
-            <div className="md:w-2/3 p-8 lg:p-16 relative bg-white">
-              <ContactForm />
-            </div>
-          </div>
+          <ContactForm />
         </section>
 
         {/* Map Section */}
