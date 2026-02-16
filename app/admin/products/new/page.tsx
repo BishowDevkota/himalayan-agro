@@ -4,10 +4,11 @@ import authOptions from "../../../../lib/auth";
 import ProductForm from "../../../components/admin/ProductForm";
 import connectToDatabase from "../../../../lib/mongodb";
 import Product from "../../../../models/Product";
+import { hasPermission } from "../../../../lib/permissions";
 
 export default async function NewProductPage() {
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "admin") return <div className="p-12">Unauthorized</div>;
+  if (!session || !hasPermission(session.user, "products:write")) return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
   const recent = await Product.find({}).sort({ createdAt: -1 }).limit(3).lean();

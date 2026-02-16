@@ -5,10 +5,11 @@ import connectToDatabase from "../../../lib/mongodb";
 import PaymentRequest from "../../../models/PaymentRequest";
 import Vendor from "../../../models/Vendor";
 import AdminPaymentRequestsClient from "../../components/admin/AdminPaymentRequestsClient";
+import { hasPermission } from "../../../lib/permissions";
 
 export default async function AdminPaymentRequestsPage() {
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "admin") return <div className="p-12">Unauthorized</div>;
+  if (!session || !hasPermission(session.user, "payments:read")) return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
   const requests = await PaymentRequest.find({}).sort({ createdAt: -1 }).lean();

@@ -6,10 +6,11 @@ import authOptions from "../../../lib/auth";
 import { serializeMany } from "../../../lib/serialize";
 import CategoryForm from "../../components/admin/CategoryForm";
 import CategoryRow from "../../components/admin/CategoryRow";
+import { hasPermission } from "../../../lib/permissions";
 
 export default async function AdminCategoriesPage() {
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "admin") return <div className="p-12">Unauthorized</div>;
+  if (!session || !hasPermission(session.user, "categories:read")) return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
   const categories = await Category.find().sort({ name: 1 }).lean();

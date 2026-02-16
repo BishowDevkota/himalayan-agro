@@ -6,6 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useCart } from "../../store/useCart";
 import { motion, AnimatePresence } from "framer-motion";
+import { adminLandingForPermissions } from "../../lib/permissions";
 
 function IconSearch({ size = 20 }: { size?: number }) {
   return (
@@ -144,6 +145,9 @@ function isActivePath(pathname: string, href: string): boolean {
 export default function Navbar() {
   const { data: session } = useSession();
   const role = (session as any)?.user?.role;
+  const permissions = (session as any)?.user?.permissions || [];
+  const canAccessAdmin = role === "admin" || (Array.isArray(permissions) && permissions.length > 0);
+  const adminTarget = role === "admin" ? "/admin/dashboard" : adminLandingForPermissions(permissions);
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [companyOpen, setCompanyOpen] = useState(false);
@@ -318,8 +322,8 @@ export default function Navbar() {
                       </div>
                       <button onClick={() => { setUserMenuOpen(false); router.push("/cart"); }} className="w-full text-left px-4 py-2.5 text-sm text-gray-600 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors sm:hidden">Cart</button>
                       <button onClick={() => { setUserMenuOpen(false); router.push("/my-orders"); }} className="w-full text-left px-4 py-2.5 text-sm text-gray-600 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors">My Orders</button>
-                      {role === "admin" && (
-                        <button onClick={() => { setUserMenuOpen(false); router.push("/admin/dashboard"); }} className="w-full text-left px-4 py-2.5 text-sm text-gray-600 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors border-t border-gray-100">Admin Dashboard</button>
+                      {canAccessAdmin && (
+                        <button onClick={() => { setUserMenuOpen(false); router.push(adminTarget); }} className="w-full text-left px-4 py-2.5 text-sm text-gray-600 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors border-t border-gray-100">Admin Panel</button>
                       )}
                       <button onClick={() => signOut()} className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors border-t border-gray-100 font-medium">Sign out</button>
                     </motion.div>
@@ -473,8 +477,8 @@ export default function Navbar() {
                       Cart {cartCount > 0 && <span className="ml-1 text-[10px] text-white bg-red-500 rounded-full px-1.5 py-0.5">{cartCount}</span>}
                     </button>
                     <button onClick={() => navigateAndClose("/my-orders")} className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors duration-200">My Orders</button>
-                    {role === "admin" && (
-                      <button onClick={() => navigateAndClose("/admin/dashboard")} className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors duration-200">Admin Dashboard</button>
+                    {canAccessAdmin && (
+                      <button onClick={() => navigateAndClose(adminTarget)} className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors duration-200">Admin Panel</button>
                     )}
                     <button onClick={() => { setMobileOpen(false); signOut(); }} className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors duration-200">Sign out</button>
                   </>

@@ -4,16 +4,13 @@ import authOptions from "../../../../../lib/auth";
 import connectToDatabase from "../../../../../lib/mongodb";
 import PaymentRequest from "../../../../../models/PaymentRequest";
 import mongoose from "mongoose";
-
-async function requireAdmin() {
-  const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "admin") return null;
-  return session;
-}
+import { hasPermission } from "../../../../../lib/permissions";
 
 export async function PATCH(req: Request, context: any) {
-  const session = await requireAdmin();
-  if (!session) return NextResponse.json({ message: "Not found" }, { status: 404 });
+  const session = (await getServerSession(authOptions as any)) as any;
+  if (!session || !hasPermission(session.user, "payments:write")) {
+    return NextResponse.json({ message: "Not found" }, { status: 404 });
+  }
 
   const params = await Promise.resolve(context?.params) as { id?: string } | undefined;
   const id = params?.id;

@@ -4,16 +4,13 @@ import authOptions from "../../../../lib/auth";
 import connectToDatabase from "../../../../lib/mongodb";
 import PaymentRequest from "../../../../models/PaymentRequest";
 import Vendor from "../../../../models/Vendor";
-
-async function requireAdmin() {
-  const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "admin") return null;
-  return session;
-}
+import { hasPermission } from "../../../../lib/permissions";
 
 export async function GET(req: Request) {
-  const session = await requireAdmin();
-  if (!session) return NextResponse.json({ message: "Not found" }, { status: 404 });
+  const session = (await getServerSession(authOptions as any)) as any;
+  if (!session || !hasPermission(session.user, "payments:read")) {
+    return NextResponse.json({ message: "Not found" }, { status: 404 });
+  }
 
   await connectToDatabase();
   const url = new URL(req.url);

@@ -5,10 +5,11 @@ import AdminVendorsClient from "../../components/admin/AdminVendorsClient";
 import connectToDatabase from "../../../lib/mongodb";
 import Vendor from "../../../models/Vendor";
 import User from "../../../models/User";
+import { hasPermission } from "../../../lib/permissions";
 
 export default async function AdminVendorsPage() {
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "admin") return <div className="p-12">Unauthorized</div>;
+  if (!session || !hasPermission(session.user, "vendors:read")) return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
   const vendors = await Vendor.find({}).sort({ createdAt: -1 }).lean();

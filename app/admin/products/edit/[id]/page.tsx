@@ -4,6 +4,7 @@ import Product from "../../../../../models/Product";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../../../lib/auth";
 import ProductForm from "../../../../components/admin/ProductForm";
+import { hasPermission } from "../../../../../lib/permissions";
 
 export default async function EditProductPage({ params }: { params: { id: string } } | { params: Promise<{ id: string }> }) {
   // `params` can be a Promise in some Next.js runtimes — unwrap it safely.
@@ -11,7 +12,7 @@ export default async function EditProductPage({ params }: { params: { id: string
   const id = resolvedParams.id;
 
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "admin") return <div className="p-12">Unauthorized</div>;
+  if (!session || !hasPermission(session.user, "products:write")) return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
   const product = await Product.findById(id).lean();

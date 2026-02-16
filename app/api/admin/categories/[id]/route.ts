@@ -2,11 +2,14 @@ import { NextResponse } from "next/server";
 import connectToDatabase from "../../../../../lib/mongodb";
 import Category from "../../../../../models/Category";
 import Product from "../../../../../models/Product";
-import { getSessionUser, requireAdmin } from "../../../../../lib/server-utils";
+import { getSessionUser } from "../../../../../lib/server-utils";
+import { hasPermission } from "../../../../../lib/permissions";
 
 export async function PATCH(req: Request, context: any) {
   const user = await getSessionUser();
-  requireAdmin(user);
+  if (!hasPermission(user, "categories:write")) {
+    return NextResponse.json({ message: "Not found" }, { status: 404 });
+  }
   const params = context.params instanceof Promise ? await context.params : context.params;
   const { id } = params;
   const body = await req.json();
@@ -25,7 +28,9 @@ export async function PATCH(req: Request, context: any) {
 
 export async function DELETE(req: Request, context: any) {
   const user = await getSessionUser();
-  requireAdmin(user);
+  if (!hasPermission(user, "categories:write")) {
+    return NextResponse.json({ message: "Not found" }, { status: 404 });
+  }
   const params = context.params instanceof Promise ? await context.params : context.params;
   const { id } = params;
   await connectToDatabase();

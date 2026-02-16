@@ -3,16 +3,13 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../../lib/auth";
 import connectToDatabase from "../../../../lib/mongodb";
 import Product from "../../../../models/Product";
-
-async function requireAdmin() {
-  const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== 'admin') return null;
-  return session;
-}
+import { hasPermission } from "../../../../lib/permissions";
 
 export async function GET(req: Request) {
-  const session = await requireAdmin();
-  if (!session) return NextResponse.json({ message: 'Not found' }, { status: 404 });
+  const session = (await getServerSession(authOptions as any)) as any;
+  if (!session || !hasPermission(session.user, "products:read")) {
+    return NextResponse.json({ message: "Not found" }, { status: 404 });
+  }
 
   await connectToDatabase();
   const url = new URL(req.url);
@@ -35,8 +32,10 @@ export async function GET(req: Request) {
 
 // (Optional) create product via admin API — delegates similar validation as public POST
 export async function POST(req: Request) {
-  const session = await requireAdmin();
-  if (!session) return NextResponse.json({ message: 'Not found' }, { status: 404 });
+  const session = (await getServerSession(authOptions as any)) as any;
+  if (!session || !hasPermission(session.user, "products:write")) {
+    return NextResponse.json({ message: "Not found" }, { status: 404 });
+  }
   const body = await req.json().catch(() => ({}));
   await connectToDatabase();
 

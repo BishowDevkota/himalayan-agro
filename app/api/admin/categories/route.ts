@@ -2,9 +2,14 @@ import { NextResponse } from "next/server";
 import connectToDatabase from "../../../../lib/mongodb";
 import Category from "../../../../models/Category";
 import Product from "../../../../models/Product";
-import { getSessionUser, requireAdmin } from "../../../../lib/server-utils";
+import { getSessionUser } from "../../../../lib/server-utils";
+import { hasPermission } from "../../../../lib/permissions";
 
 export async function GET() {
+  const user = await getSessionUser();
+  if (!hasPermission(user, "categories:read")) {
+    return NextResponse.json({ message: "Not found" }, { status: 404 });
+  }
   await connectToDatabase();
   const categories = await Category.find().sort({ name: 1 }).lean();
   return NextResponse.json({ categories });
@@ -12,7 +17,9 @@ export async function GET() {
 
 export async function POST(req: Request) {
   const user = await getSessionUser();
-  requireAdmin(user);
+  if (!hasPermission(user, "categories:write")) {
+    return NextResponse.json({ message: "Not found" }, { status: 404 });
+  }
   const body = await req.json();
   await connectToDatabase();
 

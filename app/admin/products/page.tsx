@@ -5,10 +5,11 @@ import ProductRow from "../../components/admin/ProductRow";
 import AdminProductsClient from "../../components/admin/AdminProductsClient";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
+import { hasPermission } from "../../../lib/permissions";
 
 export default async function AdminProductsPage() {
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "admin") return <div className="p-12">Unauthorized</div>;
+  if (!session || !hasPermission(session.user, "products:read")) return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
   const products = await Product.find({}).sort({ createdAt: -1 }).lean();
