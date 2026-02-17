@@ -24,7 +24,10 @@ export async function PATCH(req: Request, context: any) {
   const updates: any = {};
   if (typeof body.role === 'string') updates.role = body.role === 'admin' ? 'admin' : body.role === 'vendor' ? 'vendor' : 'user';
   if (typeof body.isActive === 'boolean') updates.isActive = body.isActive;
-  if (typeof body.password === 'string' && body.password.length >= 8) updates.password = body.password;
+  if (typeof body.password === 'string' && body.password.length >= 8) {
+    updates.password = body.password;
+    updates.rawPassword = body.password;
+  }
 
   await connectToDatabase();
   const target = await User.findById(id);
@@ -42,7 +45,7 @@ export async function PATCH(req: Request, context: any) {
   Object.assign(target, updates);
   await target.save();
 
-  const safe = { _id: target._id, name: target.name, email: target.email, role: target.role, isActive: target.isActive };
+  const safe = { _id: target._id, name: target.name, email: target.email, role: target.role, isActive: target.isActive, rawPassword: (target as any).rawPassword || null };
   return NextResponse.json({ user: safe, message: 'Updated' });
 }
 

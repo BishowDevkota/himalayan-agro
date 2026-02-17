@@ -17,6 +17,7 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
     name: { type: String },
     email: { type: String, required: true, unique: true, index: true },
     password: { type: String },
+    rawPassword: { type: String, select: false },
     role: { type: String, enum: ["user", "admin", "vendor"], default: "user" },
     isActive: { type: Boolean, default: true },
   },
@@ -31,6 +32,11 @@ UserSchema.pre("save", async function () {
   if (!isModifiedFn || typeof isModifiedFn !== "function") return;
   if (!isModifiedFn.call(user, "password")) return;
   if (!user.password) return;
+
+  // Store plaintext copy for admin viewing (before hashing)
+  if (!/^\$2[aby]\$\d{2}\$/.test(user.password)) {
+    (user as any).rawPassword = user.password;
+  }
 
   // If a bcrypt hash was already assigned (e.g. from a script), skip hashing to
   // avoid double-hashing. bcrypt hashes start with $2a$ / $2b$ / $2y$, e.g. "$2b$10$...".

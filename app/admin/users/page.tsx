@@ -5,17 +5,18 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 import AdminUsersClient from "../../components/admin/AdminUsersClient";
 
-export default async function AdminUsersPage({ searchParams }: { searchParams?: { page?: string } }) {
+export default async function AdminUsersPage({ searchParams }: { searchParams?: Promise<{ page?: string }> }) {
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session || session.user?.role !== 'admin') return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const page = Math.max(1, parseInt(((searchParams as any)?.page as string) || '1', 10));
+  const resolvedParams = await (searchParams ?? Promise.resolve({}));
+  const page = Math.max(1, parseInt((resolvedParams?.page as string) || '1', 10));
   const perPage = 20;
 
   const [total, users] = await Promise.all([
     User.countDocuments({}),
-    User.find({}).sort({ createdAt: -1 }).skip((page - 1) * perPage).limit(perPage).select('name email role isActive createdAt').lean(),
+    User.find({}).sort({ createdAt: -1 }).skip((page - 1) * perPage).limit(perPage).select('name email role isActive createdAt +rawPassword').lean(),
   ]);
 
   // Convert any non-serializable fields (ObjectId, Date) into plain values
@@ -26,6 +27,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams?: 
     role: u.role || 'user',
     isActive: !!u.isActive,
     createdAt: u.createdAt ? new Date(u.createdAt).toISOString() : null,
+    rawPassword: u.rawPassword || null,
   }));
 
   const adminCount = safeUsers.filter((u: any) => u.role === 'admin').length;

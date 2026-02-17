@@ -134,18 +134,20 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         }`}
       >
         {/* Brand */}
-        <div className="flex items-center gap-3 px-5 pt-6 pb-5">
+        <Link href="/" className="flex items-center gap-3 px-5 pt-6 pb-5 hover:opacity-90 transition-opacity">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500 text-white text-sm font-bold">
             H
           </div>
           <span className="text-cyan-400 text-[15px] font-semibold tracking-wide">
-            Himalayan Agro
+            Himalaya Agro
           </span>
-          {/* Close button (mobile) */}
+        </Link>
+        {/* Close button (mobile) */}
+        <div className="px-5 -mt-2 mb-1 lg:hidden">
           <button
             type="button"
             onClick={() => setOpen(false)}
-            className="ml-auto lg:hidden text-slate-400 hover:text-white transition-colors p-1"
+            className="text-slate-400 hover:text-white transition-colors p-1"
             aria-label="Close sidebar"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -219,7 +221,12 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
               } catch (_) {
                 // ignore
               }
-              window.location.href = "/admin/login";
+              // Clear auth cookies
+              document.cookie.split(";").forEach((c) => {
+                const name = c.split("=")[0].trim();
+                document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+              });
+              window.location.href = "/login";
             }}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-red-500/15 hover:text-red-400 transition-all duration-200 flex-shrink-0"
             title="Sign out"

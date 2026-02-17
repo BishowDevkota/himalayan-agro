@@ -10,6 +10,84 @@ function roleColor(r: string) {
   return "bg-slate-100 text-slate-700";
 }
 
+function PasswordCell({ userId, rawPassword }: { userId: string; rawPassword: string | null }) {
+  const [visible, setVisible] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [pw, setPw] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [currentPw, setCurrentPw] = useState(rawPassword);
+
+  async function handleSave() {
+    if (!pw || pw.length < 8) return toast.error("Password must be at least 8 characters");
+    setSaving(true);
+    try {
+      const res = await fetch(`/api/admin/users/${userId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: pw }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.message || "Failed");
+      toast.success("Password updated");
+      setCurrentPw(pw);
+      setPw("");
+      setEditing(false);
+    } catch (err: any) {
+      toast.error(err?.message || String(err));
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  if (editing) {
+    return (
+      <div className="flex items-center gap-1.5">
+        <input
+          className="w-28 rounded-md border border-slate-200 bg-slate-50/50 px-2 py-1 text-xs text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none"
+          placeholder="New password"
+          value={pw}
+          onChange={(e) => setPw(e.target.value)}
+          autoFocus
+        />
+        <button className="rounded-md bg-cyan-600 text-white px-2 py-1 text-[11px] font-medium hover:bg-cyan-700 disabled:opacity-50" onClick={handleSave} disabled={saving}>
+          {saving ? "…" : "Save"}
+        </button>
+        <button className="rounded-md bg-slate-100 text-slate-600 px-2 py-1 text-[11px] font-medium hover:bg-slate-200" onClick={() => { setEditing(false); setPw(""); }}>
+          ✕
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-1.5">
+      <code className="text-xs bg-slate-50 border border-slate-100 rounded px-1.5 py-0.5 text-slate-600 font-mono select-all">
+        {currentPw ? (visible ? currentPw : "••••••••") : <span className="text-slate-300 italic">not set</span>}
+      </code>
+      {currentPw && (
+        <button
+          className="text-slate-400 hover:text-slate-600 transition-colors"
+          onClick={() => setVisible(!visible)}
+          title={visible ? "Hide" : "Show"}
+        >
+          {visible ? (
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21" /></svg>
+          ) : (
+            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+          )}
+        </button>
+      )}
+      <button
+        className="text-slate-400 hover:text-cyan-600 transition-colors"
+        onClick={() => setEditing(true)}
+        title="Set password"
+      >
+        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+      </button>
+    </div>
+  );
+}
+
 export default function AdminUsersClient({
   initialUsers = [],
   initialTotal = 0,
@@ -166,16 +244,17 @@ export default function AdminUsersClient({
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">User</th>
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Role</th>
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Status</th>
+              <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Password</th>
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Joined</th>
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {loading && (
-              <tr><td colSpan={5} className="px-5 py-12 text-center text-sm text-slate-400">Loading…</td></tr>
+              <tr><td colSpan={6} className="px-5 py-12 text-center text-sm text-slate-400">Loading…</td></tr>
             )}
             {!loading && users.length === 0 && (
-              <tr><td colSpan={5} className="px-5 py-12 text-center text-sm text-slate-400">No users found.</td></tr>
+              <tr><td colSpan={6} className="px-5 py-12 text-center text-sm text-slate-400">No users found.</td></tr>
             )}
             {!loading && users.map((u: any) => (
               <tr key={u._id} className="align-top hover:bg-cyan-50/30 transition-colors">
@@ -201,6 +280,10 @@ export default function AdminUsersClient({
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-semibold ${u.isActive ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}`}>
                     {u.isActive ? 'Active' : 'Inactive'}
                   </span>
+                </td>
+
+                <td className="px-5 py-3.5">
+                  <PasswordCell userId={u._id} rawPassword={u.rawPassword} />
                 </td>
 
                 <td className="px-5 py-3.5 text-sm text-slate-500">

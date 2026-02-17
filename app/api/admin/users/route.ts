@@ -35,7 +35,7 @@ export async function GET(req: Request) {
       .sort({ createdAt: -1 })
       .skip((page - 1) * perPage)
       .limit(perPage)
-      .select('name email role isActive createdAt')
+      .select('name email role isActive createdAt +rawPassword')
       .lean(),
   ]);
 

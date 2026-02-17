@@ -206,7 +206,7 @@ export default function Navbar() {
           <Link href="/" className="shrink-0 flex items-center" aria-label="Home">
             <motion.img
               src="/wide-logo.jpeg"
-              alt="Himalayan"
+              alt="Himalaya"
               loading="eager"
               className="h-10 sm:h-12 w-auto object-contain"
               whileHover={{ scale: 1.04 }}
@@ -391,7 +391,7 @@ export default function Navbar() {
               {/* Panel header */}
               <div className="flex items-center justify-between px-5 h-16 border-b border-gray-100 shrink-0">
                 <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center">
-                  <img src="/wide-logo.jpeg" alt="Himalayan" className="h-9 w-auto object-contain"
+                  <img src="/wide-logo.jpeg" alt="Himalaya" className="h-9 w-auto object-contain"
                     onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.png"; }} />
                 </Link>
                 <motion.button whileTap={{ scale: 0.85 }} onClick={() => setMobileOpen(false)} className="p-2 rounded-full hover:bg-gray-100 transition-colors" aria-label="Close menu">

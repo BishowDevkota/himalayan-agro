@@ -90,7 +90,7 @@ const investors = [
       "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&q=80&w=200",
   },
   {
-    name: "Himalayan Cooperative Bank",
+    name: "Himalaya Cooperative Bank",
     type: "Strategic",
     focus: "Rural finance",
     ticket: "NPR 80M - 150M",

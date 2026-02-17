@@ -6,7 +6,7 @@ const articles = [
   {
     date: 'Jan 2026',
     category: 'Export',
-    title: 'Himalayan Agro Expands Organic Spice Exports to European Markets',
+    title: 'Himalaya Agro Expands Organic Spice Exports to European Markets',
     excerpt:
       'Our latest shipment of GMP-certified turmeric and ginger products has been well received across key European distribution channels.',
     image:

@@ -57,7 +57,7 @@ export default function AdminLoginClient({ from = "/admin", serverError }: { fro
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-sky-400 rounded-lg flex items-center justify-center text-slate-900 font-black">H</div>
                 <div>
-                  <div className="text-sm font-semibold text-slate-100">Himalayan</div>
+                  <div className="text-sm font-semibold text-slate-100">Himalaya</div>
                   <div className="text-xs text-slate-400">Admin console</div>
                 </div>
               </div>
