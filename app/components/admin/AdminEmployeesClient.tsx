@@ -136,10 +136,10 @@ export default function AdminEmployeesClient() {
   }
 
   return (
-    <section className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+    <section className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-semibold">Employee management</h2>
+          <h2 className="text-2xl font-semibold text-slate-900">Employee management</h2>
           <p className="text-sm text-slate-500 mt-1">Create employees and assign role-based access.</p>
         </div>
       </div>
@@ -147,26 +147,26 @@ export default function AdminEmployeesClient() {
       <form onSubmit={handleCreate} className="flex flex-wrap items-center gap-3 mb-6">
         <input className="hidden" />
         <input
-          className="w-40 rounded-lg border border-gray-200 px-3 py-2 text-sm"
+          className="w-40 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm"
           placeholder="name (optional)"
           value={createName}
           onChange={(e) => setCreateName(e.target.value)}
         />
         <input
-          className="w-52 rounded-lg border border-gray-200 px-3 py-2 text-sm"
+          className="w-52 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm"
           placeholder="email"
           value={createEmail}
           onChange={(e) => setCreateEmail(e.target.value)}
         />
         <input
-          className="w-40 rounded-lg border border-gray-200 px-3 py-2 text-sm"
+          className="w-40 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm"
           placeholder="password"
           type="password"
           value={createPassword}
           onChange={(e) => setCreatePassword(e.target.value)}
         />
         <select
-          className="rounded-lg border border-gray-200 px-3 py-2 text-sm"
+          className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm"
           value={createRole}
           onChange={(e) => setCreateRole(e.target.value)}
         >
@@ -175,7 +175,7 @@ export default function AdminEmployeesClient() {
           ))}
         </select>
         <button
-          className="rounded bg-sky-600 text-white px-4 py-2 text-sm"
+          className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm"
           type="submit"
           disabled={creating}
         >
@@ -192,7 +192,7 @@ export default function AdminEmployeesClient() {
           {employees.map((e) => (
             <div key={e._id} className="py-4 flex items-start justify-between gap-6">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center text-slate-700 font-bold">
+                <div className="w-12 h-12 rounded-2xl bg-slate-900/5 flex items-center justify-center text-slate-700 font-bold">
                   {(e.name || e.email || "E")[0].toUpperCase()}
                 </div>
                 <div>
@@ -203,12 +203,12 @@ export default function AdminEmployeesClient() {
               </div>
 
               <div className="text-right">
-                <div className={`text-xs ${e.isActive ? "text-emerald-600" : "text-red-600"}`}>
+                <div className={`text-xs ${e.isActive ? "text-emerald-600" : "text-rose-600"}`}>
                   {e.isActive ? "Active" : "Inactive"}
                 </div>
                 <div className="mt-2 flex flex-wrap items-center justify-end gap-2">
                   <select
-                    className="rounded border border-gray-200 px-2 py-1 text-xs"
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs"
                     value={e.role}
                     onChange={(event) => handleRoleChange(e, event.target.value)}
                   >
@@ -217,19 +217,19 @@ export default function AdminEmployeesClient() {
                     ))}
                   </select>
                   <button
-                    className={`rounded px-2 py-1 text-xs ${e.isActive ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"}`}
+                    className={`rounded-full px-3 py-1 text-xs ${e.isActive ? "bg-rose-50 text-rose-700" : "bg-emerald-50 text-emerald-700"}`}
                     onClick={() => handleToggleActive(e)}
                   >
                     {e.isActive ? "Deactivate" : "Activate"}
                   </button>
                   <button
-                    className="rounded bg-gray-100 text-slate-800 px-2 py-1 text-xs"
+                    className="rounded-full bg-slate-900/5 text-slate-800 px-3 py-1 text-xs"
                     onClick={() => handleSetPassword(e)}
                   >
                     Set password
                   </button>
                   <button
-                    className="rounded bg-red-600 text-white px-2 py-1 text-xs"
+                    className="rounded-full bg-slate-900 text-white px-3 py-1 text-xs"
                     onClick={() => handleDelete(e)}
                   >
                     Delete

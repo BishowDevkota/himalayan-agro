@@ -54,10 +54,10 @@ export default function AdminPaymentRequestsClient({ initialRequests = [] }: { i
   }
 
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+    <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
       <div className="flex items-center justify-between gap-4 mb-6">
         <div className="flex items-center gap-3">
-          <select className="rounded-lg border border-gray-200 px-3 py-2 text-slate-900" value={status} onChange={(e) => { setStatus(e.target.value); fetchRequests({ status: e.target.value }); }}>
+          <select className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900" value={status} onChange={(e) => { setStatus(e.target.value); fetchRequests({ status: e.target.value }); }}>
             <option value="">All</option>
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
@@ -81,19 +81,19 @@ export default function AdminPaymentRequestsClient({ initialRequests = [] }: { i
                   <div className="text-xs text-slate-400 mt-1">Requested {r.createdAt ? new Date(r.createdAt).toLocaleDateString() : ""}</div>
                 </div>
 
-                <div className="text-lg font-extrabold text-slate-900">₹{Number(r.amount || 0).toFixed(2)}</div>
+                <div className="text-lg font-black text-slate-900">₹{Number(r.amount || 0).toFixed(2)}</div>
 
                 <div className="flex items-center gap-3">
                   <div className={`text-xs px-2 py-1 rounded-full ${statusColor(r.status)}`}>{r.status}</div>
                   <button
-                    className="rounded bg-emerald-600 text-white px-3 py-2 text-sm disabled:opacity-60"
+                    className="rounded-full bg-slate-900 text-white px-4 py-2 text-sm disabled:opacity-60"
                     onClick={() => updateStatus(r._id, "approved")}
                     disabled={r.status === "approved"}
                   >
                     Approve
                   </button>
                   <button
-                    className="rounded border border-rose-200 text-rose-700 px-3 py-2 text-sm disabled:opacity-60"
+                    className="rounded-full border border-rose-200 bg-white text-rose-700 px-4 py-2 text-sm disabled:opacity-60"
                     onClick={() => updateStatus(r._id, "rejected")}
                     disabled={r.status === "rejected"}
                   >

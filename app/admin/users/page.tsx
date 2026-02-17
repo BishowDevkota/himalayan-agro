@@ -29,16 +29,22 @@ export default async function AdminUsersPage({ searchParams }: { searchParams?: 
   }));
 
   return (
-    <main className="min-h-screen bg-white text-slate-900">
+    <main className="pb-16">
       <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-extrabold">User management</h1>
-            <p className="mt-2 text-sm text-slate-500">Manage users, roles and activation status.</p>
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Access</span>
+            <h1 className="mt-3 text-4xl font-black">User management</h1>
+            <p className="mt-3 text-sm text-slate-500">Manage users, roles and activation status.</p>
           </div>
         </div>
 
-        <AdminUsersClient initialUsers={safeUsers} initialTotal={Number(total || 0)} initialPage={page} initialPerPage={perPage} />
+        <AdminUsersClient
+          initialUsers={safeUsers}
+          initialTotal={Number(total || 0)}
+          initialPage={page}
+          initialPerPage={perPage}
+        />
       </div>
     </main>
   );

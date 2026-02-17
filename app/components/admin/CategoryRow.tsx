@@ -39,24 +39,26 @@ export default function CategoryRow({ category }: { category: any }) {
   }
 
   return (
-    <div className="flex items-center justify-between gap-4 border rounded p-3">
+    <div className="flex items-center justify-between gap-4 border border-slate-100 bg-white rounded-2xl p-4">
       <div>
         {editing ? (
-          <input className="rounded border px-2 py-1" value={name} onChange={(e) => setName(e.target.value)} />
+          <input className="rounded-full border border-slate-200 px-3 py-1.5 text-sm" value={name} onChange={(e) => setName(e.target.value)} />
         ) : (
-          <div className="font-medium">{category.name} <span className="text-sm text-gray-500">({(category.products||[]).length})</span></div>
+          <div className="font-medium text-slate-900">
+            {category.name} <span className="text-sm text-slate-400">({(category.products || []).length})</span>
+          </div>
         )}
       </div>
       <div className="flex items-center gap-2">
         {editing ? (
           <>
-            <button className="text-sm text-sky-600" onClick={save} disabled={loading}>{loading ? 'Saving…' : 'Save'}</button>
-            <button className="text-sm text-gray-600" onClick={() => setEditing(false)}>Cancel</button>
+            <button className="text-sm text-slate-900" onClick={save} disabled={loading}>{loading ? 'Saving…' : 'Save'}</button>
+            <button className="text-sm text-slate-500" onClick={() => setEditing(false)}>Cancel</button>
           </>
         ) : (
           <>
-            <button className="text-sm text-sky-600" onClick={() => setEditing(true)}>Edit</button>
-            <button className="text-sm text-red-600" onClick={remove} disabled={loading}>Delete</button>
+            <button className="text-sm text-slate-900" onClick={() => setEditing(true)}>Edit</button>
+            <button className="text-sm text-rose-600" onClick={remove} disabled={loading}>Delete</button>
           </>
         )}
       </div>

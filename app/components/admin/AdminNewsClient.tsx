@@ -40,23 +40,23 @@ export default function AdminNewsClient({ initialItems }: { initialItems: NewsIt
   }
 
   return (
-    <section className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+    <section className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-2xl font-semibold">News posts</h2>
+          <h2 className="text-2xl font-semibold text-slate-900">News posts</h2>
           <p className="text-sm text-slate-500 mt-1">Create, edit, and publish news articles.</p>
         </div>
-        <a className="rounded bg-sky-600 text-white px-4 py-2 text-sm" href="/admin/news/add">Add news</a>
+        <a className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm" href="/admin/news/add">Add news</a>
       </div>
 
       {items.length === 0 ? (
         <div className="py-10 text-center text-sm text-slate-500">No news yet</div>
       ) : (
-        <div className="divide-y divide-gray-100">
+        <div className="divide-y divide-slate-100">
           {items.map((item) => (
             <div key={item._id} className="py-4 flex items-start justify-between gap-6">
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 rounded-lg bg-gray-50 overflow-hidden">
+                <div className="w-16 h-16 rounded-2xl bg-slate-50 overflow-hidden">
                   {item.coverImage ? (
                     <img src={item.coverImage} alt={item.title} className="w-full h-full object-cover" />
                   ) : null}
@@ -71,10 +71,10 @@ export default function AdminNewsClient({ initialItems }: { initialItems: NewsIt
               </div>
 
               <div className="flex items-center gap-3">
-                <a className="text-sm text-sky-600" href={`/admin/news/${item._id}/edit`}>Edit</a>
+                <a className="text-sm text-slate-900" href={`/admin/news/${item._id}/edit`}>Edit</a>
                 <a className="text-sm text-slate-600" href={`/news/${item.slug}`} target="_blank" rel="noreferrer">View</a>
                 <button
-                  className="text-sm text-red-600"
+                  className="text-sm text-rose-600"
                   onClick={() => handleDelete(item._id)}
                   disabled={deletingId === item._id}
                 >

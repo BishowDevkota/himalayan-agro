@@ -32,19 +32,19 @@ export default function AdminOrdersClient({ initialOrders = [] }: { initialOrder
   }
 
   return (
-    <div className="bg-white text-slate-900">
-      <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm mb-6">
+    <div className="text-slate-900">
+      <div className="bg-white/90 border border-slate-100 rounded-3xl p-5 shadow-sm mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <label htmlFor="admin-order-search" className="sr-only">Search orders</label>
             <input
               id="admin-order-search"
-              className="w-full sm:w-72 rounded-lg border border-gray-200 px-3 py-2 shadow-sm text-slate-900 placeholder:text-slate-400"
+              className="w-full sm:w-72 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400"
               placeholder="Search by id, customer, item..."
               value={q}
               onChange={(e) => setQ(e.target.value)}
             />
-            <select className="rounded-lg border border-gray-200 px-3 py-2 text-slate-900" value={status} onChange={(e) => setStatus(e.target.value)}>
+            <select className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900" value={status} onChange={(e) => setStatus(e.target.value)}>
               <option value="">All statuses</option>
               <option value="pending">Pending</option>
               <option value="processing">Processing</option>
@@ -56,15 +56,15 @@ export default function AdminOrdersClient({ initialOrders = [] }: { initialOrder
 
           <div className="flex items-center gap-3">
             <div className="text-sm text-slate-600">Showing <span className="font-medium text-slate-800">{filtered.length}</span> of <span className="font-medium text-slate-800">{orders.length}</span></div>
-            <Link href="/admin/orders" className="inline-flex items-center gap-2 rounded-lg border border-gray-100 px-3 py-2 text-sm text-slate-700">Refresh</Link>
+            <Link href="/admin/orders" className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700">Refresh</Link>
           </div>
         </div>
       </div>
 
-      <div className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-auto">
+      <div className="bg-white/90 border border-slate-100 rounded-3xl shadow-sm overflow-auto">
         <table className="w-full text-sm text-slate-800">
           <thead>
-            <tr className="text-left text-xs text-slate-600">
+            <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
               <th className="px-4 py-3">Order</th>
               <th className="px-4 py-3">Customer</th>
               <th className="px-4 py-3">Items</th>
@@ -75,7 +75,7 @@ export default function AdminOrdersClient({ initialOrders = [] }: { initialOrder
               <th className="px-4 py-3">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-slate-100">
             {filtered.map((o: any) => (
               <tr key={o._id} className="align-top">
                 <td className="px-4 py-4 w-[14rem]">

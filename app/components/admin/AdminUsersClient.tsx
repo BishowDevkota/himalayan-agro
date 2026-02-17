@@ -89,29 +89,37 @@ export default function AdminUsersClient({
   const totalPages = Math.max(1, Math.ceil((total || 0) / perPage));
 
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-      <div className="flex items-center justify-between gap-4 mb-6">
+    <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-6">
         <form onSubmit={handleSearch} className="flex items-center gap-3 w-full max-w-xl">
           <label htmlFor="admin-user-search" className="sr-only">Search users</label>
-          <input id="admin-user-search" className="flex-1 rounded-lg border border-gray-200 px-4 py-2 shadow-sm placeholder-gray-400" placeholder="Search by name or email" value={q} onChange={(e) => setQ(e.target.value)} />
-          <button className="rounded-lg bg-sky-600 text-white px-4 py-2 text-sm" type="submit">Search</button>
+          <input
+            id="admin-user-search"
+            className="flex-1 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm placeholder-slate-400"
+            placeholder="Search by name or email"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+          <button className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm" type="submit">Search</button>
         </form>
 
         <form onSubmit={handleCreate} className="flex items-center gap-3">
           <input className="hidden" />
-          <div className="hidden sm:flex items-center gap-2 bg-slate-50 border border-gray-100 rounded-lg px-3 py-2">
-            <input className="w-36 bg-transparent text-sm placeholder-gray-400 focus:outline-none" placeholder="name (optional)" value={createName} onChange={(e) => setCreateName(e.target.value)} />
-            <input className="w-40 bg-transparent text-sm placeholder-gray-400 focus:outline-none" placeholder="email" value={createEmail} onChange={(e) => setCreateEmail(e.target.value)} />
-            <input className="w-36 bg-transparent text-sm placeholder-gray-400 focus:outline-none" placeholder="password" value={createPassword} onChange={(e) => setCreatePassword(e.target.value)} />
+          <div className="hidden sm:flex items-center gap-2 bg-slate-50 border border-slate-100 rounded-full px-4 py-2">
+            <input className="w-32 bg-transparent text-sm placeholder-slate-400 focus:outline-none" placeholder="name (optional)" value={createName} onChange={(e) => setCreateName(e.target.value)} />
+            <input className="w-40 bg-transparent text-sm placeholder-slate-400 focus:outline-none" placeholder="email" value={createEmail} onChange={(e) => setCreateEmail(e.target.value)} />
+            <input className="w-32 bg-transparent text-sm placeholder-slate-400 focus:outline-none" placeholder="password" value={createPassword} onChange={(e) => setCreatePassword(e.target.value)} />
             <select className="bg-transparent text-sm" value={createRole} onChange={(e) => setCreateRole(e.target.value as any)}>
               <option value="user">User</option>
               <option value="admin">Admin</option>
               <option value="vendor">Vendor</option>
             </select>
-            <button className="rounded bg-sky-600 text-white px-3 py-1 text-sm" type="submit" disabled={creating}>{creating ? 'Creating…' : 'Create'}</button>
+            <button className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-sm" type="submit" disabled={creating}>
+              {creating ? 'Creating…' : 'Create'}
+            </button>
           </div>
 
-          <a className="sm:hidden rounded bg-sky-600 text-white px-4 py-2 text-sm" href="/register">Create account</a>
+          <a className="sm:hidden rounded-full bg-slate-900 text-white px-4 py-2 text-sm" href="/register">Create account</a>
         </form>
       </div>
 
@@ -126,7 +134,9 @@ export default function AdminUsersClient({
               <div className="flex items-start justify-between gap-6">
                 <div className="flex-1">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center text-slate-700 font-bold">{(u.name || u.email || 'U')[0].toUpperCase()}</div>
+                    <div className="w-12 h-12 rounded-2xl bg-slate-900/5 flex items-center justify-center text-slate-700 font-bold">
+                      {(u.name || u.email || 'U')[0].toUpperCase()}
+                    </div>
                     <div>
                       <div className="font-medium text-slate-900">{u.name || '—'}</div>
                       <div className="text-sm text-slate-500">{u.email}</div>
@@ -148,9 +158,9 @@ export default function AdminUsersClient({
       <div className="mt-6 flex items-center justify-between">
         <div className="text-sm text-slate-500">{total} users</div>
         <div className="flex items-center gap-2">
-          <button className="rounded border border-gray-100 px-3 py-1 text-sm" disabled={page <= 1} onClick={() => { setPage((p) => Math.max(1, p-1)); fetchUsers({ page: Math.max(1, page-1) }); }}>Prev</button>
+          <button className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm" disabled={page <= 1} onClick={() => { setPage((p) => Math.max(1, p-1)); fetchUsers({ page: Math.max(1, page-1) }); }}>Prev</button>
           <div className="text-sm text-slate-600">Page {page} / {totalPages}</div>
-          <button className="rounded bg-sky-600 text-white px-3 py-1 text-sm" disabled={page >= totalPages} onClick={() => { setPage((p) => p+1); fetchUsers({ page: page+1 }); }}>Next</button>
+          <button className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-sm" disabled={page >= totalPages} onClick={() => { setPage((p) => p+1); fetchUsers({ page: page+1 }); }}>Next</button>
         </div>
       </div>
     </div>

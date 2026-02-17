@@ -62,20 +62,20 @@ export default function ProductForm({ initial = null }: { initial?: any }) {
     <form onSubmit={submit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
       {/* form */}
-      <div className="lg:col-span-2 bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+      <div className="lg:col-span-2 bg-white border border-slate-100 rounded-3xl p-6 shadow-sm">
         <div className="flex items-start justify-between gap-6">
           <div>
-            <h2 className="text-lg font-semibold">Product details</h2>
+            <h2 className="text-lg font-semibold text-slate-900">Product details</h2>
             <p className="mt-1 text-sm text-slate-500">Add title, description and pricing information. Fields marked * are required.</p>
           </div>
-          <div className="text-sm text-slate-500">Draft</div>
+          <div className="text-xs uppercase tracking-wider text-slate-400">Draft</div>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-4">
           <div>
             <label className="block text-sm font-medium text-slate-700">Name <span className="text-rose-600">*</span></label>
             <input
-              className="mt-1 block w-full rounded-lg border border-gray-200 bg-white px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-200 text-slate-900"
+              className="mt-2 block w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-200 text-slate-900"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
@@ -85,12 +85,12 @@ export default function ProductForm({ initial = null }: { initial?: any }) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
             <label className="block text-sm font-medium text-slate-700">Brand</label>
-            <input className="mt-1 block w-full rounded-lg border border-gray-200 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-200 text-slate-900" value={brand} onChange={(e) => setBrand(e.target.value)} />
+            <input className="mt-2 block w-full rounded-full border border-slate-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-200 text-slate-900" value={brand} onChange={(e) => setBrand(e.target.value)} />
             </div>
 
             <div>
               <label className="block text-sm font-medium">Category</label>
-              <select value={selectedCategoryId} onChange={(e) => { setSelectedCategoryId(e.target.value); }} className="mt-1 block w-full rounded-lg border border-gray-200 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-200">
+              <select value={selectedCategoryId} onChange={(e) => { setSelectedCategoryId(e.target.value); }} className="mt-2 block w-full rounded-full border border-slate-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-200">
                 <option value="">— none —</option>
                 {categories.map((c: any) => (
                   <option key={c._id} value={c._id}>{c.name} ({c.productsCount ?? 0})</option>
@@ -104,22 +104,22 @@ export default function ProductForm({ initial = null }: { initial?: any }) {
 
           <div>
             <label className="block text-sm font-medium text-slate-700">Short description</label>
-            <textarea className="mt-1 block w-full rounded-lg border border-gray-200 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-200 text-slate-800" value={description} onChange={(e) => setDescription(e.target.value)} rows={4} />
+            <textarea className="mt-2 block w-full rounded-2xl border border-slate-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-200 text-slate-800" value={description} onChange={(e) => setDescription(e.target.value)} rows={4} />
             <div className="mt-2 text-xs text-slate-500">Keep it concise — shown on category cards and listings.</div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium">Price (INR) <span className="text-rose-600">*</span></label>
-              <div className="mt-1 relative">
+              <div className="mt-2 relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-slate-500">₹</span>
-                <input type="number" step="0.01" className="pl-8 pr-3 w-full rounded-lg border border-gray-200 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-200" value={price} onChange={(e) => setPrice(Number(e.target.value))} required />
+                <input type="number" step="0.01" className="pl-8 pr-3 w-full rounded-full border border-slate-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-200" value={price} onChange={(e) => setPrice(Number(e.target.value))} required />
               </div>
             </div>
 
             <div>
               <label className="block text-sm font-medium">Stock <span className="text-rose-600">*</span></label>
-              <input type="number" className="mt-1 block w-full rounded-lg border border-gray-200 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-200" value={stock} onChange={(e) => setStock(Number(e.target.value))} required />
+              <input type="number" className="mt-2 block w-full rounded-full border border-slate-200 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sky-200" value={stock} onChange={(e) => setStock(Number(e.target.value))} required />
             </div>
           </div>
 
@@ -131,20 +131,20 @@ export default function ProductForm({ initial = null }: { initial?: any }) {
             </div>
           </div>
 
-          <div className="mt-4 flex items-center gap-3">
-            <button type="submit" className="inline-flex items-center gap-2 rounded-lg bg-sky-600 px-4 py-2 text-white shadow-sm hover:bg-sky-700" disabled={loading}>{loading ? 'Saving…' : 'Save product'}</button>
-            <a role="button" onClick={() => window.history.back()} className="inline-flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm text-slate-700 cursor-pointer">Cancel</a>
+          <div className="mt-4 flex flex-wrap items-center gap-3">
+            <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2 text-white" disabled={loading}>{loading ? 'Saving…' : 'Save product'}</button>
+            <a role="button" onClick={() => window.history.back()} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2 text-sm text-slate-700 cursor-pointer">Cancel</a>
             <button type="button" onClick={() => window.open(`/product/preview?name=${encodeURIComponent(name)}`, '_blank')} className="ml-auto text-sm text-slate-500">Preview</button>
           </div>
         </div>
       </div>
 
       {/* aside: live preview + helpers */}
-      <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
-        <h4 className="text-sm font-semibold">Live preview</h4>
+      <div className="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm">
+        <h4 className="text-sm font-semibold text-slate-900">Live preview</h4>
 
-        <div className="mt-4 border border-gray-100 rounded-lg overflow-hidden">
-          <div className="w-full h-44 bg-gray-100 flex items-center justify-center overflow-hidden">
+        <div className="mt-4 border border-slate-100 rounded-2xl overflow-hidden">
+          <div className="w-full h-44 bg-slate-100 flex items-center justify-center overflow-hidden">
             <img src={images[0] || '/placeholder.png'} alt={name || 'preview'} className="w-full h-full object-cover" />
           </div>
           <div className="p-4">
