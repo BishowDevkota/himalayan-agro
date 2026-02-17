@@ -134,7 +134,7 @@ export default function OurMission() {
           {/* Mission Statement */}
           <motion.p
             variants={headingVariants}
-            className="text-center text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-16 sm:mb-20"
+            className="text-center text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-12 sm:mb-16"
           >
             Himalaya Nepal Agriculture Company Limited is committed to modernizing
             Nepal&apos;s agricultural sector through{' '}
@@ -143,6 +143,22 @@ export default function OurMission() {
             global export, and{' '}
             farmer empowerment.
           </motion.p>
+
+          {/* Mission Infographic */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.85 }}
+            transition={{ duration: 0.9, ease: 'easeOut', delay: 0.3 }}
+            className="flex justify-center mb-16 sm:mb-20"
+          >
+            <motion.img
+              src="/mission-infographic.png"
+              alt="Transforming Nepal's Agriculture — Integrated Farming, Value Addition, Global Export, Farmer Empowerment"
+              className="w-full max-w-xl sm:max-w-2xl lg:max-w-3xl h-auto rounded-full drop-shadow-[0_8px_24px_rgba(0,0,0,0.15)]"
+              whileHover={{ scale: 1.03, rotate: 1 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+            />
+          </motion.div>
 
           {/* ── Mobile Pillar Cards (below sm) ── */}
           <div className="grid grid-cols-1 gap-4 sm:hidden">
