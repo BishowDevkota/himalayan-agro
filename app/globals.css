@@ -26,16 +26,17 @@ body {
 }
 
 
+/* Dark mode disabled — this app is light-themed.
+   Keeping tokens as light values to prevent system dark-mode
+   from leaking a black background through transparent UI elements. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-
-    /* dark theme text tokens */
-    --text-primary: #e6eef6; /* high contrast on dark */
-    --text-secondary: #9aa4ad;
-    --text-muted: #6b7580;
-    --text-inverse: #0a0a0a;
+    --background: #ffffff;
+    --foreground: #171717;
+    --text-primary: #171717;
+    --text-secondary: #6b7280;
+    --text-muted: #9ca3af;
+    --text-inverse: #ffffff;
   }
 }
 

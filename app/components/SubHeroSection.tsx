@@ -58,10 +58,10 @@ export default function SubHeroSection({
 
   return (
     <section
-      className="relative w-full overflow-hidden"
+      className="relative z-0 w-full overflow-hidden"
       style={{
-        height: '70vh',
-        minHeight: 480,
+        height: '100dvh',
+        minHeight: 540,
         backgroundColor: isDark ? '#0a1628' : '#f5f0e8',
       }}
     >

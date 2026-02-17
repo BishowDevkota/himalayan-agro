@@ -125,7 +125,7 @@ export default function Hero() {
   const slide = slides[current];
 
   return (
-    <section className="relative w-full bg-[#f5f0e8] overflow-hidden h-[calc(100dvh-64px)] min-h-125">
+    <section className="relative z-0 w-full bg-[#f5f0e8] overflow-hidden h-dvh min-h-125">
       {/* Background */}
       <AnimatePresence mode="wait">
         <motion.div

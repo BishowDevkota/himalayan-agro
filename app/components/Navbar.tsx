@@ -197,18 +197,18 @@ export default function Navbar() {
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" as const }}
-      className={`sticky top-0 w-full z-50 bg-white transition-shadow duration-300 ${scrolled ? "shadow-md" : "shadow-sm"}`}
+      className="fixed top-0 left-0 right-0 z-50 pt-4 px-4 sm:px-6 lg:px-10 pointer-events-none"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-17">
+      <div className={`pointer-events-auto max-w-7xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl px-5 sm:px-7 lg:px-8 transition-shadow duration-300 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
+        <div className="flex items-center justify-between h-[72px] lg:h-20">
 
           {/*  SECTION 1: Logo  */}
           <Link href="/" className="shrink-0 flex items-center" aria-label="Home">
             <motion.img
-              src="/wide-logo.jpeg"
+              src="/logo_original.png"
               alt="Himalaya"
               loading="eager"
-              className="h-10 sm:h-12 w-auto object-contain"
+              className="h-14 sm:h-16 w-auto object-contain"
               whileHover={{ scale: 1.04 }}
               transition={{ duration: 0.25 }}
               onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.png"; }}
@@ -391,7 +391,7 @@ export default function Navbar() {
               {/* Panel header */}
               <div className="flex items-center justify-between px-5 h-16 border-b border-gray-100 shrink-0">
                 <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center">
-                  <img src="/wide-logo.jpeg" alt="Himalaya" className="h-9 w-auto object-contain"
+                  <img src="/logo_original.png" alt="Himalaya" className="h-12 w-auto object-contain"
                     onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.png"; }} />
                 </Link>
                 <motion.button whileTap={{ scale: 0.85 }} onClick={() => setMobileOpen(false)} className="p-2 rounded-full hover:bg-gray-100 transition-colors" aria-label="Close menu">
