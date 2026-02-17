@@ -10,8 +10,8 @@ export default async function AdminUsersPage({ searchParams }: { searchParams?: 
   if (!session || session.user?.role !== 'admin') return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const resolvedParams = await (searchParams ?? Promise.resolve({}));
-  const page = Math.max(1, parseInt((resolvedParams?.page as string) || '1', 10));
+  const resolvedParams = await (searchParams ?? Promise.resolve({} as { page?: string }));
+  const page = Math.max(1, parseInt(resolvedParams?.page || '1', 10));
   const perPage = 20;
 
   const [total, users] = await Promise.all([
