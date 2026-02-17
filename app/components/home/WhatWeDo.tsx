@@ -144,8 +144,62 @@ export default function OurMission() {
             farmer empowerment.
           </motion.p>
 
-          {/* Pillar Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-4">
+          {/* ── Mobile Pillar Cards (below sm) ── */}
+          <div className="grid grid-cols-1 gap-4 sm:hidden">
+            {pillars.map((pillar, index) => (
+              <motion.div
+                key={index}
+                variants={cardVariants}
+                className="group relative bg-white rounded-2xl overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.06)] transition-all duration-500"
+              >
+                {/* Left accent border */}
+                <div
+                  className="absolute top-0 left-0 bottom-0 w-1"
+                  style={{ backgroundColor: pillar.color }}
+                />
+
+                <div className="p-6 pl-7">
+                  {/* Icon + Number row */}
+                  <div className="flex items-start justify-between mb-5">
+                    <div
+                      className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm"
+                      style={{ backgroundColor: pillar.bgLight, color: pillar.color }}
+                    >
+                      {pillar.icon}
+                    </div>
+                    <span
+                      className="text-[36px] font-black leading-none opacity-[0.07] select-none"
+                      style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3
+                    className="text-lg font-bold text-gray-900 mb-2 tracking-tight"
+                    style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
+                  >
+                    {pillar.title}
+                  </h3>
+
+                  {/* Colored separator */}
+                  <div
+                    className="w-8 h-0.5 mb-3"
+                    style={{ backgroundColor: pillar.color }}
+                  />
+
+                  {/* Description */}
+                  <p className="text-sm text-gray-500 leading-relaxed">
+                    {pillar.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* ── Desktop / Tablet Pillar Cards (sm and above) ── */}
+          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-4">
             {pillars.map((pillar, index) => (
               <motion.div
                 key={index}
