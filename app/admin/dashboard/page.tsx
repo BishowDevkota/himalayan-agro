@@ -127,93 +127,64 @@ export default async function AdminDashboardPage() {
           </section>
 
           <aside className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <h3 className="text-base font-semibold text-slate-900">Quick actions</h3>
-            <div className="mt-4 grid gap-3">
-              <a href="/admin/products" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-2xl border border-slate-100 px-4 py-3 bg-white">
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-slate-400">Products</div>
-                  <div className="font-medium text-slate-800">Manage catalog</div>
-                </div>
-                <div className="text-slate-400">→</div>
-              </a>
-
-              <a href="/admin/categories" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-2xl border border-slate-100 px-4 py-3 bg-white">
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-slate-400">Categories</div>
-                  <div className="font-medium text-slate-800">Category management</div>
-                </div>
-                <div className="text-slate-400">→</div>
-              </a>
-
-              <a href="/admin/orders" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-2xl border border-slate-100 px-4 py-3 bg-white">
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-slate-400">Orders</div>
-                  <div className="font-medium text-slate-800">Fulfillment queue</div>
-                </div>
-                <div className="text-slate-400">→</div>
-              </a>
-
-              <a href="/admin/users" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-2xl border border-slate-100 px-4 py-3 bg-white">
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-slate-400">Users</div>
-                  <div className="font-medium text-slate-800">User management</div>
-                </div>
-                <div className="text-slate-400">→</div>
-              </a>
-
-              <a href="/admin/vendor" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-2xl border border-slate-100 px-4 py-3 bg-white">
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-slate-400">Vendors</div>
-                  <div className="font-medium text-slate-800">Review applications</div>
-                </div>
-                <div className="text-slate-400">→</div>
-              </a>
-
-              <a href="/admin/payment-requests" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-2xl border border-slate-100 px-4 py-3 bg-white">
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-slate-400">Payments</div>
-                  <div className="font-medium text-slate-800">Payment requests</div>
-                </div>
-                <div className="text-slate-400">→</div>
-              </a>
-
-              <a href="/admin/news" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-2xl border border-slate-100 px-4 py-3 bg-white">
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-slate-400">News</div>
-                  <div className="font-medium text-slate-800">Manage news posts</div>
-                </div>
-                <div className="text-slate-400">→</div>
-              </a>
-              <a href="/admin/employees" className="w-full text-left inline-flex items-center justify-between gap-3 rounded-2xl border border-slate-100 px-4 py-3 bg-white">
-                <div>
-                  <div className="text-xs uppercase tracking-wider text-slate-400">Employees</div>
-                  <div className="font-medium text-slate-800">Manage employees</div>
-                </div>
-                <div className="text-slate-400">→</div>
-              </a>
+            <div className="flex items-center justify-between">
+              <h3 className="text-base font-semibold text-slate-900">Sales performance</h3>
+              <span className="text-xs text-slate-400">Last 8 weeks</span>
             </div>
 
-            <div className="mt-6 border-t border-slate-100 pt-4 text-sm text-slate-500">
-              <div>
-                Last sync: <span className="font-medium text-slate-700">Jan 30, 2026</span>
+            <div className="mt-6 rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
+              <div className="flex h-40 items-end gap-3">
+                {[
+                  "h-16",
+                  "h-20",
+                  "h-24",
+                  "h-28",
+                  "h-24",
+                  "h-32",
+                  "h-28",
+                  "h-36",
+                ].map((height, index) => (
+                  <div
+                    key={`bar-${index}`}
+                    className={`flex-1 rounded-full bg-gradient-to-t from-slate-900 to-slate-700 ${height}`}
+                  />
+                ))}
               </div>
-              <div className="mt-2">
-                System status: <span className="ml-2 inline-flex items-center gap-2 text-emerald-600">● <span className="text-slate-600">Healthy</span></span>
+              <div className="mt-4 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-400">
+                <span>W1</span>
+                <span>W2</span>
+                <span>W3</span>
+                <span>W4</span>
+                <span>W5</span>
+                <span>W6</span>
+                <span>W7</span>
+                <span>W8</span>
+              </div>
+            </div>
+
+            <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
+              <div className="rounded-2xl border border-slate-100 bg-white p-4">
+                <div className="text-xs uppercase tracking-widest text-slate-400">Revenue</div>
+                <div className="mt-2 text-2xl font-black text-slate-900">NPR 42.8M</div>
+                <div className="mt-1 text-xs text-emerald-600">+12.4% MoM</div>
+              </div>
+              <div className="rounded-2xl border border-slate-100 bg-white p-4">
+                <div className="text-xs uppercase tracking-widest text-slate-400">Orders</div>
+                <div className="mt-2 text-2xl font-black text-slate-900">6,420</div>
+                <div className="mt-1 text-xs text-emerald-600">+8.1% MoM</div>
+              </div>
+              <div className="rounded-2xl border border-slate-100 bg-white p-4">
+                <div className="text-xs uppercase tracking-widest text-slate-400">Avg order</div>
+                <div className="mt-2 text-2xl font-black text-slate-900">NPR 6,670</div>
+                <div className="mt-1 text-xs text-slate-500">Stable</div>
+              </div>
+              <div className="rounded-2xl border border-slate-100 bg-white p-4">
+                <div className="text-xs uppercase tracking-widest text-slate-400">Refunds</div>
+                <div className="mt-2 text-2xl font-black text-slate-900">1.2%</div>
+                <div className="mt-1 text-xs text-emerald-600">-0.4% MoM</div>
               </div>
             </div>
           </aside>
-        </div>
-
-        <div className="mt-10 flex flex-wrap gap-3">
-          <a className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-5 py-2.5 text-white shadow-sm" href="/admin/products">
-            Manage products
-          </a>
-          <a className="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-slate-700" href="/admin/categories">
-            Manage categories
-          </a>
-          <a className="inline-flex items-center gap-3 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-slate-700" href="/admin/orders">
-            Manage orders
-          </a>
         </div>
       </div>
     </main>

@@ -18,70 +18,85 @@ const navItems = [
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [open, setOpen] = React.useState(false);
 
   if (pathname?.startsWith("/admin/login")) {
     return <div className="min-h-screen">{children}</div>;
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-sky-100">
+    <div className="min-h-screen bg-white text-slate-900 selection:bg-slate-200">
       <div className="relative overflow-hidden">
         <div className="absolute -top-32 -right-16 h-72 w-72 rounded-full bg-sky-200/40 blur-[120px]" aria-hidden />
         <div className="absolute -bottom-40 -left-16 h-80 w-80 rounded-full bg-emerald-200/30 blur-[140px]" aria-hidden />
 
-        <header className="relative z-10">
-          <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-10">
-            <div className="flex flex-col gap-6 rounded-[32px] border border-slate-100 bg-white/80 px-6 py-6 shadow-sm backdrop-blur">
-              <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-lg font-black">
-                    H
-                  </div>
-                  <div>
-                    <div className="text-xs uppercase tracking-[0.2em] text-slate-400">Himalayan Agro</div>
-                    <div className="text-2xl font-black text-slate-900">Admin Console</div>
-                  </div>
-                </div>
+        <button
+          type="button"
+          className="fixed left-10 top-[100px] z-50 flex h-5 w-8 flex-col items-center justify-between"
+          onClick={() => setOpen((prev) => !prev)}
+          aria-label={open ? "Close navigation" : "Open navigation"}
+          aria-expanded={open}
+          aria-controls="admin-sidebar"
+        >
+          <span
+            className={`h-px w-full bg-black transition-transform duration-300 ${
+              open ? "translate-y-2 rotate-45" : "translate-y-0"
+            }`}
+          />
+          <span
+            className={`h-px w-full bg-black transition-opacity duration-300 ${
+              open ? "opacity-0" : "opacity-100"
+            }`}
+          />
+          <span
+            className={`h-px w-full bg-black transition-transform duration-300 ${
+              open ? "-translate-y-2 -rotate-45" : "translate-y-0"
+            }`}
+          />
+        </button>
 
-                <div className="flex flex-wrap items-center gap-3 text-sm">
-                  <Link
-                    href="/"
-                    className="rounded-full border border-slate-200 px-4 py-2 text-slate-600 hover:text-slate-900"
-                  >
-                    View Storefront
-                  </Link>
-                  <Link
-                    href="/admin/dashboard"
-                    className="rounded-full bg-slate-900 px-4 py-2 text-white"
-                  >
-                    Open Dashboard
-                  </Link>
-                </div>
-              </div>
+        {open ? (
+          <div
+            className="fixed inset-0 z-40 bg-black/10 backdrop-blur"
+            onClick={() => setOpen(false)}
+            aria-hidden
+          />
+        ) : null}
 
-              <nav className="flex flex-wrap items-center gap-2 text-sm text-slate-600">
-                {navItems.map((item) => {
-                  const isActive = pathname === item.href;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`rounded-full px-4 py-2 ${
-                        isActive
-                          ? "bg-slate-900 text-white"
-                          : "bg-white text-slate-600 border border-slate-100 hover:text-slate-900"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
-          </div>
-        </header>
+        <aside
+          id="admin-sidebar"
+          className={`fixed left-0 top-0 z-50 h-screen w-[90vw] transform overflow-y-auto border-r border-slate-200 bg-white px-10 pt-[120px] transition-transform duration-500 lg:w-[25vw] ${
+            open ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <nav className="flex flex-col gap-6 text-[1.35rem] font-light text-slate-900">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`block transition-all duration-300 ${
+                    isActive
+                      ? "text-slate-900"
+                      : "text-slate-900/80 hover:text-slate-500 hover:translate-x-2"
+                  }`}
+                  onClick={() => setOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </aside>
 
-        <div className="relative z-10">{children}</div>
+        <div
+          className={`relative z-10 min-h-screen px-10 pt-10 transition-[padding] duration-500 ${
+            open ? "lg:pl-[25vw]" : "lg:pl-10"
+          }`}
+        >
+          <div className="relative z-10">{children}</div>
+        </div>
       </div>
     </div>
   );
