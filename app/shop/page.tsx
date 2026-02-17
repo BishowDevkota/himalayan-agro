@@ -1,4 +1,6 @@
 import React from "react";
+import { getServerSession } from "next-auth";
+import authOptions from "../../lib/auth";
 import connectToDatabase from "../../lib/mongodb";
 import Product from "../../models/Product";
 import ProductCard from "../components/ProductCard";
@@ -38,6 +40,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
     const safeCats = serializeCats(cats as any[]);
 
     const totalPages = Math.ceil(total / limit);
+    const session = await getServerSession(authOptions);
 
     return (
       <main className="bg-white text-gray-900">
@@ -50,8 +53,8 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
             { value: `${total}`, label: "Products Available" },
             { value: "340+", label: "Partner Farms" },
           ]}
-          btnText="Become a Vendor"
-          btnHref="/register/vendor"
+          btnText={!session ? "Become a Vendor" : undefined}
+          btnHref={!session ? "/register/vendor" : undefined}
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
