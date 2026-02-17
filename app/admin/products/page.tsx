@@ -24,77 +24,86 @@ export default async function AdminProductsPage() {
   const activeCount = safeProducts.filter((p: any) => p.isActive).length;
 
   return (
-    <main className="pb-16">
-      <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+    <main className="pb-10">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Catalog</span>
-            <h1 className="mt-3 text-4xl font-black text-slate-900">Products</h1>
-            <p className="mt-3 text-sm text-slate-500">Manage catalog — create, edit and publish products.</p>
+            <span className="inline-block text-xs font-semibold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full mb-3">Catalog</span>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Products</h1>
+            <p className="mt-1 text-sm text-slate-500">Manage catalog — create, edit and publish products.</p>
           </div>
-
-          <div className="flex flex-wrap gap-2">
-            <a className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-xs font-medium" href="/admin/products/new">New product</a>
-            <a className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-700" href="/products">View store</a>
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Total Products</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{safeProducts.length}</div>
-                <div className="mt-2 text-sm text-slate-400">All product listings</div>
-              </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 font-bold">P</div>
-            </div>
-          </div>
-
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Active</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{activeCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Published & visible</div>
-              </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 font-bold">A</div>
-            </div>
-          </div>
-
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Categories</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{publicCats.length}</div>
-                <div className="mt-2 text-sm text-slate-400">Product categories</div>
-              </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 font-bold">C</div>
-            </div>
-          </div>
-
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Out of Stock</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{outOfStock}</div>
-                <div className="mt-2 text-sm text-slate-400">Needs restocking</div>
-              </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 font-bold">!</div>
-            </div>
+          <div className="flex items-center gap-2">
+            <a className="inline-flex items-center gap-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 text-sm font-medium transition-colors shadow-sm" href="/admin/products/new">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New product
+            </a>
+            <a className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm" href="/products">View store</a>
           </div>
         </div>
 
-        <div className="mt-8">
-          <AdminProductsClient
-            initialProducts={safeProducts}
-            initialTotal={safeProducts.length}
-            initialPage={1}
-            initialPerPage={20}
-            categories={publicCats}
-          />
+        {/* Stat Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-100 text-cyan-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Total</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{safeProducts.length}</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 mt-3">All product listings</p>
+          </div>
+
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Active</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{activeCount}</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 mt-3">Published &amp; visible</p>
+          </div>
+
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Categories</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{publicCats.length}</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 mt-3">Product categories</p>
+          </div>
+
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-rose-100 text-rose-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Out of Stock</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{outOfStock}</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 mt-3">Needs restocking</p>
+          </div>
         </div>
+
+        <AdminProductsClient
+          initialProducts={safeProducts}
+          initialTotal={safeProducts.length}
+          initialPage={1}
+          initialPerPage={20}
+          categories={publicCats}
+        />
       </div>
     </main>
   );

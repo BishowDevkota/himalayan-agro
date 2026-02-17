@@ -112,159 +112,172 @@ export default async function AdminDashboardPage() {
   });
 
   return (
-    <main className="pb-16">
-      <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+    <main className="pb-10">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Admin overview</span>
-            <h1 className="mt-3 text-4xl font-black leading-tight text-slate-900">Admin dashboard</h1>
-            <p className="mt-3 text-sm text-slate-500">
-              Overview — quick access to orders, products, categories and users.
-            </p>
+            <span className="inline-block text-xs font-semibold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full mb-3">Overview</span>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Dashboard</h1>
+            <p className="mt-1 text-sm text-slate-500">Real-time analytics &amp; performance metrics.</p>
+          </div>
+          <a href="/admin/dashboard" className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+            Refresh
+          </a>
+        </div>
+
+        {/* Stat Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Users</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{users}</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 mt-3">Total registered accounts</p>
+          </div>
+
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-100 text-cyan-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Products</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{products}</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 mt-3">Active product listings</p>
+          </div>
+
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V8l-5-5z"/><path d="M15 3v5h5"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Orders</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{orders}</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 mt-3">All-time orders placed</p>
+          </div>
+
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 text-violet-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9"/><path d="M9 21V13h6v8"/></svg>
+              </div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Vendors</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{vendors}</p>
+              </div>
+            </div>
+            <p className="text-xs text-slate-400 mt-3">Store applications</p>
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
+        {/* Revenue & Performance */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
+          {/* Revenue Mix */}
+          <section className="lg:col-span-2 bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden">
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between px-5 pt-5 pb-4 border-b border-slate-100">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Users</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{users}</div>
-                <div className="mt-2 text-sm text-slate-400">Total registered accounts</div>
+                <h2 className="text-base font-semibold text-slate-900">Revenue mix</h2>
+                <p className="text-xs text-slate-400 mt-0.5">Last 30 days by order status</p>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 font-bold">U</div>
-            </div>
-          </div>
-
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Products</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{products}</div>
-                <div className="mt-2 text-sm text-slate-400">Active product listings</div>
-              </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 font-bold">P</div>
-            </div>
-          </div>
-
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Orders</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{orders}</div>
-                <div className="mt-2 text-sm text-slate-400">Orders placed (all time)</div>
-              </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 font-bold">O</div>
-            </div>
-          </div>
-
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Vendors</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{vendors}</div>
-                <div className="mt-2 text-sm text-slate-400">Store applications</div>
-              </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 font-bold">V</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <section className="lg:col-span-2 bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <h2 className="text-lg font-bold text-slate-900">Revenue mix</h2>
-                <p className="mt-1 text-xs text-slate-400">Last 30 days by order status.</p>
-              </div>
-              <div className="text-xs text-slate-400">Total: {formatNPR.format(revenueNow)}</div>
+              <span className="text-sm font-semibold text-cyan-600">{formatNPR.format(revenueNow)}</span>
             </div>
 
-            <div className="mt-6 grid grid-cols-1 gap-8 rounded-3xl border border-slate-100 bg-slate-50/80 p-6 md:grid-cols-[260px_1fr]">
-              <div className="relative h-60 w-60 mx-auto">
-                <div
-                  className="h-full w-full rounded-full"
-                  style={{ background: pieBackground }}
-                />
-                <div className="absolute inset-6 rounded-full bg-white shadow-sm flex flex-col items-center justify-center text-center">
-                  <div className="text-xs uppercase tracking-widest text-slate-400">Revenue</div>
-                  <div className="mt-2 text-xl font-black text-slate-900">{formatNPR.format(revenueNow)}</div>
-                  <div className="mt-1 text-xs text-slate-400">Last 30 days</div>
-                </div>
-              </div>
-
-              <div className="grid gap-4">
-                {statusTotals.map((item) => (
-                  <div key={item.key} className="flex items-center justify-between rounded-2xl border border-slate-100 bg-white px-4 py-3">
-                    <div className="flex items-center gap-3">
-                      <span className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
-                      <div>
-                        <div className="text-sm font-semibold text-slate-900">{item.label}</div>
-                        <div className="text-xs text-slate-400">{item.key}</div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="text-sm font-semibold text-slate-900">{formatNPR.format(item.total)}</div>
-                      <div className="text-xs text-slate-400">
-                        {statusTotalRevenue
-                          ? `${((item.total / statusTotalRevenue) * 100).toFixed(1)}%`
-                          : "0.0%"}
-                      </div>
-                    </div>
+            <div className="p-5">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr]">
+                <div className="relative h-52 w-52 mx-auto">
+                  <div className="h-full w-full rounded-full" style={{ background: pieBackground }} />
+                  <div className="absolute inset-5 rounded-full bg-white shadow-sm flex flex-col items-center justify-center text-center">
+                    <p className="text-[10px] uppercase tracking-widest text-slate-400 font-medium">Revenue</p>
+                    <p className="text-lg font-bold text-slate-900 mt-1">{formatNPR.format(revenueNow)}</p>
+                    <p className="text-[10px] text-slate-400">Last 30 days</p>
                   </div>
-                ))}
+                </div>
+
+                <div className="grid gap-2.5">
+                  {statusTotals.map((item) => (
+                    <div key={item.key} className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/60 px-4 py-2.5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="h-2.5 w-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
+                        <div>
+                          <p className="text-sm font-medium text-slate-700">{item.label}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-sm font-semibold text-slate-900">{formatNPR.format(item.total)}</p>
+                        <p className="text-[10px] text-slate-400">
+                          {statusTotalRevenue ? `${((item.total / statusTotalRevenue) * 100).toFixed(1)}%` : "0.0%"}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </section>
 
-          <aside className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <h3 className="text-base font-semibold text-slate-900">Sales performance</h3>
-              <span className="text-xs text-slate-400">Last 8 weeks</span>
+          {/* Sales Performance */}
+          <aside className="bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden">
+            <div className="flex items-center justify-between px-5 pt-5 pb-4 border-b border-slate-100">
+              <h3 className="text-base font-semibold text-slate-900">Sales trend</h3>
+              <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">8 weeks</span>
             </div>
 
-            <div className="mt-6 rounded-2xl border border-slate-100 bg-slate-50/80 p-4">
-              <div className="flex h-40 items-end gap-3">
-                {weekBuckets.map((bucket, index) => (
-                  <div
-                    key={`bar-${index}`}
-                    className="flex-1 rounded-full bg-linear-to-t from-blue-950 to-blue-700"
-                    style={{ height: `${Math.max(18, (bucket.total / maxWeekTotal) * 140)}px` }}
-                    title={formatNPR.format(bucket.total)}
-                  />
-                ))}
+            <div className="p-5">
+              <div className="rounded-xl bg-slate-50/80 border border-slate-100 p-4">
+                <div className="flex h-36 items-end gap-2">
+                  {weekBuckets.map((bucket, index) => (
+                    <div
+                      key={`bar-${index}`}
+                      className="flex-1 rounded-md bg-gradient-to-t from-cyan-700 to-cyan-500"
+                      style={{ height: `${Math.max(16, (bucket.total / maxWeekTotal) * 130)}px` }}
+                      title={formatNPR.format(bucket.total)}
+                    />
+                  ))}
+                </div>
+                <div className="mt-3 flex items-center justify-between text-[9px] uppercase tracking-widest text-slate-400 font-medium">
+                  {weekBuckets.map((bucket) => (
+                    <span key={bucket.label}>{bucket.label}</span>
+                  ))}
+                </div>
               </div>
-              <div className="mt-4 flex items-center justify-between text-[10px] uppercase tracking-widest text-slate-400">
-                {weekBuckets.map((bucket) => (
-                  <span key={bucket.label}>{bucket.label}</span>
-                ))}
-              </div>
-            </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-4 text-sm">
-              <div className="rounded-2xl border border-slate-100 bg-white p-4">
-                <div className="text-xs uppercase tracking-widest text-slate-400">Revenue</div>
-                <div className="mt-2 text-2xl font-black text-slate-900">{formatNPR.format(revenueNow)}</div>
-                <div className={`mt-1 text-xs ${revenueChange === null || revenueChange >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
-                  {revenueChange === null ? "No prior data" : `${revenueChange >= 0 ? "+" : ""}${revenueChange.toFixed(1)}% MoM`}
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="rounded-xl border border-slate-100 bg-white p-3.5">
+                  <p className="text-[10px] uppercase tracking-widest text-slate-400 font-medium">Revenue</p>
+                  <p className="text-xl font-bold text-slate-900 mt-1">{formatNPR.format(revenueNow)}</p>
+                  <p className={`mt-0.5 text-xs font-medium ${revenueChange === null || revenueChange >= 0 ? "text-emerald-500" : "text-rose-500"}`}>
+                    {revenueChange === null ? "No prior data" : `${revenueChange >= 0 ? "+" : ""}${revenueChange.toFixed(1)}%`}
+                  </p>
                 </div>
-              </div>
-              <div className="rounded-2xl border border-slate-100 bg-white p-4">
-                <div className="text-xs uppercase tracking-widest text-slate-400">Orders</div>
-                <div className="mt-2 text-2xl font-black text-slate-900">{ordersNow}</div>
-                <div className={`mt-1 text-xs ${ordersChange === null || ordersChange >= 0 ? "text-emerald-600" : "text-rose-600"}`}>
-                  {ordersChange === null ? "No prior data" : `${ordersChange >= 0 ? "+" : ""}${ordersChange.toFixed(1)}% MoM`}
+                <div className="rounded-xl border border-slate-100 bg-white p-3.5">
+                  <p className="text-[10px] uppercase tracking-widest text-slate-400 font-medium">Orders</p>
+                  <p className="text-xl font-bold text-slate-900 mt-1">{ordersNow}</p>
+                  <p className={`mt-0.5 text-xs font-medium ${ordersChange === null || ordersChange >= 0 ? "text-emerald-500" : "text-rose-500"}`}>
+                    {ordersChange === null ? "No prior data" : `${ordersChange >= 0 ? "+" : ""}${ordersChange.toFixed(1)}%`}
+                  </p>
                 </div>
-              </div>
-              <div className="rounded-2xl border border-slate-100 bg-white p-4">
-                <div className="text-xs uppercase tracking-widest text-slate-400">Avg order</div>
-                <div className="mt-2 text-2xl font-black text-slate-900">{formatNPR.format(avgOrder)}</div>
-                <div className="mt-1 text-xs text-slate-500">Last 30 days</div>
-              </div>
-              <div className="rounded-2xl border border-slate-100 bg-white p-4">
-                <div className="text-xs uppercase tracking-widest text-slate-400">Refunds</div>
-                <div className="mt-2 text-2xl font-black text-slate-900">{refundRate.toFixed(1)}%</div>
-                <div className="mt-1 text-xs text-slate-500">Cancelled (30 days)</div>
+                <div className="rounded-xl border border-slate-100 bg-white p-3.5">
+                  <p className="text-[10px] uppercase tracking-widest text-slate-400 font-medium">Avg Order</p>
+                  <p className="text-xl font-bold text-slate-900 mt-1">{formatNPR.format(avgOrder)}</p>
+                  <p className="mt-0.5 text-xs text-slate-400">Last 30 days</p>
+                </div>
+                <div className="rounded-xl border border-slate-100 bg-white p-3.5">
+                  <p className="text-[10px] uppercase tracking-widest text-slate-400 font-medium">Refunds</p>
+                  <p className="text-xl font-bold text-slate-900 mt-1">{refundRate.toFixed(1)}%</p>
+                  <p className="mt-0.5 text-xs text-slate-400">Cancelled (30d)</p>
+                </div>
               </div>
             </div>
           </aside>

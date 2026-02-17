@@ -44,77 +44,68 @@ export default async function AdminVendorsPage() {
 
   return (
     <main className="pb-16">
-      <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Partners</span>
-            <h1 className="mt-3 text-4xl font-black text-slate-900">Vendor requests</h1>
-            <p className="mt-3 text-sm text-slate-500">
-              Review vendor applications and approve or reject them.
-            </p>
+            <span className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Partners</span>
+            <h1 className="mt-3 text-2xl sm:text-3xl font-bold text-slate-900">Vendor Requests</h1>
+            <p className="mt-1 text-sm text-slate-500">Review vendor applications and approve or reject them.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <a
-              href="/admin/vendor"
-              className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm text-slate-700"
-            >
-              Refresh
-            </a>
-          </div>
+          <a href="/admin/vendor" className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm self-start">
+            Refresh
+          </a>
         </div>
 
         {/* Stats Summary */}
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Total Vendors</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{safe.length}</div>
-                <div className="mt-2 text-sm text-slate-400">All applications</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Total Vendors</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{safe.length}</div>
+                <div className="mt-1 text-xs text-slate-400">All applications</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 font-bold">V</div>
+              <div className="h-10 w-10 rounded-xl bg-cyan-50 flex items-center justify-center"><svg className="h-5 w-5 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
             </div>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Pending</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{pendingCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Awaiting review</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Pending</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{pendingCount}</div>
+                <div className="mt-1 text-xs text-slate-400">Awaiting review</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 font-bold">P</div>
+              <div className="h-10 w-10 rounded-xl bg-amber-50 flex items-center justify-center"><svg className="h-5 w-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10" strokeWidth="2"/><path strokeLinecap="round" strokeWidth="2" d="M12 6v6l4 2"/></svg></div>
             </div>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Approved</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{approvedCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Active vendors</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Approved</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{approvedCount}</div>
+                <div className="mt-1 text-xs text-slate-400">Active vendors</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 font-bold">✓</div>
+              <div className="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center"><svg className="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
             </div>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Rejected</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{rejectedCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Declined applications</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Rejected</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{rejectedCount}</div>
+                <div className="mt-1 text-xs text-slate-400">Declined applications</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 font-bold">✗</div>
+              <div className="h-10 w-10 rounded-xl bg-rose-50 flex items-center justify-center"><svg className="h-5 w-5 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
             </div>
           </div>
         </div>
 
         {/* Vendors Table */}
-        <div className="mt-8">
-          <AdminVendorsClient initialVendors={safe} />
-        </div>
+        <AdminVendorsClient initialVendors={safe} />
       </div>
     </main>
   );

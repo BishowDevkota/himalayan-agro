@@ -64,34 +64,40 @@ export default function AdminProductsClient({
   return (
     <div>
       {/* Toolbar */}
-      <div className="bg-white/90 border border-slate-100 rounded-3xl p-4 shadow-sm mb-6">
+      <div className="bg-white border border-slate-200/60 rounded-2xl p-4 shadow-sm mb-5">
         <form onSubmit={handleSearch} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div className="flex items-center gap-2 w-full sm:w-auto">
-            <input
-              aria-label="Search products"
-              className="w-full sm:w-60 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs text-slate-900 placeholder:text-slate-400"
-              placeholder="Search by name, brand or SKU"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-            />
-            <select className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-900" value={category} onChange={(e) => setCategory(e.target.value)}>
+            <div className="relative w-full sm:w-60">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input
+                aria-label="Search products"
+                className="w-full rounded-lg border border-slate-200 bg-slate-50/50 pl-9 pr-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all"
+                placeholder="Search by name, brand or SKU"
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+              />
+            </div>
+            <select className="rounded-lg border border-slate-200 bg-slate-50/50 px-3 py-2 text-sm text-slate-700 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all" value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">All categories</option>
               {categories.map((c: any) => (
                 <option key={c._id} value={c.name}>{c.name} ({c.productsCount || 0})</option>
               ))}
             </select>
-            <button className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-xs font-medium whitespace-nowrap" type="submit">Search</button>
+            <button className="rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors" type="submit">Search</button>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="text-xs text-slate-500">Showing <span className="font-medium text-slate-800">{products.length}</span> of <span className="font-medium text-slate-800">{total}</span></div>
-            <a className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-xs font-medium whitespace-nowrap" href="/admin/products/new">New product</a>
+            <p className="text-xs text-slate-500">Showing <span className="font-semibold text-slate-700">{products.length}</span> of <span className="font-semibold text-slate-700">{total}</span></p>
+            <a className="inline-flex items-center gap-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors" href="/admin/products/new">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New product
+            </a>
           </div>
         </form>
 
-        <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
-          <label className="flex items-center gap-2"><input type="checkbox" className="h-3.5 w-3.5" disabled /> Bulk select (coming soon)</label>
-          <div>Show <select className="ml-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-900" value={perPage} onChange={(e) => { setPerPage(Number(e.target.value)); fetchProducts({ page: 1 }); }}>
+        <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+          <label className="flex items-center gap-2"><input type="checkbox" className="h-3.5 w-3.5 rounded border-slate-300" disabled /> Bulk select (coming soon)</label>
+          <div>Show <select className="ml-1.5 rounded-lg border border-slate-200 bg-slate-50/50 px-2.5 py-1 text-xs text-slate-700 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none" value={perPage} onChange={(e) => { setPerPage(Number(e.target.value)); fetchProducts({ page: 1 }); }}>
             <option value={10}>10</option>
             <option value={20}>20</option>
             <option value={50}>50</option>
@@ -100,38 +106,40 @@ export default function AdminProductsClient({
       </div>
 
       {/* Product table */}
-      <div className="bg-white/90 border border-slate-100 rounded-3xl shadow-sm overflow-auto">
-        <table className="w-full text-sm text-slate-800">
-          <thead>
-            <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
-              <th className="px-5 py-4">Product</th>
-              <th className="px-5 py-4">Category</th>
-              <th className="px-5 py-4">Price</th>
-              <th className="px-5 py-4">Stock</th>
-              <th className="px-5 py-4">Status</th>
-              <th className="px-5 py-4">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {loading && (
-              <tr><td colSpan={6} className="px-5 py-12 text-center text-sm text-slate-400">Loading…</td></tr>
-            )}
-            {empty && (
-              <tr><td colSpan={6} className="px-5 py-12 text-center text-sm text-slate-400">No products found.</td></tr>
-            )}
-            {!loading && products.map((p: any) => (
-              <ProductRow key={p._id} product={p} />
-            ))}
-          </tbody>
-        </table>
+      <div className="bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-slate-50/80 border-b border-slate-100">
+                <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Product</th>
+                <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Category</th>
+                <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Price</th>
+                <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Stock</th>
+                <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Status</th>
+                <th className="px-4 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {loading && (
+                <tr><td colSpan={6} className="px-4 py-16 text-center text-sm text-slate-400">Loading…</td></tr>
+              )}
+              {empty && (
+                <tr><td colSpan={6} className="px-4 py-16 text-center text-sm text-slate-400">No products found.</td></tr>
+              )}
+              {!loading && products.map((p: any) => (
+                <ProductRow key={p._id} product={p} />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       {/* Pagination */}
-      <div className="mt-6 flex items-center justify-between">
-        <div className="text-xs text-slate-500">Page {page} of {totalPages}</div>
+      <div className="mt-5 flex items-center justify-between">
+        <p className="text-xs text-slate-500">Page <span className="font-semibold text-slate-700">{page}</span> of <span className="font-semibold text-slate-700">{totalPages}</span></p>
         <div className="flex items-center gap-2">
-          <button className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs text-slate-700 font-medium" disabled={page <= 1} onClick={() => { const np = Math.max(1, page-1); setPage(np); fetchProducts({ page: np }); }}>Prev</button>
-          <button className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-xs font-medium" disabled={page >= totalPages} onClick={() => { const np = Math.min(totalPages, page+1); setPage(np); fetchProducts({ page: np }); }}>Next</button>
+          <button className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-xs text-slate-700 font-medium transition-colors disabled:opacity-40" disabled={page <= 1} onClick={() => { const np = Math.max(1, page-1); setPage(np); fetchProducts({ page: np }); }}>Prev</button>
+          <button className="rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 text-xs font-medium transition-colors disabled:opacity-40" disabled={page >= totalPages} onClick={() => { const np = Math.min(totalPages, page+1); setPage(np); fetchProducts({ page: np }); }}>Next</button>
         </div>
       </div>
     </div>

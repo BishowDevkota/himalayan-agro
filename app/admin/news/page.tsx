@@ -29,83 +29,74 @@ export default async function AdminNewsPage() {
 
   return (
     <main className="pb-16">
-      <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Content</span>
-            <h1 className="mt-3 text-4xl font-black text-slate-900">News</h1>
-            <p className="mt-3 text-sm text-slate-500">
-              Manage your news posts and announcements — search, filter and publish.
-            </p>
+            <span className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Content</span>
+            <h1 className="mt-3 text-2xl sm:text-3xl font-bold text-slate-900">News</h1>
+            <p className="mt-1 text-sm text-slate-500">Manage your news posts and announcements.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <a
-              href="/admin/news/add"
-              className="rounded-full bg-slate-900 text-white px-5 py-2.5 text-sm"
-            >
+          <div className="flex items-center gap-2 self-start">
+            <a href="/admin/news/add" className="rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 text-sm font-medium transition-colors inline-flex items-center gap-1.5">
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"/></svg>
               Add news
             </a>
-            <a
-              href="/admin/news"
-              className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm text-slate-700"
-            >
+            <a href="/admin/news" className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm">
               Refresh
             </a>
           </div>
         </div>
 
         {/* Stats Summary */}
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Total Posts</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{safe.length}</div>
-                <div className="mt-2 text-sm text-slate-400">All news articles</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Total Posts</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{safe.length}</div>
+                <div className="mt-1 text-xs text-slate-400">All news articles</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 font-bold">N</div>
+              <div className="h-10 w-10 rounded-xl bg-cyan-50 flex items-center justify-center"><svg className="h-5 w-5 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg></div>
             </div>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Published</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{publishedCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Live &amp; visible</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Published</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{publishedCount}</div>
+                <div className="mt-1 text-xs text-slate-400">Live &amp; visible</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 font-bold">P</div>
+              <div className="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center"><svg className="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
             </div>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Drafts</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{draftCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Awaiting publish</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Drafts</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{draftCount}</div>
+                <div className="mt-1 text-xs text-slate-400">Awaiting publish</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 font-bold">D</div>
+              <div className="h-10 w-10 rounded-xl bg-amber-50 flex items-center justify-center"><svg className="h-5 w-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></div>
             </div>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Categories</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{categories.length}</div>
-                <div className="mt-2 text-sm text-slate-400">Unique topics</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Categories</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{categories.length}</div>
+                <div className="mt-1 text-xs text-slate-400">Unique topics</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-violet-50 text-violet-600 font-bold">C</div>
+              <div className="h-10 w-10 rounded-xl bg-violet-50 flex items-center justify-center"><svg className="h-5 w-5 text-violet-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg></div>
             </div>
           </div>
         </div>
 
         {/* News Table */}
-        <div className="mt-8">
-          <AdminNewsClient initialItems={safe} />
-        </div>
+        <AdminNewsClient initialItems={safe} />
       </div>
     </main>
   );

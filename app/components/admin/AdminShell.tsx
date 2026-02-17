@@ -213,7 +213,14 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           </div>
           <button
             type="button"
-            onClick={() => signOut({ callbackUrl: "/admin/login" })}
+            onClick={async () => {
+              try {
+                await signOut({ redirect: false });
+              } catch (_) {
+                // ignore
+              }
+              window.location.href = "/admin/login";
+            }}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-red-500/15 hover:text-red-400 transition-all duration-200 flex-shrink-0"
             title="Sign out"
           >

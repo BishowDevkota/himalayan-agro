@@ -138,18 +138,18 @@ export default function AdminEmployeesClient() {
   }
 
   return (
-    <div className="text-slate-900">
+    <div className="text-slate-900 space-y-5">
       {/* Search & Create Bar */}
-      <div className="bg-white/90 border border-slate-100 rounded-3xl p-5 shadow-sm mb-6">
+      <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="text-sm text-slate-600">
-            Showing <span className="font-medium text-slate-800">{employees.length}</span> employees
+          <div className="text-sm text-slate-500">
+            Showing <span className="font-semibold text-slate-700">{employees.length}</span> employees
           </div>
           <button
-            className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm"
+            className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors ${showCreate ? 'border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 shadow-sm' : 'bg-cyan-600 hover:bg-cyan-700 text-white'}`}
             onClick={() => setShowCreate(!showCreate)}
           >
-            {showCreate ? "Cancel" : "Create employee"}
+            {showCreate ? "Cancel" : "+ Create employee"}
           </button>
         </div>
 
@@ -157,26 +157,26 @@ export default function AdminEmployeesClient() {
         {showCreate && (
           <form onSubmit={handleCreate} className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-end gap-3">
             <div>
-              <label className="block text-xs text-slate-400 mb-1">Name</label>
-              <input className="w-36 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400" placeholder="optional" value={createName} onChange={(e) => setCreateName(e.target.value)} />
+              <label className="block text-[11px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">Name</label>
+              <input className="w-36 rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all" placeholder="optional" value={createName} onChange={(e) => setCreateName(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-slate-400 mb-1">Email</label>
-              <input className="w-48 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400" placeholder="email" value={createEmail} onChange={(e) => setCreateEmail(e.target.value)} />
+              <label className="block text-[11px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">Email</label>
+              <input className="w-48 rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all" placeholder="email" value={createEmail} onChange={(e) => setCreateEmail(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-slate-400 mb-1">Password</label>
-              <input className="w-36 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400" placeholder="min 8 chars" type="password" value={createPassword} onChange={(e) => setCreatePassword(e.target.value)} />
+              <label className="block text-[11px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">Password</label>
+              <input className="w-36 rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all" placeholder="min 8 chars" type="password" value={createPassword} onChange={(e) => setCreatePassword(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-slate-400 mb-1">Role</label>
-              <select className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900" value={createRole} onChange={(e) => setCreateRole(e.target.value)}>
+              <label className="block text-[11px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">Role</label>
+              <select className="rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all" value={createRole} onChange={(e) => setCreateRole(e.target.value)}>
                 {EMPLOYEE_ROLES.map((role) => (
                   <option key={role} value={role}>{roleLabel(role)}</option>
                 ))}
               </select>
             </div>
-            <button className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm" type="submit" disabled={creating}>
+            <button className="rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50" type="submit" disabled={creating}>
               {creating ? "Creating…" : "Create"}
             </button>
           </form>
@@ -184,15 +184,16 @@ export default function AdminEmployeesClient() {
       </div>
 
       {/* Employees Table */}
-      <div className="bg-white/90 border border-slate-100 rounded-3xl shadow-sm overflow-auto">
+      <div className="bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
         <table className="w-full text-sm text-slate-800">
           <thead>
-            <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
-              <th className="px-5 py-4">Employee</th>
-              <th className="px-5 py-4">Role</th>
-              <th className="px-5 py-4">Status</th>
-              <th className="px-5 py-4">Joined</th>
-              <th className="px-5 py-4">Actions</th>
+            <tr className="bg-slate-50/80 border-b border-slate-100">
+              <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Employee</th>
+              <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Role</th>
+              <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Status</th>
+              <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Joined</th>
+              <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -203,22 +204,22 @@ export default function AdminEmployeesClient() {
               <tr><td colSpan={5} className="px-5 py-12 text-center text-sm text-slate-400">No employees yet.</td></tr>
             )}
             {!loading && employees.map((emp) => (
-              <tr key={emp._id} className="align-top hover:bg-slate-50/60 transition-colors">
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl bg-slate-900/5 flex items-center justify-center text-slate-700 font-bold shrink-0">
+              <tr key={emp._id} className="align-top hover:bg-cyan-50/30 transition-colors">
+                <td className="px-5 py-3.5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-cyan-50 flex items-center justify-center text-cyan-600 font-bold text-sm shrink-0">
                       {(emp.name || emp.email || "E")[0].toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <div className="font-semibold text-slate-900 truncate">{emp.name || "—"}</div>
+                      <div className="font-semibold text-slate-900 truncate text-sm">{emp.name || "—"}</div>
                       <div className="text-xs text-slate-400 mt-0.5 truncate">{emp.email}</div>
                     </div>
                   </div>
                 </td>
 
-                <td className="px-5 py-4">
+                <td className="px-5 py-3.5">
                   <select
-                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-900"
+                    className="rounded-lg border border-slate-200 bg-slate-50/50 px-2.5 py-1 text-xs text-slate-900 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all"
                     value={emp.role}
                     onChange={(event) => handleRoleChange(emp, event.target.value)}
                   >
@@ -228,32 +229,32 @@ export default function AdminEmployeesClient() {
                   </select>
                 </td>
 
-                <td className="px-5 py-4">
-                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${emp.isActive ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-700"}`}>
+                <td className="px-5 py-3.5">
+                  <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-semibold ${emp.isActive ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-700"}`}>
                     {emp.isActive ? "Active" : "Inactive"}
                   </span>
                 </td>
 
-                <td className="px-5 py-4 text-sm text-slate-500">
+                <td className="px-5 py-3.5 text-sm text-slate-500">
                   {emp.createdAt ? new Date(emp.createdAt).toLocaleDateString() : "—"}
                 </td>
 
-                <td className="px-5 py-4">
-                  <div className="flex items-center gap-3">
+                <td className="px-5 py-3.5">
+                  <div className="flex items-center gap-2">
                     <button
-                      className={`text-sm font-medium ${emp.isActive ? "text-rose-600 hover:text-rose-700" : "text-emerald-600 hover:text-emerald-700"}`}
+                      className={`rounded-md px-3 py-1 text-xs font-semibold transition-colors ${emp.isActive ? "bg-rose-50 hover:bg-rose-100 text-rose-700" : "bg-emerald-50 hover:bg-emerald-100 text-emerald-700"}`}
                       onClick={() => handleToggleActive(emp)}
                     >
                       {emp.isActive ? "Deactivate" : "Activate"}
                     </button>
                     <button
-                      className="text-sm text-slate-500 hover:text-slate-700"
+                      className="rounded-md bg-slate-100 hover:bg-slate-200 text-slate-600 px-3 py-1 text-xs font-semibold transition-colors"
                       onClick={() => handleSetPassword(emp)}
                     >
-                      Set password
+                      Password
                     </button>
                     <button
-                      className="text-sm text-rose-600 hover:text-rose-700"
+                      className="rounded-md bg-rose-50 hover:bg-rose-100 text-rose-700 px-3 py-1 text-xs font-semibold transition-colors"
                       onClick={() => handleDelete(emp)}
                     >
                       Delete
@@ -264,6 +265,7 @@ export default function AdminEmployeesClient() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   );

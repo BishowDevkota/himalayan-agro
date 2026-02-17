@@ -33,83 +33,83 @@ export default async function AdminUsersPage({ searchParams }: { searchParams?: 
   const activeCount = safeUsers.filter((u: any) => u.isActive).length;
 
   return (
-    <main className="pb-16">
-      <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
+    <main className="pb-10">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Access</span>
-            <h1 className="mt-3 text-4xl font-black text-slate-900">User management</h1>
-            <p className="mt-3 text-sm text-slate-500">
-              Manage users, roles and activation status.
-            </p>
+            <span className="inline-block text-xs font-semibold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full mb-3">Access</span>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">User management</h1>
+            <p className="mt-1 text-sm text-slate-500">Manage users, roles and activation status.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <a
-              href="/admin/users"
-              className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm text-slate-700"
-            >
-              Refresh
-            </a>
-          </div>
+          <a href="/admin/users" className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+            Refresh
+          </a>
         </div>
 
-        {/* Stats Summary */}
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Total Users</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{total}</div>
-                <div className="mt-2 text-sm text-slate-400">Registered accounts</div>
+        {/* Stat Cards */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-100 text-cyan-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 font-bold">U</div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Total</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{total}</p>
+              </div>
             </div>
+            <p className="text-xs text-slate-400 mt-3">Registered accounts</p>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Admins</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{adminCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Admin role users</div>
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-100 text-amber-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 font-bold">A</div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Admins</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{adminCount}</p>
+              </div>
             </div>
+            <p className="text-xs text-slate-400 mt-3">Admin role users</p>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Vendors</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{vendorCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Vendor accounts</div>
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9"/><path d="M9 21V13h6v8"/></svg>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 font-bold">V</div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Vendors</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{vendorCount}</p>
+              </div>
             </div>
+            <p className="text-xs text-slate-400 mt-3">Vendor accounts</p>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Active</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{activeCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Currently active</div>
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 text-violet-600 flex-shrink-0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-violet-50 text-violet-600 font-bold">✓</div>
+              <div className="min-w-0">
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Active</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{activeCount}</p>
+              </div>
             </div>
+            <p className="text-xs text-slate-400 mt-3">Currently active</p>
           </div>
         </div>
 
         {/* Users Table */}
-        <div className="mt-8">
-          <AdminUsersClient
-            initialUsers={safeUsers}
-            initialTotal={Number(total || 0)}
-            initialPage={page}
-            initialPerPage={perPage}
-          />
-        </div>
+        <AdminUsersClient
+          initialUsers={safeUsers}
+          initialTotal={Number(total || 0)}
+          initialPage={page}
+          initialPerPage={perPage}
+        />
       </div>
     </main>
   );

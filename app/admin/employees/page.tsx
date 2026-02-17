@@ -26,77 +26,68 @@ export default async function AdminEmployeesPage() {
 
   return (
     <main className="pb-16">
-      <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
           <div>
-            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Access</span>
-            <h1 className="mt-3 text-4xl font-black text-slate-900">Employees</h1>
-            <p className="mt-3 text-sm text-slate-500">
-              Create employees and assign role-based access.
-            </p>
+            <span className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Access</span>
+            <h1 className="mt-3 text-2xl sm:text-3xl font-bold text-slate-900">Employees</h1>
+            <p className="mt-1 text-sm text-slate-500">Create employees and assign role-based access.</p>
           </div>
-          <div className="flex items-center gap-3">
-            <a
-              href="/admin/employees"
-              className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm text-slate-700"
-            >
-              Refresh
-            </a>
-          </div>
+          <a href="/admin/employees" className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm self-start">
+            Refresh
+          </a>
         </div>
 
         {/* Stats Summary */}
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Total Employees</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{safe.length}</div>
-                <div className="mt-2 text-sm text-slate-400">All staff members</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Total Employees</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{safe.length}</div>
+                <div className="mt-1 text-xs text-slate-400">All staff members</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 font-bold">E</div>
+              <div className="h-10 w-10 rounded-xl bg-cyan-50 flex items-center justify-center"><svg className="h-5 w-5 text-cyan-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg></div>
             </div>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Active</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{activeCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Currently active</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Active</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{activeCount}</div>
+                <div className="mt-1 text-xs text-slate-400">Currently active</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 font-bold">✓</div>
+              <div className="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center"><svg className="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
             </div>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Inactive</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{inactiveCount}</div>
-                <div className="mt-2 text-sm text-slate-400">Deactivated staff</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Inactive</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{inactiveCount}</div>
+                <div className="mt-1 text-xs text-slate-400">Deactivated staff</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 font-bold">✗</div>
+              <div className="h-10 w-10 rounded-xl bg-rose-50 flex items-center justify-center"><svg className="h-5 w-5 text-rose-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg></div>
             </div>
           </div>
 
-          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-xs uppercase tracking-widest text-slate-400">Roles</div>
-                <div className="mt-3 text-3xl font-black text-slate-900">{roles.length}</div>
-                <div className="mt-2 text-sm text-slate-400">Unique roles assigned</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Roles</div>
+                <div className="mt-2 text-2xl font-bold text-slate-900">{roles.length}</div>
+                <div className="mt-1 text-xs text-slate-400">Unique roles assigned</div>
               </div>
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 font-bold">R</div>
+              <div className="h-10 w-10 rounded-xl bg-amber-50 flex items-center justify-center"><svg className="h-5 w-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg></div>
             </div>
           </div>
         </div>
 
         {/* Employees Table */}
-        <div className="mt-8">
-          <AdminEmployeesClient />
-        </div>
+        <AdminEmployeesClient />
       </div>
     </main>
   );
