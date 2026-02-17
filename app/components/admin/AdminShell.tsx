@@ -55,21 +55,33 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           />
         </button>
 
-        {open ? (
-          <div
-            className="fixed inset-0 z-40 bg-black/10 backdrop-blur"
-            onClick={() => setOpen(false)}
-            aria-hidden
-          />
-        ) : null}
-
         <aside
           id="admin-sidebar"
-          className={`fixed left-0 top-0 z-50 h-screen w-[90vw] transform overflow-y-auto border-r border-slate-200 bg-white px-10 pt-[120px] transition-transform duration-500 lg:w-[25vw] ${
+          className={`fixed left-0 top-0 z-50 h-screen w-[90vw] transform overflow-y-auto border-r border-slate-900 bg-black px-10 pt-10 transition-transform duration-500 lg:w-[20vw] ${
             open ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <nav className="flex flex-col gap-6 text-[1.35rem] font-light text-slate-900">
+          <div className="flex items-center justify-between mb-10">
+            <Link href="/" className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-white text-black flex items-center justify-center text-lg font-black">
+                H
+              </div>
+              <span className="text-white text-sm font-semibold tracking-wide">Himalayan Agro</span>
+            </Link>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              aria-label="Close navigation"
+              className="text-white/70 hover:text-white transition-colors"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18" />
+                <line x1="6" y1="6" x2="18" y2="18" />
+              </svg>
+            </button>
+          </div>
+
+          <nav className="flex flex-col gap-6 text-[1.35rem] font-light text-white">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -78,8 +90,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                   href={item.href}
                   className={`block transition-all duration-300 ${
                     isActive
-                      ? "text-slate-900"
-                      : "text-slate-900/80 hover:text-slate-500 hover:translate-x-2"
+                      ? "text-white"
+                      : "text-white/70 hover:text-white hover:translate-x-2"
                   }`}
                   onClick={() => setOpen(false)}
                 >
@@ -92,7 +104,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
         <div
           className={`relative z-10 min-h-screen px-10 pt-10 transition-[padding] duration-500 ${
-            open ? "lg:pl-[25vw]" : "lg:pl-10"
+            open ? "lg:pl-[20vw]" : "lg:pl-10"
           }`}
         >
           <div className="relative z-10">{children}</div>
