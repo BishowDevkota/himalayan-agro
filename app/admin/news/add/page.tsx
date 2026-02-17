@@ -9,12 +9,13 @@ export default async function AdminNewsAddPage() {
   if (!session || !hasPermission(session.user, "news:write")) return <div className="p-12">Unauthorized</div>;
 
   return (
-    <main className="min-h-screen bg-white text-slate-900">
+    <main className="pb-16">
       <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-extrabold">Add news</h1>
-            <p className="mt-2 text-sm text-slate-500">Create a new announcement with a WordPress-like editor.</p>
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Content</span>
+            <h1 className="mt-3 text-4xl font-black">Add news</h1>
+            <p className="mt-3 text-sm text-slate-500">Create a new announcement with a WordPress-like editor.</p>
           </div>
         </div>
 

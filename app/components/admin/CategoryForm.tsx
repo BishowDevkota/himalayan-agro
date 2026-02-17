@@ -33,11 +33,18 @@ export default function CategoryForm({ initial = null, onSaved }: { initial?: an
   return (
     <form onSubmit={submit} className="space-y-3 max-w-sm">
       <div>
-        <label className="block text-sm font-medium">Name</label>
-        <input className="mt-1 block w-full rounded border px-3 py-2" value={name} onChange={(e) => setName(e.target.value)} required />
+        <label className="block text-sm font-medium text-slate-700">Name</label>
+        <input
+          className="mt-2 block w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-sm"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
       </div>
       <div>
-        <button className="rounded bg-sky-600 text-white px-4 py-2" disabled={loading}>{loading ? 'Saving…' : initial ? 'Save' : 'Create category'}</button>
+        <button className="rounded-full bg-slate-900 text-white px-5 py-2" disabled={loading}>
+          {loading ? 'Saving…' : initial ? 'Save' : 'Create category'}
+        </button>
       </div>
     </form>
   );

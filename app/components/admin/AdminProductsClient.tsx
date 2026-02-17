@@ -63,29 +63,29 @@ export default function AdminProductsClient({
 
   return (
     <div>
-      <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm mb-6">
+      <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm mb-6">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <form onSubmit={handleSearch} className="flex items-center gap-3 w-full md:max-w-xl">
             <input
               aria-label="Search products"
-              className="flex-1 rounded-lg border border-gray-200 px-4 py-2 shadow-sm placeholder-gray-400"
+              className="flex-1 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm placeholder-slate-400"
               placeholder="Search by name, brand or SKU"
               value={q}
               onChange={(e) => setQ(e.target.value)}
             />
 
-            <select className="rounded-lg border border-gray-200 px-3 py-2" value={category} onChange={(e) => setCategory(e.target.value)}>
+            <select className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm" value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">All categories</option>
               {categories.map((c: any) => (
                 <option key={c._id} value={c.name}>{c.name} ({c.productsCount || 0})</option>
               ))}
             </select>
 
-            <button className="rounded-lg bg-sky-600 text-white px-4 py-2 text-sm" type="submit">Search</button>
+            <button className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm" type="submit">Search</button>
           </form>
 
           <div className="flex items-center gap-3">
-            <a className="rounded bg-sky-600 text-white px-4 py-2 text-sm" href="/admin/products/new">New product</a>
+            <a className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm" href="/admin/products/new">New product</a>
             <div className="text-sm text-slate-500">{total} products</div>
           </div>
         </div>
@@ -114,8 +114,8 @@ export default function AdminProductsClient({
       <div className="mt-6 flex items-center justify-between">
         <div className="text-sm text-slate-500">Page {page} of {totalPages}</div>
         <div className="flex items-center gap-2">
-          <button className="rounded border border-gray-100 px-3 py-1 text-sm" disabled={page <= 1} onClick={() => { const np = Math.max(1, page-1); setPage(np); fetchProducts({ page: np }); }}>Prev</button>
-          <button className="rounded bg-sky-600 text-white px-3 py-1 text-sm" disabled={page >= totalPages} onClick={() => { const np = Math.min(totalPages, page+1); setPage(np); fetchProducts({ page: np }); }}>Next</button>
+          <button className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm" disabled={page <= 1} onClick={() => { const np = Math.max(1, page-1); setPage(np); fetchProducts({ page: np }); }}>Prev</button>
+          <button className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-sm" disabled={page >= totalPages} onClick={() => { const np = Math.min(totalPages, page+1); setPage(np); fetchProducts({ page: np }); }}>Next</button>
         </div>
       </div>
     </div>

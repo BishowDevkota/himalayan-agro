@@ -17,27 +17,33 @@ export default async function AdminCategoriesPage() {
   const safe = serializeMany(categories as any[]);
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Categories</h1>
-      </div>
+    <main className="pb-16">
+      <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Catalog</span>
+            <h1 className="mt-3 text-4xl font-black">Categories</h1>
+            <p className="mt-3 text-sm text-slate-500">Create and maintain product categories.</p>
+          </div>
+        </div>
 
-      <div className="mt-6 grid grid-cols-2 gap-8">
-        <div>
-          <h2 className="text-lg font-medium">Create category</h2>
-          <div className="mt-4">
-            <CategoryForm />
-          </div>
-        </div>
-        <div>
-          <h2 className="text-lg font-medium">Existing categories</h2>
-          <div className="mt-4 space-y-2">
-            {safe.map((c: any) => (
-              <CategoryRow key={c._id} category={c} />
-            ))}
-          </div>
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <section className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-slate-900">Create category</h2>
+            <div className="mt-4">
+              <CategoryForm />
+            </div>
+          </section>
+          <section className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <h2 className="text-lg font-semibold text-slate-900">Existing categories</h2>
+            <div className="mt-4 space-y-3">
+              {safe.map((c: any) => (
+                <CategoryRow key={c._id} category={c} />
+              ))}
+            </div>
+          </section>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

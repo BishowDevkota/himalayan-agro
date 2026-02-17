@@ -50,7 +50,7 @@ export default function AdminVendorsClient({ initialVendors = [] }: { initialVen
   }
 
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+    <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
         <form
           onSubmit={(e) => {
@@ -61,18 +61,18 @@ export default function AdminVendorsClient({ initialVendors = [] }: { initialVen
         >
           <input
             aria-label="Search vendors"
-            className="flex-1 rounded-lg border border-gray-200 px-4 py-2 shadow-sm placeholder-gray-400"
+            className="flex-1 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm placeholder-slate-400"
             placeholder="Search by store, owner, or email"
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
-          <select className="rounded-lg border border-gray-200 px-3 py-2" value={status} onChange={(e) => setStatus(e.target.value)}>
+          <select className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm" value={status} onChange={(e) => setStatus(e.target.value)}>
             <option value="">All</option>
             <option value="pending">Pending</option>
             <option value="approved">Approved</option>
             <option value="rejected">Rejected</option>
           </select>
-          <button className="rounded-lg bg-sky-600 text-white px-4 py-2 text-sm" type="submit">Filter</button>
+          <button className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm" type="submit">Filter</button>
         </form>
       </div>
 
@@ -87,7 +87,7 @@ export default function AdminVendorsClient({ initialVendors = [] }: { initialVen
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">V</div>
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center font-bold">V</div>
                     <div>
                       <div className="font-semibold text-slate-900">{v.storeName}</div>
                       <div className="text-sm text-slate-500">Owner: {v.ownerName || "—"}</div>
@@ -103,14 +103,14 @@ export default function AdminVendorsClient({ initialVendors = [] }: { initialVen
                     {v.status}
                   </div>
                   <button
-                    className="rounded bg-emerald-600 text-white px-3 py-2 text-sm disabled:opacity-60"
+                    className="rounded-full bg-slate-900 text-white px-4 py-2 text-sm disabled:opacity-60"
                     onClick={() => updateVendor(v._id, "approved")}
                     disabled={v.status === "approved"}
                   >
                     Approve
                   </button>
                   <button
-                    className="rounded border border-rose-200 text-rose-700 px-3 py-2 text-sm disabled:opacity-60"
+                    className="rounded-full border border-rose-200 bg-white text-rose-700 px-4 py-2 text-sm disabled:opacity-60"
                     onClick={() => updateVendor(v._id, "rejected")}
                     disabled={v.status === "rejected"}
                   >

@@ -21,13 +21,18 @@ export default async function EditProductPage({ params }: { params: { id: string
   const safeProduct = serialize(product);
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Edit product</h1>
+    <main className="pb-16">
+      <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Catalog</span>
+            <h1 className="mt-3 text-4xl font-black">Edit product</h1>
+          </div>
+        </div>
+        <div className="mt-6 bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+          <ProductForm initial={safeProduct} />
+        </div>
       </div>
-      <div className="mt-6">
-        <ProductForm initial={safeProduct} />
-      </div>
-    </div>
+    </main>
   );
 }

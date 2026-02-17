@@ -15,15 +15,23 @@ export default async function AdminOrdersPage() {
   const safe = serializeMany(orders as any[]);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <div className="max-w-7xl mx-auto py-12 px-4">
-        <div className="flex items-center justify-between">
+    <main className="pb-16">
+      <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-semibold text-slate-900">Orders</h1>
-            <p className="mt-1 text-sm text-slate-600">Manage and fulfill recent orders — search, filter and review details.</p>
+            <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Operations</span>
+            <h1 className="mt-3 text-4xl font-black text-slate-900">Orders</h1>
+            <p className="mt-3 text-sm text-slate-500">
+              Manage and fulfill recent orders — search, filter and review details.
+            </p>
           </div>
           <div className="flex items-center gap-3">
-            <a href="/admin/orders" className="inline-flex items-center gap-2 rounded-lg border border-gray-100 px-3 py-2 text-sm text-slate-700">Refresh</a>
+            <a
+              href="/admin/orders"
+              className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700"
+            >
+              Refresh
+            </a>
           </div>
         </div>
 
@@ -31,6 +39,6 @@ export default async function AdminOrdersPage() {
           <AdminOrdersClient initialOrders={safe} />
         </div>
       </div>
-    </div>
+    </main>
   );
 }
