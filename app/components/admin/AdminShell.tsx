@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 import React from "react";
 
 const navItems = [
@@ -61,45 +62,61 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             open ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <div className="flex items-center justify-between mb-10">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-white text-black flex items-center justify-center text-lg font-black">
-                H
-              </div>
-              <span className="text-white text-sm font-semibold tracking-wide">Himalayan Agro</span>
-            </Link>
-            <button
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Close navigation"
-              className="text-white/70 hover:text-white transition-colors"
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-          </div>
+          <div className="flex min-h-full flex-col">
+            <div className="flex items-center justify-between mb-10">
+              <Link href="/" className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-xl bg-white text-black flex items-center justify-center text-lg font-black">
+                  H
+                </div>
+                <span className="text-white text-sm font-semibold tracking-wide">Himalaya Agro</span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Close navigation"
+                className="text-white/70 hover:text-white transition-colors"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
 
-          <nav className="flex flex-col gap-6 text-[1.35rem] font-light text-white">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`block transition-all duration-300 ${
-                    isActive
-                      ? "text-white"
-                      : "text-white/70 hover:text-white hover:translate-x-2"
-                  }`}
-                  onClick={() => setOpen(false)}
-                >
-                  {item.label}
+            <nav className="flex flex-col gap-6 text-[1.35rem] font-light text-white">
+              {navItems.map((item) => {
+                const isActive = pathname === item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`block transition-all duration-300 ${
+                      isActive
+                        ? "text-white"
+                        : "text-white/70 hover:text-white hover:translate-x-2"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            <div className="mt-auto pt-10">
+              <div className="border-t border-white/10 pt-6 flex flex-col gap-3 text-sm">
+                <Link href="/admin/profile" className="text-white/80 hover:text-white transition-colors">
+                  Profile
                 </Link>
-              );
-            })}
-          </nav>
+                <button
+                  type="button"
+                  onClick={() => signOut({ callbackUrl: "/admin/login" })}
+                  className="text-left text-white/80 hover:text-white transition-colors"
+                >
+                  Sign out
+                </button>
+              </div>
+            </div>
+          </div>
         </aside>
 
         <div
