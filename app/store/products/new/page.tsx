@@ -11,7 +11,7 @@ export default async function StoreNewProductPage() {
 
   return (
     <div className="bg-white">
-      <div className="max-w-7xl mx-auto py-12 px-4">
+      <div className="max-w-7xl mx-auto pt-28 pb-12 px-4">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-slate-900">New product</h1>

@@ -37,7 +37,7 @@ export default async function StoreRevenuePaymentPage() {
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
-      <div className="max-w-4xl mx-auto py-16 px-6">
+      <div className="max-w-4xl mx-auto pt-28 pb-16 px-6">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-extrabold">Request payment</h1>

@@ -30,7 +30,7 @@ export default async function StoreProfilePage({ params }: { params: { id: strin
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
-      <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto pt-28 pb-16 px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
             <h1 className="text-3xl font-extrabold">{vendor.storeName}</h1>

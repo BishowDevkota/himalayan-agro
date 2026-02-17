@@ -180,3 +180,12 @@ body {
   color: #334155;
 }
 .news-content img { max-width: 100%; height: auto; border-radius: 14px; margin: 1rem 0; }
+
+/* Hide scrollbar but keep scroll behaviour */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

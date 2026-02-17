@@ -102,7 +102,7 @@ export default function LoginClient({ from, serverError }: { from: string; serve
   }
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center px-4 sm:px-6 py-12 sm:py-20 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center px-4 sm:px-6 pt-36 pb-24 sm:pt-40 sm:pb-28 relative overflow-hidden">
       {/* Subtle background decoration */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-[#2da8da]/5 blur-3xl" />

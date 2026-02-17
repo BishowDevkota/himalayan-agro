@@ -377,115 +377,157 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="lg:hidden fixed inset-0 z-40 bg-black/30"
+              className="lg:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm pointer-events-auto"
               onClick={() => setMobileOpen(false)}
             />
-            {/* Sliding panel */}
+            {/* Sliding panel — admin-style dark sidebar */}
             <motion.div
               variants={mobilePanelVariants}
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="lg:hidden fixed top-0 left-0 bottom-0 z-50 w-70 sm:w-[320px] bg-white shadow-2xl flex flex-col"
+              className="lg:hidden fixed top-0 left-0 bottom-0 z-50 w-[270px] sm:w-[300px] shadow-2xl flex flex-col pointer-events-auto"
             >
-              {/* Panel header */}
-              <div className="flex items-center justify-between px-5 h-16 border-b border-gray-100 shrink-0">
+              {/* White logo header */}
+              <div className="flex items-center justify-between px-5 py-4 bg-white shrink-0">
                 <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center">
-                  <img src="/logo_original.png" alt="Himalaya" className="h-12 w-auto object-contain"
+                  <img src="/logo_original.png" alt="Himalaya" className="h-11 w-auto object-contain"
                     onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.png"; }} />
                 </Link>
-                <motion.button whileTap={{ scale: 0.85 }} onClick={() => setMobileOpen(false)} className="p-2 rounded-full hover:bg-gray-100 transition-colors" aria-label="Close menu">
-                  <IconClose size={20} />
+                <motion.button whileTap={{ scale: 0.85 }} onClick={() => setMobileOpen(false)} className="p-2 rounded-lg hover:bg-gray-100 transition-colors text-slate-500" aria-label="Close menu">
+                  <IconClose size={18} />
                 </motion.button>
               </div>
 
-              {/* Nav items */}
-              <nav className="flex-1 overflow-y-auto py-3 px-3 space-y-1">
-                {navLinks.map((link, i) => {
-                  const bgHex = mobileBgColors[i % mobileBgColors.length];
-                  if (link.isDropdown) {
-                    const active = companyMobileOpen;
-                    return (
-                      <motion.div key={link.label} custom={i} variants={mobileItemVariants} initial="hidden" animate="visible">
-                        <button
-                          onClick={() => setCompanyMobileOpen((p) => !p)}
-                          style={{ backgroundColor: active ? bgHex : undefined }}
-                          className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-[15px] font-medium transition-all duration-200 ${active ? "text-[#0891b2]" : "text-gray-700"}`}
-                          onMouseEnter={(e) => { if (!active) e.currentTarget.style.backgroundColor = bgHex; }}
-                          onMouseLeave={(e) => { if (!active) e.currentTarget.style.backgroundColor = ""; }}
-                        >
-                          Company
-                          <motion.span animate={{ rotate: companyMobileOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                            <IconChevronDown size={15} />
-                          </motion.span>
-                        </button>
-                        <AnimatePresence>
-                          {companyMobileOpen && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.25, ease: "easeOut" as const }}
-                              className="overflow-hidden"
-                            >
-                              <div className="pl-3 py-1 space-y-0.5">
-                                {companyDropdownItems.map((item) => (
-                                  <button key={item.label} onClick={() => navigateAndClose(item.href)}
-                                    className="w-full text-left px-4 py-2.5 rounded-lg text-sm text-gray-500 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors duration-200"
-                                  >{item.label}</button>
-                                ))}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </motion.div>
-                    );
-                  }
-                  const active = isActivePath(pathname, link.href);
-                  return (
-                    <motion.button key={link.label} custom={i} variants={mobileItemVariants} initial="hidden" animate="visible"
-                      onClick={() => navigateAndClose(link.href)}
-                      style={{ backgroundColor: active ? bgHex : undefined }}
-                      className={`w-full text-left px-4 py-3 rounded-xl text-[15px] font-medium transition-all duration-200 ${active ? "text-[#0891b2]" : "text-gray-700 hover:text-[#0891b2]"}`}
-                      onMouseEnter={(e) => { if (!active) e.currentTarget.style.backgroundColor = bgHex; }}
-                      onMouseLeave={(e) => { if (!active) e.currentTarget.style.backgroundColor = ""; }}
-                    >
-                      <span className="flex items-center gap-2">
-                        {link.label}
-                        {active && <span className="w-1.5 h-1.5 rounded-full bg-[#0891b2]" />}
-                      </span>
-                    </motion.button>
-                  );
-                })}
-              </nav>
+              {/* Dark body — matches admin sidebar */}
+              <div className="flex-1 flex flex-col bg-slate-900 overflow-hidden">
+                <div className="h-px bg-slate-700/50" />
 
-              {/* Bottom auth section */}
-              <div className="shrink-0 border-t border-gray-100 p-4 space-y-2">
-                {/* Become a Vendor — only when not logged in */}
-                {!session && (
-                  <button
-                    onClick={() => navigateAndClose("/register/vendor")}
-                    className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-semibold text-white rounded-full bg-[#0891b2] hover:bg-[#0e7490] shadow-md shadow-cyan-200/50 transition-all duration-300"
-                  >
-                    <IconStorefront size={15} />
-                    Become a Vendor
-                  </button>
-                )}
-                {!session ? (
-                  <>
-                    <button onClick={() => navigateAndClose("/login")} className="block w-full text-center px-4 py-2.5 text-sm font-medium text-gray-700 border border-gray-200 rounded-full hover:bg-gray-50 transition-colors duration-200">Sign in</button>
-                  </>
-                ) : (
-                  <>
-                    <button onClick={() => navigateAndClose("/cart")} className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors duration-200">
-                      Cart {cartCount > 0 && <span className="ml-1 text-[10px] text-white bg-red-500 rounded-full px-1.5 py-0.5">{cartCount}</span>}
+                {/* Nav items */}
+                <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+                  {navLinks.map((link, i) => {
+                    if (link.isDropdown) {
+                      const active = companyMobileOpen;
+                      return (
+                        <motion.div key={link.label} custom={i} variants={mobileItemVariants} initial="hidden" animate="visible">
+                          <button
+                            onClick={() => setCompanyMobileOpen((p) => !p)}
+                            className={`w-full flex items-center gap-3 justify-between px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${active ? "bg-cyan-500/15 text-cyan-400" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"}`}
+                          >
+                            <span className="flex items-center gap-3">
+                              <span className={active ? "text-cyan-400" : "text-slate-500"}>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9" /><path d="M9 21V13h6v8" /></svg>
+                              </span>
+                              Company
+                            </span>
+                            <motion.span animate={{ rotate: companyMobileOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                              <IconChevronDown size={14} />
+                            </motion.span>
+                          </button>
+                          <AnimatePresence>
+                            {companyMobileOpen && (
+                              <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.25, ease: "easeOut" as const }}
+                                className="overflow-hidden"
+                              >
+                                <div className="pl-9 py-1 space-y-0.5">
+                                  {companyDropdownItems.map((item) => (
+                                    <button key={item.label} onClick={() => navigateAndClose(item.href)}
+                                      className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
+                                    >{item.label}</button>
+                                  ))}
+                                </div>
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.div>
+                      );
+                    }
+                    const active = isActivePath(pathname, link.href);
+                    const icons: Record<string, React.ReactNode> = {
+                      Home: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>,
+                      Shop: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M6 6h15l-1.5 9h-12L4 2H2" /><circle cx="9" cy="20" r="1" /><circle cx="18" cy="20" r="1" /></svg>,
+                      Investor: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" /></svg>,
+                      About: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>,
+                      News: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2" /><line x1="10" y1="6" x2="18" y2="6" /><line x1="10" y1="10" x2="18" y2="10" /><line x1="10" y1="14" x2="14" y2="14" /></svg>,
+                      Contact: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" /></svg>,
+                    };
+                    return (
+                      <motion.button key={link.label} custom={i} variants={mobileItemVariants} initial="hidden" animate="visible"
+                        onClick={() => navigateAndClose(link.href)}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${active ? "bg-cyan-500/15 text-cyan-400" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"}`}
+                      >
+                        <span className={active ? "text-cyan-400" : "text-slate-500"}>{icons[link.label]}</span>
+                        {link.label}
+                        {active && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-cyan-400" />}
+                      </motion.button>
+                    );
+                  })}
+                </nav>
+
+                <div className="h-px bg-slate-700/50 mx-4" />
+
+                {/* Bottom auth section — admin style */}
+                <div className="shrink-0 px-3 py-3 space-y-1">
+                  {!session && (
+                    <button
+                      onClick={() => navigateAndClose("/register/vendor")}
+                      className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-cyan-400 hover:bg-cyan-500/15 transition-all duration-200"
+                    >
+                      <span className="text-cyan-400"><IconStorefront size={18} /></span>
+                      Become a Vendor
                     </button>
-                    <button onClick={() => navigateAndClose("/my-orders")} className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors duration-200">My Orders</button>
-                    {canAccessAdmin && (
-                      <button onClick={() => navigateAndClose(adminTarget)} className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-gray-700 hover:text-[#0891b2] hover:bg-cyan-50 transition-colors duration-200">Admin Panel</button>
-                    )}
-                    <button onClick={() => { setMobileOpen(false); signOut(); }} className="w-full text-left px-4 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 transition-colors duration-200">Sign out</button>
-                  </>
+                  )}
+                  {!session ? (
+                    <button onClick={() => navigateAndClose("/login")} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all duration-200">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4" /><polyline points="10 17 15 12 10 7" /><line x1="15" y1="12" x2="3" y2="12" /></svg>
+                      Sign in
+                    </button>
+                  ) : (
+                    <>
+                      <button onClick={() => navigateAndClose("/cart")} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all duration-200">
+                        <span className="text-slate-500"><IconCart size={18} /></span>
+                        Cart {cartCount > 0 && <span className="ml-1 text-[10px] text-white bg-red-500 rounded-full px-1.5 py-0.5">{cartCount}</span>}
+                      </button>
+                      <button onClick={() => navigateAndClose("/my-orders")} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all duration-200">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M16 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V8l-5-5z" /><path d="M15 3v5h5" /><line x1="9" y1="13" x2="15" y2="13" /><line x1="9" y1="17" x2="13" y2="17" /></svg>
+                        My Orders
+                      </button>
+                      {canAccessAdmin && (
+                        <button onClick={() => navigateAndClose(adminTarget)} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-slate-400 hover:bg-slate-800 hover:text-cyan-400 transition-all duration-200">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7" rx="1" /><rect x="14" y="3" width="7" height="7" rx="1" /><rect x="3" y="14" width="7" height="7" rx="1" /><rect x="14" y="14" width="7" height="7" rx="1" /></svg>
+                          Admin Panel
+                        </button>
+                      )}
+                    </>
+                  )}
+                </div>
+
+                <div className="h-px bg-slate-700/50 mx-4" />
+
+                {/* Profile / Sign out — bottom of panel */}
+                {session && (
+                  <div className="shrink-0 px-3 py-4 flex items-center gap-3">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-700 text-cyan-400 text-sm font-bold flex-shrink-0">
+                      {(session as any).user?.image
+                        ? <img src={(session as any).user.image} alt="" className="w-9 h-9 rounded-full object-cover" />
+                        : <span>{(session as any).user?.name?.[0]?.toUpperCase() ?? "U"}</span>}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-[13px] font-medium text-slate-200 truncate">{(session as any).user?.name}</div>
+                      <div className="text-[11px] text-slate-500 truncate">{(session as any).user?.email}</div>
+                    </div>
+                    <button
+                      onClick={() => { setMobileOpen(false); signOut(); }}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-red-500/15 hover:text-red-400 transition-all duration-200 flex-shrink-0"
+                      title="Sign out"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
+                    </button>
+                  </div>
                 )}
               </div>
             </motion.div>

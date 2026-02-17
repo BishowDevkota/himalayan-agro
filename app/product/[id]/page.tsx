@@ -34,7 +34,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
   const inStock = safeProduct.stock > 0;
 
   return (
-    <div className="bg-white text-gray-900 min-h-screen">
+    <div className="bg-white text-gray-900 min-h-screen pt-24">
       {/* Breadcrumb */}
       <div className="bg-[#f8faf9] border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">

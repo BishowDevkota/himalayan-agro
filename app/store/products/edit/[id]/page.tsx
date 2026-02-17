@@ -25,7 +25,7 @@ export default async function StoreEditProductPage({ params }: { params: { id: s
   const safeProduct = { ...product, _id: String(product._id) } as any;
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4">
+    <div className="max-w-7xl mx-auto pt-28 pb-12 px-4">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-semibold">Edit product</h1>
       </div>

@@ -24,7 +24,7 @@ export default async function MyOrderDetail({ params }: { params: { id: string }
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
-      <div className="max-w-5xl mx-auto py-16 px-6">
+      <div className="max-w-5xl mx-auto pt-28 pb-16 px-6">
         <div className="flex items-start justify-between gap-8">
           <div className="flex-1">
             <div className="flex items-start justify-between gap-6">

@@ -20,7 +20,7 @@ export default async function EmployeeDashboardPage() {
 
   return (
     <main className="min-h-screen bg-white text-slate-900">
-      <div className="max-w-6xl mx-auto py-16 px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto pt-28 pb-16 px-6 lg:px-8">
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-extrabold">Employee dashboard</h1>

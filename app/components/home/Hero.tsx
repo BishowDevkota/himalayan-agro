@@ -125,7 +125,7 @@ export default function Hero() {
   const slide = slides[current];
 
   return (
-    <section className="relative z-0 w-full bg-[#f5f0e8] overflow-hidden h-dvh min-h-125">
+    <section className="relative z-0 w-full bg-[#f5f0e8] overflow-clip h-dvh min-h-125">
       {/* Background */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -146,7 +146,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-14 items-center w-full py-4 sm:py-10 lg:py-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-14 items-center w-full pt-20 pb-4 sm:pt-28 sm:pb-10 lg:pt-0 lg:pb-0">
 
           {/* === LEFT: Text === */}
           <AnimatePresence mode="wait">
@@ -159,14 +159,14 @@ export default function Hero() {
               className="max-w-lg order-2 lg:order-1"
             >
               <motion.div variants={fadeUpVariants}>
-                <span className="inline-block px-4 py-1.5 rounded-full border border-[#c4b99a] text-[#5a4e3c] text-xs sm:text-sm font-medium tracking-wide mb-5">
+                <span className="inline-block px-4 py-1.5 rounded-full border border-[#c4b99a] text-[#5a4e3c] text-xs sm:text-sm font-medium tracking-wide mb-6 sm:mb-5">
                   {slide.tag}
                 </span>
               </motion.div>
 
               <motion.h1
                 variants={fadeUpVariants}
-                className="text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-[#2a2018] leading-[1.12] tracking-tight mb-2 sm:mb-4"
+                className="text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-[#2a2018] leading-[1.12] tracking-tight mb-5 sm:mb-4"
                 style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
               >
                 {slide.title}
@@ -176,7 +176,7 @@ export default function Hero() {
 
               <motion.p
                 variants={fadeUpVariants}
-                className="text-[#6b5e4d] text-xs sm:text-base lg:text-lg leading-relaxed mb-4 sm:mb-7 max-w-md"
+                className="text-[#6b5e4d] text-xs sm:text-base lg:text-lg leading-relaxed mb-8 sm:mb-7 max-w-md"
               >
                 {slide.subtitle}
               </motion.p>
@@ -192,19 +192,6 @@ export default function Hero() {
                   {slide.btnText}
                 </motion.button>
               </motion.div>
-
-              {/* Mobile-only stats row */}
-              <motion.div
-                variants={fadeUpVariants}
-                className="flex gap-4 sm:gap-6 mt-4 sm:mt-8 lg:hidden"
-              >
-                {slide.stats.map((stat, idx) => (
-                  <div key={idx} className={idx > 0 ? "border-l border-[#d9d0c0] pl-4 sm:pl-6" : ""}>
-                    <p className="text-xl sm:text-2xl font-bold text-[#2a2018]">{stat.value}</p>
-                    <p className="text-[10px] sm:text-xs text-[#8b7e6a] font-medium">{stat.label}</p>
-                  </div>
-                ))}
-              </motion.div>
             </motion.div>
           </AnimatePresence>
 
@@ -216,10 +203,10 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.8, ease: "easeOut" as const, delay: 0.15 }}
-              className="relative flex items-center justify-center order-1 lg:order-2"
+              className="relative flex items-center justify-center order-1 lg:order-2 px-4 py-3 sm:px-8 sm:py-4 lg:px-0 lg:py-0"
             >
               {/* Central image */}
-              <div className="relative w-full max-w-45 sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto aspect-3/4 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative w-full max-w-52 sm:max-w-xs md:max-w-sm lg:max-w-md mx-auto aspect-3/4 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
                 <img
                   src={slide.img}
                   alt="Agriculture"
@@ -228,21 +215,21 @@ export default function Hero() {
                 />
               </div>
 
-              {/* --- Floating Cards (desktop only) --- */}
+              {/* --- Floating Cards (all screens) --- */}
 
-              {/* Top-left: NDVI card */}
+              {/* Top-left: NDVI / Crop Health card */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="hidden lg:flex absolute top-16 -left-10 bg-white rounded-xl shadow-lg px-3.5 py-2.5 items-center gap-2.5 z-20 border border-gray-100"
+                className="absolute -top-2 -left-2 sm:top-4 sm:-left-6 lg:top-16 lg:-left-10 bg-white rounded-lg sm:rounded-xl shadow-lg px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 flex items-center gap-1.5 sm:gap-2.5 z-20 border border-gray-100"
               >
-                <div className="w-9 h-9 rounded-lg bg-[#fef3c7] flex items-center justify-center shrink-0">
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-[#fef3c7] flex items-center justify-center shrink-0">
                   <ChartIcon />
                 </div>
                 <div>
-                  <p className="text-[13px] font-semibold text-[#2a2018] leading-tight">{slide.floatingCards[0].label}</p>
-                  <p className="text-[11px] text-[#8b7e6a]">{slide.floatingCards[0].value}</p>
+                  <p className="text-[10px] sm:text-[13px] font-semibold text-[#2a2018] leading-tight">{slide.floatingCards[0].label}</p>
+                  <p className="text-[8px] sm:text-[11px] text-[#8b7e6a]">{slide.floatingCards[0].value}</p>
                 </div>
               </motion.div>
 
@@ -251,22 +238,22 @@ export default function Hero() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.65 }}
-                className="hidden lg:block absolute top-6 -right-8 bg-white rounded-xl shadow-lg px-4 py-3 z-20 border border-gray-100"
+                className="absolute -top-3 -right-1 sm:top-2 sm:-right-4 lg:top-6 lg:-right-8 bg-white rounded-lg sm:rounded-xl shadow-lg px-2.5 py-2 sm:px-4 sm:py-3 z-20 border border-gray-100"
               >
-                <div className="flex gap-5">
+                <div className="flex gap-3 sm:gap-5">
                   {slide.stats.map((stat, idx) => (
-                    <div key={idx} className={idx > 0 ? "border-l border-gray-100 pl-5" : ""}>
-                      <p className="text-[10px] font-semibold text-[#8b7e6a] tracking-wider uppercase">{stat.label}</p>
+                    <div key={idx} className={idx > 0 ? "border-l border-gray-100 pl-3 sm:pl-5" : ""}>
+                      <p className="text-[8px] sm:text-[10px] font-semibold text-[#8b7e6a] tracking-wider uppercase">{stat.label}</p>
                       <motion.p
                         key={`s-${current}-${idx}`}
                         initial={{ opacity: 0, y: 8 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.8 + idx * 0.12, duration: 0.45 }}
-                        className="text-xl font-bold text-[#2a2018] mt-0.5"
+                        className="text-base sm:text-xl font-bold text-[#2a2018] mt-0.5"
                       >
                         {stat.value}
                       </motion.p>
-                      <p className="text-[10px] text-gray-400">{stat.sublabel}</p>
+                      <p className="text-[8px] sm:text-[10px] text-gray-400">{stat.sublabel}</p>
                     </div>
                   ))}
                 </div>
@@ -277,19 +264,19 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.8 }}
-                className="hidden lg:block absolute bottom-20 -left-8 bg-[#2a2018] rounded-xl shadow-lg px-4 py-3 z-20"
+                className="absolute bottom-4 -left-2 sm:bottom-16 sm:-left-4 lg:bottom-20 lg:-left-8 bg-[#2a2018] rounded-lg sm:rounded-xl shadow-lg px-3 py-2 sm:px-4 sm:py-3 z-20"
               >
                 <motion.p
                   key={`h-${current}`}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 1, duration: 0.4 }}
-                  className="text-2xl font-bold text-white"
+                  className="text-xl sm:text-2xl font-bold text-white"
                 >
                   {slide.hectares.value}
                 </motion.p>
-                <p className="text-[11px] text-gray-300">{slide.hectares.label}</p>
-                <p className="text-[10px] text-gray-500">{slide.hectares.sublabel}</p>
+                <p className="text-[9px] sm:text-[11px] text-gray-300">{slide.hectares.label}</p>
+                <p className="text-[8px] sm:text-[10px] text-gray-500">{slide.hectares.sublabel}</p>
               </motion.div>
 
               {/* Bottom-right: Insight */}
@@ -297,14 +284,14 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.95 }}
-                className="hidden lg:flex absolute bottom-8 -right-6 bg-white rounded-xl shadow-lg px-3.5 py-2.5 items-center gap-2.5 z-20 border border-gray-100"
+                className="absolute bottom-2 -right-1 sm:bottom-6 sm:-right-3 lg:bottom-8 lg:-right-6 bg-white rounded-lg sm:rounded-xl shadow-lg px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 flex items-center gap-1.5 sm:gap-2.5 z-20 border border-gray-100"
               >
-                <div className="w-9 h-9 rounded-full bg-[#d1fae5] flex items-center justify-center shrink-0">
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-[#d1fae5] flex items-center justify-center shrink-0">
                   <GlobeIcon />
                 </div>
                 <div>
-                  <p className="text-[13px] font-semibold text-[#2a2018] leading-tight">{slide.floatingCards[1].label}</p>
-                  <p className="text-[11px] text-[#8b7e6a]">{slide.floatingCards[1].value}</p>
+                  <p className="text-[10px] sm:text-[13px] font-semibold text-[#2a2018] leading-tight">{slide.floatingCards[1].label}</p>
+                  <p className="text-[8px] sm:text-[11px] text-[#8b7e6a]">{slide.floatingCards[1].value}</p>
                 </div>
               </motion.div>
 
@@ -313,6 +300,8 @@ export default function Hero() {
                 <path d="M10 90 Q 50 10, 90 50" strokeLinecap="round" />
                 <path d="M85 45 L90 50 L84 54" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
+
+
             </motion.div>
           </AnimatePresence>
         </div>
