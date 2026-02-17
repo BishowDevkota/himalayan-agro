@@ -63,59 +63,75 @@ export default function AdminProductsClient({
 
   return (
     <div>
-      <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm mb-6">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <form onSubmit={handleSearch} className="flex items-center gap-3 w-full md:max-w-xl">
+      {/* Toolbar */}
+      <div className="bg-white/90 border border-slate-100 rounded-3xl p-4 shadow-sm mb-6">
+        <form onSubmit={handleSearch} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             <input
               aria-label="Search products"
-              className="flex-1 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm placeholder-slate-400"
+              className="w-full sm:w-60 rounded-full border border-slate-200 bg-white px-3.5 py-1.5 text-xs text-slate-900 placeholder:text-slate-400"
               placeholder="Search by name, brand or SKU"
               value={q}
               onChange={(e) => setQ(e.target.value)}
             />
-
-            <select className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm" value={category} onChange={(e) => setCategory(e.target.value)}>
+            <select className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-900" value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="">All categories</option>
               {categories.map((c: any) => (
                 <option key={c._id} value={c.name}>{c.name} ({c.productsCount || 0})</option>
               ))}
             </select>
-
-            <button className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm" type="submit">Search</button>
-          </form>
+            <button className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-xs font-medium whitespace-nowrap" type="submit">Search</button>
+          </div>
 
           <div className="flex items-center gap-3">
-            <a className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm" href="/admin/products/new">New product</a>
-            <div className="text-sm text-slate-500">{total} products</div>
+            <div className="text-xs text-slate-500">Showing <span className="font-medium text-slate-800">{products.length}</span> of <span className="font-medium text-slate-800">{total}</span></div>
+            <a className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-xs font-medium whitespace-nowrap" href="/admin/products/new">New product</a>
           </div>
-        </div>
+        </form>
 
-        <div className="mt-4">
-          <div className="flex items-center gap-3 text-sm text-slate-500">
-            <label className="flex items-center gap-2"><input type="checkbox" className="h-4 w-4" disabled /> Bulk select (coming soon)</label>
-            <div className="ml-auto">Show <select className="ml-2" value={perPage} onChange={(e) => { setPerPage(Number(e.target.value)); fetchProducts({ page: 1 }); }}>
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-            </select> per page</div>
-          </div>
+        <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+          <label className="flex items-center gap-2"><input type="checkbox" className="h-3.5 w-3.5" disabled /> Bulk select (coming soon)</label>
+          <div>Show <select className="ml-1.5 rounded-full border border-slate-200 bg-white px-2.5 py-1 text-xs text-slate-900" value={perPage} onChange={(e) => { setPerPage(Number(e.target.value)); fetchProducts({ page: 1 }); }}>
+            <option value={10}>10</option>
+            <option value={20}>20</option>
+            <option value={50}>50</option>
+          </select> per page</div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-4">
-        {loading && <div className="py-12 text-center text-sm text-slate-500">Loading…</div>}
-        {empty && <div className="py-12 text-center text-sm text-slate-500">No products found</div>}
-
-        {products.map((p: any) => (
-          <ProductRow key={p._id} product={p} />
-        ))}
+      {/* Product table */}
+      <div className="bg-white/90 border border-slate-100 rounded-3xl shadow-sm overflow-auto">
+        <table className="w-full text-sm text-slate-800">
+          <thead>
+            <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
+              <th className="px-5 py-4">Product</th>
+              <th className="px-5 py-4">Category</th>
+              <th className="px-5 py-4">Price</th>
+              <th className="px-5 py-4">Stock</th>
+              <th className="px-5 py-4">Status</th>
+              <th className="px-5 py-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {loading && (
+              <tr><td colSpan={6} className="px-5 py-12 text-center text-sm text-slate-400">Loading…</td></tr>
+            )}
+            {empty && (
+              <tr><td colSpan={6} className="px-5 py-12 text-center text-sm text-slate-400">No products found.</td></tr>
+            )}
+            {!loading && products.map((p: any) => (
+              <ProductRow key={p._id} product={p} />
+            ))}
+          </tbody>
+        </table>
       </div>
 
+      {/* Pagination */}
       <div className="mt-6 flex items-center justify-between">
-        <div className="text-sm text-slate-500">Page {page} of {totalPages}</div>
+        <div className="text-xs text-slate-500">Page {page} of {totalPages}</div>
         <div className="flex items-center gap-2">
-          <button className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-sm" disabled={page <= 1} onClick={() => { const np = Math.max(1, page-1); setPage(np); fetchProducts({ page: np }); }}>Prev</button>
-          <button className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-sm" disabled={page >= totalPages} onClick={() => { const np = Math.min(totalPages, page+1); setPage(np); fetchProducts({ page: np }); }}>Next</button>
+          <button className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs text-slate-700 font-medium" disabled={page <= 1} onClick={() => { const np = Math.max(1, page-1); setPage(np); fetchProducts({ page: np }); }}>Prev</button>
+          <button className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-xs font-medium" disabled={page >= totalPages} onClick={() => { const np = Math.min(totalPages, page+1); setPage(np); fetchProducts({ page: np }); }}>Next</button>
         </div>
       </div>
     </div>

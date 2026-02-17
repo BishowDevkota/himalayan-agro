@@ -33,7 +33,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
         <button
           type="button"
-          className="fixed left-10 top-[100px] z-50 flex h-5 w-8 flex-col items-center justify-between"
+          className="fixed left-10 top-25 z-50 flex h-5 w-8 flex-col items-center justify-between"
           onClick={() => setOpen((prev) => !prev)}
           aria-label={open ? "Close navigation" : "Open navigation"}
           aria-expanded={open}
@@ -65,7 +65,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           <div className="flex min-h-full flex-col">
             <div className="flex items-center justify-between mb-10">
               <Link href="/" className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-xl bg-white text-black flex items-center justify-center text-lg font-black">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-black text-lg font-bold">
                   H
                 </div>
                 <span className="text-white text-sm font-semibold tracking-wide">Himalaya Agro</span>
@@ -103,17 +103,24 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             </nav>
 
             <div className="mt-auto pt-10">
-              <div className="border-t border-white/10 pt-6 flex flex-col gap-3 text-sm">
-                <Link href="/admin/profile" className="text-white/80 hover:text-white transition-colors">
-                  Profile
-                </Link>
-                <button
-                  type="button"
-                  onClick={() => signOut({ callbackUrl: "/admin/login" })}
-                  className="text-left text-white/80 hover:text-white transition-colors"
+              <div className="border-t border-white/10 pt-6 flex items-center justify-between">
+                <div
+                  aria-label="Profile"
+                  className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white text-white cursor-default"
                 >
-                  Sign out
-                </button>
+                  <span className="text-xl font-bold leading-none">A</span>
+                </div>
+                <Link
+                  href="/admin/dashboard"
+                  aria-label="Sign out"
+                  className="flex h-14 w-14 items-center justify-center rounded-full border-2 border-white text-white hover:bg-white/10 transition-colors"
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                  </svg>
+                </Link>
               </div>
             </div>
           </div>

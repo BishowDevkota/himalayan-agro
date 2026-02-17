@@ -50,7 +50,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
                 </>
               )}
               <li><svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg></li>
-              <li className="text-gray-900 font-medium truncate max-w-[200px]">{safeProduct.name}</li>
+              <li className="text-gray-900 font-medium truncate max-w-50">{safeProduct.name}</li>
             </ol>
           </nav>
         </div>
@@ -83,7 +83,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
             {images.length > 1 && (
               <div className="flex gap-3 mt-4 overflow-x-auto pb-1">
                 {images.map((img: string, i: number) => (
-                  <div key={i} className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 cursor-pointer transition-colors ${i === 0 ? 'border-[#059669]' : 'border-gray-100 hover:border-[#0891b2]'}`}>
+                  <div key={i} className={`shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 cursor-pointer transition-colors ${i === 0 ? 'border-[#059669]' : 'border-gray-100 hover:border-[#0891b2]'}`}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={img} alt={`${safeProduct.name} ${i + 1}`} className="w-full h-full object-cover" />
                   </div>

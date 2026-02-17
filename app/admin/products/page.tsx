@@ -1,7 +1,6 @@
 import React from "react";
 import connectToDatabase from "../../../lib/mongodb";
 import Product from "../../../models/Product";
-import ProductRow from "../../components/admin/ProductRow";
 import AdminProductsClient from "../../components/admin/AdminProductsClient";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
@@ -21,49 +20,80 @@ export default async function AdminProductsPage() {
   const cats = await Category.find().sort({ name: 1 }).lean();
   const publicCats = cats.map((c: any) => ({ _id: String(c._id), name: c.name, productsCount: (c.products || []).length }));
 
+  const outOfStock = safeProducts.filter((p: any) => (p.stock ?? 0) <= 0).length;
+  const activeCount = safeProducts.filter((p: any) => p.isActive).length;
+
   return (
     <main className="pb-16">
       <div className="max-w-7xl mx-auto py-16 px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div>
             <span className="text-xs font-bold uppercase tracking-[0.3em] text-sky-600">Catalog</span>
-            <h1 className="mt-3 text-4xl font-black">Products</h1>
+            <h1 className="mt-3 text-4xl font-black text-slate-900">Products</h1>
             <p className="mt-3 text-sm text-slate-500">Manage catalog — create, edit and publish products.</p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
-            <a className="rounded-full bg-slate-900 text-white px-5 py-2.5" href="/admin/products/new">New product</a>
-            <a className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-slate-700" href="/products">View store</a>
+          <div className="flex flex-wrap gap-2">
+            <a className="rounded-full bg-slate-900 text-white px-4 py-1.5 text-xs font-medium" href="/admin/products/new">New product</a>
+            <a className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-700" href="/products">View store</a>
+          </div>
+        </div>
+
+        {/* Stats */}
+        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-xs uppercase tracking-widest text-slate-400">Total Products</div>
+                <div className="mt-3 text-3xl font-black text-slate-900">{safeProducts.length}</div>
+                <div className="mt-2 text-sm text-slate-400">All product listings</div>
+              </div>
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-sky-50 text-sky-600 font-bold">P</div>
+            </div>
+          </div>
+
+          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-xs uppercase tracking-widest text-slate-400">Active</div>
+                <div className="mt-3 text-3xl font-black text-slate-900">{activeCount}</div>
+                <div className="mt-2 text-sm text-slate-400">Published & visible</div>
+              </div>
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 font-bold">A</div>
+            </div>
+          </div>
+
+          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-xs uppercase tracking-widest text-slate-400">Categories</div>
+                <div className="mt-3 text-3xl font-black text-slate-900">{publicCats.length}</div>
+                <div className="mt-2 text-sm text-slate-400">Product categories</div>
+              </div>
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 font-bold">C</div>
+            </div>
+          </div>
+
+          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <div className="text-xs uppercase tracking-widest text-slate-400">Out of Stock</div>
+                <div className="mt-3 text-3xl font-black text-slate-900">{outOfStock}</div>
+                <div className="mt-2 text-sm text-slate-400">Needs restocking</div>
+              </div>
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 font-bold">!</div>
+            </div>
           </div>
         </div>
 
         <div className="mt-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <AdminProductsClient
-                initialProducts={safeProducts}
-                initialTotal={safeProducts.length}
-                initialPage={1}
-                initialPerPage={20}
-                categories={publicCats}
-              />
-            </div>
-
-            <aside className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-              <h3 className="text-base font-semibold text-slate-900">Catalog insights</h3>
-              <div className="mt-4 text-sm text-slate-600">Quick controls and metrics for your product catalog.</div>
-
-              <dl className="mt-6 grid grid-cols-1 gap-3 text-sm">
-                <div className="flex items-center justify-between"><dt className="text-slate-500">Total products</dt><dd className="font-semibold text-slate-900">{safeProducts.length}</dd></div>
-                <div className="flex items-center justify-between"><dt className="text-slate-500">Categories</dt><dd className="font-semibold text-slate-900">{publicCats.length}</dd></div>
-                <div className="flex items-center justify-between"><dt className="text-slate-500">Out of stock</dt><dd className="font-semibold text-rose-600">{/* TODO: calculate */}0</dd></div>
-              </dl>
-
-              <div className="mt-6 border-t border-slate-100 pt-4 text-sm text-slate-500">
-                <div>Tip: use the filters to find products quickly.</div>
-              </div>
-            </aside>
-          </div>
+          <AdminProductsClient
+            initialProducts={safeProducts}
+            initialTotal={safeProducts.length}
+            initialPage={1}
+            initialPerPage={20}
+            categories={publicCats}
+          />
         </div>
       </div>
     </main>

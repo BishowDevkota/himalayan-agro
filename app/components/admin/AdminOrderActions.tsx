@@ -33,11 +33,12 @@ export default function AdminOrderActions({ orderId, initialOrderStatus, initial
   }
 
   return (
-    <div className="bg-white border border-slate-100 rounded-3xl p-4 text-slate-900 shadow-sm">
-      <div className="text-xs uppercase tracking-widest text-slate-400">Order actions</div>
-      <div className="mt-3 space-y-3">
+    <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 text-slate-900 shadow-sm">
+      <h3 className="text-base font-semibold text-slate-900">Order actions</h3>
+      <div className="mt-1 text-xs text-slate-400">Update order and payment status.</div>
+      <div className="mt-6 space-y-4">
         <div>
-          <label className="block text-sm text-slate-700">Order status</label>
+          <label className="block text-sm text-slate-500">Order status</label>
           <select className="mt-2 block w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900" value={orderStatus} onChange={(e) => setOrderStatus(e.target.value)}>
             {ORDER_STATUSES.map((s) => (
               <option key={s} value={s}>{s}</option>
@@ -45,15 +46,15 @@ export default function AdminOrderActions({ orderId, initialOrderStatus, initial
           </select>
         </div>
         <div>
-          <label className="block text-sm text-slate-700">Payment status</label>
+          <label className="block text-sm text-slate-500">Payment status</label>
           <select className="mt-2 block w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900" value={paymentStatus} onChange={(e) => setPaymentStatus(e.target.value)}>
             {PAYMENT_STATUSES.map((s) => (
               <option key={s} value={s}>{s}</option>
             ))}
           </select>
         </div>
-        <div>
-          <button className="w-full rounded-full bg-slate-900 text-white py-2" disabled={saving} onClick={save}>{saving ? 'Saving…' : 'Save changes'}</button>
+        <div className="pt-2">
+          <button className="w-full rounded-full bg-slate-900 text-white py-2.5 text-sm font-medium" disabled={saving} onClick={save}>{saving ? 'Saving…' : 'Save changes'}</button>
         </div>
       </div>
     </div>

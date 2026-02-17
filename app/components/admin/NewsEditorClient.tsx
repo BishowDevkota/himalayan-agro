@@ -84,45 +84,56 @@ export default function NewsEditorClient({
   }
 
   return (
-    <form onSubmit={handleSave} className="space-y-6">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-slate-700">Title</label>
-            <input
-              className="mt-2 w-full rounded-lg border border-gray-200 px-4 py-2 text-sm"
-              placeholder="News headline"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
+    <form onSubmit={handleSave} className="space-y-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main content — 2 cols */}
+        <div className="lg:col-span-2 space-y-8">
+          <section className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-slate-900">Article details</h2>
+            <p className="mt-1 text-xs text-slate-400">Title and summary for the news post.</p>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700">Excerpt</label>
-            <textarea
-              className="mt-2 w-full rounded-lg border border-gray-200 px-4 py-2 text-sm min-h-[90px]"
-              placeholder="Short summary shown on the news list"
-              value={excerpt}
-              onChange={(e) => setExcerpt(e.target.value)}
-            />
-          </div>
+            <div className="mt-6 space-y-5">
+              <div>
+                <label className="block text-sm font-medium text-slate-700">Title</label>
+                <input
+                  className="mt-2 w-full rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400"
+                  placeholder="News headline"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700">Content</label>
-            <div className="mt-2">
+              <div>
+                <label className="block text-sm font-medium text-slate-700">Excerpt</label>
+                <textarea
+                  className="mt-2 w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 min-h-22.5"
+                  placeholder="Short summary shown on the news list"
+                  value={excerpt}
+                  onChange={(e) => setExcerpt(e.target.value)}
+                />
+              </div>
+            </div>
+          </section>
+
+          <section className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <h2 className="text-lg font-bold text-slate-900">Content</h2>
+            <p className="mt-1 text-xs text-slate-400">Write or paste the full article body.</p>
+            <div className="mt-6">
               <RichTextEditorClient value={contentHtml} onChange={setContentHtml} />
             </div>
-          </div>
+          </section>
         </div>
 
-        <aside className="space-y-6">
-          <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
-            <h3 className="text-sm font-semibold text-slate-900">Publish settings</h3>
-            <div className="mt-3 space-y-3">
+        {/* Sidebar */}
+        <aside className="space-y-8">
+          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <h3 className="text-base font-semibold text-slate-900">Publish settings</h3>
+            <div className="mt-1 text-xs text-slate-400">Control visibility and category.</div>
+            <div className="mt-6 space-y-4">
               <div>
-                <label className="block text-xs text-slate-500">Status</label>
+                <label className="block text-sm text-slate-500">Status</label>
                 <select
-                  className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+                  className="mt-2 block w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900"
                   value={status}
                   onChange={(e) => setStatus(e.target.value as any)}
                 >
@@ -132,9 +143,9 @@ export default function NewsEditorClient({
               </div>
 
               <div>
-                <label className="block text-xs text-slate-500">Category</label>
+                <label className="block text-sm text-slate-500">Category</label>
                 <input
-                  className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+                  className="mt-2 w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400"
                   placeholder="e.g. Company, Technology"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
@@ -143,21 +154,22 @@ export default function NewsEditorClient({
             </div>
           </div>
 
-          <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
-            <h3 className="text-sm font-semibold text-slate-900">Cover image</h3>
-            <div className="mt-3 space-y-3">
+          <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
+            <h3 className="text-base font-semibold text-slate-900">Cover image</h3>
+            <div className="mt-1 text-xs text-slate-400">Upload or paste a URL for the cover.</div>
+            <div className="mt-6 space-y-4">
               {coverImage ? (
-                <div className="rounded-lg overflow-hidden border border-gray-100">
+                <div className="rounded-2xl overflow-hidden border border-slate-100">
                   <img src={coverImage} alt="Cover" className="w-full h-48 object-cover" />
                 </div>
               ) : (
-                <div className="h-40 rounded-lg border border-dashed border-gray-200 bg-slate-50 flex items-center justify-center text-sm text-slate-500">
+                <div className="h-40 rounded-2xl border border-dashed border-slate-200 bg-slate-50 flex items-center justify-center text-sm text-slate-400">
                   No cover selected
                 </div>
               )}
 
               <label className="block">
-                <div className="relative rounded-lg border border-gray-200 px-3 py-2 text-sm text-center cursor-pointer hover:bg-slate-50">
+                <div className="relative rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm text-center cursor-pointer hover:bg-slate-50 transition-colors text-slate-700">
                   <input
                     type="file"
                     accept="image/*"
@@ -169,11 +181,11 @@ export default function NewsEditorClient({
                     }}
                     disabled={uploadingCover}
                   />
-                  {uploadingCover ? "Uploading..." : "Upload cover image"}
+                  {uploadingCover ? "Uploading…" : "Upload cover image"}
                 </div>
               </label>
               <input
-                className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm"
+                className="w-full rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400"
                 placeholder="Or paste image URL"
                 value={coverImage}
                 onChange={(e) => setCoverImage(e.target.value)}
@@ -183,10 +195,10 @@ export default function NewsEditorClient({
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-sky-600 text-white px-4 py-2 text-sm"
+            className="w-full rounded-full bg-slate-900 text-white px-4 py-2.5 text-sm font-medium"
             disabled={saving}
           >
-            {saving ? "Saving..." : mode === "create" ? "Publish news" : "Save changes"}
+            {saving ? "Saving…" : mode === "create" ? "Publish news" : "Save changes"}
           </button>
         </aside>
       </div>

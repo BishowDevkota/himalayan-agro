@@ -25,7 +25,13 @@ export default async function StoreOrdersPage() {
     : [];
 
   const safe = (orders || []).map((o: any) => {
-    const vendorItems = (o.items || []).filter((it: any) => productIdSet.has(String(it.product)));
+    const vendorItems = (o.items || [])
+      .filter((it: any) => productIdSet.has(String(it.product)))
+      .map((it: any) => ({
+        ...it,
+        _id: it._id ? String(it._id) : undefined,
+        product: String(it.product),
+      }));
     const vendorTotal = vendorItems.reduce((sum: number, it: any) => sum + Number(it.price || 0) * Number(it.quantity || 0), 0);
     return {
       _id: String(o._id),

@@ -22,6 +22,7 @@ export default function AdminEmployeesClient() {
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [loading, setLoading] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [showCreate, setShowCreate] = useState(false);
   const [createName, setCreateName] = useState("");
   const [createEmail, setCreateEmail] = useState("");
   const [createPassword, setCreatePassword] = useState("");
@@ -68,6 +69,7 @@ export default function AdminEmployeesClient() {
       setCreateEmail("");
       setCreatePassword("");
       setCreateRole(EMPLOYEE_ROLES[0] || "accountant");
+      setShowCreate(false);
       await fetchEmployees();
     } catch (err: any) {
       toast.error(err?.message || String(err));
@@ -77,7 +79,7 @@ export default function AdminEmployeesClient() {
   }
 
   async function patchEmployee(id: string, payload: any) {
-    const res = await fetch(`/api/admin/employees/${id}` , {
+    const res = await fetch(`/api/admin/employees/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -136,110 +138,133 @@ export default function AdminEmployeesClient() {
   }
 
   return (
-    <section className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm">
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-2xl font-semibold text-slate-900">Employee management</h2>
-          <p className="text-sm text-slate-500 mt-1">Create employees and assign role-based access.</p>
+    <div className="text-slate-900">
+      {/* Search & Create Bar */}
+      <div className="bg-white/90 border border-slate-100 rounded-3xl p-5 shadow-sm mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="text-sm text-slate-600">
+            Showing <span className="font-medium text-slate-800">{employees.length}</span> employees
+          </div>
+          <button
+            className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm"
+            onClick={() => setShowCreate(!showCreate)}
+          >
+            {showCreate ? "Cancel" : "Create employee"}
+          </button>
         </div>
+
+        {/* Inline Create Form */}
+        {showCreate && (
+          <form onSubmit={handleCreate} className="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-end gap-3">
+            <div>
+              <label className="block text-xs text-slate-400 mb-1">Name</label>
+              <input className="w-36 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400" placeholder="optional" value={createName} onChange={(e) => setCreateName(e.target.value)} />
+            </div>
+            <div>
+              <label className="block text-xs text-slate-400 mb-1">Email</label>
+              <input className="w-48 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400" placeholder="email" value={createEmail} onChange={(e) => setCreateEmail(e.target.value)} />
+            </div>
+            <div>
+              <label className="block text-xs text-slate-400 mb-1">Password</label>
+              <input className="w-36 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900 placeholder:text-slate-400" placeholder="min 8 chars" type="password" value={createPassword} onChange={(e) => setCreatePassword(e.target.value)} />
+            </div>
+            <div>
+              <label className="block text-xs text-slate-400 mb-1">Role</label>
+              <select className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-900" value={createRole} onChange={(e) => setCreateRole(e.target.value)}>
+                {EMPLOYEE_ROLES.map((role) => (
+                  <option key={role} value={role}>{roleLabel(role)}</option>
+                ))}
+              </select>
+            </div>
+            <button className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm" type="submit" disabled={creating}>
+              {creating ? "Creating…" : "Create"}
+            </button>
+          </form>
+        )}
       </div>
 
-      <form onSubmit={handleCreate} className="flex flex-wrap items-center gap-3 mb-6">
-        <input className="hidden" />
-        <input
-          className="w-40 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm"
-          placeholder="name (optional)"
-          value={createName}
-          onChange={(e) => setCreateName(e.target.value)}
-        />
-        <input
-          className="w-52 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm"
-          placeholder="email"
-          value={createEmail}
-          onChange={(e) => setCreateEmail(e.target.value)}
-        />
-        <input
-          className="w-40 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm"
-          placeholder="password"
-          type="password"
-          value={createPassword}
-          onChange={(e) => setCreatePassword(e.target.value)}
-        />
-        <select
-          className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm"
-          value={createRole}
-          onChange={(e) => setCreateRole(e.target.value)}
-        >
-          {EMPLOYEE_ROLES.map((role) => (
-            <option key={role} value={role}>{roleLabel(role)}</option>
-          ))}
-        </select>
-        <button
-          className="rounded-full bg-slate-900 text-white px-5 py-2 text-sm"
-          type="submit"
-          disabled={creating}
-        >
-          {creating ? "Creating…" : "Create employee"}
-        </button>
-      </form>
+      {/* Employees Table */}
+      <div className="bg-white/90 border border-slate-100 rounded-3xl shadow-sm overflow-auto">
+        <table className="w-full text-sm text-slate-800">
+          <thead>
+            <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
+              <th className="px-5 py-4">Employee</th>
+              <th className="px-5 py-4">Role</th>
+              <th className="px-5 py-4">Status</th>
+              <th className="px-5 py-4">Joined</th>
+              <th className="px-5 py-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {loading && (
+              <tr><td colSpan={5} className="px-5 py-12 text-center text-sm text-slate-400">Loading…</td></tr>
+            )}
+            {!loading && employees.length === 0 && (
+              <tr><td colSpan={5} className="px-5 py-12 text-center text-sm text-slate-400">No employees yet.</td></tr>
+            )}
+            {!loading && employees.map((emp) => (
+              <tr key={emp._id} className="align-top hover:bg-slate-50/60 transition-colors">
+                <td className="px-5 py-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 rounded-xl bg-slate-900/5 flex items-center justify-center text-slate-700 font-bold shrink-0">
+                      {(emp.name || emp.email || "E")[0].toUpperCase()}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="font-semibold text-slate-900 truncate">{emp.name || "—"}</div>
+                      <div className="text-xs text-slate-400 mt-0.5 truncate">{emp.email}</div>
+                    </div>
+                  </div>
+                </td>
 
-      {loading ? (
-        <div className="py-6 text-center text-sm text-slate-500">Loading…</div>
-      ) : employees.length === 0 ? (
-        <div className="py-6 text-center text-sm text-slate-500">No employees yet</div>
-      ) : (
-        <div className="divide-y divide-gray-100">
-          {employees.map((e) => (
-            <div key={e._id} className="py-4 flex items-start justify-between gap-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-slate-900/5 flex items-center justify-center text-slate-700 font-bold">
-                  {(e.name || e.email || "E")[0].toUpperCase()}
-                </div>
-                <div>
-                  <div className="font-medium text-slate-900">{e.name || "—"}</div>
-                  <div className="text-sm text-slate-500">{e.email}</div>
-                  <div className="text-xs text-slate-400 mt-1">Role: {roleLabel(e.role)}</div>
-                </div>
-              </div>
-
-              <div className="text-right">
-                <div className={`text-xs ${e.isActive ? "text-emerald-600" : "text-rose-600"}`}>
-                  {e.isActive ? "Active" : "Inactive"}
-                </div>
-                <div className="mt-2 flex flex-wrap items-center justify-end gap-2">
+                <td className="px-5 py-4">
                   <select
-                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs"
-                    value={e.role}
-                    onChange={(event) => handleRoleChange(e, event.target.value)}
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs text-slate-900"
+                    value={emp.role}
+                    onChange={(event) => handleRoleChange(emp, event.target.value)}
                   >
                     {EMPLOYEE_ROLES.map((role) => (
                       <option key={role} value={role}>{roleLabel(role)}</option>
                     ))}
                   </select>
-                  <button
-                    className={`rounded-full px-3 py-1 text-xs ${e.isActive ? "bg-rose-50 text-rose-700" : "bg-emerald-50 text-emerald-700"}`}
-                    onClick={() => handleToggleActive(e)}
-                  >
-                    {e.isActive ? "Deactivate" : "Activate"}
-                  </button>
-                  <button
-                    className="rounded-full bg-slate-900/5 text-slate-800 px-3 py-1 text-xs"
-                    onClick={() => handleSetPassword(e)}
-                  >
-                    Set password
-                  </button>
-                  <button
-                    className="rounded-full bg-slate-900 text-white px-3 py-1 text-xs"
-                    onClick={() => handleDelete(e)}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </section>
+                </td>
+
+                <td className="px-5 py-4">
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${emp.isActive ? "bg-emerald-50 text-emerald-700" : "bg-rose-50 text-rose-700"}`}>
+                    {emp.isActive ? "Active" : "Inactive"}
+                  </span>
+                </td>
+
+                <td className="px-5 py-4 text-sm text-slate-500">
+                  {emp.createdAt ? new Date(emp.createdAt).toLocaleDateString() : "—"}
+                </td>
+
+                <td className="px-5 py-4">
+                  <div className="flex items-center gap-3">
+                    <button
+                      className={`text-sm font-medium ${emp.isActive ? "text-rose-600 hover:text-rose-700" : "text-emerald-600 hover:text-emerald-700"}`}
+                      onClick={() => handleToggleActive(emp)}
+                    >
+                      {emp.isActive ? "Deactivate" : "Activate"}
+                    </button>
+                    <button
+                      className="text-sm text-slate-500 hover:text-slate-700"
+                      onClick={() => handleSetPassword(emp)}
+                    >
+                      Set password
+                    </button>
+                    <button
+                      className="text-sm text-rose-600 hover:text-rose-700"
+                      onClick={() => handleDelete(emp)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }

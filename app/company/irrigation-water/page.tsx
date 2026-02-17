@@ -53,7 +53,7 @@ export default function IrrigationWaterPage() {
       <SubHeroSection
         title="Irrigation & Water"
         description="Smart water management solutions — drip systems, sprinklers, and solar pumps that maximize every drop for Nepali agriculture."
-        image="https://images.unsplash.com/photo-1563514227147-6d2ff665a6a0?auto=format&fit=crop&q=80&w=2000"
+        image="https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&q=80&w=2000"
         tag="Drip, Sprinkler & Pumps"
         stats={[
           { value: "60%", label: "Water Saved" },

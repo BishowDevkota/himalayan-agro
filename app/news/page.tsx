@@ -14,7 +14,7 @@ export const metadata = {
   excerpt:
     "Our IoT sensor network now covers over 156,000 hectares across Nepal, bringing real-time soil health monitoring and AI-driven crop recommendations to thousands of smallholder farmers in previously underserved regions.",
   image:
-    "https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&q=80&w=1200",
+    "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&q=80&w=1200",
 };
 
 const articles = [
@@ -25,7 +25,7 @@ const articles = [
     excerpt:
       "A new partnership will streamline organic certification for our partner farms, opening doors to premium European and North American markets.",
     image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=600",
+      "https://images.unsplash.com/photo-1589923188651-268a9765e432?auto=format&fit=crop&q=80&w=600",
   },
   {
     title: "FY 2025 Revenue Surpasses NPR 1.2 Billion Mark",
@@ -34,7 +34,7 @@ const articles = [
     excerpt:
       "Strong demand for export-grade large cardamom and orthodox tea drove a 34% year-over-year revenue increase.",
     image:
-      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600",
+      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=600",
   },
   {
     title: "New Cold-Chain Logistics Hub Opens in Biratnagar",
@@ -43,7 +43,7 @@ const articles = [
     excerpt:
       "The state-of-the-art facility reduces post-harvest losses by up to 40% and supports year-round export operations.",
     image:
-      "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600",
+      "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&q=80&w=600",
   },
   {
     title: "Farmer Welfare Fund Distributes NPR 50M in Crop Insurance Payouts",
@@ -52,7 +52,7 @@ const articles = [
     excerpt:
       "Over 2,000 smallholder farmers received insurance payouts following unseasonal rainfall, safeguarding their livelihoods.",
     image:
-      "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&q=80&w=600",
+      "https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&q=80&w=600",
   },
   {
     title: "AI-Driven Yield Prediction Model Achieves 98% Accuracy",
@@ -61,7 +61,7 @@ const articles = [
     excerpt:
       "Our machine learning models now predict crop yields with near-perfect accuracy, enabling better resource planning for the upcoming season.",
     image:
-      "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=600",
+      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=600",
   },
   {
     title: "Himalaya Nepal Agriculture Wins National Innovation Award",
@@ -70,7 +70,7 @@ const articles = [
     excerpt:
       "Recognized by the Ministry of Agriculture for pioneering digital logistics and traceability systems in Nepal's agri-export sector.",
     image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600",
+      "https://images.unsplash.com/photo-1567521464027-f127ff144326?auto=format&fit=crop&q=80&w=600",
   },
 ];
 
@@ -89,7 +89,7 @@ export default function NewsPage() {
       <SubHeroSection
         title="News & Updates"
         description="Stay up to date with the latest developments, milestones, and stories from Himalaya Nepal Agriculture."
-        image="https://images.unsplash.com/photo-1504711434969-e33886168d4c?auto=format&fit=crop&q=80&w=2000"
+        image="https://images.unsplash.com/photo-1586339949216-35c2747cc36d?auto=format&fit=crop&q=80&w=2000"
         tag="Latest From HNA"
         stats={[
           { value: "340+", label: "Partner Farms" },

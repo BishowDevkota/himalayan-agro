@@ -127,7 +127,7 @@ export default function SearchClient({ initialQuery = "" }: { initialQuery?: str
             {suggestions.map((p, idx) => (
               <li key={p._id} role="option" aria-selected={active === idx} className={`border-b last:border-b-0 ${active === idx ? 'bg-gray-50' : ''}`}>
                 <Link href={`/product/${p._id}`} onClick={() => setOpen(false)} className="flex items-center gap-3 px-3 py-2 hover:bg-gray-50">
-                  <div className="w-12 h-12 bg-gray-100 rounded overflow-hidden flex-shrink-0 flex items-center justify-center">
+                  <div className="w-12 h-12 bg-gray-100 rounded overflow-hidden shrink-0 flex items-center justify-center">
                     {p.images && p.images[0] ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img src={p.images[0]} alt={p.name} className="object-cover w-full h-full" />

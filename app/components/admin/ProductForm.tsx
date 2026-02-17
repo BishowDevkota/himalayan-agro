@@ -131,10 +131,10 @@ export default function ProductForm({ initial = null }: { initial?: any }) {
             </div>
           </div>
 
-          <div className="mt-4 flex flex-wrap items-center gap-3">
-            <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-2 text-white" disabled={loading}>{loading ? 'Saving…' : 'Save product'}</button>
-            <a role="button" onClick={() => window.history.back()} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2 text-sm text-slate-700 cursor-pointer">Cancel</a>
-            <button type="button" onClick={() => window.open(`/product/preview?name=${encodeURIComponent(name)}`, '_blank')} className="ml-auto text-sm text-slate-500">Preview</button>
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <button type="submit" className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-1.5 text-xs font-medium text-white" disabled={loading}>{loading ? 'Saving…' : 'Save product'}</button>
+            <a role="button" onClick={() => window.history.back()} className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-700 cursor-pointer">Cancel</a>
+            <button type="button" onClick={() => window.open(`/product/preview?name=${encodeURIComponent(name)}`, '_blank')} className="ml-auto rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-medium text-slate-500 hover:bg-slate-50">Preview</button>
           </div>
         </div>
       </div>

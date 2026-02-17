@@ -77,22 +77,22 @@ export default function UserActionsClient({ userId, initialRole, initialActive }
   }
 
   return (
-    <div className="mt-6 flex gap-3 items-center">
+    <div className="flex items-center gap-2 flex-wrap">
       {role === "admin" ? (
-        <button className="rounded bg-amber-50 text-amber-800 px-3 py-1 text-sm" onClick={handleDemote} disabled={loading}>Demote</button>
+        <button className="rounded-full bg-amber-50 text-amber-800 px-3 py-1 text-xs font-medium" onClick={handleDemote} disabled={loading}>Demote</button>
       ) : role === "user" ? (
-        <button className="rounded bg-sky-600 text-white px-3 py-1 text-sm" onClick={handlePromote} disabled={loading}>Promote</button>
+        <button className="rounded-full bg-sky-600 text-white px-3 py-1 text-xs font-medium" onClick={handlePromote} disabled={loading}>Promote</button>
       ) : (
-        <div className="rounded bg-emerald-50 text-emerald-700 px-3 py-1 text-sm">Vendor</div>
+        <div className="rounded-full bg-emerald-50 text-emerald-700 px-3 py-1 text-xs font-medium">Vendor</div>
       )}
 
-      <button className={`rounded ${isActive ? 'bg-red-50 text-red-700' : 'bg-emerald-50 text-emerald-700'} px-3 py-1 text-sm`} onClick={handleToggleActive} disabled={loading}>
+      <button className={`rounded-full ${isActive ? 'bg-red-50 text-red-700' : 'bg-emerald-50 text-emerald-700'} px-3 py-1 text-xs font-medium`} onClick={handleToggleActive} disabled={loading}>
         {isActive ? 'Deactivate' : 'Activate'}
       </button>
 
-      <button className="rounded bg-gray-100 text-slate-800 px-3 py-1 text-sm" onClick={handleSetPassword} disabled={loading}>Set password</button>
+      <button className="rounded-full bg-slate-100 text-slate-800 px-3 py-1 text-xs font-medium" onClick={handleSetPassword} disabled={loading}>Set password</button>
 
-      <button className="rounded bg-red-600 text-white px-3 py-1 text-sm" onClick={handleDelete} disabled={loading}>Delete user</button>
+      <button className="rounded-full bg-red-600 text-white px-3 py-1 text-xs font-medium" onClick={handleDelete} disabled={loading}>Delete</button>
     </div>
   );
 }

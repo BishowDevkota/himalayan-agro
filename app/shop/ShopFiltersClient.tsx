@@ -93,7 +93,7 @@ export default function ShopFiltersClient({
         <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
           <button
             onClick={() => toggleCategory(undefined)}
-            className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium border-2 transition-all duration-200 ${
+            className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium border-2 transition-all duration-200 ${
               !currentCategory
                 ? 'bg-[#059669] text-white border-[#059669]'
                 : 'bg-white text-gray-600 border-gray-200 hover:border-[#059669] hover:text-[#059669]'
@@ -108,7 +108,7 @@ export default function ShopFiltersClient({
               <button
                 key={c._id}
                 onClick={() => toggleCategory(c.name)}
-                className={`flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium border-2 transition-all duration-200 ${
+                className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium border-2 transition-all duration-200 ${
                   isActive
                     ? 'bg-[#0891b2] text-white border-[#0891b2]'
                     : 'bg-white text-gray-600 border-gray-200 hover:border-[#0891b2] hover:text-[#0891b2]'

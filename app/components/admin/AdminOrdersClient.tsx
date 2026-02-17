@@ -31,6 +31,12 @@ export default function AdminOrdersClient({ initialOrders = [] }: { initialOrder
     return "bg-gray-100 text-gray-700";
   }
 
+  function paymentColor(s: string) {
+    if (s === "paid") return "bg-emerald-50 text-emerald-700";
+    if (s === "failed") return "bg-red-50 text-red-700";
+    return "bg-amber-50 text-amber-700";
+  }
+
   return (
     <div className="text-slate-900">
       <div className="bg-white/90 border border-slate-100 rounded-3xl p-5 shadow-sm mb-6">
@@ -56,7 +62,7 @@ export default function AdminOrdersClient({ initialOrders = [] }: { initialOrder
 
           <div className="flex items-center gap-3">
             <div className="text-sm text-slate-600">Showing <span className="font-medium text-slate-800">{filtered.length}</span> of <span className="font-medium text-slate-800">{orders.length}</span></div>
-            <Link href="/admin/orders" className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700">Refresh</Link>
+            <Link href="/admin/orders" className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700">Refresh</Link>
           </div>
         </div>
       </div>
@@ -65,51 +71,51 @@ export default function AdminOrdersClient({ initialOrders = [] }: { initialOrder
         <table className="w-full text-sm text-slate-800">
           <thead>
             <tr className="text-left text-xs uppercase tracking-wider text-slate-400">
-              <th className="px-4 py-3">Order</th>
-              <th className="px-4 py-3">Customer</th>
-              <th className="px-4 py-3">Items</th>
-              <th className="px-4 py-3">Total</th>
-              <th className="px-4 py-3">Payment</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3">Date</th>
-              <th className="px-4 py-3">Actions</th>
+              <th className="px-5 py-4">Order</th>
+              <th className="px-5 py-4">Customer</th>
+              <th className="px-5 py-4">Items</th>
+              <th className="px-5 py-4">Total</th>
+              <th className="px-5 py-4">Payment</th>
+              <th className="px-5 py-4">Status</th>
+              <th className="px-5 py-4">Date</th>
+              <th className="px-5 py-4">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
             {filtered.map((o: any) => (
-              <tr key={o._id} className="align-top">
-                <td className="px-4 py-4 w-[14rem]">
-                  <div className="font-medium text-slate-900">#{String(o._id).slice(-8)}</div>
-                  <div className="text-xs text-slate-500">{o.items.length} items</div>
+              <tr key={o._id} className="align-top hover:bg-slate-50/60 transition-colors">
+                <td className="px-5 py-4 w-56">
+                  <div className="font-semibold text-slate-900">#{String(o._id).slice(-8)}</div>
+                  <div className="text-xs text-slate-400 mt-0.5">{o.items.length} item{o.items.length !== 1 ? 's' : ''}</div>
                 </td>
 
-                <td className="px-4 py-4 w-[18rem]">
+                <td className="px-5 py-4 w-56">
                   <div className="font-medium text-slate-900">{o.shippingAddress?.name || o.email || '—'}</div>
-                  <div className="text-xs text-slate-500 mt-1 truncate">{o.shippingAddress?.phone || o.shippingAddress?.email || ''}</div>
+                  <div className="text-xs text-slate-400 mt-0.5 truncate">{o.shippingAddress?.phone || o.shippingAddress?.email || ''}</div>
                 </td>
 
-                <td className="px-4 py-4 text-slate-800">{o.items.length}</td>
+                <td className="px-5 py-4 text-slate-800">{o.items.length}</td>
 
-                <td className="px-4 py-4 font-extrabold text-slate-900">{typeof o.totalAmount === 'number' ? `₹${o.totalAmount.toFixed(2)}` : o.totalAmount}</td>
+                <td className="px-5 py-4 font-extrabold text-slate-900">{typeof o.totalAmount === 'number' ? `₹${o.totalAmount.toFixed(2)}` : o.totalAmount}</td>
 
-                <td className="px-4 py-4">
-                  <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${o.paymentStatus === 'paid' ? 'bg-emerald-50 text-emerald-700' : o.paymentStatus === 'failed' ? 'bg-red-50 text-red-700' : 'bg-amber-50 text-amber-700'}`}>
+                <td className="px-5 py-4">
+                  <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${paymentColor(o.paymentStatus)}`}>
                     {o.paymentStatus}
-                  </div>
+                  </span>
                 </td>
 
-                <td className="px-4 py-4">
-                  <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${statusColor(o.orderStatus)}`}>
+                <td className="px-5 py-4">
+                  <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${statusColor(o.orderStatus)}`}>
                     {o.orderStatus}
-                  </div>
+                  </span>
                 </td>
 
-                <td className="px-4 py-4 text-sm text-slate-500">{new Date(o.createdAt).toLocaleString()}</td>
+                <td className="px-5 py-4 text-sm text-slate-500">{new Date(o.createdAt).toLocaleString()}</td>
 
-                <td className="px-4 py-4">
+                <td className="px-5 py-4">
                   <div className="flex items-center gap-3">
-                    <a href={`/admin/orders/${o._id}`} className="text-sm text-sky-600">View</a>
-                    <a href={`/admin/orders/${o._id}#actions`} className="text-sm text-slate-700">Actions</a>
+                    <a href={`/admin/orders/${o._id}`} className="text-sm font-medium text-sky-600 hover:text-sky-700">View</a>
+                    <a href={`/admin/orders/${o._id}#actions`} className="text-sm text-slate-500 hover:text-slate-700">Actions</a>
                   </div>
                 </td>
               </tr>
@@ -117,7 +123,7 @@ export default function AdminOrdersClient({ initialOrders = [] }: { initialOrder
 
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-4 py-12 text-center text-sm text-slate-500">No orders match your filters.</td>
+                <td colSpan={8} className="px-5 py-12 text-center text-sm text-slate-400">No orders match your filters.</td>
               </tr>
             )}
           </tbody>

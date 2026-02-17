@@ -228,7 +228,7 @@ export default async function AdminDashboardPage() {
                 {weekBuckets.map((bucket, index) => (
                   <div
                     key={`bar-${index}`}
-                    className="flex-1 rounded-full bg-gradient-to-t from-blue-950 to-blue-700"
+                    className="flex-1 rounded-full bg-linear-to-t from-blue-950 to-blue-700"
                     style={{ height: `${Math.max(18, (bucket.total / maxWeekTotal) * 140)}px` }}
                     title={formatNPR.format(bucket.total)}
                   />

@@ -120,7 +120,7 @@ export default function AboutPage() {
             ].map((obj, i) => (
               <div
                 key={i}
-                className="group relative p-6 rounded-2xl border border-slate-100 text-center transition-all duration-300 hover:border-[#29A8DD]/30 hover:bg-[#29A8DD]/[0.03] hover:shadow-lg hover:shadow-[#29A8DD]/5 hover:-translate-y-1"
+                className="group relative p-6 rounded-2xl border border-slate-100 text-center transition-all duration-300 hover:border-[#29A8DD]/30 hover:bg-[#29A8DD]/3 hover:shadow-lg hover:shadow-[#29A8DD]/5 hover:-translate-y-1"
               >
                 <span className="text-2xl block mb-3 group-hover:scale-110 transition-transform duration-300">{obj.icon}</span>
                 <span className="block text-[#29A8DD] font-black text-xs mb-1.5 tabular-nums">0{i + 1}</span>
@@ -411,7 +411,7 @@ export default function AboutPage() {
               { name: "Quality Analysts", role: "Compliance & Standards", icon: "✅" }
             ].map((p, i) => (
               <div key={i} className="group text-center">
-                <div className="relative w-full aspect-square rounded-[28px] bg-gradient-to-br from-slate-50 to-slate-100 mb-5 overflow-hidden border border-slate-100 group-hover:border-[#29A8DD]/20 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#29A8DD]/5">
+                <div className="relative w-full aspect-square rounded-[28px] bg-linear-to-br from-slate-50 to-slate-100 mb-5 overflow-hidden border border-slate-100 group-hover:border-[#29A8DD]/20 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-[#29A8DD]/5">
                   {p.img ? (
                     <img src={p.img} alt={p.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
                   ) : (

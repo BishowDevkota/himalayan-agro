@@ -18,10 +18,10 @@ const EcoBalance = () => {
         className="absolute inset-0 z-0 bg-cover bg-center bg-fixed"
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=2000')" }}
       />
-      <div className="absolute inset-0 z-10 bg-gradient-to-br from-black/95 via-black/80 to-[#0c2d48]/50" />
+      <div className="absolute inset-0 z-10 bg-linear-to-br from-black/95 via-black/80 to-[#0c2d48]/50" />
 
       {/* --- CONTENT CONTAINER --- */}
-      <div className="relative z-20 max-w-[1400px] mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="relative z-20 max-w-350 mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         
         {/* LEFT SIDE: The Glass Card */}
         <motion.div 
@@ -29,7 +29,7 @@ const EcoBalance = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-16 rounded-sm max-w-[700px]"
+          className="bg-white/5 backdrop-blur-xl border border-white/10 p-8 md:p-16 rounded-sm max-w-175"
         >
           <span className="block font-bold tracking-[3px] text-sm uppercase mb-4 text-[#2da8da]">
             03 — OUR LEGACY
@@ -38,7 +38,7 @@ const EcoBalance = () => {
           <h2 className="text-5xl md:text-7xl font-black uppercase leading-[0.95] mb-8 tracking-tighter text-white">
             Economic <br />
             {/* Adjusted font size here to text-6xl for better fit */}
-            <span className="text-4xl md:text-6xl bg-gradient-to-r from-[#2da8da] to-[#87ceeb] bg-clip-text text-transparent italic block mt-2">
+            <span className="text-4xl md:text-6xl bg-linear-to-r from-[#2da8da] to-[#87ceeb] bg-clip-text text-transparent italic block mt-2">
               Transformation
             </span>
           </h2>
@@ -80,7 +80,7 @@ const EcoBalance = () => {
           <motion.div 
             animate={{ rotate: 360 }}
             transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            className="absolute w-[450px] h-[450px] border border-dashed border-[#2da8da]/30 rounded-full"
+            className="absolute w-112.5 h-112.5 border border-dashed border-[#2da8da]/30 rounded-full"
           />
           
           {/* Floating High-Quality Image */}
@@ -88,7 +88,7 @@ const EcoBalance = () => {
             initial={{ y: 20, opacity: 0, rotate: 0 }}
             whileInView={{ y: 0, opacity: 1, rotate: 3 }}
             transition={{ delay: 0.3, duration: 1 }}
-            className="relative z-30 w-72 h-[420px] rounded-2xl overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-black"
+            className="relative z-30 w-72 h-105 rounded-2xl overflow-hidden border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] bg-black"
           >
             <img 
               src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=1000" 
@@ -96,7 +96,7 @@ const EcoBalance = () => {
               alt="Sustainable Highland Agriculture"
             />
             {/* UI Overlay on Photo */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent" />
             <div className="absolute bottom-6 left-6">
               <div className="flex items-center gap-2 mb-1">
                 <span className="w-2 h-2 bg-[#2da8da] rounded-full animate-pulse" />
@@ -114,7 +114,7 @@ const EcoBalance = () => {
           >
             <span className="text-[9px] text-[#2da8da] block uppercase font-black tracking-tighter">Export Potential</span>
             <div className="text-xl font-black text-white">USD 2.4B+</div>
-            <div className="w-full bg-white/10 h-[2px] mt-2">
+            <div className="w-full bg-white/10 h-0.5 mt-2">
                 <motion.div 
                     initial={{ width: 0 }}
                     whileInView={{ width: "70%" }}

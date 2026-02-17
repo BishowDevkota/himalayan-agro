@@ -45,7 +45,7 @@ export default async function NewProductPage() {
                 <li>Keep the description short and benefit-focused (1-2 lines).</li>
                 <li>Set an accurate stock value to avoid oversells.</li>
               </ul>
-              <a href="/admin/categories" className="mt-4 inline-block text-sm bg-slate-900 text-white px-4 py-2 rounded-full">Manage categories</a>
+              <a href="/admin/categories" className="mt-4 inline-block text-xs font-medium bg-slate-900 text-white px-4 py-1.5 rounded-full">Manage categories</a>
             </div>
 
             <div className="mt-6 bg-white/90 border border-slate-100 rounded-3xl p-4 shadow-sm">

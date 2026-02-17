@@ -26,8 +26,8 @@ const icons = {
 
 const segments = [
   { name: "Fruit Orchards", desc: "Apple, citrus, kiwi & stone fruit cultivation across diverse altitudes.", img: "https://images.unsplash.com/photo-1474564862106-1f23d10b9d72?auto=format&fit=crop&q=80&w=400" },
-  { name: "Floriculture", desc: "Commercial flower farming — roses, gladiolus, marigold & orchids for domestic and export markets.", img: "https://images.unsplash.com/photo-1490750967868-88aa4f44baee?auto=format&fit=crop&q=80&w=400" },
-  { name: "Vegetable Farming", desc: "Year-round vegetable production through open-field and protected cultivation technologies.", img: "https://images.unsplash.com/photo-1592921870789-04563d55041c?auto=format&fit=crop&q=80&w=400" },
+  { name: "Floriculture", desc: "Commercial flower farming — roses, gladiolus, marigold & orchids for domestic and export markets.", img: "https://images.unsplash.com/photo-1487530811176-3780de880c2d?auto=format&fit=crop&q=80&w=400" },
+  { name: "Vegetable Farming", desc: "Year-round vegetable production through open-field and protected cultivation technologies.", img: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&q=80&w=400" },
 ];
 
 const techniques = [

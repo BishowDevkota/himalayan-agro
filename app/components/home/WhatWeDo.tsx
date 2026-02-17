@@ -87,8 +87,8 @@ export default function OurMission() {
   return (
     <section ref={sectionRef} className="relative bg-white py-20 sm:py-28 lg:py-32 overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-green-50 opacity-40 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full bg-green-50 opacity-40 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-125 h-125 rounded-full bg-green-50 opacity-40 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-100 h-100 rounded-full bg-green-50 opacity-40 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -271,7 +271,7 @@ export default function OurMission() {
 
                 {/* Bottom accent line */}
                 <div
-                  className="absolute bottom-0 left-0 right-0 h-[3px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                  className="absolute bottom-0 left-0 right-0 h-0.75 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
                   style={{ backgroundColor: pillar.color }}
                 />
               </motion.div>
