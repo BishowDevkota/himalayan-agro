@@ -53,8 +53,8 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
             { value: `${total}`, label: "Products Available" },
             { value: "340+", label: "Partner Farms" },
           ]}
-          btnText={!session ? "Become a Distributer" : undefined}
-          btnHref={!session ? "/register/distributer" : undefined}
+          btnText={!session ? "Become a Distributor" : undefined}
+          btnHref={!session ? "/register/distributor" : undefined}
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

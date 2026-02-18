@@ -3,20 +3,20 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 import { redirect } from "next/navigation";
 import connectToDatabase from "../../../lib/mongodb";
-import Distributer from "../../../models/Distributer";
+import Distributor from "../../../models/Distributor";
 import Product from "../../../models/Product";
-import DistributerProductsClient from "../../components/distributer/DistributerProductsClient";
+import DistributorProductsClient from "../../components/distributor/DistributorProductsClient";
 
 export default async function StoreProductsPage() {
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session) return redirect("/login?from=/store/products");
-  if (session.user?.role !== "distributer") return <div className="p-12">Unauthorized</div>;
+  if (session.user?.role !== "distributor") return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const distributer = await Distributer.findOne({ user: session.user?.id }).lean();
-  if (!distributer) return <div className="p-12">Distributer profile missing</div>;
+  const distributor = await Distributor.findOne({ user: session.user?.id }).lean();
+  if (!distributor) return <div className="p-12">Distributor profile missing</div>;
 
-  const products = await Product.find({ distributer: distributer._id }).sort({ createdAt: -1 }).lean();
+  const products = await Product.find({ distributor: distributor._id }).sort({ createdAt: -1 }).lean();
   const safe = products.map((p: any) => ({ ...p, _id: String(p._id) }));
 
   return (
@@ -25,11 +25,11 @@ export default async function StoreProductsPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-extrabold">Products</h1>
-            <p className="mt-2 text-sm text-slate-500">Manage items for {distributer.storeName}.</p>
+            <p className="mt-2 text-sm text-slate-500">Manage items for {distributor.storeName}.</p>
           </div>
         </div>
 
-        <DistributerProductsClient initialProducts={safe} />
+        <DistributorProductsClient initialProducts={safe} />
       </div>
     </div>
   );

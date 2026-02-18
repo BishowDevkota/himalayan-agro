@@ -17,7 +17,7 @@ export default function PaymentRequestForm({ maxAmount }: { maxAmount: number })
 
     setLoading(true);
     try {
-      const res = await fetch("/api/distributer/payment-requests", {
+      const res = await fetch("/api/distributor/payment-requests", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: value }),

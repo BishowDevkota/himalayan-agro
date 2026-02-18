@@ -27,8 +27,8 @@ export function requireAdmin(user: any) {
 
 export function requireVendor(user: any) {
   requireUser(user);
-  if (user.role !== "distributer") {
-    const err: any = new Error("Distributer role required");
+  if (user.role !== "distributor") {
+    const err: any = new Error("Distributor role required");
     err.status = 403;
     throw err;
   }

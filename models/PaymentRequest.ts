@@ -3,7 +3,7 @@ import mongoose, { Document, Model, Schema } from "mongoose";
 export type PaymentRequestStatus = "pending" | "approved" | "rejected";
 
 export interface IPaymentRequest extends Document {
-  distributer: mongoose.Types.ObjectId;
+  distributor: mongoose.Types.ObjectId;
   user: mongoose.Types.ObjectId;
   amount: number;
   status: PaymentRequestStatus;
@@ -14,7 +14,7 @@ export interface IPaymentRequest extends Document {
 
 const PaymentRequestSchema: Schema<IPaymentRequest> = new mongoose.Schema(
   {
-    distributer: { type: mongoose.Schema.Types.ObjectId, ref: "Distributer", required: true, index: true },
+    distributor: { type: mongoose.Schema.Types.ObjectId, ref: "Distributor", required: true, index: true },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, index: true },
     amount: { type: Number, required: true, min: 1 },
     status: { type: String, enum: ["pending", "approved", "rejected"], default: "pending", index: true },

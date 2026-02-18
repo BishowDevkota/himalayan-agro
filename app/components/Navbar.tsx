@@ -161,6 +161,16 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
+  const desktopCta = !session
+    ? { label: "Become a Distributor", href: "/register/distributor" }
+    : role === "admin"
+      ? { label: "Admin", href: "/admin/dashboard" }
+      : role === "employee"
+        ? { label: "Employee", href: "/employee" }
+        : role === "distributor"
+          ? { label: "Distributor", href: "/store" }
+          : null;
+
   function navigateAndClose(href: string) {
     setMobileOpen(false);
     setCompanyMobileOpen(false);
@@ -339,16 +349,16 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* Become a Distributer — only visible when not logged in */}
-            {!session && (
+            {/* Primary role CTA */}
+            {desktopCta && (
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(8,145,178,0.4)" }}
                 whileTap={{ scale: 0.96 }}
-                onClick={() => router.push("/register/distributer")}
+                onClick={() => router.push(desktopCta.href)}
                 className="hidden lg:inline-flex items-center gap-1.5 px-5 py-2 text-sm font-semibold text-white rounded-full bg-[#0891b2] hover:bg-[#0e7490] shadow-md shadow-cyan-200/50 transition-all duration-300"
               >
                 <IconStorefront size={15} />
-                Become a Distributer
+                {desktopCta.label}
               </motion.button>
             )}
 
@@ -472,13 +482,13 @@ export default function Navbar() {
 
                 {/* Bottom auth section — admin style */}
                 <div className="shrink-0 px-3 py-3 space-y-1">
-                  {!session && (
+                  {desktopCta && (
                     <button
-                      onClick={() => navigateAndClose("/register/distributer")}
+                      onClick={() => navigateAndClose(desktopCta.href)}
                       className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-cyan-400 hover:bg-cyan-500/15 transition-all duration-200"
                     >
                       <span className="text-cyan-400"><IconStorefront size={18} /></span>
-                      Become a Distributer
+                      {desktopCta.label}
                     </button>
                   )}
                   {!session ? (

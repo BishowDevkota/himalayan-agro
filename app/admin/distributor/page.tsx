@@ -1,23 +1,23 @@
 import React from "react";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
-import AdminDistributersClient from "../../components/admin/AdminDistributersClient";
+import AdminDistributorsClient from "../../components/admin/AdminDistributorsClient";
 import connectToDatabase from "../../../lib/mongodb";
-import Distributer from "../../../models/Distributer";
+import Distributor from "../../../models/Distributor";
 import User from "../../../models/User";
 import { hasPermission } from "../../../lib/permissions";
 
-export default async function AdminDistributersPage() {
+export default async function AdminDistributorsPage() {
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || !hasPermission(session.user, "distributers:read")) return <div className="p-12">Unauthorized</div>;
+  if (!session || !hasPermission(session.user, "distributors:read")) return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const distributers = await Distributer.find({}).sort({ createdAt: -1 }).lean();
-  const userIds = distributers.map((v: any) => v.user);
+  const distributors = await Distributor.find({}).sort({ createdAt: -1 }).lean();
+  const userIds = distributors.map((v: any) => v.user);
   const users = await User.find({ _id: { $in: userIds } }).select("email isActive role").lean();
   const userById = new Map(users.map((u: any) => [String(u._id), u]));
 
-  const safe = distributers.map((v: any) => {
+  const safe = distributors.map((v: any) => {
     const u = userById.get(String(v.user));
     return {
       _id: String(v._id),
@@ -49,10 +49,10 @@ export default async function AdminDistributersPage() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
           <div>
             <span className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Partners</span>
-            <h1 className="mt-3 text-2xl sm:text-3xl font-bold text-slate-900">Distributer Requests</h1>
-            <p className="mt-1 text-sm text-slate-500">Review distributer applications and approve or reject them.</p>
+            <h1 className="mt-3 text-2xl sm:text-3xl font-bold text-slate-900">Distributor Requests</h1>
+            <p className="mt-1 text-sm text-slate-500">Review distributor applications and approve or reject them.</p>
           </div>
-          <a href="/admin/distributer" className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm self-start">
+          <a href="/admin/distributor" className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm self-start">
             Refresh
           </a>
         </div>
@@ -62,7 +62,7 @@ export default async function AdminDistributersPage() {
           <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Total Distributers</div>
+                <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Total Distributors</div>
                 <div className="mt-2 text-2xl font-bold text-slate-900">{safe.length}</div>
                 <div className="mt-1 text-xs text-slate-400">All applications</div>
               </div>
@@ -86,7 +86,7 @@ export default async function AdminDistributersPage() {
               <div>
                 <div className="text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Approved</div>
                 <div className="mt-2 text-2xl font-bold text-slate-900">{approvedCount}</div>
-                <div className="mt-1 text-xs text-slate-400">Active distributers</div>
+                <div className="mt-1 text-xs text-slate-400">Active distributors</div>
               </div>
               <div className="h-10 w-10 rounded-xl bg-emerald-50 flex items-center justify-center"><svg className="h-5 w-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
             </div>
@@ -104,8 +104,8 @@ export default async function AdminDistributersPage() {
           </div>
         </div>
 
-        {/* Distributers Table */}
-        <AdminDistributersClient initialVendors={safe} />
+        {/* Distributors Table */}
+        <AdminDistributorsClient initialVendors={safe} />
       </div>
     </main>
   );

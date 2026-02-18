@@ -83,7 +83,7 @@ export default function UserActionsClient({ userId, initialRole, initialActive }
       ) : role === "user" ? (
         <button className="rounded-full bg-sky-600 text-white px-3 py-1 text-xs font-medium" onClick={handlePromote} disabled={loading}>Promote</button>
       ) : (
-        <div className="rounded-full bg-emerald-50 text-emerald-700 px-3 py-1 text-xs font-medium">Distributer</div>
+        <div className="rounded-full bg-emerald-50 text-emerald-700 px-3 py-1 text-xs font-medium">Distributor</div>
       )}
 
       <button className={`rounded-full ${isActive ? 'bg-red-50 text-red-700' : 'bg-emerald-50 text-emerald-700'} px-3 py-1 text-xs font-medium`} onClick={handleToggleActive} disabled={loading}>

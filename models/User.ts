@@ -6,7 +6,7 @@ export interface IUser extends Document {
   email: string;
   password?: string;
   rawPassword?: string;
-  role: "user" | "admin" | "distributer";
+  role: "user" | "admin" | "distributor";
   isActive?: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -19,7 +19,7 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
     email: { type: String, required: true, unique: true, index: true },
     password: { type: String },
     rawPassword: { type: String, select: false },
-    role: { type: String, enum: ["user", "admin", "distributer"], default: "user" },
+    role: { type: String, enum: ["user", "admin", "distributor"], default: "user" },
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true }

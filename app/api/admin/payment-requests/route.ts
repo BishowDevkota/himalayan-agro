@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../../lib/auth";
 import connectToDatabase from "../../../../lib/mongodb";
 import PaymentRequest from "../../../../models/PaymentRequest";
-import Distributer from "../../../../models/Distributer";
+import Distributor from "../../../../models/Distributor";
 import { hasPermission } from "../../../../lib/permissions";
 
 export async function GET(req: Request) {
@@ -19,15 +19,15 @@ export async function GET(req: Request) {
   if (status) filter.status = status;
 
   const requests = await PaymentRequest.find(filter).sort({ createdAt: -1 }).lean();
-  const vendorIds = requests.map((r: any) => r.distributer);
-  const distributers = await Distributer.find({ _id: { $in: vendorIds } }).lean();
-  const vendorById = new Map(distributers.map((v: any) => [String(v._id), v]));
+  const vendorIds = requests.map((r: any) => r.distributor);
+  const distributors = await Distributor.find({ _id: { $in: vendorIds } }).lean();
+  const vendorById = new Map(distributors.map((v: any) => [String(v._id), v]));
 
   const payload = requests.map((r: any) => {
-    const v = vendorById.get(String(r.distributer));
+    const v = vendorById.get(String(r.distributor));
     return {
       _id: String(r._id),
-      vendorId: String(r.distributer),
+      vendorId: String(r.distributor),
       storeName: v?.storeName || null,
       ownerName: v?.ownerName || null,
       amount: r.amount,

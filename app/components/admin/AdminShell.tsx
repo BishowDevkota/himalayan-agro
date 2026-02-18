@@ -62,8 +62,8 @@ const navItems = [
     ),
   },
   {
-    href: "/admin/distributer",
-    label: "Distributers",
+    href: "/admin/distributor",
+    label: "Distributors",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9" />

@@ -22,7 +22,7 @@ export async function PATCH(req: Request, context: any) {
 
   const body = await req.json().catch(() => ({}));
   const updates: any = {};
-  if (typeof body.role === 'string') updates.role = body.role === 'admin' ? 'admin' : body.role === 'distributer' ? 'distributer' : 'user';
+  if (typeof body.role === 'string') updates.role = body.role === 'admin' ? 'admin' : body.role === 'distributor' ? 'distributor' : 'user';
   if (typeof body.isActive === 'boolean') updates.isActive = body.isActive;
   if (typeof body.password === 'string' && body.password.length >= 8) {
     updates.password = body.password;
