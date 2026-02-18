@@ -215,10 +215,19 @@ export default function Navbar() {
           {/*  SECTION 1: Logo  */}
           <Link href="/" className="shrink-0 flex items-center" aria-label="Home">
             <motion.img
+              src="/wide-logo.jpeg"
+              alt="Himalaya"
+              loading="eager"
+              className="hidden lg:block h-12 xl:h-14 w-auto max-w-[240px] object-contain"
+              whileHover={{ scale: 1.04 }}
+              transition={{ duration: 0.25 }}
+              onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/logo_original.png"; }}
+            />
+            <motion.img
               src="/logo_original.png"
               alt="Himalaya"
               loading="eager"
-              className="h-14 sm:h-16 w-auto object-contain"
+              className="h-14 sm:h-16 lg:hidden w-auto object-contain"
               whileHover={{ scale: 1.04 }}
               transition={{ duration: 0.25 }}
               onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.png"; }}
