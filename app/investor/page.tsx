@@ -220,12 +220,15 @@ export default function InvestorPage() {
                 {...gridMotion}
                 className="group p-6 rounded-3xl border border-slate-100 bg-white hover:shadow-lg transition-shadow duration-300"
               >
-                <div className="w-full h-40 rounded-2xl overflow-hidden border border-slate-100">
+                <div className="relative w-full h-40 rounded-2xl overflow-hidden border border-slate-100 bg-slate-100">
                   <img
-                    src={investor.logo}
-                    alt={investor.name}
-                    className="w-full h-full object-cover"
+                    src="/logo.jpeg"
+                    alt="Photo not found"
+                    className="w-full h-full object-cover opacity-25"
                   />
+                  <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold uppercase tracking-wider text-slate-600">
+                    Photo not found
+                  </span>
                 </div>
                 <div className="mt-4 flex items-center justify-between">
                   <h3 className="text-lg font-bold text-slate-900">{investor.name}</h3>
@@ -311,12 +314,15 @@ export default function InvestorPage() {
                 {...gridMotion}
                 className="p-6 rounded-3xl border border-slate-100 bg-white hover:shadow-lg transition-shadow duration-300"
               >
-                <div className="w-full h-48 rounded-2xl overflow-hidden border border-slate-100">
+                <div className="relative w-full h-48 rounded-2xl overflow-hidden border border-slate-100 bg-slate-100">
                   <img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
+                    src="/logo.jpeg"
+                    alt="Photo not found"
+                    className="w-full h-full object-cover opacity-25"
                   />
+                  <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold uppercase tracking-wider text-slate-600">
+                    Photo not found
+                  </span>
                 </div>
                 <h3 className="mt-5 text-lg font-bold text-slate-900">{member.name}</h3>
                 <p className="text-sm text-slate-500 mt-1">{member.role}</p>
