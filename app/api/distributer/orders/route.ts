@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import connectToDatabase from "../../../../lib/mongodb";
 import Order from "../../../../models/Order";
 import Product from "../../../../models/Product";
-import Vendor from "../../../../models/Vendor";
+import Distributer from "../../../../models/Distributer";
 import { getSessionUser, requireVendor } from "../../../../lib/server-utils";
 
 export async function GET(req: Request) {
@@ -10,10 +10,10 @@ export async function GET(req: Request) {
   requireVendor(user);
 
   await connectToDatabase();
-  const vendor = await Vendor.findOne({ user: user.id }).lean();
-  if (!vendor) return NextResponse.json({ items: [], meta: { total: 0, page: 1, perPage: 20 } });
+  const distributer = await Distributer.findOne({ user: user.id }).lean();
+  if (!distributer) return NextResponse.json({ items: [], meta: { total: 0, page: 1, perPage: 20 } });
 
-  const productIds = await Product.find({ vendor: vendor._id }).select("_id").lean();
+  const productIds = await Product.find({ distributer: distributer._id }).select("_id").lean();
   const productIdSet = new Set(productIds.map((p: any) => String(p._id)));
   if (productIdSet.size === 0) return NextResponse.json({ items: [], meta: { total: 0, page: 1, perPage: 20 } });
 

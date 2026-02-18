@@ -59,9 +59,9 @@ export default function CartClient() {
   if (loading) return <div className="py-12">Loading cart…</div>;
   if (!cart || !cart.items.length)
     return (
-      <div className="py-12 text-center">
-        <h2 className="text-lg font-semibold">Your cart is empty</h2>
-        <p className="mt-3">Browse the <a className="text-sky-600" href="/shop">shop</a> and add items to your cart.</p>
+      <div className="py-14 px-6 text-center bg-[#f8faf9] border border-gray-100 rounded-2xl">
+        <h2 className="text-xl font-semibold text-gray-900">Your cart is empty</h2>
+        <p className="mt-3 text-gray-600">Browse the <a className="text-[#059669] font-medium hover:underline" href="/shop">shop</a> and add items to your cart.</p>
       </div>
     );
 
@@ -75,7 +75,7 @@ export default function CartClient() {
   const hasMissingProducts = (cart.items || []).some((it: any) => !it?.product);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-black dark:text-black">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-gray-900">
       <div className="lg:col-span-2 space-y-4">
         {(cart.items || []).map((it: any, idx: number) => {
           const prod = it?.product ?? null;
@@ -83,7 +83,7 @@ export default function CartClient() {
 
           if (!prod) {
             return (
-              <article key={key} className="group bg-white border rounded-2xl shadow-sm overflow-hidden p-4 flex items-start gap-4">
+              <article key={key} className="group bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden p-4 sm:p-5 flex items-start gap-4">
                 <div className="w-28 h-28 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0 flex items-center justify-center text-gray-300">
                   <img src="/placeholder.png" alt="product removed" className="w-full h-full object-cover" />
                 </div>
@@ -107,7 +107,7 @@ export default function CartClient() {
                     </div>
 
                     <div className="flex items-center gap-4">
-                      <button className="text-sm text-black hover:underline" onClick={() => remove(it?._id)} disabled={updating}>Remove</button>
+                      <button className="text-sm text-gray-700 hover:text-[#059669] hover:underline" onClick={() => remove(it?._id)} disabled={updating}>Remove</button>
                     </div>
                   </div>
                 </div>
@@ -117,8 +117,8 @@ export default function CartClient() {
 
           // product exists — render normally but use safe accessors
           return (
-            <article key={key} className="group bg-white border rounded-2xl shadow-sm overflow-hidden p-4 flex items-start gap-4">
-              <div className="w-28 h-28 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0">
+            <article key={key} className="group bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden p-4 sm:p-5 flex items-start gap-4">
+              <div className="w-28 h-28 rounded-xl overflow-hidden bg-[#f8faf9] flex-shrink-0 border border-gray-100">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={prod.images?.[0] || '/placeholder.png'} alt={prod.name || 'product'} className="w-full h-full object-cover" />
               </div>
@@ -131,7 +131,7 @@ export default function CartClient() {
                   </div>
 
                   <div className="text-right">
-                    <div className="text-sm font-extrabold text-sky-600">₹{(Number(prod.price) || 0).toFixed(2)}</div>
+                    <div className="text-sm font-extrabold text-[#d97706]">₹{(Number(prod.price) || 0).toFixed(2)}</div>
                     <div className="text-xs text-gray-500 mt-1">₹{((Number(prod.price) || 0) * Number(it.quantity || 0)).toFixed(2)}</div>
                   </div>
                 </div>
@@ -140,12 +140,12 @@ export default function CartClient() {
                   <div className="flex items-center gap-2">
                     <button
                       aria-label={`Decrease quantity for ${prod.name}`}
-                      className="w-8 h-8 rounded-md border text-gray-700 disabled:opacity-50"
+                      className="w-8 h-8 rounded-lg border border-gray-200 text-gray-700 hover:bg-[#f8faf9] disabled:opacity-50"
                       onClick={() => update(prod._id, Math.max(1, it.quantity - 1))}
                       disabled={updating || it.quantity <= 1}
                     >−</button>
                     <input
-                      className="w-20 rounded-md border px-2 py-1 text-sm text-center"
+                      className="w-20 rounded-lg border border-gray-200 px-2 py-1.5 text-sm text-center"
                       type="number"
                       min={1}
                       value={it.quantity}
@@ -153,7 +153,7 @@ export default function CartClient() {
                     />
                     <button
                       aria-label={`Increase quantity for ${prod.name}`}
-                      className="w-8 h-8 rounded-md border text-gray-700 disabled:opacity-50"
+                      className="w-8 h-8 rounded-lg border border-gray-200 text-gray-700 hover:bg-[#f8faf9] disabled:opacity-50"
                       onClick={() => update(prod._id, Math.min((prod.stock || 9999), it.quantity + 1))}
                       disabled={updating || it.quantity >= (prod.stock || 9999)}
                     >+</button>
@@ -161,8 +161,8 @@ export default function CartClient() {
                   </div>
 
                   <div className="flex items-center gap-4">
-                    <button className="text-sm text-black hover:underline" onClick={() => remove(prod._id)} disabled={updating}>Remove</button>
-                    <a href={`/product/${prod._id}`} className="text-sm text-black hover:underline">View details</a>
+                    <button className="text-sm text-gray-700 hover:text-[#059669] hover:underline" onClick={() => remove(prod._id)} disabled={updating}>Remove</button>
+                    <a href={`/product/${prod._id}`} className="text-sm text-gray-700 hover:text-[#059669] hover:underline">View details</a>
                   </div>
                 </div>
               </div>
@@ -170,31 +170,31 @@ export default function CartClient() {
           );
         })}
 
-        <div className="mt-6 flex items-center justify-between">
-          <div className="text-sm text-black">Need to change something? <a className="text-sky-600" href="/shop">Continue shopping</a></div>
+        <div className="mt-6 flex items-center justify-between px-1">
+          <div className="text-sm text-gray-600">Need to change something? <a className="text-[#059669] font-medium hover:underline" href="/shop">Continue shopping</a></div>
           <div>
-            <button className="text-sm text-black hover:underline" onClick={() => remove()} disabled={updating}>Clear cart</button>
+            <button className="text-sm text-gray-700 hover:text-[#059669] hover:underline" onClick={() => remove()} disabled={updating}>Clear cart</button>
           </div>
         </div>
       </div>
 
-      <aside className="border rounded-xl p-6 bg-white shadow-sm lg:sticky lg:top-24">
-        <div className="text-sm text-gray-500">Subtotal</div>
+      <aside className="border border-gray-100 rounded-2xl p-6 bg-[#f8faf9] shadow-sm lg:sticky lg:top-24">
+        <div className="text-sm text-gray-500">Order summary</div>
         <div className="mt-2 flex items-baseline justify-between">
           <div className="text-xs text-gray-500">Items ({cart.items.length})</div>
-          <div className="text-2xl font-extrabold text-sky-600">₹{total.toFixed(2)}</div>
+          <div className="text-2xl font-extrabold text-[#d97706]">₹{total.toFixed(2)}</div>
         </div>
 
         <div className="mt-6">
-          <a href="/checkout" className={`block w-full text-center rounded-lg ${hasMissingProducts ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-sky-600 text-white'} py-3 text-sm font-medium`} onClick={(e) => hasMissingProducts && e.preventDefault()}>{hasMissingProducts ? 'Remove unavailable items' : 'Proceed to checkout'}</a>
+          <a href="/checkout" className={`block w-full text-center rounded-xl ${hasMissingProducts ? 'bg-gray-300 text-gray-600 cursor-not-allowed' : 'bg-[#059669] text-white hover:bg-[#047857]'} py-3 text-sm font-semibold transition-colors`} onClick={(e) => hasMissingProducts && e.preventDefault()}>{hasMissingProducts ? 'Remove unavailable items' : 'Proceed to checkout'}</a>
           {hasMissingProducts && <div className="mt-3 text-sm text-amber-600">Some items were removed — please remove unavailable items before checking out.</div>}
         </div>
 
         <div className="mt-4 text-sm text-gray-500">Shipping & payment on next step. Free returns • Secure payments</div>
 
         <div className="mt-6 grid grid-cols-2 gap-3 text-xs text-gray-600">
-          <div className="px-3 py-2 bg-gray-50 rounded">Estimated delivery</div>
-          <div className="px-3 py-2 bg-gray-50 rounded text-right">2–5 business days</div>
+          <div className="px-3 py-2 bg-white border border-gray-100 rounded">Estimated delivery</div>
+          <div className="px-3 py-2 bg-white border border-gray-100 rounded text-right">2–5 business days</div>
         </div>
       </aside>
     </div>

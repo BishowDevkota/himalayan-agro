@@ -66,7 +66,7 @@ const features = [
   },
 ];
 
-export default function VendorSignupClient({ from }: { from?: string }) {
+export default function DistributerSignupClient({ from }: { from?: string }) {
   const [ownerName, setOwnerName] = useState("");
   const [storeName, setStoreName] = useState("");
   const [email, setEmail] = useState("");
@@ -86,7 +86,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/vendors/register", {
+      const res = await fetch("/api/distributers/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -102,7 +102,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.message || "Unable to submit request");
-      toast.success("Vendor request submitted. Await admin approval.");
+      toast.success("Distributer request submitted. Await admin approval.");
       router.push("/login");
     } catch (err: any) {
       const msg = err.message || "Unable to submit request";
@@ -165,7 +165,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="mt-4 text-white/80 text-sm leading-relaxed max-w-xs"
             >
-              Submit your vendor application. Our team will review your details and activate your store.
+              Submit your distributer application. Our team will review your details and activate your store.
             </motion.p>
           </div>
 
@@ -222,18 +222,18 @@ export default function VendorSignupClient({ from }: { from?: string }) {
 
             <motion.div variants={itemVariants} className="mb-8">
               <h1 className="text-2xl sm:text-[26px] font-extrabold text-gray-900 tracking-tight">
-                Vendor application
+                Distributer application
               </h1>
               <p className="mt-2 text-sm text-gray-400">
                 Provide your store details to start selling
               </p>
             </motion.div>
 
-            <form onSubmit={onSubmit} className="space-y-5" aria-describedby={error ? "vendor-error" : undefined}>
+            <form onSubmit={onSubmit} className="space-y-5" aria-describedby={error ? "distributer-error" : undefined}>
               {/* Owner + Store name row */}
               <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="vendor-owner" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  <label htmlFor="distributer-owner" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
                     Owner name
                   </label>
                   <div className={fieldClasses("owner")}>
@@ -243,7 +243,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                       </svg>
                     </div>
                     <input
-                      id="vendor-owner"
+                      id="distributer-owner"
                       className="w-full bg-transparent pl-11 pr-4 py-3.5 text-sm text-gray-900 placeholder-gray-300 focus:outline-none rounded-xl"
                       value={ownerName}
                       onChange={(e) => setOwnerName(e.target.value)}
@@ -255,7 +255,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="vendor-store" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  <label htmlFor="distributer-store" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
                     Store name
                   </label>
                   <div className={fieldClasses("store")}>
@@ -265,7 +265,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                       </svg>
                     </div>
                     <input
-                      id="vendor-store"
+                      id="distributer-store"
                       className="w-full bg-transparent pl-11 pr-4 py-3.5 text-sm text-gray-900 placeholder-gray-300 focus:outline-none rounded-xl"
                       value={storeName}
                       onChange={(e) => setStoreName(e.target.value)}
@@ -281,7 +281,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
               {/* Email row */}
               <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="vendor-email" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  <label htmlFor="distributer-email" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
                     Account email
                   </label>
                   <div className={fieldClasses("email")}>
@@ -291,7 +291,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                       </svg>
                     </div>
                     <input
-                      id="vendor-email"
+                      id="distributer-email"
                       className="w-full bg-transparent pl-11 pr-4 py-3.5 text-sm text-gray-900 placeholder-gray-300 focus:outline-none rounded-xl"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
@@ -305,7 +305,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="vendor-contact-email" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  <label htmlFor="distributer-contact-email" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
                     Contact email
                   </label>
                   <div className={fieldClasses("contactEmail")}>
@@ -315,7 +315,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                       </svg>
                     </div>
                     <input
-                      id="vendor-contact-email"
+                      id="distributer-contact-email"
                       className="w-full bg-transparent pl-11 pr-4 py-3.5 text-sm text-gray-900 placeholder-gray-300 focus:outline-none rounded-xl"
                       value={contactEmail}
                       onChange={(e) => setContactEmail(e.target.value)}
@@ -331,7 +331,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
               {/* Phone + Password row */}
               <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="vendor-phone" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  <label htmlFor="distributer-phone" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
                     Contact phone
                   </label>
                   <div className={fieldClasses("phone")}>
@@ -341,7 +341,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                       </svg>
                     </div>
                     <input
-                      id="vendor-phone"
+                      id="distributer-phone"
                       className="w-full bg-transparent pl-11 pr-4 py-3.5 text-sm text-gray-900 placeholder-gray-300 focus:outline-none rounded-xl"
                       value={contactPhone}
                       onChange={(e) => setContactPhone(e.target.value)}
@@ -353,7 +353,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                   </div>
                 </div>
                 <div>
-                  <label htmlFor="vendor-password" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  <label htmlFor="distributer-password" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
                     Password
                   </label>
                   <div className={fieldClasses("password")}>
@@ -363,7 +363,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                       </svg>
                     </div>
                     <input
-                      id="vendor-password"
+                      id="distributer-password"
                       className="w-full bg-transparent pl-11 pr-12 py-3.5 text-sm text-gray-900 placeholder-gray-300 focus:outline-none rounded-xl"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
@@ -399,7 +399,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
 
               {/* Address */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="vendor-address" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                <label htmlFor="distributer-address" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
                   Business address
                 </label>
                 <div className={fieldClasses("address")}>
@@ -410,7 +410,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                     </svg>
                   </div>
                   <input
-                    id="vendor-address"
+                    id="distributer-address"
                     className="w-full bg-transparent pl-11 pr-4 py-3.5 text-sm text-gray-900 placeholder-gray-300 focus:outline-none rounded-xl"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
@@ -424,7 +424,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
 
               {/* Description */}
               <motion.div variants={itemVariants}>
-                <label htmlFor="vendor-desc" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                <label htmlFor="distributer-desc" className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
                   Store description
                 </label>
                 <div className={fieldClasses("desc")}>
@@ -434,7 +434,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
                     </svg>
                   </div>
                   <textarea
-                    id="vendor-desc"
+                    id="distributer-desc"
                     className="w-full bg-transparent pl-11 pr-4 py-3.5 text-sm text-gray-900 placeholder-gray-300 focus:outline-none rounded-xl resize-none"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -450,7 +450,7 @@ export default function VendorSignupClient({ from }: { from?: string }) {
               <AnimatePresence>
                 {error && (
                   <motion.div
-                    id="vendor-error"
+                    id="distributer-error"
                     role="alert"
                     initial={{ opacity: 0, y: -8, height: 0 }}
                     animate={{ opacity: 1, y: 0, height: "auto" }}

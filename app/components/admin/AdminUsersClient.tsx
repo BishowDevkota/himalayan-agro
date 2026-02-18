@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 function roleColor(r: string) {
   if (r === "admin") return "bg-amber-50 text-amber-700";
-  if (r === "vendor") return "bg-emerald-50 text-emerald-700";
+  if (r === "distributer") return "bg-emerald-50 text-emerald-700";
   return "bg-slate-100 text-slate-700";
 }
 
@@ -110,7 +110,7 @@ export default function AdminUsersClient({
   const [createName, setCreateName] = useState("");
   const [createEmail, setCreateEmail] = useState("");
   const [createPassword, setCreatePassword] = useState("");
-  const [createRole, setCreateRole] = useState<"user" | "admin" | "vendor">("user");
+  const [createRole, setCreateRole] = useState<"user" | "admin" | "distributer">("user");
 
   const fetchUsers = useCallback(async (opts: { page?: number; q?: string } = {}) => {
     setLoading(true);
@@ -225,7 +225,7 @@ export default function AdminUsersClient({
               <select className="rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all" value={createRole} onChange={(e) => setCreateRole(e.target.value as any)}>
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
-                <option value="vendor">Vendor</option>
+                <option value="distributer">Distributer</option>
               </select>
             </div>
             <button className="rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50" type="submit" disabled={creating}>

@@ -2,12 +2,12 @@ import React from "react";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../../lib/auth";
 import { redirect } from "next/navigation";
-import VendorProductForm from "../../../components/vendor/VendorProductForm";
+import DistributerProductForm from "../../../components/distributer/DistributerProductForm";
 
 export default async function StoreNewProductPage() {
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session) return redirect("/login?from=/store/products/new");
-  if (session.user?.role !== "vendor") return <div className="p-12">Unauthorized</div>;
+  if (session.user?.role !== "distributer") return <div className="p-12">Unauthorized</div>;
 
   return (
     <div className="bg-white">
@@ -20,7 +20,7 @@ export default async function StoreNewProductPage() {
         </div>
 
         <div className="mt-8">
-          <VendorProductForm />
+          <DistributerProductForm />
         </div>
       </div>
     </div>

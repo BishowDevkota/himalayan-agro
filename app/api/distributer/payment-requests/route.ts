@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "../../../../lib/mongodb";
-import Vendor from "../../../../models/Vendor";
+import Distributer from "../../../../models/Distributer";
 import Product from "../../../../models/Product";
 import Order from "../../../../models/Order";
 import PaymentRequest from "../../../../models/PaymentRequest";
@@ -17,10 +17,10 @@ export async function POST(req: Request) {
   }
 
   await connectToDatabase();
-  const vendor = await Vendor.findOne({ user: user.id }).lean();
-  if (!vendor) return NextResponse.json({ message: "Vendor profile not found" }, { status: 404 });
+  const distributer = await Distributer.findOne({ user: user.id }).lean();
+  if (!distributer) return NextResponse.json({ message: "Distributer profile not found" }, { status: 404 });
 
-  const productIds = await Product.find({ vendor: vendor._id }).select("_id").lean();
+  const productIds = await Product.find({ distributer: distributer._id }).select("_id").lean();
   const productIdSet = new Set(productIds.map((p: any) => String(p._id)));
   if (productIdSet.size === 0) {
     return NextResponse.json({ message: "No delivered revenue available" }, { status: 400 });
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     return sum + vendorTotal;
   }, 0);
 
-  const approvedRequests = await PaymentRequest.find({ vendor: vendor._id, status: "approved" }).lean();
+  const approvedRequests = await PaymentRequest.find({ distributer: distributer._id, status: "approved" }).lean();
   const realized = approvedRequests.reduce((sum: number, r: any) => sum + Number(r.amount || 0), 0);
   const unrealized = Math.max(0, totalDelivered - realized);
 
@@ -41,6 +41,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: "Request exceeds unrealized revenue" }, { status: 400 });
   }
 
-  const pr = await PaymentRequest.create({ vendor: vendor._id, user: user.id, amount, status: "pending" });
+  const pr = await PaymentRequest.create({ distributer: distributer._id, user: user.id, amount, status: "pending" });
   return NextResponse.json({ id: pr._id.toString(), message: "Payment request submitted" }, { status: 201 });
 }

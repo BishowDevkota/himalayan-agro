@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "../../../../lib/mongodb";
 import User from "../../../../models/User";
-import Vendor from "../../../../models/Vendor";
+import Distributer from "../../../../models/Distributer";
 
 function validateEmail(email: string) {
   return typeof email === "string" && /\S+@\S+\.\S+/.test(email);
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
   if (!validateEmail(contactEmail)) return NextResponse.json({ message: "Valid contact email is required" }, { status: 400 });
   if (typeof password !== "string" || password.length < 8) return NextResponse.json({ message: "Password must be at least 8 characters" }, { status: 400 });
 
-  // prevent registering the admin account via vendor sign-up
+  // prevent registering the admin account via distributer sign-up
   if (process.env.ADMIN_EMAIL && email === process.env.ADMIN_EMAIL) {
     return NextResponse.json({ message: "Registration using this email is not allowed" }, { status: 403 });
   }
@@ -37,12 +37,12 @@ export async function POST(req: Request) {
     name: ownerName || undefined,
     email,
     password,
-    role: "vendor",
+    role: "distributer",
     isActive: false,
   });
 
   try {
-    await Vendor.create({
+    await Distributer.create({
       user: user._id,
       ownerName: ownerName || undefined,
       storeName,
@@ -57,5 +57,5 @@ export async function POST(req: Request) {
     throw err;
   }
 
-  return NextResponse.json({ message: "Vendor request submitted" }, { status: 201 });
+  return NextResponse.json({ message: "Distributer request submitted" }, { status: 201 });
 }

@@ -339,16 +339,16 @@ export default function Navbar() {
               </div>
             )}
 
-            {/* Become a Vendor — only visible when not logged in */}
+            {/* Become a Distributer — only visible when not logged in */}
             {!session && (
               <motion.button
                 whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(8,145,178,0.4)" }}
                 whileTap={{ scale: 0.96 }}
-                onClick={() => router.push("/register/vendor")}
+                onClick={() => router.push("/register/distributer")}
                 className="hidden lg:inline-flex items-center gap-1.5 px-5 py-2 text-sm font-semibold text-white rounded-full bg-[#0891b2] hover:bg-[#0e7490] shadow-md shadow-cyan-200/50 transition-all duration-300"
               >
                 <IconStorefront size={15} />
-                Become a Vendor
+                Become a Distributer
               </motion.button>
             )}
 
@@ -474,11 +474,11 @@ export default function Navbar() {
                 <div className="shrink-0 px-3 py-3 space-y-1">
                   {!session && (
                     <button
-                      onClick={() => navigateAndClose("/register/vendor")}
+                      onClick={() => navigateAndClose("/register/distributer")}
                       className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-cyan-400 hover:bg-cyan-500/15 transition-all duration-200"
                     >
                       <span className="text-cyan-400"><IconStorefront size={18} /></span>
-                      Become a Vendor
+                      Become a Distributer
                     </button>
                   )}
                   {!session ? (

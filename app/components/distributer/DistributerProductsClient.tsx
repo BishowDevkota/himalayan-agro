@@ -3,14 +3,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-export default function VendorProductsClient({ initialProducts = [] }: { initialProducts?: any[] }) {
+export default function DistributerProductsClient({ initialProducts = [] }: { initialProducts?: any[] }) {
   const [products, setProducts] = useState(initialProducts || []);
   const [loading, setLoading] = useState(false);
 
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/vendor/products", { credentials: "same-origin" });
+      const res = await fetch("/api/distributer/products", { credentials: "same-origin" });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.message || "Failed to load products");
       setProducts((json.items || []).map((p: any) => ({ ...p, _id: String(p._id) })));
@@ -27,7 +27,7 @@ export default function VendorProductsClient({ initialProducts = [] }: { initial
 
   async function toggleActive(product: any) {
     try {
-      const res = await fetch(`/api/vendor/products/${product._id}`, {
+      const res = await fetch(`/api/distributer/products/${product._id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isActive: !product.isActive }),
@@ -44,7 +44,7 @@ export default function VendorProductsClient({ initialProducts = [] }: { initial
   async function remove(product: any) {
     if (!confirm("Delete product? This action cannot be undone.")) return;
     try {
-      const res = await fetch(`/api/vendor/products/${product._id}`, { method: "DELETE" });
+      const res = await fetch(`/api/distributer/products/${product._id}`, { method: "DELETE" });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.message || "Delete failed");
       toast.success("Deleted");

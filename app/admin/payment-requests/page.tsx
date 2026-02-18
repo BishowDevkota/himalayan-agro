@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 import connectToDatabase from "../../../lib/mongodb";
 import PaymentRequest from "../../../models/PaymentRequest";
-import Vendor from "../../../models/Vendor";
+import Distributer from "../../../models/Distributer";
 import AdminPaymentRequestsClient from "../../components/admin/AdminPaymentRequestsClient";
 import { hasPermission } from "../../../lib/permissions";
 
@@ -13,15 +13,15 @@ export default async function AdminPaymentRequestsPage() {
 
   await connectToDatabase();
   const requests = await PaymentRequest.find({}).sort({ createdAt: -1 }).lean();
-  const vendorIds = requests.map((r: any) => r.vendor);
-  const vendors = await Vendor.find({ _id: { $in: vendorIds } }).lean();
-  const vendorById = new Map(vendors.map((v: any) => [String(v._id), v]));
+  const vendorIds = requests.map((r: any) => r.distributer);
+  const distributers = await Distributer.find({ _id: { $in: vendorIds } }).lean();
+  const vendorById = new Map(distributers.map((v: any) => [String(v._id), v]));
 
   const safe = requests.map((r: any) => {
-    const v = vendorById.get(String(r.vendor));
+    const v = vendorById.get(String(r.distributer));
     return {
       _id: String(r._id),
-      vendorId: String(r.vendor),
+      vendorId: String(r.distributer),
       storeName: v?.storeName || null,
       ownerName: v?.ownerName || null,
       amount: r.amount,
@@ -44,7 +44,7 @@ export default async function AdminPaymentRequestsPage() {
           <div>
             <span className="inline-flex items-center text-xs font-semibold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full">Finance</span>
             <h1 className="mt-3 text-2xl sm:text-3xl font-bold text-slate-900">Payment Requests</h1>
-            <p className="mt-1 text-sm text-slate-500">Review vendor payout requests and approve or reject.</p>
+            <p className="mt-1 text-sm text-slate-500">Review distributer payout requests and approve or reject.</p>
           </div>
           <a href="/admin/payment-requests" className="rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm self-start">
             Refresh

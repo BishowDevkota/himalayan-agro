@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 import { redirect } from "next/navigation";
 import connectToDatabase from "../../../lib/mongodb";
-import Vendor from "../../../models/Vendor";
+import Distributer from "../../../models/Distributer";
 import Product from "../../../models/Product";
 import Order from "../../../models/Order";
 import PaymentRequest from "../../../models/PaymentRequest";
@@ -11,13 +11,13 @@ import PaymentRequest from "../../../models/PaymentRequest";
 export default async function StoreRevenuePage() {
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session) return redirect("/login?from=/store/revenue");
-  if (session.user?.role !== "vendor") return <div className="p-12">Unauthorized</div>;
+  if (session.user?.role !== "distributer") return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const vendor = await Vendor.findOne({ user: session.user?.id }).lean();
-  if (!vendor) return <div className="p-12">Vendor profile missing</div>;
+  const distributer = await Distributer.findOne({ user: session.user?.id }).lean();
+  if (!distributer) return <div className="p-12">Distributer profile missing</div>;
 
-  const productIds = await Product.find({ vendor: vendor._id }).select("_id").lean();
+  const productIds = await Product.find({ distributer: distributer._id }).select("_id").lean();
   const productIdSet = new Set(productIds.map((p: any) => String(p._id)));
 
   const deliveredOrders = productIdSet.size
@@ -41,11 +41,11 @@ export default async function StoreRevenuePage() {
     };
   });
 
-  const approvedRequests = await PaymentRequest.find({ vendor: vendor._id, status: "approved" }).lean();
+  const approvedRequests = await PaymentRequest.find({ distributer: distributer._id, status: "approved" }).lean();
   const realizedRevenue = approvedRequests.reduce((sum: number, r: any) => sum + Number(r.amount || 0), 0);
   const unrealizedRevenue = Math.max(0, totalRevenue - realizedRevenue);
 
-  const recentRequests = await PaymentRequest.find({ vendor: vendor._id }).sort({ createdAt: -1 }).limit(10).lean();
+  const recentRequests = await PaymentRequest.find({ distributer: distributer._id }).sort({ createdAt: -1 }).limit(10).lean();
   const safeRequests = recentRequests.map((r: any) => ({
     id: String(r._id),
     amount: r.amount,

@@ -2,13 +2,13 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../../lib/auth";
 import connectToDatabase from "../../../../lib/mongodb";
-import Vendor from "../../../../models/Vendor";
+import Distributer from "../../../../models/Distributer";
 import User from "../../../../models/User";
 import { hasPermission } from "../../../../lib/permissions";
 
 export async function GET(req: Request) {
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || !hasPermission(session.user, "vendors:read")) {
+  if (!session || !hasPermission(session.user, "distributers:read")) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
 
@@ -24,12 +24,12 @@ export async function GET(req: Request) {
     filter.$or = [{ storeName: rx }, { ownerName: rx }, { contactEmail: rx }];
   }
 
-  const vendors = await Vendor.find(filter).sort({ createdAt: -1 }).lean();
-  const userIds = vendors.map((v: any) => v.user);
+  const distributers = await Distributer.find(filter).sort({ createdAt: -1 }).lean();
+  const userIds = distributers.map((v: any) => v.user);
   const users = await User.find({ _id: { $in: userIds } }).select("email isActive role").lean();
   const userById = new Map(users.map((u: any) => [String(u._id), u]));
 
-  const payload = vendors.map((v: any) => {
+  const payload = distributers.map((v: any) => {
     const u = userById.get(String(v.user));
     return {
       _id: String(v._id),
@@ -50,5 +50,5 @@ export async function GET(req: Request) {
     };
   });
 
-  return NextResponse.json({ vendors: payload });
+  return NextResponse.json({ distributers: payload });
 }

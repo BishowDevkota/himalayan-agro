@@ -1,20 +1,20 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "../../../../lib/mongodb";
 import Product from "../../../../models/Product";
-import Vendor from "../../../../models/Vendor";
+import Distributer from "../../../../models/Distributer";
 import { getSessionUser, requireVendor } from "../../../../lib/server-utils";
 
 async function getVendorForUser(userId: string) {
   await connectToDatabase();
-  return Vendor.findOne({ user: userId }).lean();
+  return Distributer.findOne({ user: userId }).lean();
 }
 
 export async function GET(req: Request) {
   const user = await getSessionUser();
   requireVendor(user);
 
-  const vendor = await getVendorForUser(user.id);
-  if (!vendor) return NextResponse.json({ items: [], meta: { total: 0, page: 1, perPage: 20 } });
+  const distributer = await getVendorForUser(user.id);
+  if (!distributer) return NextResponse.json({ items: [], meta: { total: 0, page: 1, perPage: 20 } });
 
   const url = new URL(req.url);
   const q = url.searchParams.get("q") || undefined;
@@ -22,7 +22,7 @@ export async function GET(req: Request) {
   const page = Math.max(1, Number(url.searchParams.get("page") || 1));
   const perPage = Math.min(200, Number(url.searchParams.get("perPage") || 20));
 
-  const filter: any = { vendor: vendor._id };
+  const filter: any = { distributer: distributer._id };
   if (q) filter.$text = { $search: q };
   if (category) filter.category = category;
 
@@ -39,8 +39,8 @@ export async function POST(req: Request) {
   requireVendor(user);
   const body = await req.json();
 
-  const vendor = await getVendorForUser(user.id);
-  if (!vendor) return NextResponse.json({ message: "Vendor profile not found" }, { status: 404 });
+  const distributer = await getVendorForUser(user.id);
+  if (!distributer) return NextResponse.json({ message: "Distributer profile not found" }, { status: 404 });
 
   const payload = {
     name: body.name,
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     images: Array.isArray(body.images) ? body.images : [],
     stock: Number(body.stock) || 0,
     isActive: body.isActive !== false,
-    vendor: vendor._id,
+    distributer: distributer._id,
   };
 
   await connectToDatabase();

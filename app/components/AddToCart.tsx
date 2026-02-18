@@ -11,6 +11,13 @@ export default function AddToCart({ product }: { product: any }) {
   const router = useRouter();
   const disabled = product.stock < 1;
 
+  function buyNow() {
+    const safeQty = Math.max(1, Math.min(Number(product.stock) || 1, Number(qty) || 1));
+    const checkoutUrl = `/checkout?buyNow=${encodeURIComponent(product._id)}&qty=${safeQty}`;
+    if (!session) return signIn(undefined, { callbackUrl: checkoutUrl });
+    router.push(checkoutUrl);
+  }
+
   async function add() {
     if (!session) return signIn(undefined, { callbackUrl: `/product/${product._id}` });
     try {
@@ -70,7 +77,8 @@ export default function AddToCart({ product }: { product: any }) {
         </button>
         <button
           className="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-[#d97706] text-[#d97706] text-sm font-bold rounded-xl hover:bg-[#d97706] hover:text-white transition-colors duration-200"
-          onClick={() => router.push("/checkout")}
+          onClick={buyNow}
+          disabled={disabled}
         >
           Buy Now
         </button>

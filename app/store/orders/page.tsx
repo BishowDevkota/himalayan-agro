@@ -3,21 +3,21 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 import { redirect } from "next/navigation";
 import connectToDatabase from "../../../lib/mongodb";
-import Vendor from "../../../models/Vendor";
+import Distributer from "../../../models/Distributer";
 import Product from "../../../models/Product";
 import Order from "../../../models/Order";
-import VendorOrdersClient from "../../components/vendor/VendorOrdersClient";
+import DistributerOrdersClient from "../../components/distributer/DistributerOrdersClient";
 
 export default async function StoreOrdersPage() {
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session) return redirect("/login?from=/store/orders");
-  if (session.user?.role !== "vendor") return <div className="p-12">Unauthorized</div>;
+  if (session.user?.role !== "distributer") return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const vendor = await Vendor.findOne({ user: session.user?.id }).lean();
-  if (!vendor) return <div className="p-12">Vendor profile missing</div>;
+  const distributer = await Distributer.findOne({ user: session.user?.id }).lean();
+  if (!distributer) return <div className="p-12">Distributer profile missing</div>;
 
-  const productIds = await Product.find({ vendor: vendor._id }).select("_id").lean();
+  const productIds = await Product.find({ distributer: distributer._id }).select("_id").lean();
   const productIdSet = new Set(productIds.map((p: any) => String(p._id)));
 
   const orders = productIdSet.size
@@ -55,7 +55,7 @@ export default async function StoreOrdersPage() {
           <a className="rounded border border-gray-200 px-4 py-2 text-sm" href="/store">Back to dashboard</a>
         </div>
 
-        <VendorOrdersClient initialOrders={safe} />
+        <DistributerOrdersClient initialOrders={safe} />
       </div>
     </div>
   );

@@ -3,9 +3,9 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../../../lib/auth";
 import { redirect } from "next/navigation";
 import connectToDatabase from "../../../../../lib/mongodb";
-import Vendor from "../../../../../models/Vendor";
+import Distributer from "../../../../../models/Distributer";
 import Product from "../../../../../models/Product";
-import VendorProductForm from "../../../../components/vendor/VendorProductForm";
+import DistributerProductForm from "../../../../components/distributer/DistributerProductForm";
 
 export default async function StoreEditProductPage({ params }: { params: { id: string } } | { params: Promise<{ id: string }> }) {
   const resolvedParams = params instanceof Promise ? await params : params;
@@ -13,13 +13,13 @@ export default async function StoreEditProductPage({ params }: { params: { id: s
 
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session) return redirect(`/login?from=/store/products/edit/${id}`);
-  if (session.user?.role !== "vendor") return <div className="p-12">Unauthorized</div>;
+  if (session.user?.role !== "distributer") return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const vendor = await Vendor.findOne({ user: session.user?.id }).lean();
-  if (!vendor) return <div className="p-12">Vendor profile missing</div>;
+  const distributer = await Distributer.findOne({ user: session.user?.id }).lean();
+  if (!distributer) return <div className="p-12">Distributer profile missing</div>;
 
-  const product = await Product.findOne({ _id: id, vendor: vendor._id }).lean();
+  const product = await Product.findOne({ _id: id, distributer: distributer._id }).lean();
   if (!product) return <div className="p-12">Product not found</div>;
 
   const safeProduct = { ...product, _id: String(product._id) } as any;
@@ -30,7 +30,7 @@ export default async function StoreEditProductPage({ params }: { params: { id: s
         <h1 className="text-2xl font-semibold">Edit product</h1>
       </div>
       <div className="mt-6">
-        <VendorProductForm initial={safeProduct} />
+        <DistributerProductForm initial={safeProduct} />
       </div>
     </div>
   );

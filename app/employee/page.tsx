@@ -14,7 +14,7 @@ export default async function EmployeeDashboardPage() {
 
   const canPayments = hasPermission(user, "payments:read");
   const canProducts = hasPermission(user, "products:read");
-  const canVendors = hasPermission(user, "vendors:read");
+  const canVendors = hasPermission(user, "distributers:read");
   const canCategories = hasPermission(user, "categories:read");
   const canNews = hasPermission(user, "news:read");
 
@@ -34,7 +34,7 @@ export default async function EmployeeDashboardPage() {
           {canPayments && (
             <a className="rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow" href="/admin/payment-requests">
               <h2 className="text-lg font-semibold">Payment requests</h2>
-              <p className="mt-2 text-sm text-slate-600">Review and approve vendor payout requests.</p>
+              <p className="mt-2 text-sm text-slate-600">Review and approve distributer payout requests.</p>
             </a>
           )}
 
@@ -46,9 +46,9 @@ export default async function EmployeeDashboardPage() {
           )}
 
           {canVendors && (
-            <a className="rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow" href="/admin/vendor">
-              <h2 className="text-lg font-semibold">Vendor approvals</h2>
-              <p className="mt-2 text-sm text-slate-600">Approve or reject vendor applications.</p>
+            <a className="rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow" href="/admin/distributer">
+              <h2 className="text-lg font-semibold">Distributer approvals</h2>
+              <p className="mt-2 text-sm text-slate-600">Approve or reject distributer applications.</p>
             </a>
           )}
 

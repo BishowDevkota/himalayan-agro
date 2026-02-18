@@ -5,7 +5,7 @@ import ImageUpload from "../admin/ImageUpload";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
-export default function VendorProductForm({ initial = null }: { initial?: any }) {
+export default function DistributerProductForm({ initial = null }: { initial?: any }) {
   const [name, setName] = useState(initial?.name || "");
   const [description, setDescription] = useState(initial?.description || "");
   const [brand, setBrand] = useState(initial?.brand || "");
@@ -44,7 +44,7 @@ export default function VendorProductForm({ initial = null }: { initial?: any })
       else if (initial?.category) payload.category = initial.category;
 
       const method = initial ? "PATCH" : "POST";
-      const url = initial ? `/api/vendor/products/${initial._id}` : `/api/vendor/products`;
+      const url = initial ? `/api/distributer/products/${initial._id}` : `/api/distributer/products`;
       const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (!res.ok) throw new Error((await res.json()).message || "Save failed");
       toast.success("Product saved");

@@ -4,7 +4,7 @@ import React, { useMemo, useState } from "react";
 
 const ORDER_STATUSES = ["pending", "processing", "shipped", "delivered", "cancelled"] as const;
 
-export default function VendorOrdersClient({ initialOrders = [] }: { initialOrders?: any[] }) {
+export default function DistributerOrdersClient({ initialOrders = [] }: { initialOrders?: any[] }) {
   const [orders, setOrders] = useState(initialOrders || []);
   const [q, setQ] = useState("");
   const [status, setStatus] = useState("");
@@ -70,7 +70,7 @@ export default function VendorOrdersClient({ initialOrders = [] }: { initialOrde
               </div>
 
               <div>
-                <div className="text-sm text-slate-500">Vendor total</div>
+                <div className="text-sm text-slate-500">Distributer total</div>
                 <div className="text-lg font-extrabold text-slate-900">₹{Number(o.vendorTotal || 0).toFixed(2)}</div>
               </div>
 
@@ -94,7 +94,7 @@ export default function VendorOrdersClient({ initialOrders = [] }: { initialOrde
                   ))}
                 </div>
               ) : (
-                <div>No vendor items</div>
+                <div>No distributer items</div>
               )}
             </div>
           </div>

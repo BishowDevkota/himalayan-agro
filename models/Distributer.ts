@@ -33,5 +33,5 @@ const VendorSchema: Schema<IVendor> = new mongoose.Schema(
   { timestamps: true }
 );
 
-const Vendor: Model<IVendor> = (mongoose.models.Vendor as Model<IVendor>) || mongoose.model<IVendor>("Vendor", VendorSchema);
-export default Vendor;
+const Distributer: Model<IVendor> = (mongoose.models.Distributer as Model<IVendor>) || mongoose.model<IVendor>("Distributer", VendorSchema);
+export default Distributer;

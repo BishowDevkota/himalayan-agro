@@ -1,17 +1,17 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "../../../../../lib/mongodb";
 import Product from "../../../../../models/Product";
-import Vendor from "../../../../../models/Vendor";
+import Distributer from "../../../../../models/Distributer";
 import { getSessionUser, requireVendor } from "../../../../../lib/server-utils";
 
 async function getVendorForUser(userId: string) {
   await connectToDatabase();
-  return Vendor.findOne({ user: userId }).lean();
+  return Distributer.findOne({ user: userId }).lean();
 }
 
 async function loadProductForVendor(productId: string, vendorId: string) {
   await connectToDatabase();
-  return Product.findOne({ _id: productId, vendor: vendorId }).lean();
+  return Product.findOne({ _id: productId, distributer: vendorId }).lean();
 }
 
 export async function GET(req: Request, context: any) {
@@ -20,10 +20,10 @@ export async function GET(req: Request, context: any) {
   const user = await getSessionUser();
   requireVendor(user);
 
-  const vendor = await getVendorForUser(user.id);
-  if (!vendor) return NextResponse.json({ message: "Vendor profile not found" }, { status: 404 });
+  const distributer = await getVendorForUser(user.id);
+  if (!distributer) return NextResponse.json({ message: "Distributer profile not found" }, { status: 404 });
 
-  const product = await loadProductForVendor(id, String(vendor._id));
+  const product = await loadProductForVendor(id, String(distributer._id));
   if (!product) return NextResponse.json({ message: "Not found" }, { status: 404 });
   return NextResponse.json(product);
 }
@@ -35,10 +35,10 @@ export async function PATCH(req: Request, context: any) {
   requireVendor(user);
   const body = await req.json();
 
-  const vendor = await getVendorForUser(user.id);
-  if (!vendor) return NextResponse.json({ message: "Vendor profile not found" }, { status: 404 });
+  const distributer = await getVendorForUser(user.id);
+  if (!distributer) return NextResponse.json({ message: "Distributer profile not found" }, { status: 404 });
 
-  const existing = await loadProductForVendor(id, String(vendor._id));
+  const existing = await loadProductForVendor(id, String(distributer._id));
   if (!existing) return NextResponse.json({ message: "Not found" }, { status: 404 });
 
   await connectToDatabase();
@@ -77,14 +77,14 @@ export async function DELETE(req: Request, context: any) {
   const user = await getSessionUser();
   requireVendor(user);
 
-  const vendor = await getVendorForUser(user.id);
-  if (!vendor) return NextResponse.json({ message: "Vendor profile not found" }, { status: 404 });
+  const distributer = await getVendorForUser(user.id);
+  if (!distributer) return NextResponse.json({ message: "Distributer profile not found" }, { status: 404 });
 
-  const existing = await loadProductForVendor(id, String(vendor._id));
+  const existing = await loadProductForVendor(id, String(distributer._id));
   if (!existing) return NextResponse.json({ message: "Not found" }, { status: 404 });
 
   await connectToDatabase();
-  const deleted = await Product.findOneAndDelete({ _id: id, vendor: vendor._id }).lean();
+  const deleted = await Product.findOneAndDelete({ _id: id, distributer: distributer._id }).lean();
   if (!deleted) return NextResponse.json({ message: "Not found" }, { status: 404 });
 
   try {

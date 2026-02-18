@@ -38,6 +38,7 @@ export async function POST(req: Request) {
   requireUser(user);
   const body = await req.json();
   const items = Array.isArray(body.items) ? body.items : [];
+  const checkoutMode = body.checkoutMode === 'buyNow' ? 'buyNow' : 'cart';
   if (!items.length) return NextResponse.json({ message: "No items" }, { status: 400 });
 
   await connectToDatabase();
@@ -104,8 +105,9 @@ export async function POST(req: Request) {
       orderStatus: "pending",
     });
 
-    // clear cart
-    await Cart.deleteOne({ user: userIdForOrder });
+    if (checkoutMode !== 'buyNow') {
+      await Cart.deleteOne({ user: userIdForOrder });
+    }
 
     return NextResponse.json(order, { status: 201 });
   } catch (err: any) {

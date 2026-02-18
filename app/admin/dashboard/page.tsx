@@ -3,7 +3,7 @@ import connectToDatabase from "../../../lib/mongodb";
 import User from "../../../models/User";
 import Product from "../../../models/Product";
 import Order from "../../../models/Order";
-import Vendor from "../../../models/Vendor";
+import Distributer from "../../../models/Distributer";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 
@@ -26,7 +26,7 @@ export default async function AdminDashboardPage() {
     users,
     products,
     orders,
-    vendors,
+    distributers,
     ordersLast8Weeks,
     revenueNowAgg,
     revenuePrevAgg,
@@ -36,7 +36,7 @@ export default async function AdminDashboardPage() {
     User.countDocuments({}),
     Product.countDocuments({}),
     Order.countDocuments({}),
-    Vendor.countDocuments({}),
+    Distributer.countDocuments({}),
     Order.find({ createdAt: { $gte: start8w } }).select("totalAmount createdAt").lean(),
     Order.aggregate([
       { $match: { createdAt: { $gte: start30 } } },
@@ -174,8 +174,8 @@ export default async function AdminDashboardPage() {
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9"/><path d="M9 21V13h6v8"/></svg>
               </div>
               <div className="min-w-0">
-                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Vendors</p>
-                <p className="text-2xl font-bold text-slate-900 mt-0.5">{vendors}</p>
+                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Distributers</p>
+                <p className="text-2xl font-bold text-slate-900 mt-0.5">{distributers}</p>
               </div>
             </div>
             <p className="text-xs text-slate-400 mt-3">Store applications</p>

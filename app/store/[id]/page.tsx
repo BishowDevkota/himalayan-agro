@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 import { redirect } from "next/navigation";
 import connectToDatabase from "../../../lib/mongodb";
-import Vendor from "../../../models/Vendor";
+import Distributer from "../../../models/Distributer";
 import Product from "../../../models/Product";
 
 export default async function StoreProfilePage({ params }: { params: { id: string } } | { params: Promise<{ id: string }> }) {
@@ -14,51 +14,51 @@ export default async function StoreProfilePage({ params }: { params: { id: strin
   if (!session) return redirect(`/login?from=/store/${id}`);
 
   await connectToDatabase();
-  const vendor = await Vendor.findById(id).lean();
-  if (!vendor || vendor.status !== "approved") {
+  const distributer = await Distributer.findById(id).lean();
+  if (!distributer || distributer.status !== "approved") {
     return (
       <div className="min-h-screen bg-white text-slate-900">
         <div className="max-w-5xl mx-auto py-16 px-6">
           <h1 className="text-2xl font-semibold">Store not found</h1>
-          <p className="mt-2 text-sm text-slate-500">This vendor is not available.</p>
+          <p className="mt-2 text-sm text-slate-500">This distributer is not available.</p>
         </div>
       </div>
     );
   }
 
-  const products = await Product.find({ vendor: vendor._id, isActive: true }).sort({ createdAt: -1 }).lean();
+  const products = await Product.find({ distributer: distributer._id, isActive: true }).sort({ createdAt: -1 }).lean();
 
   return (
     <div className="min-h-screen bg-white text-slate-900">
       <div className="max-w-7xl mx-auto pt-28 pb-16 px-6 lg:px-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
-            <h1 className="text-3xl font-extrabold">{vendor.storeName}</h1>
-            <p className="mt-2 text-sm text-slate-500">Vendor store front</p>
+            <h1 className="text-3xl font-extrabold">{distributer.storeName}</h1>
+            <p className="mt-2 text-sm text-slate-500">Distributer store front</p>
           </div>
         </div>
 
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
           <section className="lg:col-span-2 bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
             <h2 className="text-lg font-bold text-slate-900">About this store</h2>
-            <div className="mt-4 text-sm text-slate-600">{vendor.description || "No description provided."}</div>
+            <div className="mt-4 text-sm text-slate-600">{distributer.description || "No description provided."}</div>
             <dl className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <div>
                 <dt className="text-slate-500">Owner</dt>
-                <dd className="mt-1 text-slate-900 font-medium">{vendor.ownerName || "—"}</dd>
+                <dd className="mt-1 text-slate-900 font-medium">{distributer.ownerName || "—"}</dd>
               </div>
               <div>
                 <dt className="text-slate-500">Contact</dt>
-                <dd className="mt-1 text-slate-900 font-medium">{vendor.contactEmail}</dd>
+                <dd className="mt-1 text-slate-900 font-medium">{distributer.contactEmail}</dd>
               </div>
             </dl>
           </section>
 
           <aside className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
             <h3 className="text-base font-semibold text-slate-900">Store contact</h3>
-            <div className="mt-3 text-sm text-slate-600">{vendor.contactEmail}</div>
-            <div className="mt-1 text-sm text-slate-600">{vendor.contactPhone || "—"}</div>
-            <div className="mt-3 text-sm text-slate-600">{vendor.address || "—"}</div>
+            <div className="mt-3 text-sm text-slate-600">{distributer.contactEmail}</div>
+            <div className="mt-1 text-sm text-slate-600">{distributer.contactPhone || "—"}</div>
+            <div className="mt-3 text-sm text-slate-600">{distributer.address || "—"}</div>
           </aside>
         </div>
 

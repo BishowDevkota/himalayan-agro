@@ -3,8 +3,8 @@ export const EMPLOYEE_ROLE_PERMISSIONS: Record<string, string[]> = {
   product_manager: [
     "products:read",
     "products:write",
-    "vendors:read",
-    "vendors:approve",
+    "distributers:read",
+    "distributers:approve",
     "categories:read",
     "categories:write",
   ],
@@ -54,8 +54,8 @@ export function permissionForAdminApi(pathname: string, method: string) {
     return method === "GET" ? "payments:read" : "payments:write";
   }
 
-  if (pathname.startsWith("/api/admin/vendors")) {
-    return method === "GET" ? "vendors:read" : "vendors:approve";
+  if (pathname.startsWith("/api/admin/distributers")) {
+    return method === "GET" ? "distributers:read" : "distributers:approve";
   }
 
   if (pathname.startsWith("/api/admin/products")) {
@@ -73,7 +73,7 @@ export function adminLandingForPermissions(permissions: string[] = []) {
   if (permissions.includes("news:read")) return "/admin/news";
   if (permissions.includes("payments:read")) return "/admin/payment-requests";
   if (permissions.includes("products:read")) return "/admin/products";
-  if (permissions.includes("vendors:read")) return "/admin/vendor";
+  if (permissions.includes("distributers:read")) return "/admin/distributer";
   if (permissions.includes("categories:read")) return "/admin/categories";
   return "/admin/dashboard";
 }

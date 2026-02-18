@@ -9,8 +9,8 @@ function statusColor(s: string) {
   return "bg-amber-50 text-amber-700";
 }
 
-export default function AdminVendorsClient({ initialVendors = [] }: { initialVendors?: any[] }) {
-  const [vendors, setVendors] = useState(initialVendors || []);
+export default function AdminDistributersClient({ initialVendors = [] }: { initialVendors?: any[] }) {
+  const [distributers, setVendors] = useState(initialVendors || []);
   const [status, setStatus] = useState("");
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,15 +18,15 @@ export default function AdminVendorsClient({ initialVendors = [] }: { initialVen
   const fetchVendors = useCallback(async (opts: { status?: string; q?: string } = {}) => {
     setLoading(true);
     try {
-      const url = new URL("/api/admin/vendors", window.location.origin);
+      const url = new URL("/api/admin/distributers", window.location.origin);
       const nextStatus = opts.status ?? status;
       const nextQ = opts.q ?? q;
       if (nextStatus) url.searchParams.set("status", nextStatus);
       if (nextQ) url.searchParams.set("q", nextQ);
       const res = await fetch(url.toString(), { credentials: "same-origin" });
       const json = await res.json();
-      if (!res.ok) throw new Error(json?.message || "Failed to load vendors");
-      setVendors(json.vendors || []);
+      if (!res.ok) throw new Error(json?.message || "Failed to load distributers");
+      setVendors(json.distributers || []);
     } catch (err: any) {
       toast.error(err.message || String(err));
     } finally {
@@ -41,14 +41,14 @@ export default function AdminVendorsClient({ initialVendors = [] }: { initialVen
   async function updateVendor(id: string, nextStatus: "approved" | "rejected") {
     const reason = nextStatus === "rejected" ? prompt("Reason for rejection (optional):") || "" : "";
     try {
-      const res = await fetch(`/api/admin/vendors/${id}`, {
+      const res = await fetch(`/api/admin/distributers/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: nextStatus, rejectionReason: reason || undefined }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.message || "Update failed");
-      toast.success("Vendor updated");
+      toast.success("Distributer updated");
       await fetchVendors();
     } catch (err: any) {
       toast.error(err.message || String(err));
@@ -70,7 +70,7 @@ export default function AdminVendorsClient({ initialVendors = [] }: { initialVen
             <div className="relative w-full sm:w-72">
               <svg className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="11" cy="11" r="8" strokeWidth="2"/><path strokeLinecap="round" d="M21 21l-4.35-4.35" strokeWidth="2"/></svg>
               <input
-                aria-label="Search vendors"
+                aria-label="Search distributers"
                 className="w-full rounded-lg border border-slate-200 bg-slate-50/50 pl-9 pr-3.5 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all"
                 placeholder="Search by store, owner, or email..."
                 value={q}
@@ -87,12 +87,12 @@ export default function AdminVendorsClient({ initialVendors = [] }: { initialVen
           </div>
 
           <div className="text-sm text-slate-500">
-            Showing <span className="font-semibold text-slate-700">{vendors.length}</span> vendors
+            Showing <span className="font-semibold text-slate-700">{distributers.length}</span> distributers
           </div>
         </form>
       </div>
 
-      {/* Vendors Table */}
+      {/* Distributers Table */}
       <div className="bg-white border border-slate-200/60 rounded-2xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
         <table className="w-full text-sm text-slate-800">
@@ -109,10 +109,10 @@ export default function AdminVendorsClient({ initialVendors = [] }: { initialVen
             {loading && (
               <tr><td colSpan={5} className="px-5 py-12 text-center text-sm text-slate-400">Loading…</td></tr>
             )}
-            {!loading && vendors.length === 0 && (
-              <tr><td colSpan={5} className="px-5 py-12 text-center text-sm text-slate-400">No vendor requests.</td></tr>
+            {!loading && distributers.length === 0 && (
+              <tr><td colSpan={5} className="px-5 py-12 text-center text-sm text-slate-400">No distributer requests.</td></tr>
             )}
-            {!loading && vendors.map((v: any) => (
+            {!loading && distributers.map((v: any) => (
               <tr key={v._id} className="align-top hover:bg-cyan-50/30 transition-colors">
                 <td className="px-5 py-3.5">
                   <div className="flex items-center gap-3">
