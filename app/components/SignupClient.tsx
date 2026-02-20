@@ -187,14 +187,16 @@ export default function SignupClient({ from }: { from?: string }) {
           className="bg-white rounded-3xl md:rounded-l-none md:rounded-r-3xl shadow-2xl shadow-gray-200/60 p-8 sm:p-10 lg:p-12 text-slate-900 relative"
         >
           <div className="max-w-sm mx-auto">
-            {/* Mobile brand */}
+            {/* Mobile brand header */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1, duration: 0.4 }}
-              className="md:hidden mb-8"
+              className="md:hidden mb-8 -mx-8 -mt-8 sm:-mx-10 sm:-mt-10 rounded-t-3xl bg-[#0f2a4a] px-6 py-8 text-center"
             >
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-300">Himalaya</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-3">Himalaya Agro</p>
+              <h2 className="text-2xl font-extrabold text-white leading-tight">Get started</h2>
+              <p className="mt-2 text-sm text-white/70 max-w-xs mx-auto">Create an account to save orders, track shipments and access buyer-only pricing.</p>
             </motion.div>
 
             <motion.div variants={itemVariants} className="mb-8">

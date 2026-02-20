@@ -175,20 +175,14 @@ export default function OurMission() {
                 />
 
                 <div className="p-6 pl-7">
-                  {/* Icon + Number row */}
-                  <div className="flex items-start justify-between mb-5">
+                  {/* Icon row */}
+                  <div className="flex items-start mb-5">
                     <div
                       className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm"
                       style={{ backgroundColor: pillar.bgLight, color: pillar.color }}
                     >
                       {pillar.icon}
                     </div>
-                    <span
-                      className="text-[36px] font-black leading-none opacity-[0.07] select-none"
-                      style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
-                    >
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
                   </div>
 
                   {/* Title */}

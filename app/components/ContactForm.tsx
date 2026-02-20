@@ -72,8 +72,10 @@ export default function ContactForm() {
 
         <div className="bg-white rounded-3xl md:rounded-l-none md:rounded-r-3xl shadow-2xl shadow-gray-200/60 p-8 sm:p-10 lg:p-12 text-slate-900 relative">
           <div className="max-w-xl mx-auto">
-            <div className="md:hidden mb-8">
-              <p className="text-xs font-semibold uppercase tracking-widest text-gray-300">Himalaya</p>
+            <div className="md:hidden mb-8 -mx-8 -mt-8 sm:-mx-10 sm:-mt-10 rounded-t-3xl bg-[#0f2a4a] px-6 py-8 text-center">
+              <p className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-3">Himalaya Agro</p>
+              <h2 className="text-2xl font-extrabold text-white leading-tight">Let&apos;s talk</h2>
+              <p className="mt-2 text-sm text-white/70 max-w-xs mx-auto">Share your needs and our team will reach out within 24 hours.</p>
             </div>
 
             <div className="mb-8">
