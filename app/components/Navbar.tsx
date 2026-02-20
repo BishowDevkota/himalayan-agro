@@ -227,7 +227,7 @@ export default function Navbar() {
               src="/logo_original.png"
               alt="Himalaya"
               loading="eager"
-              className="h-14 sm:h-16 lg:hidden w-auto object-contain"
+              className="h-[74px] sm:h-20 lg:hidden w-auto object-contain"
               whileHover={{ scale: 1.04 }}
               transition={{ duration: 0.25 }}
               onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.png"; }}
