@@ -18,7 +18,7 @@ const slides = [
       { value: "215", label: "Irrigated Zones", sublabel: "18 Modern Zones" },
     ],
     floatingCards: [
-      { label: "Vegetation Index (NDVI)", value: "Trend: +4.2% Growth" },
+      { label: "Vegetation Index", value: "Trend: +4.2% Growth" },
       { label: "Agronomist Insight", value: "Nitrogen levels dropping" },
     ],
     hectares: { value: "156K", label: "Total Hectares", sublabel: "Monitored" },
