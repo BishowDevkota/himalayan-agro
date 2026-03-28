@@ -6,10 +6,21 @@ import Order from "../../../models/Order";
 import Distributor from "../../../models/Distributor";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
+import { redirect } from "next/navigation";
+import { adminLandingForPermissions } from "../../../lib/permissions";
 
 export default async function AdminDashboardPage() {
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "admin") {
+  if (!session) {
+    return <div className="p-12">Unauthorized</div>;
+  }
+
+  if (session.user?.role !== "admin") {
+    const permissions = Array.isArray(session.user?.permissions) ? session.user.permissions : [];
+    const landing = adminLandingForPermissions(permissions);
+    if (landing && landing !== "/admin/dashboard") {
+      redirect(landing);
+    }
     return <div className="p-12">Unauthorized</div>;
   }
 

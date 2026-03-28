@@ -147,7 +147,12 @@ export default function Navbar() {
   const role = (session as any)?.user?.role;
   const permissions = (session as any)?.user?.permissions || [];
   const canAccessAdmin = role === "admin" || (Array.isArray(permissions) && permissions.length > 0);
-  const adminTarget = role === "admin" ? "/admin/dashboard" : adminLandingForPermissions(permissions);
+  const landingForPermissions = adminLandingForPermissions(permissions);
+  const adminTarget = role === "admin"
+    ? "/admin/dashboard"
+    : role === "employee" && landingForPermissions === "/admin/dashboard"
+      ? "/"
+      : landingForPermissions;
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [companyOpen, setCompanyOpen] = useState(false);
@@ -166,7 +171,7 @@ export default function Navbar() {
     : role === "admin"
       ? { label: "Admin", href: "/admin/dashboard" }
       : role === "employee"
-        ? { label: "Employee", href: "/employee" }
+        ? { label: "Employee", href: adminTarget }
         : role === "distributor"
           ? { label: "Distributor", href: "/store" }
           : null;

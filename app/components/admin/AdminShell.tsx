@@ -1,14 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import React from "react";
 
-const navItems = [
+type NavItem = {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+  permission?: string;
+  adminOnly?: boolean;
+};
+
+const navItems: NavItem[] = [
   {
     href: "/admin/dashboard",
     label: "Dashboard",
+    adminOnly: true,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -21,6 +30,7 @@ const navItems = [
   {
     href: "/admin/orders",
     label: "Orders",
+    adminOnly: true,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V8l-5-5z" />
@@ -33,6 +43,7 @@ const navItems = [
   {
     href: "/admin/products",
     label: "Products",
+    permission: "products:read",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" />
@@ -43,6 +54,7 @@ const navItems = [
   {
     href: "/admin/categories",
     label: "Categories",
+    permission: "categories:read",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" />
@@ -52,6 +64,7 @@ const navItems = [
   {
     href: "/admin/users",
     label: "Users",
+    adminOnly: true,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
@@ -64,6 +77,7 @@ const navItems = [
   {
     href: "/admin/distributor",
     label: "Distributors",
+    permission: "distributors:read",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9" />
@@ -74,6 +88,7 @@ const navItems = [
   {
     href: "/admin/payment-requests",
     label: "Payments",
+    permission: "payments:read",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
@@ -84,6 +99,7 @@ const navItems = [
   {
     href: "/admin/news",
     label: "News",
+    permission: "news:read",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2" />
@@ -96,6 +112,7 @@ const navItems = [
   {
     href: "/admin/employees",
     label: "Employees",
+    adminOnly: true,
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" />
@@ -109,8 +126,32 @@ const navItems = [
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const router = useRouter();
   const [open, setOpen] = React.useState(true);
+  const { data: session, status } = useSession();
+  const isSessionLoading = status === "loading";
+
+  const user = session?.user as any;
+  const role = user?.role;
+  const userPermissions = Array.isArray(user?.permissions) ? user.permissions : [];
+
+  const visibleNavItems = navItems.filter((item) => {
+    if (role === "admin") return true;
+    if (role !== "employee") return false;
+    if (item.adminOnly) return false;
+    if (!item.permission) return true;
+    return userPermissions.includes("*") || userPermissions.includes(item.permission);
+  });
+
+  const profileName = user?.name || user?.email || (role === "admin" ? "Admin" : "Employee");
+  const profileRole = role === "admin"
+    ? "Administrator"
+    : user?.employeeRole
+      ? String(user.employeeRole)
+          .split("_")
+          .map((part: string) => part.charAt(0).toUpperCase() + part.slice(1))
+          .join(" ")
+      : "Employee";
+  const profileInitial = String(profileName || "U").charAt(0).toUpperCase();
 
   if (pathname?.startsWith("/admin/login")) {
     return <div className="min-h-screen">{children}</div>;
@@ -161,7 +202,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
-          {navItems.map((item) => {
+          {visibleNavItems.map((item) => {
             const isActive = pathname === item.href || (item.href !== "/admin/dashboard" && pathname?.startsWith(item.href));
             return (
               <Link
@@ -184,6 +225,9 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
               </Link>
             );
           })}
+          {!isSessionLoading && visibleNavItems.length === 0 && (
+            <div className="px-3 py-2 text-xs text-slate-500">No admin modules assigned to this account.</div>
+          )}
         </nav>
 
         <div className="h-px bg-slate-700/50 mx-4" />
@@ -207,11 +251,11 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         {/* Bottom: Profile & Sign Out */}
         <div className="px-3 py-4 flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-700 text-cyan-400 text-sm font-bold flex-shrink-0">
-            A
+            {profileInitial}
           </div>
           <div className="min-w-0 flex-1">
-            <div className="text-[13px] font-medium text-slate-200 truncate">Admin</div>
-            <div className="text-[11px] text-slate-500">Administrator</div>
+            <div className="text-[13px] font-medium text-slate-200 truncate">{profileName}</div>
+            <div className="text-[11px] text-slate-500">{profileRole}</div>
           </div>
           <button
             type="button"
