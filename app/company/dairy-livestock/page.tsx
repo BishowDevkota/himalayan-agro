@@ -3,7 +3,7 @@ import SubHeroSection from "../../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../../components/AnimatedClient";
 
 export const metadata = {
-  title: "Dairy & Livestock — Himalaya Nepal Agriculture",
+  title: "Dairy & Livestock",
   description: "Animal husbandry products, veterinary care, and livestock management solutions for sustainable dairy and meat production.",
 };
 

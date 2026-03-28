@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -113,7 +113,30 @@ const slideVariants = {
 
 export default function Hero() {
   const [current, setCurrent] = useState(0);
+  const swipeStart = useRef<{ x: number; y: number } | null>(null);
   const router = useRouter();
+
+  const SWIPE_THRESHOLD = 50;
+  const SWIPE_VERTICAL_TOLERANCE = 90;
+
+  const goToNext = () => setCurrent((prev) => (prev + 1) % slides.length);
+  const goToPrev = () => setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+
+  const startSwipe = (x: number, y: number) => {
+    swipeStart.current = { x, y };
+  };
+
+  const endSwipe = (x: number, y: number) => {
+    if (!swipeStart.current) return;
+    const dx = x - swipeStart.current.x;
+    const dy = y - swipeStart.current.y;
+    swipeStart.current = null;
+
+    if (Math.abs(dx) < SWIPE_THRESHOLD || Math.abs(dy) > SWIPE_VERTICAL_TOLERANCE) return;
+
+    if (dx < 0) goToNext();
+    else goToPrev();
+  };
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -125,7 +148,17 @@ export default function Hero() {
   const slide = slides[current];
 
   return (
-    <section className="relative z-0 w-full bg-[#f5f0e8] overflow-clip h-dvh min-h-125">
+    <section
+      className="relative z-0 w-full bg-[#f5f0e8] overflow-clip h-dvh min-h-125"
+      onTouchStart={(e) => startSwipe(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}
+      onTouchEnd={(e) => endSwipe(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}
+      onMouseDown={(e) => startSwipe(e.clientX, e.clientY)}
+      onMouseUp={(e) => endSwipe(e.clientX, e.clientY)}
+      onMouseLeave={() => {
+        swipeStart.current = null;
+      }}
+      style={{ touchAction: 'pan-y' }}
+    >
       {/* Background */}
       <AnimatePresence mode="wait">
         <motion.div

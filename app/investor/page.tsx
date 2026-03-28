@@ -3,7 +3,7 @@ import SubHeroSection from "../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../components/AnimatedClient";
 
 export const metadata = {
-  title: "Investor Relations — Himalaya Nepal Agriculture",
+  title: "Investor Relations",
   description:
     "Explore investment opportunities, financial performance, and shareholder information for Himalaya Nepal Agriculture.",
 };

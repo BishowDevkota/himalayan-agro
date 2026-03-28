@@ -3,7 +3,7 @@ import SubHeroSection from "../../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../../components/AnimatedClient";
 
 export const metadata = {
-  title: "Organic Farming — Himalaya Nepal Agriculture",
+  title: "Organic Farming",
   description: "Certified organic supplies, bio-inputs, and sustainable farming practices for chemical-free agriculture.",
 };
 

@@ -6,13 +6,13 @@ import Footer from "./Footer";
 
 export default function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAdmin = pathname?.startsWith("/admin");
+  const isDashboardArea = pathname?.startsWith("/admin") || pathname?.startsWith("/store");
 
   return (
     <>
-      {!isAdmin && <Navbar />}
+      {!isDashboardArea && <Navbar />}
       <main>{children}</main>
-      {!isAdmin && <Footer />}
+      {!isDashboardArea && <Footer />}
     </>
   );
 }

@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 import { redirect } from "next/navigation";
@@ -11,11 +12,23 @@ import DistributorOrdersClient from "../../components/distributor/DistributorOrd
 export default async function StoreOrdersPage() {
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session) return redirect("/login?from=/store/orders");
-  if (session.user?.role !== "distributor") return <div className="p-12">Unauthorized</div>;
+  if (session.user?.role !== "distributor") {
+    return (
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">Unauthorized</div>
+      </div>
+    );
+  }
 
   await connectToDatabase();
   const distributor = await Distributor.findOne({ user: session.user?.id }).lean();
-  if (!distributor) return <div className="p-12">Distributor profile missing</div>;
+  if (!distributor) {
+    return (
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">Distributor profile missing</div>
+      </div>
+    );
+  }
 
   const productIds = await Product.find({ distributor: distributor._id }).select("_id").lean();
   const productIdSet = new Set(productIds.map((p: any) => String(p._id)));
@@ -44,19 +57,48 @@ export default async function StoreOrdersPage() {
     };
   });
 
+  const pendingCount = safe.filter((o: any) => o.orderStatus === "pending").length;
+  const processingCount = safe.filter((o: any) => o.orderStatus === "processing").length;
+  const deliveredCount = safe.filter((o: any) => o.orderStatus === "delivered").length;
+  const totalValue = safe.reduce((sum: number, o: any) => sum + Number(o.vendorTotal || 0), 0);
+
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <div className="max-w-7xl mx-auto pt-28 pb-16 px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-8">
+    <main className="pb-10">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-extrabold">Orders</h1>
-            <p className="mt-2 text-sm text-slate-500">Manage orders that include your products.</p>
+            <span className="inline-block text-xs font-semibold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full mb-3">Operations</span>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Orders</h1>
+            <p className="mt-1 text-sm text-slate-500">Orders that include products from your catalog.</p>
           </div>
-          <a className="rounded border border-gray-200 px-4 py-2 text-sm" href="/store">Back to dashboard</a>
+          <Link className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm" href="/store">Back to dashboard</Link>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Total</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">{safe.length}</p>
+            <p className="text-xs text-slate-400 mt-3">Matched orders</p>
+          </div>
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Pending</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">{pendingCount}</p>
+            <p className="text-xs text-slate-400 mt-3">Awaiting processing</p>
+          </div>
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Processing</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">{processingCount}</p>
+            <p className="text-xs text-slate-400 mt-3">In progress</p>
+          </div>
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Delivered</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">{deliveredCount}</p>
+            <p className="text-xs text-slate-400 mt-3">Value ₹{totalValue.toFixed(0)}</p>
+          </div>
         </div>
 
         <DistributorOrdersClient initialOrders={safe} />
       </div>
-    </div>
+    </main>
   );
 }

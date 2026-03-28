@@ -32,17 +32,17 @@ export default function DistributorOrdersClient({ initialOrders = [] }: { initia
   }
 
   return (
-    <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+    <div className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <input
             aria-label="Search orders"
-            className="w-full sm:w-72 rounded-lg border border-gray-200 px-3 py-2 shadow-sm text-slate-900 placeholder:text-slate-400"
+            className="w-full sm:w-72 rounded-lg border border-slate-200 px-3 py-2 shadow-sm text-slate-900 placeholder:text-slate-400"
             placeholder="Search by id, customer, item"
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
-          <select className="rounded-lg border border-gray-200 px-3 py-2 text-slate-900" value={status} onChange={(e) => setStatus(e.target.value)}>
+          <select className="rounded-lg border border-slate-200 px-3 py-2 text-slate-900" value={status} onChange={(e) => setStatus(e.target.value)}>
             <option value="">All statuses</option>
             {ORDER_STATUSES.map((s) => (
               <option key={s} value={s}>{s}</option>
@@ -55,7 +55,7 @@ export default function DistributorOrdersClient({ initialOrders = [] }: { initia
 
       <div className="space-y-4">
         {filtered.map((o: any) => (
-          <div key={o._id} className="border border-gray-100 rounded-xl p-4">
+          <div key={o._id} className="border border-slate-200 rounded-xl p-4 bg-white hover:bg-slate-50/60 transition-colors">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
               <div>
                 <div className="text-sm text-slate-500">Order</div>
@@ -80,10 +80,10 @@ export default function DistributorOrdersClient({ initialOrders = [] }: { initia
                 </div>
               </div>
 
-              <div className="text-xs text-slate-400">Status is managed by admin</div>
+              <div className="text-xs text-slate-400">Managed by admin workflow</div>
             </div>
 
-            <div className="mt-4 text-sm text-slate-600">
+            <div className="mt-4 text-sm text-slate-600 rounded-lg border border-slate-100 bg-white p-3">
               {o.vendorItems?.length ? (
                 <div className="space-y-1">
                   {o.vendorItems.map((it: any, idx: number) => (

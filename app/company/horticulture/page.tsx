@@ -3,7 +3,7 @@ import SubHeroSection from "../../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../../components/AnimatedClient";
 
 export const metadata = {
-  title: "Horticulture — Himalaya Nepal Agriculture",
+  title: "Horticulture",
   description: "Fruits, flowers & vegetable production programs. Explore our horticulture solutions for modern Nepali agriculture.",
 };
 

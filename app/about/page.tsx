@@ -4,7 +4,7 @@ import { Section as AnimatedSection, Div as AnimatedDiv } from "../components/An
 import WhatWeDo from "../components/home/WhatWeDo";
 
 export const metadata = {
-  title: "About — Himalaya Nepal Agriculture",
+  title: "About",
   description: "A comprehensive overview of our 20-year strategic plan for agricultural transformation.",
 };
 

@@ -27,6 +27,12 @@ export default function CancelOrderButton({ orderId, currentStatus }: { orderId:
   }
 
   return (
-    <button className={`text-sm ${cancellable ? 'text-red-600' : 'text-gray-400'}`} onClick={cancel} disabled={!cancellable || busy}>{busy ? 'Cancelling…' : 'Cancel order'}</button>
+    <button
+      className={`inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors ${cancellable ? "border border-rose-200 text-rose-700 hover:bg-rose-50" : "border border-gray-200 text-gray-400 cursor-not-allowed"}`}
+      onClick={cancel}
+      disabled={!cancellable || busy}
+    >
+      {busy ? "Cancelling..." : "Cancel order"}
+    </button>
   );
 }

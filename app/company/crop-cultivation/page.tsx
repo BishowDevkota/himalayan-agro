@@ -3,7 +3,7 @@ import SubHeroSection from "../../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../../components/AnimatedClient";
 
 export const metadata = {
-  title: "Crop Cultivation — Himalaya Nepal Agriculture",
+  title: "Crop Cultivation",
   description: "Seeds, fertilizers & crop care solutions for modern Nepali agriculture. Explore our full-cycle crop cultivation programs.",
 };
 

@@ -70,7 +70,15 @@ export async function POST(req: Request) {
       if (!updated) throw new Error(`Unable to reserve stock for ${prod.name}`);
       opsDone.push({ id: pid, qty });
 
-      orderItems.push({ product: pid, name: prod.name, quantity: qty, price: prod.price });
+      orderItems.push({
+        product: pid,
+        name: prod.name,
+        quantity: qty,
+        price: prod.price,
+        image: Array.isArray(prod.images) ? String(prod.images[0] || "") : "",
+        brand: prod.brand || "",
+        category: prod.category || "",
+      });
       total += prod.price * qty;
     }
 

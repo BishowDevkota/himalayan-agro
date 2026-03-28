@@ -3,7 +3,7 @@ import SubHeroSection from "../../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../../components/AnimatedClient";
 
 export const metadata = {
-  title: "Irrigation & Water — Himalaya Nepal Agriculture",
+  title: "Irrigation & Water",
   description: "Drip irrigation, sprinkler systems & pump solutions for efficient water management in Nepali agriculture.",
 };
 

@@ -1,7 +1,7 @@
 import AdminLoginClient from "../../components/admin/AdminLoginClient";
 
 export const metadata = {
-  title: "Admin sign in — Himalaya",
+  title: "Admin Sign In",
   description: "Administrator sign in for Himalaya — restricted access.",
 };
 

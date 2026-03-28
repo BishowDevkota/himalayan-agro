@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../lib/auth";
 import { redirect } from "next/navigation";
@@ -10,15 +11,21 @@ import Order from "../../models/Order";
 export default async function StoreDashboardPage() {
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session) return redirect("/login?from=/store");
-  if (session.user?.role !== "distributor") return <div className="p-12">Unauthorized</div>;
+  if (session.user?.role !== "distributor") {
+    return (
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">Unauthorized</div>
+      </div>
+    );
+  }
 
   await connectToDatabase();
   const distributor = await Distributor.findOne({ user: session.user?.id }).lean();
   if (!distributor) {
     return (
-      <div className="min-h-screen bg-white text-slate-900">
-        <div className="max-w-5xl mx-auto py-16 px-6">
-          <h1 className="text-2xl font-semibold">Store profile missing</h1>
+      <div className="max-w-7xl mx-auto">
+        <div className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">
+          <h1 className="text-2xl font-semibold text-slate-900">Store profile missing</h1>
           <p className="mt-2 text-sm text-slate-500">Your distributor profile was not found. Contact support to restore access.</p>
         </div>
       </div>
@@ -31,6 +38,8 @@ export default async function StoreDashboardPage() {
 
   let totalRevenue = 0;
   let totalOrders = 0;
+  const activeProducts = products.filter((p: any) => p.isActive).length;
+  const lowStockProducts = products.filter((p: any) => Number(p.stock || 0) <= 5).length;
 
   if (productIds.length > 0) {
     const orders = await Order.find({ "items.product": { $in: productIds } }).lean();
@@ -45,82 +54,92 @@ export default async function StoreDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white text-slate-900">
-      <div className="max-w-7xl mx-auto pt-28 pb-16 px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+    <main className="pb-10">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-extrabold">{distributor.storeName}</h1>
-            <p className="mt-2 text-sm text-slate-500">Distributor dashboard — manage your store, products and sales.</p>
+            <span className="inline-block text-xs font-semibold uppercase tracking-wider text-cyan-600 bg-cyan-50 px-3 py-1 rounded-full mb-3">Store Ops</span>
+            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">{distributor.storeName}</h1>
+            <p className="mt-1 text-sm text-slate-500">Manage products, orders, payments and storefront visibility.</p>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <a className="rounded bg-emerald-600 text-white px-4 py-2 text-sm" href="/store/products">Manage products</a>
-            <a className="rounded border border-gray-200 px-4 py-2 text-sm" href="/store/orders">Orders</a>
-            <a className="rounded border border-gray-200 px-4 py-2 text-sm" href="/store/revenue">Revenue</a>
-            <a className="rounded border border-gray-200 px-4 py-2 text-sm" href={`/store/${distributor._id}`}>View store page</a>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <Link className="inline-flex items-center gap-2 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 text-sm font-medium transition-colors shadow-sm" href="/store/products">Manage products</Link>
+            <Link className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm" href="/store/orders">Orders</Link>
+            <Link className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm" href="/store/revenue">Revenue</Link>
+            <Link className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 transition-colors shadow-sm" href={`/store/${distributor._id}`}>View store page</Link>
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-            <div className="text-sm text-slate-500">Products</div>
-            <div className="mt-2 text-3xl font-extrabold text-slate-900">{products.length}</div>
-            <div className="mt-2 text-sm text-slate-400">Active catalog size</div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Products</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">{products.length}</p>
+            <p className="text-xs text-slate-400 mt-3">Catalog size</p>
           </div>
-          <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-            <div className="text-sm text-slate-500">Orders</div>
-            <div className="mt-2 text-3xl font-extrabold text-slate-900">{totalOrders}</div>
-            <div className="mt-2 text-sm text-slate-400">Orders containing your items</div>
+
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Active</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">{activeProducts}</p>
+            <p className="text-xs text-slate-400 mt-3">Published products</p>
           </div>
-          <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-            <div className="text-sm text-slate-500">Revenue</div>
-            <div className="mt-2 text-3xl font-extrabold text-slate-900">₹{totalRevenue.toFixed(2)}</div>
-            <div className="mt-2 text-sm text-slate-400">Gross sales (item totals)</div>
+
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Orders</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">{totalOrders}</p>
+            <p className="text-xs text-slate-400 mt-3">Orders with your items</p>
+          </div>
+
+          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
+            <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Revenue</p>
+            <p className="text-2xl font-bold text-slate-900 mt-2">₹{totalRevenue.toFixed(2)}</p>
+            <p className="text-xs text-slate-400 mt-3">Low stock: {lowStockProducts}</p>
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <section className="lg:col-span-2 bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-slate-900">Store profile</h2>
-              <div className={`text-xs px-2 py-1 rounded-full ${distributor.status === "approved" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <section className="lg:col-span-2 bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="text-base font-semibold text-slate-900">Store profile</h2>
+              <div className={`text-xs px-2.5 py-1 rounded-full font-medium ${distributor.status === "approved" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>
                 {distributor.status}
               </div>
             </div>
 
-            <dl className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              <div>
-                <dt className="text-slate-500">Owner</dt>
+            <dl className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+              <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4">
+                <dt className="text-slate-500 text-xs uppercase tracking-wider">Owner</dt>
                 <dd className="mt-1 text-slate-900 font-medium">{distributor.ownerName || "—"}</dd>
               </div>
-              <div>
-                <dt className="text-slate-500">Contact email</dt>
-                <dd className="mt-1 text-slate-900 font-medium">{distributor.contactEmail}</dd>
+              <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4">
+                <dt className="text-slate-500 text-xs uppercase tracking-wider">Contact email</dt>
+                <dd className="mt-1 text-slate-900 font-medium break-all">{distributor.contactEmail}</dd>
               </div>
-              <div>
-                <dt className="text-slate-500">Contact phone</dt>
+              <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4">
+                <dt className="text-slate-500 text-xs uppercase tracking-wider">Contact phone</dt>
                 <dd className="mt-1 text-slate-900 font-medium">{distributor.contactPhone || "—"}</dd>
               </div>
-              <div>
-                <dt className="text-slate-500">Address</dt>
+              <div className="rounded-xl border border-slate-100 bg-slate-50/60 p-4">
+                <dt className="text-slate-500 text-xs uppercase tracking-wider">Address</dt>
                 <dd className="mt-1 text-slate-900 font-medium">{distributor.address || "—"}</dd>
               </div>
-              <div className="sm:col-span-2">
-                <dt className="text-slate-500">Description</dt>
+              <div className="sm:col-span-2 rounded-xl border border-slate-100 bg-slate-50/60 p-4">
+                <dt className="text-slate-500 text-xs uppercase tracking-wider">Description</dt>
                 <dd className="mt-1 text-slate-900">{distributor.description || "—"}</dd>
               </div>
             </dl>
           </section>
 
-          <aside className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+          <aside className="bg-white border border-slate-200/60 rounded-2xl p-6 shadow-sm">
             <h3 className="text-base font-semibold text-slate-900">Recent products</h3>
-            <div className="mt-4 space-y-4">
-              {products.slice(0, 4).map((p: any) => (
-                <div key={String(p._id)} className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-md bg-gray-100 overflow-hidden">
+            <div className="mt-4 space-y-3">
+              {products.slice(0, 5).map((p: any) => (
+                <div key={String(p._id)} className="flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50/60 p-2.5">
+                  <div className="w-12 h-12 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
                     <img src={(p.images && p.images[0]) || "/placeholder.png"} alt={p.name} className="w-full h-full object-cover" />
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-sm font-medium truncate">{p.name}</div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-medium text-slate-900 truncate">{p.name}</div>
                     <div className="text-xs text-slate-500">₹{Number(p.price || 0).toFixed(2)}</div>
                   </div>
                 </div>
@@ -130,6 +149,6 @@ export default async function StoreDashboardPage() {
           </aside>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

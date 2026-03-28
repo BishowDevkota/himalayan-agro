@@ -2,7 +2,7 @@ import Link from "next/link";
 import SubHeroSection from "../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../components/AnimatedClient";
 export const metadata = {
-  title: "News — Himalaya Nepal Agriculture",
+  title: "News",
   description:
     "Latest news, updates, and announcements from Himalaya Nepal Agriculture.",
     };

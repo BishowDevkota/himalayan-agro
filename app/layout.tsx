@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Himalayan Agro",
-    template: "%s - Himalayan Agro",
+    default: "HNKCL",
+    template: "%s-HNKCL",
   },
   description: "Premium Nepalese agricultural products — from farm to your doorstep.",
   icons: {

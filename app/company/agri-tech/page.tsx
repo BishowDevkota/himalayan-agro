@@ -3,7 +3,7 @@ import SubHeroSection from "../../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../../components/AnimatedClient";
 
 export const metadata = {
-  title: "Agri-Tech Solutions — Himalaya Nepal Agriculture",
+  title: "Agri-Tech Solutions",
   description: "IoT sensors, smart farming tools, and AI-driven agricultural technology for precision agriculture in Nepal.",
 };
 

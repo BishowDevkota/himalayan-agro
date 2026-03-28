@@ -1,7 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Shop - Himalayan Agro",
+  title: "Shop",
 };
 import { getServerSession } from "next-auth";
 import authOptions from "../../lib/auth";

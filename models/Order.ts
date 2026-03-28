@@ -9,6 +9,9 @@ export interface IOrderItem {
   name: string;
   quantity: number;
   price: number;
+  image?: string;
+  brand?: string;
+  category?: string;
 }
 
 export interface IShippingAddress {
@@ -42,6 +45,9 @@ const OrderItemSchema = new mongoose.Schema<IOrderItem>({
   name: { type: String, required: true },
   quantity: { type: Number, required: true, min: 1 },
   price: { type: Number, required: true, min: 0 },
+  image: { type: String },
+  brand: { type: String },
+  category: { type: String },
 });
 
 const ShippingSchema = new mongoose.Schema<IShippingAddress>({
