@@ -408,14 +408,15 @@ export default function Navbar() {
               className="lg:hidden fixed top-0 left-0 bottom-0 z-50 w-[270px] sm:w-[300px] shadow-2xl flex flex-col pointer-events-auto"
             >
               {/* White logo header */}
-              <div className="flex items-center justify-between px-5 py-4 bg-white shrink-0">
-                <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center">
-                  <img src="/logo_original.png" alt="Himalaya" className="h-11 w-auto object-contain"
-                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.png"; }} />
-                </Link>
-                <motion.button whileTap={{ scale: 0.85 }} onClick={() => setMobileOpen(false)} className="p-2 rounded-lg hover:bg-gray-100 transition-colors text-slate-500" aria-label="Close menu">
+              <div className="flex flex-col items-center justify-center px-5 py-6 bg-white shrink-0 relative">
+                <motion.button whileTap={{ scale: 0.85 }} onClick={() => setMobileOpen(false)} className="absolute top-3 right-3 p-2 rounded-lg hover:bg-gray-100 transition-colors text-slate-400" aria-label="Close menu">
                   <IconClose size={18} />
                 </motion.button>
+                <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center justify-center">
+                  <img src="/logo.jpeg" alt="Himalaya" className="w-[200px] sm:w-[220px] h-auto object-contain"
+                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/wide-logo.jpeg"; }} />
+                </Link>
+                <div className="mt-3 h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
               </div>
 
               {/* Dark body — matches admin sidebar */}
