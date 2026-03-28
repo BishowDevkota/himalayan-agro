@@ -1,5 +1,11 @@
+
+import type { Metadata } from "next";
 import ContactForm from "../components/ContactForm";
 import SubHeroSection from "../components/SubHeroSection";
+
+export const metadata: Metadata = {
+  title: "Contact - Himalayan Agro",
+};
 
 export default function ContactPage() {
   return (
