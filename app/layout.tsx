@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   },
   description: "Premium Nepalese agricultural products — from farm to your doorstep.",
   icons: {
-    icon: "/logo_original.png",
-    shortcut: "/logo_original.png",
+    icon: "/favicon-round.png",
+    shortcut: "/favicon-round.png",
     apple: "/logo_original.png",
   },
 };
@@ -39,8 +39,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="image/png" href="/logo_original.png" />
-        <link rel="shortcut icon" href="/logo_original.png" />
+        <link rel="icon" type="image/png" href="/favicon-round.png" />
+        <link rel="shortcut icon" href="/favicon-round.png" />
         <link rel="apple-touch-icon" href="/logo_original.png" />
         {process.env.NODE_ENV !== 'production' ? (
           // Inline script runs as early as possible to mute noisy Workbox/_rsc logs
