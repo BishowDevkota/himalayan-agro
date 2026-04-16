@@ -104,11 +104,18 @@ export default function Footer() {
       <div className="border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-slate-500">
-            © {new Date().getFullYear()} Himalaya Nepal Krishi Company. All rights reserved.
+            © {new Date().getFullYear()} Techvion Technology Private Limited. All right reserved.
           </p>
           <div className="flex items-center gap-1 text-xs text-slate-500">
             <span>Made by</span>
-            <span>Techvion</span>
+            <a
+              href="https://www.techvion.com.np"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-cyan-400 transition-colors duration-200"
+            >
+              Techvion
+            </a>
           </div>
         </div>
       </div>
