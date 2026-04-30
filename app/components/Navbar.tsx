@@ -273,7 +273,7 @@ export default function Navbar() {
     >
       <div
         ref={topBarRef}
-        className={`pointer-events-auto w-full overflow-hidden bg-[#F89021] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${hideTopBar ? "max-h-0 opacity-0 -translate-y-2" : "max-h-24 opacity-100 translate-y-0"}`}
+        className={`pointer-events-auto w-full overflow-hidden bg-[#D97706] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${hideTopBar ? "max-h-0 opacity-0 -translate-y-2" : "max-h-24 opacity-100 translate-y-0"}`}
       >
         <div className={`${topBarRow} min-h-[48px] py-2`}>
           <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-[11px] sm:text-sm font-semibold">
