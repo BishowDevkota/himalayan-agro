@@ -1,6 +1,7 @@
 import React from "react";
 import HeroCarousel from "./components/home/Hero";
 import OurMission from "./components/home/WhatWeDo";
+import MessageFromManagingDirector from "./components/home/MessageFromManagingDirector";
 import Products from "./components/home/Products";
 import CorePillars from "./components/home/CorePillars";
 import EcoBalance from "./components/home/EcoBalance";
@@ -51,6 +52,7 @@ export default async function HomePage() {
 
       {/* keep the rest of the home content (if any) below the hero */}
       <OurMission />
+      <MessageFromManagingDirector />
       <Products products={safeProducts} />
       {/* <ImpactVision /> */}
       <CorePillars />

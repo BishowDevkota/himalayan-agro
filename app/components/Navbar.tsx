@@ -196,7 +196,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const isHomePage = pathname === "/";
-  const hideTopBar = isHomePage && scrolled;
+  const hideTopBar = scrolled;
 
   const desktopCta = !session
     ? { label: "Become a Distributor", href: "/register/distributor" }
