@@ -60,8 +60,8 @@ export default function SubHeroSection({
     <section
       className="relative z-0 w-full overflow-hidden"
       style={{
-        height: 'calc(100dvh - var(--site-header-height, 0px))',
-        minHeight: 'calc(100dvh - var(--site-header-height, 0px))',
+        height: 'calc(100dvh - var(--top-bar-height, 0px))',
+        minHeight: 'calc(100dvh - var(--top-bar-height, 0px))',
         backgroundColor: isDark ? '#0a1628' : '#f5f0e8',
       }}
     >

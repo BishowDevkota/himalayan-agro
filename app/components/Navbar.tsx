@@ -190,10 +190,13 @@ export default function Navbar() {
   const cart = useCart((s) => s.items);
   const cartCount = cart.reduce((s, i) => s + (i.quantity || 0), 0);
   const router = useRouter();
-  const headerRef = useRef<HTMLElement | null>(null);
+  const topBarRef = useRef<HTMLDivElement | null>(null);
+  const [topBarHeight, setTopBarHeight] = useState(0);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const isHomePage = pathname === "/";
+  const hideTopBar = isHomePage && scrolled;
 
   const desktopCta = !session
     ? { label: "Become a Distributor", href: "/register/distributor" }
@@ -236,11 +239,10 @@ export default function Navbar() {
   useEffect(() => { setMobileOpen(false); setCompanyMobileOpen(false); }, [pathname]);
 
   useEffect(() => {
-    const node = headerRef.current;
+    const node = topBarRef.current;
     if (!node) return;
     const update = () => {
-      const height = node.getBoundingClientRect().height;
-      document.documentElement.style.setProperty("--site-header-height", `${height}px`);
+      setTopBarHeight(node.getBoundingClientRect().height);
     };
     update();
     const observer = new ResizeObserver(update);
@@ -249,21 +251,30 @@ export default function Navbar() {
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", update);
-      document.documentElement.style.setProperty("--site-header-height", "0px");
+      setTopBarHeight(0);
     };
   }, []);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty(
+      "--top-bar-height",
+      hideTopBar ? "0px" : `${topBarHeight}px`
+    );
+  }, [hideTopBar, topBarHeight]);
 
   const contactItems = [...topBarContacts.phones, topBarContacts.email];
 
   return (
     <motion.header
-      ref={headerRef}
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" as const }}
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
     >
-      <div className="pointer-events-auto w-full bg-[#F89021] text-white">
+      <div
+        ref={topBarRef}
+        className={`pointer-events-auto w-full overflow-hidden bg-[#F89021] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${hideTopBar ? "max-h-0 opacity-0 -translate-y-2" : "max-h-24 opacity-100 translate-y-0"}`}
+      >
         <div className={`${topBarRow} min-h-[48px] py-2`}>
           <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-[11px] sm:text-sm font-semibold">
             {contactItems.map((item, index) => (
@@ -294,7 +305,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="pt-4 px-4 sm:px-6 lg:px-10">
+      <div className="mt-2 px-4 sm:px-6 lg:px-10">
         <div className={`pointer-events-auto max-w-7xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl px-5 sm:px-7 lg:px-8 transition-shadow duration-300 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
           <div className="flex items-center justify-between h-[72px] lg:h-20">
 
