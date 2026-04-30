@@ -149,7 +149,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative z-0 w-full bg-[#f5f0e8] overflow-clip h-dvh min-h-125"
+      className="relative z-0 w-full bg-[#f5f0e8] overflow-clip"
       onTouchStart={(e) => startSwipe(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}
       onTouchEnd={(e) => endSwipe(e.changedTouches[0].clientX, e.changedTouches[0].clientY)}
       onMouseDown={(e) => startSwipe(e.clientX, e.clientY)}
@@ -157,7 +157,7 @@ export default function Hero() {
       onMouseLeave={() => {
         swipeStart.current = null;
       }}
-      style={{ touchAction: 'pan-y' }}
+      style={{ touchAction: "pan-y", height: "calc(100dvh - var(--site-header-height, 0px))" }}
     >
       {/* Background */}
       <AnimatePresence mode="wait">

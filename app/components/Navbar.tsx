@@ -60,6 +60,23 @@ function IconStorefront({ size = 16 }: { size?: number }) {
   );
 }
 
+function IconMail({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="M3 7l9 6 9-6" />
+    </svg>
+  );
+}
+
+function IconWhatsApp({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M20.52 3.48A11.9 11.9 0 0012.06 0C5.45 0 .06 5.39.06 12c0 2.11.55 4.17 1.6 5.98L0 24l6.23-1.63A11.94 11.94 0 0012.06 24C18.67 24 24 18.61 24 12a11.9 11.9 0 00-3.48-8.52zm-8.46 18.4a9.9 9.9 0 01-5.04-1.37l-.36-.21-3.7.97.99-3.6-.23-.37a9.86 9.86 0 01-1.5-5.25c0-5.46 4.44-9.9 9.9-9.9 2.65 0 5.14 1.03 7.01 2.9a9.84 9.84 0 012.9 7.0c0 5.46-4.44 9.9-9.97 9.9zm5.77-7.41c-.31-.16-1.86-.92-2.15-1.02-.29-.11-.5-.16-.71.16-.21.31-.82 1.02-1 1.23-.18.21-.37.24-.68.08-.31-.16-1.32-.49-2.52-1.57-.93-.83-1.56-1.85-1.74-2.16-.18-.31-.02-.48.14-.64.14-.14.31-.37.47-.55.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.71-.97-2.34-.26-.63-.52-.55-.71-.56h-.6c-.21 0-.55.08-.84.39-.29.31-1.11 1.08-1.11 2.64 0 1.55 1.14 3.05 1.3 3.26.16.21 2.24 3.42 5.43 4.79.76.33 1.36.53 1.82.68.76.24 1.46.21 2.01.13.61-.09 1.86-.76 2.12-1.49.26-.73.26-1.36.18-1.49-.08-.13-.29-.21-.6-.36z" />
+    </svg>
+  );
+}
+
 const companyDropdownItems = [
   { label: "Crop Cultivation", href: "/company/crop-cultivation", description: "Seeds, fertilizers & crop care" },
   { label: "Dairy & Livestock", href: "/company/dairy-livestock", description: "Animal husbandry products" },
@@ -78,6 +95,18 @@ const navLinks = [
   { label: "News", href: "/news" },
   { label: "Contact", href: "/contact" },
 ];
+
+const topBarContacts = {
+  phones: [
+    { label: "+977-9851227052", href: "tel:+9779851227052" },
+    { label: "+977-9851312052", href: "tel:+9779851312052" },
+    { label: "01-061-587586", href: "tel:01-061-587586" },
+  ],
+  email: { label: "info@himalayaagronepal.com", href: "mailto:info@himalayaagronepal.com" },
+  whatsappHref: "https://wa.me/9779851227052",
+};
+
+const topBarRow = "mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 sm:px-7 lg:px-8";
 
 // Unique background colors per mobile nav item (hex for inline styles)
 const mobileBgColors = [
@@ -206,16 +235,68 @@ export default function Navbar() {
 
   useEffect(() => { setMobileOpen(false); setCompanyMobileOpen(false); }, [pathname]);
 
+  useEffect(() => {
+    const node = headerRef.current;
+    if (!node) return;
+    const update = () => {
+      const height = node.getBoundingClientRect().height;
+      document.documentElement.style.setProperty("--site-header-height", `${height}px`);
+    };
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(node);
+    window.addEventListener("resize", update);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", update);
+      document.documentElement.style.setProperty("--site-header-height", "0px");
+    };
+  }, []);
+
+  const contactItems = [...topBarContacts.phones, topBarContacts.email];
+
   return (
     <motion.header
       ref={headerRef}
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" as const }}
-      className="fixed top-0 left-0 right-0 z-50 pt-4 px-4 sm:px-6 lg:px-10 pointer-events-none"
+      className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
     >
-      <div className={`pointer-events-auto max-w-7xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl px-5 sm:px-7 lg:px-8 transition-shadow duration-300 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
-        <div className="flex items-center justify-between h-[72px] lg:h-20">
+      <div className="pointer-events-auto w-full bg-[#F89021] text-white">
+        <div className={`${topBarRow} min-h-[48px] py-2`}>
+          <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-[11px] sm:text-sm font-semibold">
+            {contactItems.map((item, index) => (
+              <div key={item.label} className="flex items-center gap-3">
+                {index > 0 && <span className="text-white/70">|</span>}
+                <Link href={item.href} className="hover:text-white/80 transition-colors duration-200">
+                  {item.label}
+                </Link>
+              </div>
+            ))}
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <a
+              href={topBarContacts.whatsappHref}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors duration-200"
+              aria-label="WhatsApp"
+            >
+              <IconWhatsApp size={16} />
+            </a>
+            <Link
+              href={topBarContacts.email.href}
+              className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors duration-200"
+              aria-label="Email"
+            >
+              <IconMail size={16} />
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-4 px-4 sm:px-6 lg:px-10">
+        <div className={`pointer-events-auto max-w-7xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl px-5 sm:px-7 lg:px-8 transition-shadow duration-300 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
+          <div className="flex items-center justify-between h-[72px] lg:h-20">
 
           {/*  SECTION 1: Logo  */}
           <Link href="/" className="shrink-0 flex items-center" aria-label="Home">
@@ -389,6 +470,7 @@ export default function Navbar() {
             </motion.button>
           </div>
         </div>
+      </div>
       </div>
 
       {/*  Mobile Slide-from-Left Panel  */}
