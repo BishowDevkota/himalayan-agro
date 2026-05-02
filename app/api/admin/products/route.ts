@@ -44,6 +44,7 @@ export async function POST(req: Request) {
     description: body.description || '',
     brand: body.brand || '',
     price: Number(body.price) || 0,
+    unit: String(body.unit || '').trim(),
     category: body.category || 'uncategorized',
     images: Array.isArray(body.images) ? body.images : [],
     stock: Number(body.stock) || 0,

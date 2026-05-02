@@ -78,7 +78,7 @@ export default function DistributorProductsClient({ initialProducts = [] }: { in
                 <div className="text-sm text-slate-600">₹{Number(p.price || 0).toFixed(2)} • {p.brand ? `${p.brand} • ` : ""}{p.category || "—"}</div>
                 <div className="mt-1 flex items-center gap-2 text-xs text-slate-500">
                   <span className={`px-2 py-0.5 rounded-full ${p.isActive ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"}`}>{p.isActive ? "Active" : "Disabled"}</span>
-                  <span>Stock: {p.stock}</span>
+                  <span>Stock: {p.stock}{p.unit ? ` ${p.unit}` : ' units'}</span>
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-2">

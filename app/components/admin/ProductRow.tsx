@@ -50,7 +50,7 @@ export default function ProductRow({ product }: { product: any }) {
       <td className="px-5 py-4 font-extrabold text-slate-900">₹{product.price.toFixed(2)}</td>
       <td className="px-5 py-4">
         <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium ${product.stock > 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'}`}>
-          {product.stock}
+          {product.stock}{product.unit ? ` ${product.unit}` : ' units'}
         </span>
       </td>
       <td className="px-5 py-4">

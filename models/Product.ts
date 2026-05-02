@@ -5,11 +5,13 @@ export interface IProduct extends Document {
   description?: string;
   brand?: string;
   price: number;
+  unit?: string;
   category?: string;
   images: string[];
   stock: number;
   isActive: boolean;
   distributor?: mongoose.Types.ObjectId;
+  outlet?: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -20,11 +22,13 @@ const ProductSchema: Schema<IProduct> = new mongoose.Schema(
     description: { type: String },
     brand: { type: String, index: true },
     price: { type: Number, required: true, default: 0 },
+    unit: { type: String, default: "" },
     category: { type: String, index: true },
     images: { type: [String], default: [] },
     stock: { type: Number, required: true, default: 0 },
     isActive: { type: Boolean, default: true },
     distributor: { type: mongoose.Schema.Types.ObjectId, ref: "Distributor", index: true },
+    outlet: { type: mongoose.Schema.Types.ObjectId, ref: "Outlet", index: true },
   },
   { timestamps: true }
 );

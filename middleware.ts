@@ -8,6 +8,12 @@ const PUBLIC_FILE = /\.(.*)$/;
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  const outletMatch = pathname.match(/^\/admin\/outlet-([^/]+)(.*)$/);
+  if (outletMatch) {
+    const [, slug, rest = ""] = outletMatch;
+    return NextResponse.rewrite(new URL(`/admin/outlet/${slug}${rest}`, req.url));
+  }
+
   // allow next internals, static files, and auth endpoints
   if (
     pathname.startsWith("/_next") ||
@@ -29,15 +35,15 @@ export async function middleware(req: NextRequest) {
     // render so they can show a helpful client-side fallback when the server
     // session is missing (avoids confusing "Unauthorized" redirects).
     if (pathname.startsWith("/api/")) {
-      if (!token) return new NextResponse(null, { status: 401 });
+      if (!token) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
       const required = permissionForAdminApi(pathname, req.method);
       if (required) {
         const requiredList = Array.isArray(required) ? required : [required];
         const allowed = requiredList.some((perm) => hasPermission(token as any, perm));
-        if (!allowed) return new NextResponse(null, { status: 401 });
+        if (!allowed) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         return NextResponse.next();
       }
-      if ((token as any).role !== "admin") return new NextResponse(null, { status: 401 });
+      if ((token as any).role !== "admin") return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
       return NextResponse.next();
     }
 

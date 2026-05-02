@@ -140,7 +140,7 @@ export default async function ProductPage({ params }: { params: { id: string } }
               <div className="bg-[#f8faf9] rounded-xl p-4 border border-gray-50">
                 <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1">Availability</p>
                 <p className="text-sm font-bold text-gray-900">
-                  {inStock ? `${safeProduct.stock} units` : 'Unavailable'}
+                  {inStock ? `${safeProduct.stock} ${safeProduct.unit || 'unit'} left` : 'Unavailable'}
                 </p>
               </div>
               <div className="bg-[#f8faf9] rounded-xl p-4 border border-gray-50">

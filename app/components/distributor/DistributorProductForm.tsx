@@ -10,6 +10,7 @@ export default function DistributorProductForm({ initial = null }: { initial?: a
   const [description, setDescription] = useState(initial?.description || "");
   const [brand, setBrand] = useState(initial?.brand || "");
   const [price, setPrice] = useState(initial?.price || 0);
+  const [unit, setUnit] = useState(initial?.unit || "");
   const [categories, setCategories] = useState<Array<any>>([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
   const [images, setImages] = useState<string[]>(initial?.images || []);
@@ -39,7 +40,7 @@ export default function DistributorProductForm({ initial = null }: { initial?: a
     e.preventDefault();
     setLoading(true);
     try {
-      const payload: any = { name, description, brand, price, images, stock };
+      const payload: any = { name, description, brand, price, unit, images, stock };
       if (selectedCategoryId) payload.category = selectedCategoryId;
       else if (initial?.category) payload.category = initial.category;
 
@@ -120,6 +121,17 @@ export default function DistributorProductForm({ initial = null }: { initial?: a
           </div>
 
           <div>
+            <label className="block text-sm font-medium text-slate-700">Unit / measurement</label>
+            <input
+              className="mt-1 block w-full rounded-lg border border-gray-200 px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-200 text-slate-900"
+              placeholder="kg, m, liter, piece, box, etc. Leave blank for none"
+              value={unit}
+              onChange={(e) => setUnit(e.target.value)}
+            />
+            <div className="mt-2 text-xs text-slate-500">Shown on product cards and product pages.</div>
+          </div>
+
+          <div>
             <label className="block text-sm font-medium">Images</label>
             <div className="mt-2">
               <ImageUpload images={images} onChange={setImages} />
@@ -146,7 +158,7 @@ export default function DistributorProductForm({ initial = null }: { initial?: a
             <div className="mt-1 text-sm text-slate-500 truncate">{description ? description.split("\n")[0] : "Short description will appear here."}</div>
             <div className="mt-3 flex items-center justify-between">
               <div className="text-lg font-extrabold text-slate-900">{typeof price === "number" && price > 0 ? `₹${Number(price).toFixed(2)}` : "—"}</div>
-              <div className="text-sm text-slate-500">Stock: <span className="font-medium">{stock}</span></div>
+                <div className="text-sm text-slate-500">Stock: <span className="font-medium">{stock}{unit ? ` ${unit}` : ' units'}</span></div>
             </div>
           </div>
         </div>
@@ -157,6 +169,7 @@ export default function DistributorProductForm({ initial = null }: { initial?: a
             <li>At least one clear image</li>
             <li>Title: 3–60 characters</li>
             <li>Price and stock set</li>
+            <li>Unit added when needed</li>
             <li>Assigned to a category (recommended)</li>
           </ul>
         </div>
