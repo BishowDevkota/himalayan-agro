@@ -43,13 +43,9 @@ export async function POST(req: Request) {
 
   await connectToDatabase();
 
-  // load product snapshots and validate stock
-  const productIds = items.map((i: any) => i.productId);
-  const products = await Product.find({ _id: { $in: productIds } }).lean();
+  const products = await Product.find({ _id: { $in: items.map((item: any) => item.productId) } }).lean();
   const productMap: Record<string, any> = {};
-  for (const p of products) productMap[p._id.toString()] = p;
-
-  const opsDone: Array<{ id: string; qty: number }> = [];
+  for (const product of products) productMap[String(product._id)] = product;
 
   try {
     let total = 0;
@@ -59,16 +55,6 @@ export async function POST(req: Request) {
       const qty = Number(it.quantity) || 0;
       const prod = productMap[pid];
       if (!prod || !prod.isActive) throw new Error(`Product ${pid} not available`);
-      if (prod.stock < qty) throw new Error(`Insufficient stock for ${prod.name}`);
-
-      // atomically decrement stock if enough
-      const updated = await Product.findOneAndUpdate(
-        { _id: pid, stock: { $gte: qty } },
-        { $inc: { stock: -qty } },
-        { new: true }
-      ).lean();
-      if (!updated) throw new Error(`Unable to reserve stock for ${prod.name}`);
-      opsDone.push({ id: pid, qty });
 
       orderItems.push({
         product: pid,
@@ -107,10 +93,15 @@ export async function POST(req: Request) {
       user: userIdForOrder,
       items: orderItems,
       totalAmount: Math.round(total * 100) / 100,
+      outlet: (() => {
+        const outletIds = Array.from(new Set(products.map((product: any) => String(product.outlet || "")).filter(Boolean)));
+        return outletIds.length === 1 ? outletIds[0] : undefined;
+      })(),
       paymentMethod,
       shippingAddress: shipping,
       paymentStatus: "pending",
       orderStatus: "pending",
+      inventoryApplied: false,
     });
 
     if (checkoutMode !== 'buyNow') {
@@ -119,12 +110,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json(order, { status: 201 });
   } catch (err: any) {
-    // rollback stock changes
-    if (opsDone.length) {
-      await Promise.all(
-        opsDone.map((o) => Product.findByIdAndUpdate(o.id, { $inc: { stock: o.qty } }))
-      );
-    }
     return NextResponse.json({ message: err.message || "Order failed" }, { status: 400 });
   }
 }

@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 export default function ProductCard({ product, hideQuickView }: { product: any; hideQuickView?: boolean }) {
   const price = typeof product.price === 'number' ? `Rs. ${product.price.toLocaleString('en-NP', { minimumFractionDigits: 2 })}` : product.price || '—';
+  const stockLabel = product.unit ? `${product.stock} ${product.unit}` : `${product.stock} units`;
 
   return (
     <motion.article
@@ -89,7 +90,7 @@ export default function ProductCard({ product, hideQuickView }: { product: any; 
           <div>
             <p className="text-lg font-bold text-[#d97706]">{price}</p>
             {product.stock > 0 && product.stock <= 5 && (
-              <p className="text-[10px] text-red-400 font-medium mt-0.5">Only {product.stock} left</p>
+              <p className="text-[10px] text-red-400 font-medium mt-0.5">Only {stockLabel} left</p>
             )}
           </div>
           <Link

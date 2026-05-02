@@ -122,6 +122,19 @@ const navItems: NavItem[] = [
       </svg>
     ),
   },
+  {
+    href: "/admin/outlets",
+    label: "Outlets",
+    adminOnly: true,
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 3h18v18H3z" />
+        <path d="M3 9h18" />
+        <path d="M9 3v18" />
+        <path d="M15 3v18" />
+      </svg>
+    ),
+  },
 ];
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {

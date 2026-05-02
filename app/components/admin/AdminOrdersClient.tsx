@@ -3,7 +3,13 @@
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
 
-export default function AdminOrdersClient({ initialOrders = [] }: { initialOrders?: any[] }) {
+export default function AdminOrdersClient({
+  initialOrders = [],
+  orderBasePath = "/admin/orders",
+}: {
+  initialOrders?: any[];
+  orderBasePath?: string;
+}) {
   const [q, setQ] = useState("");
   const [status, setStatus] = useState<string | "">("");
 
@@ -117,8 +123,8 @@ export default function AdminOrdersClient({ initialOrders = [] }: { initialOrder
 
                   <td className="px-4 py-3.5">
                     <div className="flex items-center gap-2">
-                      <a href={`/admin/orders/${o._id}`} className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 transition-colors">View</a>
-                      <a href={`/admin/orders/${o._id}#actions`} className="text-xs text-slate-400 hover:text-slate-600 transition-colors">Actions</a>
+                      <a href={`${orderBasePath}/${o._id}`} className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 transition-colors">View</a>
+                      <a href={`${orderBasePath}/${o._id}#actions`} className="text-xs text-slate-400 hover:text-slate-600 transition-colors">Actions</a>
                     </div>
                   </td>
                 </tr>

@@ -8,6 +8,7 @@ type ProductCard = {
   shortDescription?: string;
   images?: string[];
   price?: number;
+  unit?: string;
   brand?: string | null;
   category?: string | null;
 };
@@ -177,6 +178,11 @@ export default function Products({ products }: { products?: ProductCard[] }) {
                     <div className="text-[15px] font-bold text-gray-800">
                       {typeof product.price === 'number' ? `₹${product.price.toFixed(2)}` : ''}
                     </div>
+                    {product.unit && (
+                      <div className="text-[11px] text-gray-500 font-medium">
+                        / {product.unit}
+                      </div>
+                    )}
                     <motion.a
                       href={`/product/${product._id}`}
                       whileHover={{ scale: 1.05 }}

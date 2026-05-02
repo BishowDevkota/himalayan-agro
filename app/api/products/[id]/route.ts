@@ -17,14 +17,24 @@ export async function PATCH(req: Request, context: any) {
   const params = context.params instanceof Promise ? await context.params : context.params;
   const { id } = params;
   const user = await getSessionUser();
-  if (!hasPermission(user, "products:write")) {
-    return NextResponse.json({ message: "Forbidden" }, { status: 403 });
-  }
   const body = await req.json();
   await connectToDatabase();
 
   const existing = await Product.findById(id).lean();
   if (!existing) return NextResponse.json({ message: "Not found" }, { status: 404 });
+
+  // allow if user has global products write permission
+  let allowed = hasPermission(user, "products:write");
+  // allow outlet-admins to manage products that belong to their outlet
+  if (!allowed && user && user.role === 'outlet-admin' && user.outletId) {
+    if (existing.outlet && String(existing.outlet) === String(user.outletId)) {
+      allowed = true;
+    }
+  }
+
+  if (!allowed) {
+    return NextResponse.json({ message: "Forbidden" }, { status: 403 });
+  }
 
   const updated = await Product.findByIdAndUpdate(id, body, { new: true, runValidators: true }).lean();
   if (!updated) return NextResponse.json({ message: "Not found" }, { status: 404 });
@@ -63,10 +73,24 @@ export async function DELETE(req: Request, context: any) {
   const params = context.params instanceof Promise ? await context.params : context.params;
   const { id } = params;
   const user = await getSessionUser();
-  if (!hasPermission(user, "products:write")) {
+  await connectToDatabase();
+
+  const existing = await Product.findById(id).lean();
+  if (!existing) return NextResponse.json({ message: "Not found" }, { status: 404 });
+
+  // allow if user has global products write permission
+  let allowed = hasPermission(user, "products:write");
+  // allow outlet-admins to delete products that belong to their outlet
+  if (!allowed && user && user.role === 'outlet-admin' && user.outletId) {
+    if (existing.outlet && String(existing.outlet) === String(user.outletId)) {
+      allowed = true;
+    }
+  }
+
+  if (!allowed) {
     return NextResponse.json({ message: "Forbidden" }, { status: 403 });
   }
-  await connectToDatabase();
+
   const deleted = await Product.findByIdAndDelete(id).lean();
   if (!deleted) return NextResponse.json({ message: "Not found" }, { status: 404 });
 

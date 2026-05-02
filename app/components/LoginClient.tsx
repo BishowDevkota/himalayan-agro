@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { signIn } from "next-auth/react";
+import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
@@ -98,6 +98,26 @@ export default function LoginClient({ from, serverError }: { from: string; serve
       toast.error(msg);
       return;
     }
+
+    const session = await getSession();
+    const role = (session?.user as any)?.role;
+    const outletSlug = (session?.user as any)?.outletSlug;
+
+    if (role === "outlet-admin" && outletSlug) {
+      router.push(`/admin/outlet-${outletSlug}`);
+      return;
+    }
+
+    if (role === "admin") {
+      router.push("/admin/dashboard");
+      return;
+    }
+
+    if (role === "employee") {
+      router.push("/employee");
+      return;
+    }
+
     router.push(from || "/");
   }
 

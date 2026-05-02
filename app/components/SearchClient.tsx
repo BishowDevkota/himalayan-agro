@@ -8,6 +8,7 @@ type Product = {
   _id: string;
   name: string;
   price: number;
+  unit?: string;
   images?: string[];
 };
 
@@ -141,7 +142,7 @@ export default function SearchClient({ initialQuery = "" }: { initialQuery?: str
 
                   <div className="min-w-0 flex-1">
                     <div className="text-sm font-medium text-gray-800 truncate">{p.name}</div>
-                    <div className="text-xs text-gray-500">₹{p.price?.toFixed?.(2) ?? p.price}</div>
+                    <div className="text-xs text-gray-500">₹{p.price?.toFixed?.(2) ?? p.price}{p.unit ? ` • ${p.unit}` : ''}</div>
                   </div>
                 </Link>
               </li>
@@ -172,7 +173,7 @@ export default function SearchClient({ initialQuery = "" }: { initialQuery?: str
                   </div>
                   <div className="p-3">
                     <div className="text-sm font-medium text-gray-800 truncate">{p.name}</div>
-                    <div className="text-sm text-gray-600">₹{p.price?.toFixed?.(2) ?? p.price}</div>
+                      <div className="text-sm text-gray-600">₹{p.price?.toFixed?.(2) ?? p.price}{p.unit ? ` • ${p.unit}` : ''}</div>
                   </div>
                 </Link>
               ))}

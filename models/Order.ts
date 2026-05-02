@@ -26,10 +26,13 @@ export interface IOrder extends Document {
   user: mongoose.Types.ObjectId;
   items: IOrderItem[];
   totalAmount: number;
+  outlet?: mongoose.Types.ObjectId;
   paymentStatus: PaymentStatus;
   paymentMethod?: PaymentMethod;
   shippingAddress?: IShippingAddress;
   orderStatus: OrderStatus;
+  inventoryApplied?: boolean;
+  inventoryAppliedAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 
@@ -63,10 +66,13 @@ const OrderSchema: Schema<IOrder> = new mongoose.Schema(
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     items: { type: [OrderItemSchema], required: true },
     totalAmount: { type: Number, required: true },
+    outlet: { type: mongoose.Schema.Types.ObjectId, ref: "Outlet", index: true },
     paymentMethod: { type: String, enum: ["cod", "card"], default: "cod" },
     shippingAddress: { type: ShippingSchema },
     paymentStatus: { type: String, enum: ["pending", "paid", "failed"], default: "pending" },
     orderStatus: { type: String, enum: ["pending", "processing", "shipped", "delivered", "cancelled"], default: "pending" },
+    inventoryApplied: { type: Boolean, default: false },
+    inventoryAppliedAt: { type: Date },
   },
   { timestamps: true }
 );
