@@ -1,12 +1,12 @@
 import React from "react";
 import { getServerSession } from "next-auth/next";
-import authOptions from "../../../../lib/auth";
+import authOptions from "../../../lib/auth";
 import { redirect } from "next/navigation";
-import connectToDatabase from "../../../../lib/mongodb";
-import Outlet from "../../../../models/Outlet";
-import Product from "../../../../models/Product";
-import Category from "../../../../models/Category";
-import { serialize, serializeMany } from "../../../../lib/serialize";
+import connectToDatabase from "../../../lib/mongodb";
+import Outlet from "../../../models/Outlet";
+import Product from "../../../models/Product";
+import Category from "../../../models/Category";
+import { serialize, serializeMany } from "../../../lib/serialize";
 
 export default async function OutletAdminDashboard({ params }: { params: { slug: string } } | { params: Promise<{ slug: string }> }) {
   const resolvedParams = params instanceof Promise ? await params : params;

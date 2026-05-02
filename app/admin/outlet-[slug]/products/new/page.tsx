@@ -2,11 +2,11 @@ import React from "react";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../../../lib/auth";
 import { redirect } from "next/navigation";
-import connectToDatabase from "../../../../lib/mongodb";
-import Category from "../../../../models/Category";
-import Outlet from "../../../../models/Outlet";
-import { serializeMany, serialize } from "../../../../lib/serialize";
-import OutletProductFormClient from "../../../components/admin/OutletProductFormClient";
+import connectToDatabase from "../../../../../lib/mongodb";
+import Category from "../../../../../models/Category";
+import Outlet from "../../../../../models/Outlet";
+import { serializeMany, serialize } from "../../../../../lib/serialize";
+import OutletProductFormClient from "../../../../components/admin/OutletProductFormClient";
 
 export default async function NewOutletProductPage({ params }: { params: { slug: string } } | { params: Promise<{ slug: string }> }) {
   const resolvedParams = params instanceof Promise ? await params : params;

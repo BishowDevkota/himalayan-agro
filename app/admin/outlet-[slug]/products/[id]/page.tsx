@@ -1,13 +1,13 @@
 import React from "react";
 import { getServerSession } from "next-auth/next";
-import authOptions from "../../../../../../lib/auth";
+import authOptions from "../../../../../lib/auth";
 import { redirect, notFound } from "next/navigation";
-import connectToDatabase from "../../../../../../lib/mongodb";
-import Product from "../../../../../../models/Product";
-import ProductLog from "../../../../../../models/ProductLog";
-import Outlet from "../../../../../../models/Outlet";
-import { serialize, serializeMany } from "../../../../../../lib/serialize";
-import OutletProductDetailsClient from "../../../../../app/components/admin/OutletProductDetailsClient";
+import connectToDatabase from "../../../../../lib/mongodb";
+import Product from "../../../../../models/Product";
+import ProductLog from "../../../../../models/ProductLog";
+import Outlet from "../../../../../models/Outlet";
+import { serialize, serializeMany } from "../../../../../lib/serialize";
+import OutletProductDetailsClient from "../../../../components/admin/OutletProductDetailsClient";
 
 export default async function OutletProductDetailPage({ params }: { params: { slug: string; id: string } } | { params: Promise<{ slug: string; id: string }> }) {
   const resolvedParams = params instanceof Promise ? await params : params;
