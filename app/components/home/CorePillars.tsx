@@ -81,7 +81,7 @@ export default function CorePillars() {
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={sectionVariants}
-          initial="hidden"
+          initial={false}
           animate={isInView ? 'visible' : 'hidden'}
         >
           {/* Section Label */}

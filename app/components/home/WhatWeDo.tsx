@@ -193,9 +193,6 @@ function TiltCard({ pillar }: { pillar: PillarType }) {
           ? 'transform 0.08s linear'
           : 'transform 0.5s cubic-bezier(0.22,1,0.36,1)',
         willChange: 'transform',
-        boxShadow: hovered
-          ? `0 24px 56px rgba(0,0,0,0.14), 0 8px 24px ${pillar.accentSoft.replace('0.09', '0.18')}`
-          : '0 6px 18px rgba(0,0,0,0.06)',
       }}
       className="relative rounded-[22px] overflow-hidden cursor-pointer select-none"
     >
@@ -292,7 +289,7 @@ function TiltCard({ pillar }: { pillar: PillarType }) {
         />
 
         {/* Description */}
-        <p className="text-sm text-gray-500 leading-relaxed">
+        <p className="text-[12.5px] text-gray-500 leading-relaxed">
           {pillar.description}
         </p>
       </div>
