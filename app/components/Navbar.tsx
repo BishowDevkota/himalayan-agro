@@ -77,22 +77,33 @@ function IconWhatsApp({ size = 18 }: { size?: number }) {
   );
 }
 
-const companyDropdownItems = [
-  { label: "Crop Cultivation", href: "/company/crop-cultivation", description: "Seeds, fertilizers & crop care" },
-  { label: "Dairy & Livestock", href: "/company/dairy-livestock", description: "Animal husbandry products" },
-  { label: "Horticulture", href: "/company/horticulture", description: "Fruits, flowers & vegetables" },
-  { label: "Organic Farming", href: "/company/organic-farming", description: "Certified organic supplies" },
-  { label: "Irrigation & Water", href: "/company/irrigation-water", description: "Drip, sprinkler & pumps" },
-  { label: "Agri-Tech Solutions", href: "/company/agri-tech", description: "IoT sensors & smart tools" },
+const aboutDropdownItems = [
+  { label: "Who We Are", href: "/about-us/who-we-are", description: "Overview and mission" },
+  { label: "Board of Directors", href: "/about-us/board-of-directors", description: "Governance and leadership" },
+  { label: "Executive Team", href: "/about-us/executive-team", description: "Management profiles" },
+  { label: "Expert Team", href: "/about-us/expert-team", description: "Subject-matter experts" },
+  { label: "Investor Relations", href: "/about-us/investor-relations", description: "Financial & investor info" },
+];
+
+const knowledgeDropdownItems = [
+  { label: "Training Resources", href: "/knowledge-centre/training-resources", description: "Courses & trainings" },
+  { label: "Farmer-Friendly Articles", href: "/knowledge-centre/farmer-friendly-articles", description: "How-tos & guides" },
+  { label: "Success Stories", href: "/knowledge-centre/success-stories", description: "Case studies" },
+  { label: "Publications & Documents", href: "/knowledge-centre/publications-documents", description: "Reports & downloads" },
+];
+
+const newsDropdownItems = [
+  { label: "News", href: "/news", description: "Latest news" },
+  { label: "Notices", href: "/notices", description: "Official notices & announcements" },
 ];
 
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
-  { label: "Company", href: "#", isDropdown: true },
-  { label: "Investor", href: "/investor" },
-  { label: "About", href: "/about" },
-  { label: "News", href: "/news" },
+  { label: "About Us", href: "#", isDropdown: true },
+  { label: "Outlet", href: "/outlet" },
+  { label: "Knowledge Centre", href: "#", isDropdown: true },
+  { label: "News & Notices", href: "#", isDropdown: true },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -184,9 +195,17 @@ export default function Navbar() {
       : landingForPermissions;
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [companyOpen, setCompanyOpen] = useState(false);
-  const [companyMobileOpen, setCompanyMobileOpen] = useState(false);
-  const companyRef = useRef<HTMLDivElement | null>(null);
+  // Desktop dropdown states
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const [knowledgeOpen, setKnowledgeOpen] = useState(false);
+  const [newsOpen, setNewsOpen] = useState(false);
+  // Mobile dropdown states
+  const [aboutMobileOpen, setAboutMobileOpen] = useState(false);
+  const [knowledgeMobileOpen, setKnowledgeMobileOpen] = useState(false);
+  const [newsMobileOpen, setNewsMobileOpen] = useState(false);
+  const aboutRef = useRef<HTMLDivElement | null>(null);
+  const knowledgeRef = useRef<HTMLDivElement | null>(null);
+  const newsRef = useRef<HTMLDivElement | null>(null);
   const cart = useCart((s) => s.items);
   const cartCount = cart.reduce((s, i) => s + (i.quantity || 0), 0);
   const router = useRouter();
@@ -210,7 +229,9 @@ export default function Navbar() {
 
   function navigateAndClose(href: string) {
     setMobileOpen(false);
-    setCompanyMobileOpen(false);
+    setAboutMobileOpen(false);
+    setKnowledgeMobileOpen(false);
+    setNewsMobileOpen(false);
     router.push(href);
   }
 
@@ -222,7 +243,10 @@ export default function Navbar() {
 
   useEffect(() => {
     const onDoc = (e: MouseEvent) => {
-      if (companyRef.current && !companyRef.current.contains(e.target as Node)) setCompanyOpen(false);
+      const target = e.target as Node;
+      if (aboutRef.current && !aboutRef.current.contains(target)) setAboutOpen(false);
+      if (knowledgeRef.current && !knowledgeRef.current.contains(target)) setKnowledgeOpen(false);
+      if (newsRef.current && !newsRef.current.contains(target)) setNewsOpen(false);
     };
     document.addEventListener("click", onDoc);
     return () => document.removeEventListener("click", onDoc);
@@ -236,7 +260,7 @@ export default function Navbar() {
     return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
   }, [mobileOpen]);
 
-  useEffect(() => { setMobileOpen(false); setCompanyMobileOpen(false); }, [pathname]);
+  useEffect(() => { setMobileOpen(false); setAboutMobileOpen(false); setKnowledgeMobileOpen(false); setNewsMobileOpen(false); }, [pathname]);
 
   useEffect(() => {
     const node = topBarRef.current;
@@ -343,42 +367,126 @@ export default function Navbar() {
 
               return navLinks.map((link) => {
                 if (link.isDropdown) {
-                  return (
-                    <div key={link.label} className="relative" ref={companyRef}
-                      onMouseEnter={() => { setCompanyOpen(true); setHoveredLink(link.label); }}
-                      onMouseLeave={() => { setCompanyOpen(false); setHoveredLink(null); }}
-                    >
-                      <button
-                        onClick={() => setCompanyOpen((p) => !p)}
-                        className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
+                  // About Us dropdown
+                  if (link.label === 'About Us') {
+                    return (
+                      <div key={link.label} className="relative" ref={aboutRef}
+                        onMouseEnter={() => { setAboutOpen(true); setHoveredLink(link.label); }}
+                        onMouseLeave={() => { setAboutOpen(false); setHoveredLink(null); }}
                       >
-                        {link.label}
-                        <motion.span animate={{ rotate: companyOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
-                          <IconChevronDown size={14} />
-                        </motion.span>
-                        {underlineTarget === link.label && <NavUnderline />}
-                      </button>
-                      <AnimatePresence>
-                        {companyOpen && (
-                          <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit"
-                            className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-60 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 overflow-hidden"
-                          >
-                            {companyDropdownItems.map((item, idx) => (
-                              <motion.button key={item.label}
-                                initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: idx * 0.03, duration: 0.2 }}
-                                onClick={() => { setCompanyOpen(false); router.push(item.href); }}
-                                className="w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
-                              >
-                                <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
-                                <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
-                              </motion.button>
-                            ))}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
+                        <button
+                          onClick={() => setAboutOpen((p) => !p)}
+                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
+                        >
+                          {link.label}
+                          <motion.span animate={{ rotate: aboutOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
+                            <IconChevronDown size={14} />
+                          </motion.span>
+                          {underlineTarget === link.label && <NavUnderline />}
+                        </button>
+                        <AnimatePresence>
+                          {aboutOpen && (
+                            <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit"
+                              className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-60 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 overflow-hidden"
+                            >
+                              {aboutDropdownItems.map((item, idx) => (
+                                <motion.button key={item.label}
+                                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: idx * 0.03, duration: 0.2 }}
+                                  onClick={() => { setAboutOpen(false); router.push(item.href); }}
+                                  className="w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
+                                >
+                                  <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
+                                  <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
+                                </motion.button>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
+
+                  // Knowledge Centre dropdown
+                  if (link.label === 'Knowledge Centre') {
+                    return (
+                      <div key={link.label} className="relative" ref={knowledgeRef}
+                        onMouseEnter={() => { setKnowledgeOpen(true); setHoveredLink(link.label); }}
+                        onMouseLeave={() => { setKnowledgeOpen(false); setHoveredLink(null); }}
+                      >
+                        <button
+                          onClick={() => setKnowledgeOpen((p) => !p)}
+                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
+                        >
+                          {link.label}
+                          <motion.span animate={{ rotate: knowledgeOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
+                            <IconChevronDown size={14} />
+                          </motion.span>
+                          {underlineTarget === link.label && <NavUnderline />}
+                        </button>
+                        <AnimatePresence>
+                          {knowledgeOpen && (
+                            <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit"
+                              className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-72 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 overflow-hidden"
+                            >
+                              {knowledgeDropdownItems.map((item, idx) => (
+                                <motion.button key={item.label}
+                                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: idx * 0.03, duration: 0.2 }}
+                                  onClick={() => { setKnowledgeOpen(false); router.push(item.href); }}
+                                  className="w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
+                                >
+                                  <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
+                                  <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
+                                </motion.button>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
+
+                  // News & Notices dropdown
+                  if (link.label === 'News & Notices') {
+                    return (
+                      <div key={link.label} className="relative" ref={newsRef}
+                        onMouseEnter={() => { setNewsOpen(true); setHoveredLink(link.label); }}
+                        onMouseLeave={() => { setNewsOpen(false); setHoveredLink(null); }}
+                      >
+                        <button
+                          onClick={() => setNewsOpen((p) => !p)}
+                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
+                        >
+                          {link.label}
+                          <motion.span animate={{ rotate: newsOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
+                            <IconChevronDown size={14} />
+                          </motion.span>
+                          {underlineTarget === link.label && <NavUnderline />}
+                        </button>
+                        <AnimatePresence>
+                          {newsOpen && (
+                            <motion.div variants={dropdownVariants} initial="hidden" animate="visible" exit="exit"
+                              className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-60 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 overflow-hidden"
+                            >
+                              {newsDropdownItems.map((item, idx) => (
+                                <motion.button key={item.label}
+                                  initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                                  transition={{ delay: idx * 0.03, duration: 0.2 }}
+                                  onClick={() => { setNewsOpen(false); router.push(item.href); }}
+                                  className="w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
+                                >
+                                  <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
+                                  <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
+                                </motion.button>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  }
+                  return null;
                 }
                 const active = isActivePath(pathname, link.href);
                 return (
@@ -525,45 +633,132 @@ export default function Navbar() {
                 <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
                   {navLinks.map((link, i) => {
                     if (link.isDropdown) {
-                      const active = companyMobileOpen;
-                      return (
-                        <motion.div key={link.label} custom={i} variants={mobileItemVariants} initial="hidden" animate="visible">
-                          <button
-                            onClick={() => setCompanyMobileOpen((p) => !p)}
-                            className={`w-full flex items-center gap-3 justify-between px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${active ? "bg-cyan-500/15 text-cyan-400" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"}`}
-                          >
-                            <span className="flex items-center gap-3">
-                              <span className={active ? "text-cyan-400" : "text-slate-500"}>
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9" /><path d="M9 21V13h6v8" /></svg>
-                              </span>
-                              Company
-                            </span>
-                            <motion.span animate={{ rotate: companyMobileOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                              <IconChevronDown size={14} />
-                            </motion.span>
-                          </button>
-                          <AnimatePresence>
-                            {companyMobileOpen && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.25, ease: "easeOut" as const }}
-                                className="overflow-hidden"
+                        // About Us mobile dropdown
+                        if (link.label === 'About Us') {
+                          const active = aboutMobileOpen;
+                          return (
+                            <motion.div key={link.label} custom={i} variants={mobileItemVariants} initial="hidden" animate="visible">
+                              <button
+                                onClick={() => setAboutMobileOpen((p) => !p)}
+                                className={`w-full flex items-center gap-3 justify-between px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${active ? "bg-cyan-500/15 text-cyan-400" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"}`}
                               >
-                                <div className="pl-9 py-1 space-y-0.5">
-                                  {companyDropdownItems.map((item) => (
-                                    <button key={item.label} onClick={() => navigateAndClose(item.href)}
-                                      className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
-                                    >{item.label}</button>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </motion.div>
-                      );
-                    }
+                                <span className="flex items-center gap-3">
+                                  <span className={active ? "text-cyan-400" : "text-slate-500"}>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9" /><path d="M9 21V13h6v8" /></svg>
+                                  </span>
+                                  {link.label}
+                                </span>
+                                <motion.span animate={{ rotate: aboutMobileOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                                  <IconChevronDown size={14} />
+                                </motion.span>
+                              </button>
+                              <AnimatePresence>
+                                {aboutMobileOpen && (
+                                  <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.25, ease: "easeOut" as const }}
+                                    className="overflow-hidden"
+                                  >
+                                    <div className="pl-9 py-1 space-y-0.5">
+                                      {aboutDropdownItems.map((item) => (
+                                        <button key={item.label} onClick={() => navigateAndClose(item.href)}
+                                          className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
+                                        >{item.label}</button>
+                                      ))}
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </motion.div>
+                          );
+                        }
+
+                        // Knowledge Centre mobile dropdown
+                        if (link.label === 'Knowledge Centre') {
+                          const active = knowledgeMobileOpen;
+                          return (
+                            <motion.div key={link.label} custom={i} variants={mobileItemVariants} initial="hidden" animate="visible">
+                              <button
+                                onClick={() => setKnowledgeMobileOpen((p) => !p)}
+                                className={`w-full flex items-center gap-3 justify-between px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${active ? "bg-cyan-500/15 text-cyan-400" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"}`}
+                              >
+                                <span className="flex items-center gap-3">
+                                  <span className={active ? "text-cyan-400" : "text-slate-500"}>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9" /><path d="M9 21V13h6v8" /></svg>
+                                  </span>
+                                  {link.label}
+                                </span>
+                                <motion.span animate={{ rotate: knowledgeMobileOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                                  <IconChevronDown size={14} />
+                                </motion.span>
+                              </button>
+                              <AnimatePresence>
+                                {knowledgeMobileOpen && (
+                                  <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.25, ease: "easeOut" as const }}
+                                    className="overflow-hidden"
+                                  >
+                                    <div className="pl-9 py-1 space-y-0.5">
+                                      {knowledgeDropdownItems.map((item) => (
+                                        <button key={item.label} onClick={() => navigateAndClose(item.href)}
+                                          className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
+                                        >{item.label}</button>
+                                      ))}
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </motion.div>
+                          );
+                        }
+
+                        // News & Notices mobile dropdown
+                        if (link.label === 'News & Notices') {
+                          const active = newsMobileOpen;
+                          return (
+                            <motion.div key={link.label} custom={i} variants={mobileItemVariants} initial="hidden" animate="visible">
+                              <button
+                                onClick={() => setNewsMobileOpen((p) => !p)}
+                                className={`w-full flex items-center gap-3 justify-between px-3 py-2.5 rounded-lg text-[13px] font-medium transition-all duration-200 ${active ? "bg-cyan-500/15 text-cyan-400" : "text-slate-400 hover:bg-slate-800 hover:text-slate-200"}`}
+                              >
+                                <span className="flex items-center gap-3">
+                                  <span className={active ? "text-cyan-400" : "text-slate-500"}>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9" /><path d="M9 21V13h6v8" /></svg>
+                                  </span>
+                                  {link.label}
+                                </span>
+                                <motion.span animate={{ rotate: newsMobileOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
+                                  <IconChevronDown size={14} />
+                                </motion.span>
+                              </button>
+                              <AnimatePresence>
+                                {newsMobileOpen && (
+                                  <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.25, ease: "easeOut" as const }}
+                                    className="overflow-hidden"
+                                  >
+                                    <div className="pl-9 py-1 space-y-0.5">
+                                      {newsDropdownItems.map((item) => (
+                                        <button key={item.label} onClick={() => navigateAndClose(item.href)}
+                                          className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
+                                        >{item.label}</button>
+                                      ))}
+                                    </div>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </motion.div>
+                          );
+                        }
+                      }
                     const active = isActivePath(pathname, link.href);
                     const icons: Record<string, React.ReactNode> = {
                       Home: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>,
