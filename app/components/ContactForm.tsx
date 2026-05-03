@@ -68,7 +68,7 @@ export default function ContactForm() {
           <div className="absolute -top-32 -right-24 w-72 h-72 rounded-full bg-white/10 blur-2xl" />
 
           <div className="relative z-10">
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-6">Himalaya Agro</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-6">Himalaya Nepal Krishi Company Limited</p>
             <h2 className="text-3xl lg:text-4xl font-extrabold leading-tight">Let&apos;s talk</h2>
             <p className="mt-4 text-white/80 text-sm leading-relaxed max-w-xs">
               Share your needs and our team will reach out within 24 hours.
