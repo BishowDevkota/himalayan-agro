@@ -25,17 +25,6 @@ export default function ContactPage() {
         <section className="w-full">
           <ContactForm />
         </section>
-
-        {/* Map Section */}
-        <section className="w-full mt-24">
-          <div className="w-full h-125 rounded-[1.5rem] overflow-hidden border border-gray-100">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d938.4845275782392!2d83.97552017100725!3d28.223913589483583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6987177b13ca1cdd%3A0x6cd4dd3f132d685d!2sHimalaya%20Nepal%20Krishi%20Company%20Limited!5e1!3m2!1sen!2snp!4v1777634380714!5m2!1sen!2snp"
-              width="100%" height="100%" style={{ border: 0 }} allowFullScreen loading="lazy" title="location"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-        </section>
       </main>
     </main>
   );

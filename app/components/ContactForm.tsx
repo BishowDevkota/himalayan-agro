@@ -49,8 +49,22 @@ export default function ContactForm() {
 
   return (
     <div className="w-full relative">
-      <div className="w-full grid grid-cols-1 md:grid-cols-[2fr_3fr] items-stretch">
-        <div className="hidden md:flex flex-col justify-between p-10 lg:p-12 rounded-l-3xl relative overflow-hidden bg-[#0f2a4a] text-white">
+      {/* Full-width Map Section */}
+      <div className="w-full h-64 md:h-80 overflow-hidden">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d938.4845275782392!2d83.97552017100725!3d28.223913589483583!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6987177b13ca1cdd%3A0x6cd4dd3f132d685d!2sHimalaya%20Nepal%20Krishi%20Company%20Limited!5e1!3m2!1sen!2snp!4v1777634380714!5m2!1sen!2snp"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          title="location"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </div>
+
+      <div className="w-full grid grid-cols-1 md:grid-cols-[2fr_3fr] items-stretch bg-white rounded-b-3xl shadow-2xl shadow-gray-200/60 overflow-hidden">
+        <div className="hidden md:flex flex-col justify-between p-10 lg:p-12 relative overflow-hidden bg-[#0f2a4a] text-white">
           <div className="absolute -top-32 -right-24 w-72 h-72 rounded-full bg-white/10 blur-2xl" />
 
           <div className="relative z-10">
@@ -61,24 +75,53 @@ export default function ContactForm() {
             </p>
           </div>
 
-          <div className="relative z-10 mt-10 space-y-4">
-            {[
-              { title: "Fast response", desc: "Dedicated support team" },
-              { title: "Clear timelines", desc: "We set expectations early" },
-              { title: "Trusted by growers", desc: "Reliable, on-time delivery" },
-            ].map((item) => (
-              <div key={item.title} className="flex items-start gap-3">
-                <div className="shrink-0 w-9 h-9 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white border border-white/10">
-                  <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="w-5 h-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-white">{item.title}</p>
-                  <p className="text-xs text-white/60 mt-0.5">{item.desc}</p>
+          <div className="relative z-10 mt-10 space-y-6">
+            {/* PHONE */}
+            <div className="flex items-start gap-4">
+              <div className="shrink-0 w-12 h-12 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white border border-white/10">
+                <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h1.5a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106a1.125 1.125 0 00-1.173.417l-.97 1.293a1.125 1.125 0 01-1.21.38A12.035 12.035 0 017.68 13.27a1.125 1.125 0 01.38-1.21l1.293-.97c.363-.272.527-.734.417-1.173L8.664 5.494a1.125 1.125 0 00-1.09-.852H6.75A2.25 2.25 0 004.5 6.75v0z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="text-base font-bold text-white mb-2">Phone</p>
+                <div className="text-sm text-white/70 space-y-1.5">
+                  <p>+977-9851227052</p>
+                  <p>+977-9851312052</p>
+                  <p>01-061-587586</p>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* EMAIL */}
+            <div className="flex items-start gap-4">
+              <div className="shrink-0 w-12 h-12 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white border border-white/10">
+                <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-base font-bold text-white mb-2">Email</p>
+                <p className="text-sm text-white/70">info@himalayaagronepal.com</p>
+              </div>
+            </div>
+
+            {/* ADDRESS */}
+            <div className="flex items-start gap-4">
+              <div className="shrink-0 w-12 h-12 rounded-xl bg-white/15 backdrop-blur-sm flex items-center justify-center text-white border border-white/10">
+                <svg fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-base font-bold text-white mb-2">Address</p>
+                <div className="text-sm text-white/70 space-y-1.5">
+                  <p>Dharapani Marga (Road)</p>
+                  <p>Pokhara 33700</p>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div className="relative z-10 mt-10 text-xs text-white/60">
@@ -87,7 +130,8 @@ export default function ContactForm() {
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl md:rounded-l-none md:rounded-r-3xl shadow-2xl shadow-gray-200/60 p-8 sm:p-10 lg:p-12 text-slate-900 relative">
+        <div className="bg-white p-0 text-slate-900 relative overflow-hidden">
+          <div className="p-8 sm:p-10 lg:p-12">
           <div className="max-w-xl mx-auto">
             <div className="md:hidden mb-8 -mx-8 -mt-8 sm:-mx-10 sm:-mt-10 rounded-t-3xl bg-[#0f2a4a] px-6 py-8 text-center">
               <p className="text-xs font-semibold uppercase tracking-widest text-white/40 mb-3">Himalaya Agro</p>
@@ -255,6 +299,7 @@ export default function ContactForm() {
             >
               Back to form
             </button>
+          </div>
           </div>
         </div>
       </div>
