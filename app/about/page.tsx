@@ -53,7 +53,7 @@ export default function AboutPage() {
                 {[
                   { value: "57.3%", label: "Pop. Dependent", sub: "Agriculture Sector" },
                   { value: "2035", label: "Strategic Horizon", sub: "ADS Aligned" },
-                  { value: "753", label: "Sales Centers", sub: "Local Network" },
+                  // { value: "753", label: "Sales Centers", sub: "Local Network" },
                 ].map((stat, i) => (
                   <div key={i} className={`${i > 0 ? "border-l border-slate-200 pl-8 ml-8" : ""}`}>
                     <div className="text-3xl font-black tracking-tight">{stat.value}</div>
@@ -131,7 +131,7 @@ export default function AboutPage() {
         </AnimatedDiv>
 
         {/* 4. Land Consolidation Component */}
-        <AnimatedSection
+        {/* <AnimatedSection
           className="mt-28 p-2 rounded-[48px] bg-[#0a1628] overflow-hidden"
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -171,7 +171,7 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-        </AnimatedSection>
+        </AnimatedSection> */}
 
         {/* 5. Product Verticals (Visual Component) */}
         <AnimatedDiv
@@ -217,15 +217,15 @@ export default function AboutPage() {
         </AnimatedDiv>
 
         {/* 6. Farmer Welfare Fund Component */}
-        <AnimatedSection
+        {/* <AnimatedSection
           className="mt-28 relative py-20 px-8 lg:px-16 rounded-[48px] overflow-hidden text-center"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
           viewport={{ once: true, margin: "-100px" }}
-        >
+        > */}
           {/* Background */}
-          <div className="absolute inset-0 bg-linear-to-br from-emerald-50 via-white to-emerald-50/50" />
+          {/* <div className="absolute inset-0 bg-linear-to-br from-emerald-50 via-white to-emerald-50/50" />
           <div className="absolute inset-px rounded-[47px] border border-emerald-200/40 pointer-events-none" />
           <div className="absolute top-0 right-0 w-72 h-72 bg-emerald-200/20 blur-[100px] rounded-full -mr-20 -mt-20 pointer-events-none" />
           
@@ -251,7 +251,7 @@ export default function AboutPage() {
               ))}
             </div>
           </div>
-        </AnimatedSection>
+        </AnimatedSection> */}
 
         {/* 7. Digital Infrastructure Component */}
         <AnimatedSection
@@ -292,16 +292,16 @@ export default function AboutPage() {
               <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800" alt="Tech Dashboard" className="rounded-3xl w-full" />
             </div>
             {/* Floating stat card */}
-            <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl border border-slate-100 p-5 z-10">
+            {/* <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl border border-slate-100 p-5 z-10">
               <div className="text-[10px] font-bold text-[#29A8DD] uppercase tracking-[2px] mb-1">Network Coverage</div>
               <div className="text-2xl font-black">753</div>
               <div className="text-[10px] text-slate-400">Local Sales Centers</div>
-            </div>
+            </div> */}
           </div>
         </AnimatedSection>
 
         {/* 8. Logistics & Supply Chain */}
-        <AnimatedDiv
+        {/* <AnimatedDiv
           className="mt-28"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -339,7 +339,7 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-        </AnimatedDiv>
+        </AnimatedDiv> */}
 
         {/* 9. Ownership & Governance */}
         <AnimatedSection
@@ -386,7 +386,7 @@ export default function AboutPage() {
         </AnimatedSection>
 
         {/* 10. Leadership & Planning Team */}
-        <AnimatedDiv
+        {/* <AnimatedDiv
           className="mt-28"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -425,12 +425,12 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
-        </AnimatedDiv>
+        </AnimatedDiv> */}
 
         {/* 11. WhatWeDo Component Integration */}
-        <AnimatedDiv className="mt-28">
+        {/* <AnimatedDiv className="mt-28">
           <WhatWeDo />
-        </AnimatedDiv>
+        </AnimatedDiv> */}
 
         {/* 12. Final Call to Action */}
         <AnimatedSection
