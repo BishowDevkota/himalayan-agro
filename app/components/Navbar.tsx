@@ -329,8 +329,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="mt-2 px-4 sm:px-6 lg:px-10">
-        <div className={`pointer-events-auto max-w-7xl mx-auto bg-white/95 backdrop-blur-md rounded-2xl px-5 sm:px-7 lg:px-8 transition-shadow duration-300 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
+      <div className="mt-2 px-2 sm:px-4 lg:px-6">
+        <div className={`pointer-events-auto max-w-[96rem] mx-auto bg-white/95 backdrop-blur-md rounded-2xl px-3 sm:px-5 lg:px-6 transition-shadow duration-300 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
           <div className="flex items-center justify-between h-[72px] lg:h-20">
 
           {/*  SECTION 1: Logo  */}
@@ -356,7 +356,7 @@ export default function Navbar() {
           </Link>
 
           {/*  SECTION 2: Desktop Nav  */}
-          <nav className="hidden lg:flex items-center gap-1" onMouseLeave={() => setHoveredLink(null)}>
+          <nav className="hidden lg:flex items-center gap-1 whitespace-nowrap" onMouseLeave={() => setHoveredLink(null)}>
             {(() => {
               // Find the FIRST nav link whose href matches the current path — avoids multiple active underlines
               const activeLabel = navLinks.find(
@@ -376,7 +376,7 @@ export default function Navbar() {
                       >
                         <button
                           onClick={() => setAboutOpen((p) => !p)}
-                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
+                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200 whitespace-nowrap"
                         >
                           {link.label}
                           <motion.span animate={{ rotate: aboutOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
@@ -390,15 +390,19 @@ export default function Navbar() {
                               className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-60 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 overflow-hidden"
                             >
                               {aboutDropdownItems.map((item, idx) => (
-                                <motion.button key={item.label}
+                                <motion.div key={item.label}
                                   initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: idx * 0.03, duration: 0.2 }}
-                                  onClick={() => { setAboutOpen(false); router.push(item.href); }}
-                                  className="w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
                                 >
-                                  <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
-                                  <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
-                                </motion.button>
+                                  <Link
+                                    href={item.href}
+                                    onClick={() => setAboutOpen(false)}
+                                    className="block w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
+                                  >
+                                    <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
+                                    <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
+                                  </Link>
+                                </motion.div>
                               ))}
                             </motion.div>
                           )}
@@ -416,7 +420,7 @@ export default function Navbar() {
                       >
                         <button
                           onClick={() => setKnowledgeOpen((p) => !p)}
-                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
+                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200 whitespace-nowrap"
                         >
                           {link.label}
                           <motion.span animate={{ rotate: knowledgeOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
@@ -430,15 +434,19 @@ export default function Navbar() {
                               className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-72 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 overflow-hidden"
                             >
                               {knowledgeDropdownItems.map((item, idx) => (
-                                <motion.button key={item.label}
+                                <motion.div key={item.label}
                                   initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: idx * 0.03, duration: 0.2 }}
-                                  onClick={() => { setKnowledgeOpen(false); router.push(item.href); }}
-                                  className="w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
                                 >
-                                  <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
-                                  <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
-                                </motion.button>
+                                  <Link
+                                    href={item.href}
+                                    onClick={() => setKnowledgeOpen(false)}
+                                    className="block w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
+                                  >
+                                    <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
+                                    <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
+                                  </Link>
+                                </motion.div>
                               ))}
                             </motion.div>
                           )}
@@ -456,7 +464,7 @@ export default function Navbar() {
                       >
                         <button
                           onClick={() => setNewsOpen((p) => !p)}
-                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
+                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200 whitespace-nowrap"
                         >
                           {link.label}
                           <motion.span animate={{ rotate: newsOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
@@ -470,15 +478,19 @@ export default function Navbar() {
                               className="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-60 bg-white rounded-lg shadow-xl border border-gray-100 py-1.5 overflow-hidden"
                             >
                               {newsDropdownItems.map((item, idx) => (
-                                <motion.button key={item.label}
+                                <motion.div key={item.label}
                                   initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
                                   transition={{ delay: idx * 0.03, duration: 0.2 }}
-                                  onClick={() => { setNewsOpen(false); router.push(item.href); }}
-                                  className="w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
                                 >
-                                  <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
-                                  <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
-                                </motion.button>
+                                  <Link
+                                    href={item.href}
+                                    onClick={() => setNewsOpen(false)}
+                                    className="block w-full text-left px-4 py-2.5 hover:bg-cyan-50 transition-colors duration-200 group"
+                                  >
+                                    <span className="block text-sm font-medium text-gray-700 group-hover:text-[#0891b2] transition-colors duration-200">{item.label}</span>
+                                    <span className="block text-[11px] text-gray-400 mt-0.5 leading-tight">{item.description}</span>
+                                  </Link>
+                                </motion.div>
                               ))}
                             </motion.div>
                           )}
@@ -492,7 +504,7 @@ export default function Navbar() {
                 return (
                   <Link key={link.label} href={link.href}
                     onMouseEnter={() => setHoveredLink(link.label)}
-                    className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 ${active || hoveredLink === link.label ? "text-[#0891b2]" : "text-gray-600 hover:text-[#0891b2]"}`}
+                    className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 whitespace-nowrap ${active || hoveredLink === link.label ? "text-[#0891b2]" : "text-gray-600 hover:text-[#0891b2]"}`}
                   >
                     {link.label}
                     {underlineTarget === link.label && <NavUnderline />}
@@ -663,9 +675,19 @@ export default function Navbar() {
                                   >
                                     <div className="pl-9 py-1 space-y-0.5">
                                       {aboutDropdownItems.map((item) => (
-                                        <button key={item.label} onClick={() => navigateAndClose(item.href)}
-                                          className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
-                                        >{item.label}</button>
+                                        <Link
+                                          key={item.label}
+                                          href={item.href}
+                                          onClick={() => {
+                                            setMobileOpen(false);
+                                            setAboutMobileOpen(false);
+                                            setKnowledgeMobileOpen(false);
+                                            setNewsMobileOpen(false);
+                                          }}
+                                          className="block w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
+                                        >
+                                          {item.label}
+                                        </Link>
                                       ))}
                                     </div>
                                   </motion.div>
@@ -705,9 +727,19 @@ export default function Navbar() {
                                   >
                                     <div className="pl-9 py-1 space-y-0.5">
                                       {knowledgeDropdownItems.map((item) => (
-                                        <button key={item.label} onClick={() => navigateAndClose(item.href)}
-                                          className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
-                                        >{item.label}</button>
+                                        <Link
+                                          key={item.label}
+                                          href={item.href}
+                                          onClick={() => {
+                                            setMobileOpen(false);
+                                            setAboutMobileOpen(false);
+                                            setKnowledgeMobileOpen(false);
+                                            setNewsMobileOpen(false);
+                                          }}
+                                          className="block w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
+                                        >
+                                          {item.label}
+                                        </Link>
                                       ))}
                                     </div>
                                   </motion.div>
@@ -747,9 +779,19 @@ export default function Navbar() {
                                   >
                                     <div className="pl-9 py-1 space-y-0.5">
                                       {newsDropdownItems.map((item) => (
-                                        <button key={item.label} onClick={() => navigateAndClose(item.href)}
-                                          className="w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
-                                        >{item.label}</button>
+                                        <Link
+                                          key={item.label}
+                                          href={item.href}
+                                          onClick={() => {
+                                            setMobileOpen(false);
+                                            setAboutMobileOpen(false);
+                                            setKnowledgeMobileOpen(false);
+                                            setNewsMobileOpen(false);
+                                          }}
+                                          className="block w-full text-left px-3 py-2 rounded-lg text-[13px] text-slate-500 hover:text-cyan-400 hover:bg-slate-800 transition-colors duration-200"
+                                        >
+                                          {item.label}
+                                        </Link>
                                       ))}
                                     </div>
                                   </motion.div>
