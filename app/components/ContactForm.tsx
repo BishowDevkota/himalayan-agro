@@ -16,11 +16,28 @@ export default function ContactForm() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, phone, subject, message }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        toast.error((data && data.message) || "Failed to send message");
+        setLoading(false);
+        return;
+      }
+
       setShowSuccess(true);
       toast.success("Message sent successfully!");
-    }, 1000);
+    } catch (err) {
+      console.error("Contact form submit error:", err);
+      toast.error("Failed to send message");
+    } finally {
+      setLoading(false);
+    }
   }
 
   const fieldWrap = (field: string) =>
@@ -65,7 +82,7 @@ export default function ContactForm() {
           </div>
 
           <div className="relative z-10 mt-10 text-xs text-white/60">
-            <div>Support: contact@himalaya.example</div>
+            <div>Support: info@himalayaagronepal.com</div>
             <div className="mt-2">Open: Mon - Fri</div>
           </div>
         </div>

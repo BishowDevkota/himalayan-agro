@@ -2,6 +2,8 @@
 import React from "react";
 import connectToDatabase from "../../lib/mongodb";
 import Outlet from "../../models/Outlet";
+import SubHeroSection from "../components/SubHeroSection";
+import OutletListClient from "../components/OutletListClient";
 
 export default async function OutletListPage({ searchParams }: { searchParams?: { q?: string } }) {
   await connectToDatabase();
@@ -17,26 +19,19 @@ export default async function OutletListPage({ searchParams }: { searchParams?: 
   const outlets = await Outlet.find(filter).sort({ name: 1 }).limit(200).lean();
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold text-gray-900 mb-4" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-        Outlets
-      </h1>
-      <p className="text-gray-600 mb-6">Search and browse active outlets. Use the search query `?q=` to filter results.</p>
+    <main className="bg-white text-gray-900">
+      <SubHeroSection
+        title="Outlets"
+        description="Find our outlets across Nepal. Filter by district or search by product availability."
+        tag="Find an outlet"
+        image="https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&q=80&w=2000"
+        overlay="light"
+      />
 
-      {outlets.length === 0 ? (
-        <div className="text-gray-500">No outlets found.</div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {outlets.map((o: any) => (
-            <article key={o._id} className="bg-white rounded-lg shadow-sm p-4 border border-gray-100">
-              <h3 className="text-lg font-semibold text-gray-800">{o.name}</h3>
-              {o.address && <div className="text-sm text-gray-500 mt-1">{o.address}</div>}
-              {o.contactPhone && <div className="text-sm text-gray-500 mt-2">Phone: {o.contactPhone}</div>}
-              {o.contactEmail && <div className="text-sm text-gray-500">Email: {o.contactEmail}</div>}
-            </article>
-          ))}
-        </div>
-      )}
-    </section>
+      <section className="max-w-7xl mx-auto px-4 py-10">
+        {/* Serialize server objects to plain JSON for the client component */}
+        <OutletListClient initialOutlets={JSON.parse(JSON.stringify(outlets || []))} />
+      </section>
+    </main>
   );
 }

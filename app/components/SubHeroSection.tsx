@@ -60,8 +60,8 @@ export default function SubHeroSection({
     <section
       className="relative z-0 w-full overflow-hidden"
       style={{
-        height: 'calc(100dvh - var(--top-bar-height, 0px))',
-        minHeight: 'calc(100dvh - var(--top-bar-height, 0px))',
+        height: 'calc((100dvh - var(--top-bar-height, 0px)) * 0.6)',
+        minHeight: 'calc((100dvh - var(--top-bar-height, 0px)) * 0.6)',
         backgroundColor: isDark ? '#0a1628' : '#f5f0e8',
       }}
     >
@@ -118,109 +118,17 @@ export default function SubHeroSection({
         }}
       />
 
-      {/* ── Right-side image card (desktop) ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 40, scale: 0.95 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.9, ease: 'easeOut', delay: 0.3 }}
-        className="hidden lg:block absolute right-[6%] top-1/2 -translate-y-1/2 z-10"
-      >
-        <div className="relative w-64 xl:w-72 aspect-3/4 rounded-2xl overflow-hidden shadow-2xl">
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover"
-          />
-          <div
-            className="absolute inset-0"
-            style={{
-              background: isDark
-                ? 'linear-gradient(to top, rgba(10,22,40,0.6), transparent)'
-                : 'linear-gradient(to top, rgba(42,32,24,0.35), transparent)',
-            }}
-          />
-          {/* Bottom label */}
-          <div className="absolute bottom-4 left-4 right-4">
-            <div className="flex items-center gap-2 mb-1">
-              <span
-                className="w-2 h-2 rounded-full animate-pulse"
-                style={{ background: isDark ? '#29A8DD' : '#059669' }}
-              />
-              <span
-                className="text-[10px] font-bold uppercase tracking-wider text-white"
-              >
-                Himalaya Nepal
-              </span>
-            </div>
-            <p className="text-[9px] text-white/50 uppercase tracking-widest font-bold">
-              Agriculture Pvt. Ltd.
-            </p>
-          </div>
-        </div>
-
-        {/* Floating stat chip */}
-        {stats && stats.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.9, duration: 0.5 }}
-            className="absolute -left-16 top-8 rounded-xl shadow-lg px-4 py-3 z-20"
-            style={{
-              background: isDark ? 'rgba(255,255,255,0.06)' : '#fff',
-              backdropFilter: isDark ? 'blur(16px)' : undefined,
-              border: isDark
-                ? '1px solid rgba(255,255,255,0.1)'
-                : '1px solid rgba(0,0,0,0.06)',
-            }}
-          >
-            <p
-              className="text-xl font-bold"
-              style={{ color: isDark ? '#fff' : '#2a2018' }}
-            >
-              {stats[0].value}
-            </p>
-            <p
-              className="text-[10px] font-semibold uppercase tracking-wider"
-              style={{ color: isDark ? 'rgba(255,255,255,0.5)' : '#8b7e6a' }}
-            >
-              {stats[0].label}
-            </p>
-          </motion.div>
-        )}
-
-        {/* Floating second chip */}
-        {stats && stats.length > 1 && (
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.05, duration: 0.5 }}
-            className="absolute -left-12 bottom-10 rounded-xl shadow-lg px-4 py-3 z-20"
-            style={{
-              background: isDark ? '#0a1628' : '#2a2018',
-              border: isDark
-                ? '1px solid rgba(41,168,221,0.2)'
-                : '1px solid rgba(42,32,24,0.1)',
-            }}
-          >
-            <p className="text-xl font-bold text-white">{stats[1].value}</p>
-            <p className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider">
-              {stats[1].label}
-            </p>
-          </motion.div>
-        )}
-      </motion.div>
-
       {/* ── Content ── */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center">
-        <div className="max-w-xl lg:max-w-lg py-12">
+      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-start pt-24 sm:pt-28 lg:pt-32">
+        <div className="max-w-xl lg:max-w-lg py-0 sm:py-0">
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
           >
             {/* Breadcrumb */}
-            <motion.nav variants={fadeUpVariants} className="mb-5" aria-label="Breadcrumb">
-              <ol className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[2px]">
+            <motion.nav variants={fadeUpVariants} className="mb-3 sm:mb-4" aria-label="Breadcrumb">
+              <ol className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-semibold uppercase tracking-[2px]">
                 <li>
                   <Link
                     href="/"
@@ -258,7 +166,7 @@ export default function SubHeroSection({
             {tag && (
               <motion.div variants={fadeUpVariants}>
                 <span
-                  className="inline-block px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium tracking-wide mb-5"
+                  className="inline-block px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-medium tracking-wide mb-3 sm:mb-4"
                   style={{
                     border: isDark
                       ? '1px solid rgba(41,168,221,0.3)'
@@ -275,7 +183,7 @@ export default function SubHeroSection({
             {/* Title */}
             <motion.h1
               variants={fadeUpVariants}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold leading-[1.1] tracking-tight mb-5"
+              className="text-3xl sm:text-4xl md:text-5xl font-bold leading-[1.08] tracking-tight mb-3 sm:mb-4"
               style={{
                 fontFamily: "Georgia, 'Times New Roman', serif",
                 color: isDark ? '#ffffff' : '#2a2018',
@@ -288,7 +196,7 @@ export default function SubHeroSection({
             {description && (
               <motion.p
                 variants={fadeUpVariants}
-                className="text-sm sm:text-base lg:text-lg leading-relaxed mb-8 max-w-md"
+                className="text-sm sm:text-[15px] lg:text-base leading-relaxed mb-5 sm:mb-6 max-w-md"
                 style={{ color: isDark ? 'rgba(255,255,255,0.55)' : '#6b5e4d' }}
               >
                 {description}
@@ -302,7 +210,7 @@ export default function SubHeroSection({
                   href={btnHref}
                   whileHover={{ scale: 1.04, y: -2 }}
                   whileTap={{ scale: 0.97 }}
-                  className="inline-block px-7 py-3.5 text-sm font-semibold text-white rounded-full shadow-lg transition-colors duration-300"
+                  className="inline-block px-6 py-3 text-sm font-semibold text-white rounded-full shadow-lg transition-colors duration-300"
                   style={{ backgroundColor: isDark ? '#29A8DD' : '#059669' }}
                 >
                   {btnText}
@@ -314,7 +222,7 @@ export default function SubHeroSection({
             {stats && stats.length > 0 && (
               <motion.div
                 variants={fadeUpVariants}
-                className="flex gap-6 mt-8 lg:hidden"
+                className="flex gap-4 sm:gap-6 mt-6 sm:mt-8 lg:hidden"
               >
                 {stats.map((stat, idx) => (
                   <div

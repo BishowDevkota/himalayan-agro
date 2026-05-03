@@ -1,12 +1,12 @@
 import React from "react";
-import connectToDatabase from "../../lib/mongodb";
-import Outlet from "../../models/Outlet";
-import Employee from "../../models/Employee";
-import OutletAdmin from "../../models/OutletAdmin";
-import { serialize, serializeMany } from "../../lib/serialize";
+import connectToDatabase from "../../../lib/mongodb";
+import Outlet from "../../../models/Outlet";
+import Employee from "../../../models/Employee";
+import OutletAdmin from "../../../models/OutletAdmin";
+import { serialize, serializeMany } from "../../../lib/serialize";
 import Link from "next/link";
 import { getServerSession } from "next-auth/next";
-import authOptions from "../../lib/auth";
+import authOptions from "../../../lib/auth";
 
 async function fetchData(id: string) {
   await connectToDatabase();
