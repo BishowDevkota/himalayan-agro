@@ -97,28 +97,18 @@ export default function MessageFromManagingDirector() {
             </div>
 
             {/* Body */}
-            <div className="text-start font-sans text-[14.5px] md:text-[15.5px] font-medium leading-[1.75] text-slate-700 space-y-2.5">
+            <div className="text-start font-sans text-[14px] sm:text-[14.5px] md:text-[15px] font-normal leading-relaxed text-gray-600 space-y-3.5">
               <p>
-                As the Managing Director of Himalaya Nepal Agriculture Company Limited, I am honored to
-                welcome you to our platform. Our vision is rooted in transforming Nepal's agricultural
-                landscape into a modern, sustainable, and commercially viable sector that empowers farmers
-                and strengthens the national economy.
+                As the Managing Director of Himalaya Nepal Agriculture Company Limited, I am honored to welcome you to our platform. Our vision is rooted in transforming Nepal's agricultural landscape into a modern, sustainable, and commercially viable sector that empowers farmers and strengthens the national economy.
               </p>
               <p>
-                We are committed to bridging the gap between traditional farming practices and innovative
-                agricultural solutions by promoting technology, value addition, and efficient market access.
-                Through strong collaboration with farmers, cooperatives, and stakeholders, we aim to ensure
-                quality production, fair pricing, and long-term growth for all involved.
+                We are committed to bridging the gap between traditional farming practices and innovative agricultural solutions by promoting technology, value addition, and efficient market access. Through strong collaboration with farmers, cooperatives, and stakeholders, we aim to ensure quality production, fair pricing, and long-term growth for all involved.
               </p>
               <p>
-                Our focus remains on enhancing productivity, encouraging youth participation in agriculture,
-                and building a reliable supply chain that meets both domestic and international standards.
-                We believe that agriculture is not just a profession, but a foundation for national
-                prosperity and food security.
+                Our focus remains on enhancing productivity, encouraging youth participation in agriculture, and building a reliable supply chain that meets both domestic and international standards. We believe that agriculture is not just a profession, but a foundation for national prosperity and food security.
               </p>
               <p>
-                I sincerely thank you for your interest and support. Together, let us work towards building
-                a resilient, competitive, and prosperous agricultural future for Nepal.
+                I sincerely thank you for your interest and support. Together, let us work towards building a resilient, competitive, and prosperous agricultural future for Nepal.
               </p>
             </div>
 
@@ -130,10 +120,10 @@ export default function MessageFromManagingDirector() {
               </p>
               <div className="mt-3">
                 <Link
-                  href="/about"
-                  className="inline-block rounded-xl bg-[#6ba47d] px-5 py-2.5 font-sans text-sm font-semibold text-white transition-all duration-300 ease-out hover:bg-[#4a8460] hover:scale-105"
+                  href="/managing-director"
+                  className="inline-block rounded-xl bg-[#6ba47d] px-6 py-2.5 font-sans text-sm font-semibold text-white transition-all duration-300 ease-out hover:bg-[#4a8460] hover:scale-105"
                 >
-                  Learn More
+                  About Managing Director
                 </Link>
               </div>
             </div>

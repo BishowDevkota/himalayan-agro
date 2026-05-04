@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { BarChart3, Globe } from 'lucide-react';
 
 const slides = [
   {
@@ -25,22 +26,22 @@ const slides = [
   },
   {
     tag: "Smart Agriculture Solutions",
-    title: "Autonomous Systems for",
-    titleLine2: "Modern Agriculture",
-    subtitle: "Harness AI-driven tools to optimize yield and reduce waste",
+    title: "Revolutionizing Poultry &",
+    titleLine2: "Aquaculture",
+    subtitle: "Leverage smart technologies to improve productivity and minimize resource loss.",
     btnText: "Shop Products",
     href: "/shop",
     accentColor: "#059669",
-    img: "https://images.unsplash.com/photo-1574943320219-553eb213f72d?auto=format&fit=crop&q=80&w=2000",
+    img: "/poultry.jpg",
     stats: [
-      { value: "12K", label: "Active Farms", sublabel: "32 Regions" },
-      { value: "98%", label: "Yield Accuracy", sublabel: "AI Predicted" },
+      { value: "150K", label: "Birds Managed", sublabel: "28 Facilities" },
+      { value: "94%", label: "Feed Efficiency", sublabel: "Optimized" },
     ],
     floatingCards: [
-      { label: "Crop Health Score", value: "Trend: +6.8% Increase" },
-      { label: "Weather Alert", value: "Rain expected in 48hrs" },
+      { label: "Production Rate", value: "Avg: +8.5% Growth" },
+      { label: "Health Monitor", value: "All systems optimal" },
     ],
-    hectares: { value: "89K", label: "Smart Acres", sublabel: "Automated" },
+    hectares: { value: "200K", label: "Total Production", sublabel: "Units/Month" },
   },
   {
     tag: "Sustainable Farming Initiative",
@@ -64,21 +65,11 @@ const slides = [
 ];
 
 function ChartIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d97706" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M3 3v18h18" />
-      <path d="M7 16l4-8 4 4 4-6" />
-    </svg>
-  );
+  return <BarChart3 width={24} height={24} stroke="#d97706" strokeWidth={1.5} />;
 }
 
 function GlobeIcon() {
-  return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="10" />
-      <path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z" />
-    </svg>
-  );
+  return <Globe width={24} height={24} stroke="#059669" strokeWidth={1.5} />;
 }
 
 // --- Animation Variants ---

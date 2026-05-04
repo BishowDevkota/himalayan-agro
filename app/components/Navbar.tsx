@@ -7,6 +7,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useCart } from "../../store/useCart";
 import { motion, AnimatePresence } from "framer-motion";
 import { adminLandingForPermissions, outletEmployeeLandingPath } from "../../lib/permissions";
+import { Search, ShoppingCart, ChevronDown, Menu, X, Store, Mail, SendHorizonal, MapPin, Home, Box, DollarSign, Info, Newspaper, Phone, LogOut } from "lucide-react";
 
 type SessionUser = {
   role?: string;
@@ -15,84 +16,6 @@ type SessionUser = {
   outletSlug?: string;
   distributorStatus?: string;
 };
-
-function IconSearch({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="11" cy="11" r="6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function IconCart({ size = 20 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M6 6h15l-1.5 9h-12L4 2H2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="9" cy="20" r="1" fill="currentColor" />
-      <circle cx="18" cy="20" r="1" fill="currentColor" />
-    </svg>
-  );
-}
-
-function IconChevronDown({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 20 20" fill="none">
-      <path d="M5 7l5 5 5-5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function IconMenu({ size = 24 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function IconClose({ size = 24 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M6 6l12 12M6 18L18 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function IconStorefront({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-      <path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M9 21V13h6v8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function IconMail({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="5" width="18" height="14" rx="2" />
-      <path d="M3 7l9 6 9-6" />
-    </svg>
-  );
-}
-
-function IconWhatsApp({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M20.52 3.48A11.9 11.9 0 0012.06 0C5.45 0 .06 5.39.06 12c0 2.11.55 4.17 1.6 5.98L0 24l6.23-1.63A11.94 11.94 0 0012.06 24C18.67 24 24 18.61 24 12a11.9 11.9 0 00-3.48-8.52zm-8.46 18.4a9.9 9.9 0 01-5.04-1.37l-.36-.21-3.7.97.99-3.6-.23-.37a9.86 9.86 0 01-1.5-5.25c0-5.46 4.44-9.9 9.9-9.9 2.65 0 5.14 1.03 7.01 2.9a9.84 9.84 0 012.9 7.0c0 5.46-4.44 9.9-9.97 9.9zm5.77-7.41c-.31-.16-1.86-.92-2.15-1.02-.29-.11-.5-.16-.71.16-.21.31-.82 1.02-1 1.23-.18.21-.37.24-.68.08-.31-.16-1.32-.49-2.52-1.57-.93-.83-1.56-1.85-1.74-2.16-.18-.31-.02-.48.14-.64.14-.14.31-.37.47-.55.16-.18.21-.31.31-.52.1-.21.05-.39-.03-.55-.08-.16-.71-1.71-.97-2.34-.26-.63-.52-.55-.71-.56h-.6c-.21 0-.55.08-.84.39-.29.31-1.11 1.08-1.11 2.64 0 1.55 1.14 3.05 1.3 3.26.16.21 2.24 3.42 5.43 4.79.76.33 1.36.53 1.82.68.76.24 1.46.21 2.01.13.61-.09 1.86-.76 2.12-1.49.26-.73.26-1.36.18-1.49-.08-.13-.29-.21-.6-.36z" />
-    </svg>
-  );
-}
-
-function IconLocation({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M12 21s6-5.2 6-11a6 6 0 10-12 0c0 5.8 6 11 6 11z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="12" cy="10" r="2" stroke="currentColor" strokeWidth="1.8" />
-    </svg>
-  );
-}
 
 const aboutDropdownItems = [
   { label: "Who We Are", href: "/about-us/who-we-are", description: "Overview and mission" },
@@ -322,35 +245,47 @@ export default function Navbar() {
         ref={topBarRef}
         className={`pointer-events-auto w-full overflow-hidden bg-[#D97706] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${hideTopBar ? "max-h-0 opacity-0 -translate-y-2" : "max-h-24 opacity-100 translate-y-0"}`}
       >
-        <div className={`${topBarRow} min-h-[48px] py-2`}>
+        <div className={`${topBarRow} min-h-[42px] md:min-h-[48px] py-2 md:py-1 flex flex-row items-center justify-between gap-4 md:gap-0`}>
           {/* Left: Location */}
           <div className="flex items-center flex-shrink-0">
             <Link
               href={topBarContacts.location.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 hover:text-white/80 transition-colors duration-200"
+              className="inline-flex items-center gap-1.5 hover:text-white/80 transition-colors duration-200"
               aria-label={topBarContacts.location.label}
             >
-              <IconLocation size={16} />
-              <span className="whitespace-nowrap text-[11px] sm:text-sm font-semibold">{topBarContacts.location.label}</span>
+              <MapPin size={15} className="flex-shrink-0 md:size-4" />
+              <span className="whitespace-nowrap text-xs font-semibold">{topBarContacts.location.label}</span>
             </Link>
           </div>
 
-          {/* Center: Phones and Email */}
-          <div className="flex min-w-0 flex-1 justify-center flex-wrap items-center gap-x-4 gap-y-1 text-[11px] sm:text-sm font-semibold">
+          {/* Mobile Only: Right Email */}
+          <div className="flex md:hidden items-center flex-shrink-0">
+            <Link
+              href={topBarContacts.email.href}
+              className="inline-flex items-center gap-1.5 hover:text-white/80 transition-colors duration-200"
+              aria-label={topBarContacts.email.label}
+            >
+              <Mail size={15} className="flex-shrink-0" />
+              <span className="whitespace-nowrap text-xs font-semibold">{topBarContacts.email.label}</span>
+            </Link>
+          </div>
+
+          {/* Desktop Only: Center Phones and Email */}
+          <div className="hidden md:flex min-w-0 flex-1 justify-center items-center gap-3 text-xs font-semibold flex-wrap">
             {contactItems.map((item, index) => (
-              <div key={item.label} className="flex items-center gap-3">
-                {index > 0 && <span className="text-white/70">|</span>}
-                <Link href={item.href} className="hover:text-white/80 transition-colors duration-200">
+              <div key={item.label} className="flex items-center gap-2">
+                {index > 0 && <span className="text-white/70 text-[8px]">|</span>}
+                <Link href={item.href} className="hover:text-white/80 transition-colors duration-200 whitespace-nowrap">
                   {item.label}
                 </Link>
               </div>
             ))}
           </div>
 
-          {/* Right: Action icons */}
-          <div className="ml-3 flex shrink-0 items-center gap-3 sm:ml-5 sm:gap-4 lg:ml-8">
+          {/* Desktop Only: Right Action icons */}
+          <div className="hidden md:flex shrink-0 items-center gap-3 lg:ml-8">
             <a
               href={topBarContacts.whatsappHref}
               title="WhatsApp"
@@ -359,7 +294,7 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <IconWhatsApp size={16} />
+              <SendHorizonal size={16} />
             </a>
             <Link
               href={topBarContacts.email.href}
@@ -367,7 +302,7 @@ export default function Navbar() {
               className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors duration-200"
               aria-label="Email"
             >
-              <IconMail size={16} />
+              <Mail size={16} />
             </Link>
           </div>
         </div>
@@ -424,7 +359,7 @@ export default function Navbar() {
                         >
                           {link.label}
                           <motion.span animate={{ rotate: aboutOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
-                            <IconChevronDown size={14} />
+                            <ChevronDown size={14} />
                           </motion.span>
                           {underlineTarget === link.label && <NavUnderline />}
                         </button>
@@ -468,7 +403,7 @@ export default function Navbar() {
                         >
                           {link.label}
                           <motion.span animate={{ rotate: knowledgeOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
-                            <IconChevronDown size={14} />
+                            <ChevronDown size={14} />
                           </motion.span>
                           {underlineTarget === link.label && <NavUnderline />}
                         </button>
@@ -512,7 +447,7 @@ export default function Navbar() {
                         >
                           {link.label}
                           <motion.span animate={{ rotate: newsOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
-                            <IconChevronDown size={14} />
+                            <ChevronDown size={14} />
                           </motion.span>
                           {underlineTarget === link.label && <NavUnderline />}
                         </button>
@@ -563,13 +498,13 @@ export default function Navbar() {
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.92 }}
               onClick={() => router.push("/search")}
               className="p-2 rounded-full text-gray-500 hover:text-[#0891b2] hover:bg-gray-50 transition-all duration-200" aria-label="Search"
-            ><IconSearch size={18} /></motion.button>
+            ><Search size={18} /></motion.button>
 
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.92 }}
               onClick={() => router.push("/cart")}
               className="hidden sm:inline-flex relative p-2 rounded-full text-gray-500 hover:text-[#0891b2] hover:bg-gray-50 transition-all duration-200" aria-label="Cart"
             >
-              <IconCart size={18} />
+              <ShoppingCart size={18} />
               <AnimatePresence>
                 {cartCount > 0 && (
                   <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}
@@ -627,7 +562,7 @@ export default function Navbar() {
                 onClick={() => router.push(desktopCta.href)}
                 className="hidden lg:inline-flex items-center gap-1.5 px-5 py-2 text-sm font-semibold text-white rounded-full bg-[#0891b2] hover:bg-[#0e7490] shadow-md shadow-cyan-200/50 transition-all duration-300"
               >
-                <IconStorefront size={15} />
+                <Store size={15} />
                 {desktopCta.label}
               </motion.button>
             )}
@@ -639,8 +574,8 @@ export default function Navbar() {
             >
               <AnimatePresence mode="wait" initial={false}>
                 {mobileOpen
-                  ? <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}><IconClose size={22} /></motion.span>
-                  : <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}><IconMenu size={22} /></motion.span>}
+                  ? <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}><X size={22} /></motion.span>
+                  : <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}><Menu size={22} /></motion.span>}
               </AnimatePresence>
             </motion.button>
           </div>
@@ -672,7 +607,7 @@ export default function Navbar() {
               {/* White logo header */}
               <div className="flex flex-col items-center justify-center px-5 py-6 bg-white shrink-0 relative">
                 <motion.button whileTap={{ scale: 0.85 }} onClick={() => setMobileOpen(false)} className="absolute top-3 right-3 p-2 rounded-lg hover:bg-gray-100 transition-colors text-slate-400" aria-label="Close menu">
-                  <IconClose size={18} />
+                  <X size={18} />
                 </motion.button>
                 <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center justify-center">
                   <img src="/logo.jpeg" alt="Himalaya" className="w-[200px] sm:w-[220px] h-auto object-contain"
@@ -705,7 +640,7 @@ export default function Navbar() {
                                   {link.label}
                                 </span>
                                 <motion.span animate={{ rotate: aboutMobileOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                                  <IconChevronDown size={14} />
+                                  <ChevronDown size={14} />
                                 </motion.span>
                               </button>
                               <AnimatePresence>
@@ -757,7 +692,7 @@ export default function Navbar() {
                                   {link.label}
                                 </span>
                                 <motion.span animate={{ rotate: knowledgeMobileOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                                  <IconChevronDown size={14} />
+                                  <ChevronDown size={14} />
                                 </motion.span>
                               </button>
                               <AnimatePresence>
@@ -809,7 +744,7 @@ export default function Navbar() {
                                   {link.label}
                                 </span>
                                 <motion.span animate={{ rotate: newsMobileOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                                  <IconChevronDown size={14} />
+                                  <ChevronDown size={14} />
                                 </motion.span>
                               </button>
                               <AnimatePresence>
@@ -876,7 +811,7 @@ export default function Navbar() {
                       onClick={() => navigateAndClose(desktopCta.href)}
                       className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-cyan-400 hover:bg-cyan-500/15 transition-all duration-200"
                     >
-                      <span className="text-cyan-400"><IconStorefront size={18} /></span>
+                      <span className="text-cyan-400"><Store size={18} /></span>
                       {desktopCta.label}
                     </button>
                   )}
@@ -887,14 +822,14 @@ export default function Navbar() {
                         Sign in
                       </button>
                       <button onClick={() => navigateAndClose("/register/distributor")} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-cyan-400 hover:bg-cyan-500/15 transition-all duration-200">
-                        <span className="text-cyan-400"><IconStorefront size={18} /></span>
+                        <span className="text-cyan-400"><Store size={18} /></span>
                         Become a Distributor
                       </button>
                     </>
                   ) : (
                     <>
                       <button onClick={() => navigateAndClose("/cart")} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all duration-200">
-                        <span className="text-slate-500"><IconCart size={18} /></span>
+                        <span className="text-slate-500"><ShoppingCart size={18} /></span>
                         Cart {cartCount > 0 && <span className="ml-1 text-[10px] text-white bg-red-500 rounded-full px-1.5 py-0.5">{cartCount}</span>}
                       </button>
                       <button onClick={() => navigateAndClose("/my-orders")} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all duration-200">
