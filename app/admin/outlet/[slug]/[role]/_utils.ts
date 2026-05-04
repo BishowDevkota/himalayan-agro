@@ -13,7 +13,20 @@ export type OutletEmployeeRouteParams = {
   role: string;
 };
 
-export async function resolveOutletEmployeeRoute(params: OutletEmployeeRouteParams | Promise<OutletEmployeeRouteParams>) {
+export type OutletEmployeeRouteRedirect = {
+  redirectTo: string;
+};
+
+export type OutletEmployeeRouteResolved = {
+  session: any;
+  slug: string;
+  role: OutletEmployeeRole;
+  outlet: any;
+};
+
+export type OutletEmployeeRouteResult = OutletEmployeeRouteRedirect | OutletEmployeeRouteResolved;
+
+export async function resolveOutletEmployeeRoute(params: OutletEmployeeRouteParams | Promise<OutletEmployeeRouteParams>): Promise<OutletEmployeeRouteResult> {
   const resolvedParams = params instanceof Promise ? await params : params;
   const { slug, role } = resolvedParams;
 

@@ -98,7 +98,6 @@ export default function LoginClient({ from, serverError }: { from: string; serve
     setError(null);
     const res = await signIn("credentials", { redirect: false, email: (email||"").toLowerCase().trim(), password });
     setLoading(false);
-    // @ts-expect-error
     if (res?.error) {
       const msg = ERROR_MESSAGES[res.error] || res.error || ERROR_MESSAGES.Default;
       setError(msg);
