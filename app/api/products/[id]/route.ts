@@ -32,6 +32,14 @@ export async function PATCH(req: Request, context: any) {
     }
   }
 
+  // shopkeepers can only manage products belonging to their outlet
+  if (allowed && user && user.role === "employee" && user.employeeRole === "shopkeeper") {
+    const belongsToOutlet = existing.outlet && String(existing.outlet) === String(user.outletId || "");
+    if (!belongsToOutlet) {
+      allowed = false;
+    }
+  }
+
   if (!allowed) {
     return NextResponse.json({ message: "Forbidden" }, { status: 403 });
   }
@@ -84,6 +92,14 @@ export async function DELETE(req: Request, context: any) {
   if (!allowed && user && user.role === 'outlet-admin' && user.outletId) {
     if (existing.outlet && String(existing.outlet) === String(user.outletId)) {
       allowed = true;
+    }
+  }
+
+  // shopkeepers can only delete products belonging to their outlet
+  if (allowed && user && user.role === "employee" && user.employeeRole === "shopkeeper") {
+    const belongsToOutlet = existing.outlet && String(existing.outlet) === String(user.outletId || "");
+    if (!belongsToOutlet) {
+      allowed = false;
     }
   }
 

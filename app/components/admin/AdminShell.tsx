@@ -4,6 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import React from "react";
+import { outletEmployeeSectionPath } from "../../../lib/permissions";
+
+type ShellUser = {
+  role?: string;
+  permissions?: string[];
+  employeeRole?: string;
+  outletSlug?: string;
+  name?: string;
+  email?: string;
+};
 
 type NavItem = {
   href: string;
@@ -30,7 +40,7 @@ const navItems: NavItem[] = [
   {
     href: "/admin/orders",
     label: "Orders",
-    adminOnly: true,
+    permission: "orders:read",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M16 3H5a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V8l-5-5z" />
@@ -143,9 +153,19 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const { data: session, status } = useSession();
   const isSessionLoading = status === "loading";
 
-  const user = session?.user as any;
+  const user = session?.user as ShellUser | undefined;
   const role = user?.role;
   const userPermissions = Array.isArray(user?.permissions) ? user.permissions : [];
+  const employeeRole = user?.employeeRole;
+  const outletSlug = user?.outletSlug;
+
+  function resolveHref(itemHref: string) {
+    if (role !== "employee" || !outletSlug || !employeeRole) return itemHref;
+    if (itemHref === "/admin/orders") return outletEmployeeSectionPath(outletSlug, employeeRole, "order");
+    if (itemHref === "/admin/products") return outletEmployeeSectionPath(outletSlug, employeeRole, "product");
+    if (itemHref === "/admin/categories") return outletEmployeeSectionPath(outletSlug, employeeRole, "categories");
+    return itemHref;
+  }
 
   const visibleNavItems = navItems.filter((item) => {
     if (role === "admin") return true;
@@ -216,11 +236,12 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
           {visibleNavItems.map((item) => {
-            const isActive = pathname === item.href || (item.href !== "/admin/dashboard" && pathname?.startsWith(item.href));
+            const resolvedHref = resolveHref(item.href);
+            const isActive = pathname === resolvedHref || (resolvedHref !== "/admin/dashboard" && pathname?.startsWith(resolvedHref));
             return (
               <Link
-                key={item.href}
-                href={item.href}
+                key={resolvedHref}
+                href={resolvedHref}
                 onClick={() => {
                   if (window.innerWidth < 1024) setOpen(false);
                 }}

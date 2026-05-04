@@ -16,7 +16,7 @@ const OutletAdminSchema: Schema<IOutletAdmin> = new mongoose.Schema(
   {
     outlet: { type: mongoose.Schema.Types.ObjectId, ref: "Outlet", required: true, index: true },
     username: { type: String, required: true, lowercase: true },
-    email: { type: String, required: true, lowercase: true },
+    email: { type: String, required: true, lowercase: true, unique: true, index: true },
     password: { type: String, required: true },
     name: { type: String },
     isActive: { type: Boolean, default: true, index: true },
@@ -37,8 +37,6 @@ OutletAdminSchema.pre<IOutletAdmin>("save", async function () {
   this.password = hashedPassword;
 });
 
-// Ensure unique compound index on outlet + email
-OutletAdminSchema.index({ outlet: 1, email: 1 }, { unique: true });
 OutletAdminSchema.index({ outlet: 1, username: 1 }, { unique: true });
 
 const OutletAdmin: Model<IOutletAdmin> = (mongoose.models.OutletAdmin as Model<IOutletAdmin>) || mongoose.model<IOutletAdmin>("OutletAdmin", OutletAdminSchema);

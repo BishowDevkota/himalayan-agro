@@ -3,6 +3,8 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../../../lib/auth";
 import connectToDatabase from "../../../../../lib/mongodb";
 import Employee from "../../../../../models/Employee";
+import User from "../../../../../models/User";
+import OutletAdmin from "../../../../../models/OutletAdmin";
 import mongoose from "mongoose";
 import { EMPLOYEE_ROLES, resolvePermissionsForEmployee } from "../../../../../lib/permissions";
 
@@ -37,6 +39,19 @@ export async function PATCH(req: Request, context: any) {
       return NextResponse.json({ message: "Password must be at least 8 characters" }, { status: 400 });
     }
     updates.password = body.password;
+  }
+
+  if (typeof body.email === "string" && body.email.trim()) {
+    const nextEmail = body.email.toLowerCase().trim();
+    const duplicateAccounts = await Promise.all([
+      User.findOne({ email: nextEmail, _id: { $ne: id } }).lean(),
+      Employee.findOne({ email: nextEmail, _id: { $ne: id } }).lean(),
+      OutletAdmin.findOne({ email: nextEmail }).lean(),
+    ]);
+    if (duplicateAccounts.some(Boolean)) {
+      return NextResponse.json({ message: "Email already in use" }, { status: 409 });
+    }
+    updates.email = nextEmail;
   }
 
   await connectToDatabase();

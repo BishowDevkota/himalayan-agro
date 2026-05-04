@@ -3,7 +3,10 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../../../lib/auth";
 import connectToDatabase from "../../../../../lib/mongodb";
 import Employee from "../../../../../models/Employee";
+import User from "../../../../../models/User";
+import OutletAdmin from "../../../../../models/OutletAdmin";
 import mongoose from "mongoose";
+import { EMPLOYEE_ROLES } from "../../../../../lib/permissions";
 
 async function requireOutletAdmin() {
   const session = (await getServerSession(authOptions as any)) as any;
@@ -34,9 +37,28 @@ export async function PATCH(req: Request, context: any) {
     if (typeof body.photo === "string") updates.photo = body.photo.trim();
     if (typeof body.shortDescription === "string") updates.shortDescription = body.shortDescription.trim();
     if (typeof body.phoneNumber === "string") updates.phoneNumber = body.phoneNumber.trim();
-    if (typeof body.role === "string") updates.role = body.role.trim();
+    if (typeof body.role === "string") {
+      const nextRole = body.role.trim();
+      if (!EMPLOYEE_ROLES.includes(nextRole)) {
+        return NextResponse.json({ message: "Invalid role" }, { status: 400 });
+      }
+      updates.role = nextRole;
+    }
     if (typeof body.isActive === "boolean") updates.isActive = body.isActive;
     if (typeof body.password === "string" && body.password.length >= 8) updates.password = body.password;
+
+    if (typeof body.email === "string" && body.email.trim()) {
+      const nextEmail = body.email.toLowerCase().trim();
+      const duplicateAccounts = await Promise.all([
+        User.findOne({ email: nextEmail, _id: { $ne: target._id } }).lean(),
+        Employee.findOne({ email: nextEmail, _id: { $ne: target._id } }).lean(),
+        OutletAdmin.findOne({ email: nextEmail }).lean(),
+      ]);
+      if (duplicateAccounts.some(Boolean)) {
+        return NextResponse.json({ message: "Email already in use" }, { status: 409 });
+      }
+      updates.email = nextEmail;
+    }
 
     Object.assign(target, updates);
     await target.save();

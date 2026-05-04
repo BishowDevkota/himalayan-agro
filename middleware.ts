@@ -43,7 +43,9 @@ export async function middleware(req: NextRequest) {
         if (!allowed) return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
         return NextResponse.next();
       }
-      if ((token as any).role !== "admin") return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      if ((token as any).role !== "admin" && (token as any).role !== "employee") {
+        return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+      }
       return NextResponse.next();
     }
 

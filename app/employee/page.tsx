@@ -2,7 +2,7 @@ import React from "react";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../lib/auth";
-import { adminLandingForPermissions } from "../../lib/permissions";
+import { adminLandingForPermissions, outletEmployeeLandingPath } from "../../lib/permissions";
 
 export default async function EmployeeDashboardPage() {
   const session = (await getServerSession(authOptions as any)) as any;
@@ -12,12 +12,10 @@ export default async function EmployeeDashboardPage() {
   if (user?.role === "admin") return redirect("/admin/dashboard");
   if (user?.role !== "employee") return redirect("/");
 
+  const target = outletEmployeeLandingPath(user);
+  if (target !== "/employee") return redirect(target);
+
   const permissions = Array.isArray(user?.permissions) ? user.permissions : [];
-  const target = adminLandingForPermissions(permissions);
-
-  if (target === "/admin/dashboard") {
-    return redirect("/");
-  }
-
-  return redirect(target);
+  const fallback = adminLandingForPermissions(permissions);
+  return redirect(fallback === "/admin/dashboard" ? "/" : fallback);
 }

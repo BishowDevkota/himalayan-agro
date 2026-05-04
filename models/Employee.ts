@@ -2,10 +2,14 @@ import mongoose, { Document, Model, Schema } from "mongoose";
 import bcrypt from "bcryptjs";
 
 export interface IEmployee extends Document {
+  outlet: mongoose.Types.ObjectId;
   name?: string;
   email: string;
   password?: string;
   role: string;
+  photo?: string;
+  shortDescription?: string;
+  phoneNumber?: string;
   permissions: string[];
   isActive?: boolean;
   createdAt: Date;
@@ -15,10 +19,14 @@ export interface IEmployee extends Document {
 
 const EmployeeSchema: Schema<IEmployee> = new mongoose.Schema(
   {
+    outlet: { type: mongoose.Schema.Types.ObjectId, ref: "Outlet", index: true },
     name: { type: String },
     email: { type: String, required: true, unique: true, index: true },
     password: { type: String },
     role: { type: String, required: true },
+    photo: { type: String },
+    shortDescription: { type: String },
+    phoneNumber: { type: String },
     permissions: { type: [String], default: [] },
     isActive: { type: Boolean, default: true },
   },

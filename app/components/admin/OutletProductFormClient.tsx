@@ -55,7 +55,7 @@ export default function OutletProductFormClient({ categories, outletSlug }: Outl
         throw new Error(data.message || "Failed to create product");
       }
 
-      router.push(`/admin/${outletSlug}/products`);
+      router.push(`/admin/outlet-${outletSlug}/products`);
       router.refresh();
     } catch (err: any) {
       setError(err.message || "An error occurred");

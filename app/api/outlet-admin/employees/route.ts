@@ -4,6 +4,7 @@ import authOptions from "../../../../lib/auth";
 import connectToDatabase from "../../../../lib/mongodb";
 import Employee from "../../../../models/Employee";
 import User from "../../../../models/User";
+import OutletAdmin from "../../../../models/OutletAdmin";
 import { EMPLOYEE_ROLES, resolvePermissionsForEmployee } from "../../../../lib/permissions";
 
 async function requireOutletAdmin() {
@@ -59,13 +60,20 @@ export async function POST(req: Request) {
     if (!EMPLOYEE_ROLES.includes(role)) {
       return NextResponse.json({ message: "Invalid role" }, { status: 400 });
     }
+    if (role !== "accountant" && role !== "shopkeeper") {
+      return NextResponse.json({ message: "Outlet admins can only create accountant or shopkeeper roles" }, { status: 400 });
+    }
+    if (!name) {
+      return NextResponse.json({ message: "Full name is required" }, { status: 400 });
+    }
 
     await connectToDatabase();
-    const [existingUser, existingEmployee] = await Promise.all([
+    const [existingUser, existingEmployee, existingOutletAdmin] = await Promise.all([
       User.findOne({ email }).lean(),
       Employee.findOne({ email }).lean(),
+      OutletAdmin.findOne({ email }).lean(),
     ]);
-    if (existingUser || existingEmployee) {
+    if (existingUser || existingEmployee || existingOutletAdmin) {
       return NextResponse.json({ message: "Email already in use" }, { status: 409 });
     }
 

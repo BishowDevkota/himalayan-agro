@@ -42,7 +42,19 @@ export async function POST(req: Request) {
     images: Array.isArray(body.images) ? body.images : [],
     stock: Number(body.stock) || 0,
     isActive: body.isActive !== false,
-  }; 
+  } as any;
+
+  // Keep ownership scoped for outlet product workflows.
+  if (user?.role === "outlet-admin" && user?.outletId) {
+    payload.outlet = user.outletId;
+  }
+
+  if (user?.role === "employee" && user?.employeeRole === "shopkeeper") {
+    if (!user?.outletId) {
+      return NextResponse.json({ message: "Outlet context missing for shopkeeper" }, { status: 400 });
+    }
+    payload.outlet = user.outletId;
+  }
 
   const product = await Product.create(payload);
 
