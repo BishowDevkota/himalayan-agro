@@ -35,8 +35,12 @@ export default async function OutletSettingsPage({ params }: { params: { slug: s
           <p className="mt-2 text-sm text-slate-500">Edit outlet details, profile images, and outlet staff.</p>
         </div>
 
-        <OutletSettingsClient initialOutlet={safeOutlet as any} />
-        <OutletEmployeesClient />
+        <section id="outlet-info">
+          <OutletSettingsClient initialOutlet={safeOutlet as any} />
+        </section>
+        <section id="employees">
+          <OutletEmployeesClient />
+        </section>
       </div>
     </main>
   );

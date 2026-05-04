@@ -4,6 +4,7 @@ import authOptions from "../../../../lib/auth";
 import connectToDatabase from "../../../../lib/mongodb";
 import Employee from "../../../../models/Employee";
 import User from "../../../../models/User";
+import OutletAdmin from "../../../../models/OutletAdmin";
 import { EMPLOYEE_ROLES, resolvePermissionsForEmployee } from "../../../../lib/permissions";
 
 async function requireAdmin() {
@@ -53,11 +54,12 @@ export async function POST(req: Request) {
   }
 
   await connectToDatabase();
-  const [existingUser, existingEmployee] = await Promise.all([
+  const [existingUser, existingEmployee, existingOutletAdmin] = await Promise.all([
     User.findOne({ email }).lean(),
     Employee.findOne({ email }).lean(),
+    OutletAdmin.findOne({ email }).lean(),
   ]);
-  if (existingUser || existingEmployee) {
+  if (existingUser || existingEmployee || existingOutletAdmin) {
     return NextResponse.json({ message: "Email already in use" }, { status: 409 });
   }
 

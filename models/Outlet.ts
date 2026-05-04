@@ -7,6 +7,9 @@ export interface IOutlet extends Document {
   address?: string;
   contactPhone?: string;
   contactEmail?: string;
+  profileImage?: string;
+  galleryImages?: string[];
+  primaryAdmin?: mongoose.Types.ObjectId;
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -20,6 +23,9 @@ const OutletSchema: Schema<IOutlet> = new mongoose.Schema(
     address: { type: String },
     contactPhone: { type: String },
     contactEmail: { type: String },
+    profileImage: { type: String },
+    galleryImages: { type: [String], default: [] },
+    primaryAdmin: { type: mongoose.Schema.Types.ObjectId, ref: "OutletAdmin", index: true },
     isActive: { type: Boolean, default: true, index: true },
   },
   { timestamps: true }

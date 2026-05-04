@@ -64,7 +64,7 @@ export default async function OutletAdminDashboard({ params }: { params: { slug:
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <a
             href={`/admin/outlet-${slug}/products`}
             className="bg-cyan-600 hover:bg-cyan-700 text-white p-6 rounded-2xl font-semibold transition-colors"
@@ -82,6 +82,18 @@ export default async function OutletAdminDashboard({ params }: { params: { slug:
             className="bg-emerald-600 hover:bg-emerald-700 text-white p-6 rounded-2xl font-semibold transition-colors"
           >
             Manage Categories
+          </a>
+          <a
+            href={`/admin/outlet-${slug}/settings#outlet-info`}
+            className="bg-slate-700 hover:bg-slate-800 text-white p-6 rounded-2xl font-semibold transition-colors"
+          >
+            Outlet Info
+          </a>
+          <a
+            href={`/admin/outlet-${slug}/settings#employees`}
+            className="bg-amber-600 hover:bg-amber-700 text-white p-6 rounded-2xl font-semibold transition-colors"
+          >
+            Employees
           </a>
         </div>
       </div>

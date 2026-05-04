@@ -3,7 +3,23 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
-export default function ImageUpload({ images = [], onChange }: { images?: string[]; onChange: (imgs: string[]) => void }) {
+type ImageUploadProps = {
+  images?: string[];
+  onChange: (imgs: string[]) => void;
+  multiple?: boolean;
+  uploadEndpoint?: string;
+  label?: string;
+  helpText?: string;
+};
+
+export default function ImageUpload({
+  images = [],
+  onChange,
+  multiple = true,
+  uploadEndpoint = "/api/admin/upload",
+  label = "Upload images",
+  helpText = "PNG, JPG files are supported.",
+}: ImageUploadProps) {
   const [uploading, setUploading] = useState(false);
 
   async function onFiles(e: React.ChangeEvent<HTMLInputElement>) {
@@ -15,12 +31,12 @@ export default function ImageUpload({ images = [], onChange }: { images?: string
       for (const file of Array.from(files)) {
         const fd = new FormData();
         fd.append("file", file);
-        const res = await fetch(`/api/admin/upload`, { method: "POST", body: fd });
+        const res = await fetch(uploadEndpoint, { method: "POST", body: fd });
         const json = await res.json();
         if (!res.ok) throw new Error(json.message || 'upload failed');
         uploaded.push(json.url);
       }
-      const next = [...images, ...uploaded];
+      const next = multiple ? [...images, ...uploaded] : uploaded.slice(0, 1);
       onChange(next);
       toast.success("Images uploaded");
     } catch (err: any) {
@@ -40,10 +56,10 @@ export default function ImageUpload({ images = [], onChange }: { images?: string
     <div className="space-y-3">
       <label className="block">
         <div className="relative rounded-lg border-2 border-dashed border-gray-200 bg-white/5 p-5 text-center cursor-pointer hover:border-sky-300 transition-colors">
-          <input aria-label="Upload product images" type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" multiple accept="image/*" onChange={onFiles} />
+          <input aria-label={label} type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" multiple={multiple} accept="image/*" onChange={onFiles} />
           <div className="flex flex-col items-center justify-center gap-2">
-            <div className="text-sm font-semibold">Upload images</div>
-            <div className="text-xs text-slate-400">PNG, JPG — first image will be primary. Drag & drop supported by your browser.</div>
+            <div className="text-sm font-semibold">{label}</div>
+            <div className="text-xs text-slate-400">{helpText}</div>
             {uploading && <div className="mt-2 text-sm text-slate-500">Uploading…</div>}
           </div>
         </div>

@@ -9,16 +9,23 @@ import { hasPermission } from "../../../lib/permissions";
 export default async function AdminProductsPage() {
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session || !hasPermission(session.user, "products:read")) return <div className="p-12">Unauthorized</div>;
+  const user = session.user as any;
+  const isOutletScopedUser = (user?.role === "employee" || user?.role === "outlet-admin");
+  if (isOutletScopedUser && !user?.outletId) return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const products = await Product.find({}).sort({ createdAt: -1 }).lean();
+  const productFilter: any = isOutletScopedUser ? { outlet: user.outletId } : {};
+  const products = await Product.find(productFilter).sort({ createdAt: -1 }).lean();
   const { serializeMany } = await import('../../../lib/serialize');
   const safeProducts = serializeMany(products as any[]);
 
   // categories for filter dropdown
   const Category = (await import('../../../models/Category')).default;
   const cats = await Category.find().sort({ name: 1 }).lean();
-  const publicCats = cats.map((c: any) => ({ _id: String(c._id), name: c.name, productsCount: (c.products || []).length }));
+  const allowedCategoryNames = new Set(safeProducts.map((p: any) => p.category).filter(Boolean));
+  const publicCats = cats
+    .filter((c: any) => !isOutletScopedUser || allowedCategoryNames.has(c.name))
+    .map((c: any) => ({ _id: String(c._id), name: c.name, productsCount: (c.products || []).length }));
 
   const outOfStock = safeProducts.filter((p: any) => (p.stock ?? 0) <= 0).length;
   const activeCount = safeProducts.filter((p: any) => p.isActive).length;

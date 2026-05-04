@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import ImageUpload from "./ImageUpload";
 
 interface Outlet {
   _id: string;
@@ -11,6 +13,9 @@ interface Outlet {
   address: string;
   contactPhone: string;
   contactEmail: string;
+  profileImage?: string;
+  galleryImages?: string[];
+  primaryAdmin?: string;
   isActive: boolean;
   createdAt: string;
 }
@@ -25,6 +30,8 @@ export default function OutletManagementClient({ initialOutlets }: OutletManagem
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [profileImage, setProfileImage] = useState<string[]>([]);
+  const [galleryImages, setGalleryImages] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     name: "",
     slug: "",
@@ -32,6 +39,10 @@ export default function OutletManagementClient({ initialOutlets }: OutletManagem
     address: "",
     contactPhone: "",
     contactEmail: "",
+    adminName: "",
+    adminEmail: "",
+    adminUsername: "",
+    adminPassword: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -43,7 +54,17 @@ export default function OutletManagementClient({ initialOutlets }: OutletManagem
       const res = await fetch("/api/admin/outlets", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          profileImage: profileImage[0] || "",
+          galleryImages,
+          admin: {
+            name: formData.adminName,
+            email: formData.adminEmail,
+            username: formData.adminUsername,
+            password: formData.adminPassword,
+          },
+        }),
       });
 
       if (!res.ok) {
@@ -51,7 +72,8 @@ export default function OutletManagementClient({ initialOutlets }: OutletManagem
         throw new Error(data.message || "Failed to create outlet");
       }
 
-      const newOutlet = await res.json();
+      const json = await res.json();
+      const newOutlet = json.outlet || json;
       setOutlets((prev) => [newOutlet, ...prev]);
       setFormData({
         name: "",
@@ -60,8 +82,15 @@ export default function OutletManagementClient({ initialOutlets }: OutletManagem
         address: "",
         contactPhone: "",
         contactEmail: "",
+        adminName: "",
+        adminEmail: "",
+        adminUsername: "",
+        adminPassword: "",
       });
+      setProfileImage([]);
+      setGalleryImages([]);
       setIsModalOpen(false);
+      toast.success("Outlet created");
       router.refresh();
     } catch (err: any) {
       setError(err.message || "An error occurred");
@@ -88,7 +117,7 @@ export default function OutletManagementClient({ initialOutlets }: OutletManagem
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-slate-900 bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div className="border-b border-slate-200 p-6">
               <h2 className="text-xl font-bold text-slate-900">Create New Outlet</h2>
             </div>
@@ -160,6 +189,80 @@ export default function OutletManagementClient({ initialOutlets }: OutletManagem
                   className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none"
                   placeholder="contact@outlet.com"
                 />
+              </div>
+
+              <div className="pt-2 border-t border-slate-200">
+                <h3 className="text-sm font-semibold text-slate-900 mb-3">Outlet Admin</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Full Name</label>
+                    <input
+                      type="text"
+                      value={formData.adminName}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, adminName: e.target.value }))}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none"
+                      placeholder="Outlet admin name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Email *</label>
+                    <input
+                      type="email"
+                      value={formData.adminEmail}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, adminEmail: e.target.value }))}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none"
+                      placeholder="admin@outlet.com"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Username *</label>
+                    <input
+                      type="text"
+                      value={formData.adminUsername}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, adminUsername: e.target.value }))}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none"
+                      placeholder="outlet-admin"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Password *</label>
+                    <input
+                      type="password"
+                      value={formData.adminPassword}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, adminPassword: e.target.value }))}
+                      className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none"
+                      placeholder="Minimum 8 characters"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Profile Picture</label>
+                  <ImageUpload
+                    images={profileImage}
+                    onChange={(next) => setProfileImage(next.slice(0, 1))}
+                    multiple={false}
+                    uploadEndpoint="/api/admin/upload"
+                    label="Upload profile image"
+                    helpText="Upload one image for the outlet profile picture."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">Gallery</label>
+                  <ImageUpload
+                    images={galleryImages}
+                    onChange={setGalleryImages}
+                    uploadEndpoint="/api/admin/upload"
+                    label="Upload gallery images"
+                    helpText="Upload multiple images for the outlet gallery."
+                  />
+                </div>
               </div>
 
               <div className="flex gap-3 pt-4 border-t border-slate-200">

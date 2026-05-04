@@ -10,6 +10,11 @@ export async function GET(req: Request) {
   if (!session || !hasPermission(session.user, "products:read")) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
+  const user = session.user as any;
+  const isOutletScopedUser = (user?.role === "employee" || user?.role === "outlet-admin");
+  if (isOutletScopedUser && !user?.outletId) {
+    return NextResponse.json({ message: "Outlet assignment required" }, { status: 403 });
+  }
 
   await connectToDatabase();
   const url = new URL(req.url);
@@ -21,6 +26,7 @@ export async function GET(req: Request) {
   const filter: any = {};
   if (q) filter.$text = { $search: q };
   if (category) filter.category = category;
+  if (isOutletScopedUser) filter.outlet = user.outletId;
 
   const [items, total] = await Promise.all([
     Product.find(filter).skip((page - 1) * perPage).limit(perPage).lean(),
@@ -36,6 +42,12 @@ export async function POST(req: Request) {
   if (!session || !hasPermission(session.user, "products:write")) {
     return NextResponse.json({ message: "Not found" }, { status: 404 });
   }
+  const user = session.user as any;
+  const isOutletScopedUser = (user?.role === "employee" || user?.role === "outlet-admin");
+  if (isOutletScopedUser && !user?.outletId) {
+    return NextResponse.json({ message: "Outlet assignment required" }, { status: 403 });
+  }
+
   const body = await req.json().catch(() => ({}));
   await connectToDatabase();
 
@@ -50,6 +62,12 @@ export async function POST(req: Request) {
     stock: Number(body.stock) || 0,
     isActive: body.isActive !== false,
   };
+
+  if (isOutletScopedUser) {
+    payload.outlet = user.outletId;
+  } else if (typeof body.outlet === "string" && body.outlet.trim()) {
+    payload.outlet = body.outlet.trim();
+  }
 
   const product = await Product.create(payload);
   return NextResponse.json(product, { status: 201 });

@@ -55,12 +55,16 @@ export const authOptions: NextAuthOptions = {
             if (process.env.NODE_ENV !== "production") console.debug("Credentials: password mismatch for", email);
             return null;
           }
+          const outlet = employee.outlet ? await Outlet.findById(employee.outlet).exec() : null;
           return {
             id: employee._id.toString(),
             name: employee.name,
             email: employee.email,
             role: "employee",
             employeeRole: employee.role,
+            outletId: outlet ? outlet._id.toString() : undefined,
+            outletName: outlet?.name,
+            outletSlug: outlet?.slug,
             permissions: resolvePermissionsForEmployee(employee.role, employee.permissions),
           } as any;
         }

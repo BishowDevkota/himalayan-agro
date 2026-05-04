@@ -4,6 +4,8 @@ import authOptions from "../../../../../../lib/auth";
 import connectToDatabase from "../../../../../../lib/mongodb";
 import Outlet from "../../../../../../models/Outlet";
 import OutletAdmin from "../../../../../../models/OutletAdmin";
+import Employee from "../../../../../../models/Employee";
+import User from "../../../../../../models/User";
 import { hasPermission } from "../../../../../../lib/permissions";
 
 export async function GET(req: Request, context: any) {
@@ -49,15 +51,27 @@ export async function POST(req: Request, context: any) {
       return NextResponse.json({ message: "Email, username, and password are required" }, { status: 400 });
     }
 
-    const existing = await OutletAdmin.findOne({ outlet: id, email: body.email.toLowerCase() });
+    const email = body.email.toLowerCase().trim();
+    const username = body.username.toLowerCase().trim();
+
+    const duplicateAccounts = await Promise.all([
+      User.findOne({ email }).lean(),
+      Employee.findOne({ email }).lean(),
+      OutletAdmin.findOne({ email }).lean(),
+    ]);
+    if (duplicateAccounts.some(Boolean)) {
+      return NextResponse.json({ message: "Email already in use" }, { status: 409 });
+    }
+
+    const existing = await OutletAdmin.findOne({ outlet: id, email });
     if (existing) {
       return NextResponse.json({ message: "Admin with this email already exists for this outlet" }, { status: 400 });
     }
 
     const admin = await OutletAdmin.create({
       outlet: id,
-      username: body.username.toLowerCase().trim(),
-      email: body.email.toLowerCase().trim(),
+      username,
+      email,
       password: body.password,
       name: body.name || "",
       isActive: body.isActive !== false,
