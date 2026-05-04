@@ -9,10 +9,10 @@ export const careerTimeline = [
 ];
 
 export const educationList = [
-  { degree: "MPA", field: "Public Administration & Resource Management", institution: "Tribhuvan University", year: "2023" },
-  { degree: "MA", field: "Political Science — Policy & Diplomacy", institution: "Tribhuvan University", year: "2018" },
-  { degree: "BA", field: "English & Sociology", institution: "Tribhuvan University", year: "2006" },
-  { degree: "PCL", field: "Economics, History & English", institution: "Higher Secondary Board of Nepal", year: "2001" }
+  { degree: "Master in Public Administration", field: "Public Administration & Resource Management", institution: "Tribhuvan University", year: "2023" },
+  { degree: "Master's Degree in Political Science", field: "Policy & Diplomacy", institution: "Tribhuvan University", year: "2018" },
+  { degree: "Bachelor of Arts", field: "English & Sociology", institution: "Tribhuvan University", year: "2006" },
+  { degree: "Proficiency Certificate Level", field: "Economics, History & English", institution: "Higher Secondary Board of Nepal", year: "2001" }
 ];
 
 export const publications = [

@@ -23,10 +23,10 @@ export default function CareerTimeline() {
                 <div className={`group border-l-4 ${accentStyles[item.accent] || accentStyles.gray} bg-white rounded-2xl p-4 shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gray-200 hover:shadow-[0_16px_40px_rgba(28,43,20,0.08)]`}>
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-sm font-semibold text-gray-900 transition-colors duration-300 group-hover:text-[#1C2B14]">{item.role}</div>
-                      <div className="text-xs text-gray-500 transition-colors duration-300 group-hover:text-gray-700">{item.org}</div>
+                      <div className="text-base font-semibold text-gray-900 transition-colors duration-300 group-hover:text-[#1C2B14]">{item.role}</div>
+                      <div className="text-sm text-gray-500 transition-colors duration-300 group-hover:text-gray-700">{item.org}</div>
                     </div>
-                    <div className="text-xs text-gray-400 transition-colors duration-300 group-hover:text-gray-600">{item.period}</div>
+                    <div className="text-sm text-gray-400 transition-colors duration-300 group-hover:text-gray-600">{item.period}</div>
                   </div>
                 </div>
               </motion.div>
