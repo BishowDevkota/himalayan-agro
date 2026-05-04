@@ -99,10 +99,10 @@ const newsDropdownItems = [
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "Shop", href: "/shop" },
   { label: "About Us", href: "#", isDropdown: true },
-  { label: "Outlet", href: "/outlet" },
   { label: "Knowledge Centre", href: "#", isDropdown: true },
+  { label: "Outlet", href: "/outlet" },
+  { label: "Shop", href: "/shop" },
   { label: "News & Notices", href: "#", isDropdown: true },
   { label: "Contact", href: "/contact" },
 ];

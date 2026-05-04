@@ -1,5 +1,6 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
+import SectionHeading from '../../components/SectionHeading';
 
 const articles = [
   {
@@ -48,20 +49,15 @@ export default function FarmerFriendlyArticlesPage() {
         tag="Knowledge Centre"
         description="Short, practical reads designed to answer day-to-day farm questions in simple, accessible language."
         image="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=2000"
-        overlay="dark"
       />
 
       <section className="bg-slate-50 py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0d837f]">Practical Reading</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              Easy-to-read farm guidance
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
-              These article cards are dummy CMS content that can later be swapped with administrator-managed posts.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Practical Reading"
+            title="Easy-to-read farm guidance"
+            description="These article cards are dummy CMS content that can later be swapped with administrator-managed posts."
+          />
 
           <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {articles.map((article, index) => (

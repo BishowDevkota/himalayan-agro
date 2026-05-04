@@ -1,5 +1,6 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
+import SectionHeading from '../../components/SectionHeading';
 import TeamMemberCard, { TeamMember } from '../../components/TeamMemberCard';
 
 const boardMembers: TeamMember[] = [
@@ -61,20 +62,15 @@ export default function BoardOfDirectorsPage() {
         tag="About Us"
         description="The board provides governance, oversight, and long-term direction for the organisation's growth and accountability."
         image="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=2000"
-        overlay="dark"
       />
 
       <section className="bg-slate-50 py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0d837f]">Leadership Grid</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              Board members
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
-              This grid is CMS-ready. Each profile card can later be edited by the admin panel without changing the page structure.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Leadership Grid"
+            title="Board members"
+            description="This grid is CMS-ready. Each profile card can later be edited by the admin panel without changing the page structure."
+          />
 
           <div className="mt-10 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
             {boardMembers.map((member) => (

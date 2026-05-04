@@ -1,5 +1,6 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
+import SectionHeading from '../../components/SectionHeading';
 import TeamMemberCard, { TeamMember } from '../../components/TeamMemberCard';
 
 const expertTeam: TeamMember[] = [
@@ -61,20 +62,15 @@ export default function ExpertTeamPage() {
         tag="About Us"
         description="Our experts guide farming systems, advisory services, and technical problem-solving across the field network."
         image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=2000"
-        overlay="dark"
       />
 
       <section className="bg-slate-50 py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0d837f]">Expert Grid</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              Subject matter experts
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
-              Replace these placeholders with CMS-managed expert profiles when backend content is ready.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Expert Grid"
+            title="Subject matter experts"
+            description="Replace these placeholders with CMS-managed expert profiles when backend content is ready."
+          />
 
           <div className="mt-10 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
             {expertTeam.map((member) => (

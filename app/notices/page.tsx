@@ -1,6 +1,7 @@
 import React from 'react';
 import { CalendarDays, FileText, Image as ImageIcon, Paperclip } from 'lucide-react';
 import SubHeroSection from '../components/SubHeroSection';
+import SectionHeading from '../components/SectionHeading';
 
 const notices = [
   {
@@ -45,20 +46,15 @@ export default function NoticesPage() {
         tag="News & Notices"
         description="Official notices can be published as posters, PDFs, or attachments, depending on what the admin uploads."
         image="https://images.unsplash.com/photo-1485083269755-a7b559a4fe5e?auto=format&fit=crop&q=80&w=2000"
-        overlay="dark"
       />
 
       <section className="bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0d837f]">Notice Board</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              Uploaded notices and announcements
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
-              This is a CMS-ready placeholder showing both image notices and file attachments using dummy data.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Notice Board"
+            title="Uploaded notices and announcements"
+            description="This is a CMS-ready placeholder showing both image notices and file attachments using dummy data."
+          />
 
           <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-2">
             {notices.map((notice) => (

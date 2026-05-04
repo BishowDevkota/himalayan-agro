@@ -1,5 +1,6 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
+import SectionHeading from '../../components/SectionHeading';
 import TeamMemberCard, { TeamMember } from '../../components/TeamMemberCard';
 
 const executiveTeam: TeamMember[] = [
@@ -61,20 +62,15 @@ export default function ExecutiveTeamPage() {
         tag="About Us"
         description="Our executive team turns strategy into action through operations, finance, sales, people, and digital systems."
         image="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=2000"
-        overlay="dark"
       />
 
       <section className="bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0d837f]">Management Grid</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              Executive leadership
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
-              Each card is a placeholder for CMS-managed executive profiles, ready to be replaced with live backend content.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Management Grid"
+            title="Executive leadership"
+            description="Each card is a placeholder for CMS-managed executive profiles, ready to be replaced with live backend content."
+          />
 
           <div className="mt-10 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
             {executiveTeam.map((member) => (

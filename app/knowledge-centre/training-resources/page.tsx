@@ -1,5 +1,6 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
+import SectionHeading from '../../components/SectionHeading';
 
 const trainingResources = [
   {
@@ -54,20 +55,15 @@ export default function TrainingResourcesPage() {
         tag="Knowledge Centre"
         description="CMS-managed guides, workshops, and learning materials will live here for farmers, staff, and partner networks."
         image="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&q=80&w=2000"
-        overlay="dark"
       />
 
       <section className="bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0d837f]">CMS Resources</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              Training materials and downloads
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
-              These cards are dummy content for now and can be replaced by admin-uploaded PDFs, videos, and templates later.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="CMS Resources"
+            title="Training materials and downloads"
+            description="These cards are dummy content for now and can be replaced by admin-uploaded PDFs, videos, and templates later."
+          />
 
           <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {trainingResources.map((resource) => (

@@ -1,5 +1,6 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
+import SectionHeading from '../../components/SectionHeading';
 
 const publications = [
   {
@@ -48,20 +49,15 @@ export default function PublicationsDocumentsPage() {
         tag="Knowledge Centre"
         description="Admin-uploaded PDFs, reports, presentations, and supporting documents will be collected in one place."
         image="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&q=80&w=2000"
-        overlay="dark"
       />
 
       <section className="bg-slate-50 py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0d837f]">Document Library</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              Publications and downloads
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
-              These are dummy cards for now, ready to be replaced by admin-managed uploads from the CMS.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Document Library"
+            title="Publications and downloads"
+            description="These are dummy cards for now, ready to be replaced by admin-managed uploads from the CMS."
+          />
 
           <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {publications.map((item, index) => (

@@ -1,5 +1,6 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
+import SectionHeading from '../../components/SectionHeading';
 
 const stories = [
   {
@@ -42,20 +43,15 @@ export default function SuccessStoriesPage() {
         tag="Knowledge Centre"
         description="Real-world case studies and outcomes from farms, cooperatives, and field programs will be showcased here."
         image="https://images.unsplash.com/photo-1530268729831-4b0b9e170218?auto=format&fit=crop&q=80&w=2000"
-        overlay="dark"
       />
 
       <section className="bg-white py-14 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[#0d837f]">Case Studies</p>
-            <h2 className="mt-3 text-3xl font-bold text-slate-900 sm:text-4xl" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
-              Outcomes that can be measured
-            </h2>
-            <p className="mt-4 text-base leading-relaxed text-slate-600">
-              This grid is built for CMS-managed stories so the admin can update the success outcomes without changing the page layout.
-            </p>
-          </div>
+          <SectionHeading
+            eyebrow="Case Studies"
+            title="Outcomes that can be measured"
+            description="This grid is built for CMS-managed stories so the admin can update the success outcomes without changing the page layout."
+          />
 
           <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {stories.map((story) => (
