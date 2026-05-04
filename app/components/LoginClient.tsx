@@ -387,7 +387,7 @@ export default function LoginClient({ from, serverError }: { from: string; serve
               <motion.div variants={itemVariants} className="text-center">
                 <p className="text-sm text-gray-400">
                   Don&apos;t have an account?{" "}
-                  <a href="/register" className="text-[#2da8da] font-semibold hover:text-[#1e8bb8] transition-colors duration-200 relative group">
+                  <a href="/register/distributor" className="text-[#2da8da] font-semibold hover:text-[#1e8bb8] transition-colors duration-200 relative group">
                     Create one
                     <span className="absolute -bottom-0.5 left-0 w-0 h-[1.5px] bg-[#2da8da] group-hover:w-full transition-all duration-300" />
                   </a>

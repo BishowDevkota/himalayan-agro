@@ -4,12 +4,17 @@ import connectToDatabase from "../../../lib/mongodb";
 import Cart from "../../../models/Cart";
 import Product from "../../../models/Product";
 import { getSessionUser, requireUser } from "../../../lib/server-utils";
+import { validateApprovedDistributor } from "../../../lib/distributor";
 
 export async function GET() {
   const user = await getSessionUser();
   requireUser(user);
-  if (!mongoose.Types.ObjectId.isValid(user.id)) return NextResponse.json({ cart: { items: [] } });
   await connectToDatabase();
+  const distributorCheck = await validateApprovedDistributor(user);
+  if (!distributorCheck.ok) {
+    return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+  }
+  if (!mongoose.Types.ObjectId.isValid(user.id)) return NextResponse.json({ cart: { items: [] } });
   const cart = await Cart.findOne({ user: user.id }).populate("items.product", "name price images stock isActive").lean();
   return NextResponse.json({ cart: cart || { items: [] } });
 }
@@ -17,6 +22,11 @@ export async function GET() {
 export async function POST(req: Request) {
   const user = await getSessionUser();
   requireUser(user);
+  await connectToDatabase();
+  const distributorCheck = await validateApprovedDistributor(user);
+  if (!distributorCheck.ok) {
+    return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+  }
   if (!mongoose.Types.ObjectId.isValid(user.id)) return NextResponse.json({ message: "Invalid user ID for cart" }, { status: 400 });
   const body = await req.json();
   const { productId, quantity } = body;
@@ -24,7 +34,6 @@ export async function POST(req: Request) {
   const qty = Number(quantity);
   if (qty < 1) return NextResponse.json({ message: "quantity must be >= 1" }, { status: 400 });
 
-  await connectToDatabase();
   const product = await Product.findById(productId).lean();
   if (!product || !product.isActive) return NextResponse.json({ message: "Product not available" }, { status: 404 });
   if (product.stock < qty) return NextResponse.json({ message: "Insufficient stock" }, { status: 400 });
@@ -48,9 +57,13 @@ export async function POST(req: Request) {
 export async function DELETE(req: Request) {
   const user = await getSessionUser();
   requireUser(user);
+  await connectToDatabase();
+  const distributorCheck = await validateApprovedDistributor(user);
+  if (!distributorCheck.ok) {
+    return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+  }
   if (!mongoose.Types.ObjectId.isValid(user.id)) return NextResponse.json({ success: true });
   const body = await req.json().catch(() => ({}));
-  await connectToDatabase();
   const cart = await Cart.findOne({ user: user.id });
   if (!cart) return NextResponse.json({ success: true });
 

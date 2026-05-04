@@ -43,6 +43,9 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             email: user.email,
             role: user.role,
+            distributorStatus: user.distributorStatus || "none",
+            creditLimitNpr: Number(user.creditLimitNpr || 0),
+            creditUsedNpr: Number(user.creditUsedNpr || 0),
             permissions: user.role === "admin" ? ["*"] : [],
           } as any;
         }
@@ -107,6 +110,9 @@ export const authOptions: NextAuthOptions = {
         token.outletId = (user as any).outletId || undefined;
         token.outletName = (user as any).outletName || undefined;
         token.outletSlug = (user as any).outletSlug || undefined;
+        token.distributorStatus = (user as any).distributorStatus || "none";
+        token.creditLimitNpr = Number((user as any).creditLimitNpr || 0);
+        token.creditUsedNpr = Number((user as any).creditUsedNpr || 0);
       }
       return token;
     },
@@ -119,6 +125,9 @@ export const authOptions: NextAuthOptions = {
         (session.user as any).outletId = token.outletId || undefined;
         (session.user as any).outletName = token.outletName || undefined;
         (session.user as any).outletSlug = token.outletSlug || undefined;
+        (session.user as any).distributorStatus = token.distributorStatus || "none";
+        (session.user as any).creditLimitNpr = Number(token.creditLimitNpr || 0);
+        (session.user as any).creditUsedNpr = Number(token.creditUsedNpr || 0);
       }
       return session;
     },

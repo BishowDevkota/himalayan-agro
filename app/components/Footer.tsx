@@ -29,10 +29,9 @@ const footerLinks = [
     title: "Account",
     links: [
       { label: "Sign In", href: "/login" },
-      { label: "Create Account", href: "/register" },
+      { label: "Become a Distributor", href: "/register/distributor" },
       { label: "My Orders", href: "/my-orders" },
       { label: "Cart", href: "/cart" },
-      { label: "Become a Distributor", href: "/register/distributor" },
     ],
   },
   {

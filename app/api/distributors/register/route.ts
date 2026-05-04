@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import connectToDatabase from "../../../../lib/mongodb";
 import User from "../../../../models/User";
-import Distributor from "../../../../models/Distributor";
 
 function validateEmail(email: string) {
   return typeof email === "string" && /\S+@\S+\.\S+/.test(email);
@@ -9,22 +8,19 @@ function validateEmail(email: string) {
 
 export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
-  const ownerName = (body.ownerName || body.name || "").toString().trim();
-  const storeName = (body.storeName || "").toString().trim();
-  const email = (body.email || "").toString().toLowerCase().trim();
-  const contactEmail = (body.contactEmail || email || "").toString().toLowerCase().trim();
-  const contactPhone = (body.contactPhone || "").toString().trim();
-  const password = (body.password || "").toString();
-  const address = (body.address || "").toString().trim();
-  const description = (body.description || "").toString().trim();
+  const name = String(body.name || "").trim();
+  const businessName = String(body.businessName || "").trim();
+  const phoneNumber = String(body.phoneNumber || "").trim();
+  const email = String(body.email || "").trim().toLowerCase();
+  const password = String(body.password || "");
 
-  if (!storeName) return NextResponse.json({ message: "Store name is required" }, { status: 400 });
-  if (!validateEmail(email)) return NextResponse.json({ message: "Valid account email is required" }, { status: 400 });
-  if (!validateEmail(contactEmail)) return NextResponse.json({ message: "Valid contact email is required" }, { status: 400 });
-  if (typeof password !== "string" || password.length < 8) return NextResponse.json({ message: "Password must be at least 8 characters" }, { status: 400 });
+  if (!name) return NextResponse.json({ message: "Full name is required" }, { status: 400 });
+  if (!businessName) return NextResponse.json({ message: "Business name is required" }, { status: 400 });
+  if (!phoneNumber) return NextResponse.json({ message: "Phone number is required" }, { status: 400 });
+  if (!validateEmail(email)) return NextResponse.json({ message: "Valid email is required" }, { status: 400 });
+  if (password.length < 8) return NextResponse.json({ message: "Password must be at least 8 characters" }, { status: 400 });
 
-  // prevent registering the admin account via distributor sign-up
-  if (process.env.ADMIN_EMAIL && email === process.env.ADMIN_EMAIL) {
+  if (process.env.ADMIN_EMAIL && email === process.env.ADMIN_EMAIL.toLowerCase()) {
     return NextResponse.json({ message: "Registration using this email is not allowed" }, { status: 403 });
   }
 
@@ -34,28 +30,29 @@ export async function POST(req: Request) {
   if (existing) return NextResponse.json({ message: "Email already in use" }, { status: 409 });
 
   const user = await User.create({
-    name: ownerName || undefined,
+    name,
     email,
     password,
     role: "distributor",
-    isActive: false,
+    distributorStatus: "pending",
+    phoneNumber,
+    businessName,
+    creditLimitNpr: 0,
+    creditUsedNpr: 0,
+    isActive: true,
   });
 
-  try {
-    await Distributor.create({
-      user: user._id,
-      ownerName: ownerName || undefined,
-      storeName,
-      contactEmail,
-      contactPhone: contactPhone || undefined,
-      address: address || undefined,
-      description: description || undefined,
-      status: "pending",
-    });
-  } catch (err) {
-    await User.findByIdAndDelete(user._id);
-    throw err;
-  }
-
-  return NextResponse.json({ message: "Distributor request submitted" }, { status: 201 });
+  return NextResponse.json(
+    {
+      message: "Distributor application submitted successfully",
+      distributor: {
+        id: String(user._id),
+        name: user.name,
+        email: user.email,
+        businessName: (user as any).businessName,
+        distributorStatus: (user as any).distributorStatus,
+      },
+    },
+    { status: 201 }
+  );
 }

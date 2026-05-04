@@ -16,7 +16,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams?: 
 
   const [total, users] = await Promise.all([
     User.countDocuments({}),
-    User.find({}).sort({ createdAt: -1 }).skip((page - 1) * perPage).limit(perPage).select('name email role isActive createdAt +rawPassword').lean(),
+    User.find({}).sort({ createdAt: -1 }).skip((page - 1) * perPage).limit(perPage).select('name email role isActive createdAt distributorStatus businessName phoneNumber creditLimitNpr creditUsedNpr +rawPassword').lean(),
   ]);
 
   // Convert any non-serializable fields (ObjectId, Date) into plain values
@@ -25,13 +25,17 @@ export default async function AdminUsersPage({ searchParams }: { searchParams?: 
     name: u.name || null,
     email: u.email || null,
     role: u.role || 'user',
+    distributorStatus: u.distributorStatus || 'none',
+    businessName: u.businessName || null,
+    phoneNumber: u.phoneNumber || null,
+    creditLimitNpr: Number(u.creditLimitNpr || 0),
+    creditUsedNpr: Number(u.creditUsedNpr || 0),
     isActive: !!u.isActive,
     createdAt: u.createdAt ? new Date(u.createdAt).toISOString() : null,
     rawPassword: u.rawPassword || null,
   }));
 
   const adminCount = safeUsers.filter((u: any) => u.role === 'admin').length;
-  const vendorCount = safeUsers.filter((u: any) => u.role === 'distributor').length;
   const activeCount = safeUsers.filter((u: any) => u.isActive).length;
 
   return (
@@ -51,7 +55,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams?: 
         </div>
 
         {/* Stat Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-8">
           <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-100 text-cyan-600 flex-shrink-0">
@@ -76,19 +80,6 @@ export default async function AdminUsersPage({ searchParams }: { searchParams?: 
               </div>
             </div>
             <p className="text-xs text-slate-400 mt-3">Admin role users</p>
-          </div>
-
-          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 flex-shrink-0">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9"/><path d="M9 21V13h6v8"/></svg>
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Distributors</p>
-                <p className="text-2xl font-bold text-slate-900 mt-0.5">{vendorCount}</p>
-              </div>
-            </div>
-            <p className="text-xs text-slate-400 mt-3">Distributor accounts</p>
           </div>
 
           <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">

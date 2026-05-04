@@ -13,6 +13,7 @@ type SessionUser = {
   permissions?: string[];
   employeeRole?: string;
   outletSlug?: string;
+  distributorStatus?: string;
 };
 
 function IconSearch({ size = 20 }: { size?: number }) {
@@ -226,15 +227,15 @@ export default function Navbar() {
   const isHomePage = pathname === "/";
   const hideTopBar = scrolled;
 
-  const desktopCta = !session
-    ? { label: "Become a Distributor", href: "/register/distributor" }
-    : role === "admin"
+  const desktopCta = session
+    ? role === "admin"
       ? { label: "Admin", href: "/admin/dashboard" }
       : role === "employee"
         ? { label: "Employee", href: adminTarget }
         : role === "distributor"
-          ? { label: "Distributor", href: "/store" }
-          : null;
+          ? { label: "Distributor", href: "/register/distributor" }
+        : null
+    : { label: "Become a Distributor", href: "/register/distributor" };
 
   function navigateAndClose(href: string) {
     setMobileOpen(false);
@@ -581,6 +582,10 @@ export default function Navbar() {
                   onClick={() => router.push("/login")}
                   className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
                 >Login</motion.button>
+                <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
+                  onClick={() => router.push("/register/distributor")}
+                  className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-[#0891b2] hover:bg-[#0e7490] transition-colors duration-200"
+                >Become a Distributor</motion.button>
               </div>
             )}
 
@@ -846,10 +851,16 @@ export default function Navbar() {
                     </button>
                   )}
                   {!session ? (
-                    <button onClick={() => navigateAndClose("/login")} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all duration-200">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4" /><polyline points="10 17 15 12 10 7" /><line x1="15" y1="12" x2="3" y2="12" /></svg>
-                      Sign in
-                    </button>
+                    <>
+                      <button onClick={() => navigateAndClose("/login")} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all duration-200">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4" /><polyline points="10 17 15 12 10 7" /><line x1="15" y1="12" x2="3" y2="12" /></svg>
+                        Sign in
+                      </button>
+                      <button onClick={() => navigateAndClose("/register/distributor")} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-cyan-400 hover:bg-cyan-500/15 transition-all duration-200">
+                        <span className="text-cyan-400"><IconStorefront size={18} /></span>
+                        Become a Distributor
+                      </button>
+                    </>
                   ) : (
                     <>
                       <button onClick={() => navigateAndClose("/cart")} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-200 transition-all duration-200">

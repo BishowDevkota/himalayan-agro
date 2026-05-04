@@ -7,6 +7,11 @@ export interface IUser extends Document {
   password?: string;
   rawPassword?: string;
   role: "user" | "admin" | "distributor";
+  distributorStatus?: "none" | "pending" | "approved" | "rejected";
+  phoneNumber?: string;
+  businessName?: string;
+  creditLimitNpr?: number;
+  creditUsedNpr?: number;
   isActive?: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -20,6 +25,11 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
     password: { type: String },
     rawPassword: { type: String, select: false },
     role: { type: String, enum: ["user", "admin", "distributor"], default: "user" },
+    distributorStatus: { type: String, enum: ["none", "pending", "approved", "rejected"], default: "none" },
+    phoneNumber: { type: String, index: true },
+    businessName: { type: String },
+    creditLimitNpr: { type: Number, default: 0, min: 0 },
+    creditUsedNpr: { type: Number, default: 0, min: 0 },
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true }

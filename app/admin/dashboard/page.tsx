@@ -3,7 +3,6 @@ import connectToDatabase from "../../../lib/mongodb";
 import User from "../../../models/User";
 import Product from "../../../models/Product";
 import Order from "../../../models/Order";
-import Distributor from "../../../models/Distributor";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 import { redirect } from "next/navigation";
@@ -37,7 +36,6 @@ export default async function AdminDashboardPage() {
     users,
     products,
     orders,
-    distributors,
     ordersLast8Weeks,
     revenueNowAgg,
     revenuePrevAgg,
@@ -47,7 +45,6 @@ export default async function AdminDashboardPage() {
     User.countDocuments({}),
     Product.countDocuments({}),
     Order.countDocuments({}),
-    Distributor.countDocuments({}),
     Order.find({ createdAt: { $gte: start8w } }).select("totalAmount createdAt").lean(),
     Order.aggregate([
       { $match: { createdAt: { $gte: start30 } } },
@@ -139,7 +136,7 @@ export default async function AdminDashboardPage() {
         </div>
 
         {/* Stat Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mb-8">
           <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 flex-shrink-0">
@@ -179,18 +176,6 @@ export default async function AdminDashboardPage() {
             <p className="text-xs text-slate-400 mt-3">All-time orders placed</p>
           </div>
 
-          <div className="bg-white border border-slate-200/60 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-100 text-violet-600 flex-shrink-0">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9"/><path d="M9 21V13h6v8"/></svg>
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-medium text-slate-400 uppercase tracking-wider">Distributors</p>
-                <p className="text-2xl font-bold text-slate-900 mt-0.5">{distributors}</p>
-              </div>
-            </div>
-            <p className="text-xs text-slate-400 mt-3">Store applications</p>
-          </div>
         </div>
 
         {/* Revenue & Performance */}

@@ -12,7 +12,6 @@ export default async function OutletEmployeeOrdersPage({ params }: { params: { s
   if ("redirectTo" in resolved) return redirect(resolved.redirectTo);
 
   const { slug, role, outlet } = resolved;
-  if (role !== "accountant") return redirect(outletEmployeeBasePath(slug, "accountant"));
 
   await connectToDatabase();
   const orders = await Order.find({}).sort({ createdAt: -1 }).limit(300).lean();
@@ -29,6 +28,12 @@ export default async function OutletEmployeeOrdersPage({ params }: { params: { s
             <h1 className="text-3xl font-bold text-slate-900">Orders</h1>
             <p className="mt-2 text-sm text-slate-500">Manage orders for {outlet.name}</p>
           </div>
+          <a
+            href={`${outletEmployeeBasePath(slug, role)}/order/new`}
+            className="px-4 py-2.5 bg-cyan-600 text-white font-medium rounded-lg hover:bg-cyan-700 transition-colors inline-block"
+          >
+            + Create Manual Order
+          </a>
         </div>
 
         <AdminOrdersClient initialOrders={outletOrders} orderBasePath={`${outletEmployeeBasePath(slug, role)}/order`} />

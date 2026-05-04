@@ -9,6 +9,29 @@ export default async function CheckoutPage() {
   const session = (await getServerSession(authOptions as any)) as any;
   if (!session) return <div className="p-12 text-gray-900">Please sign in to checkout.</div>;
 
+  const role = session?.user?.role;
+  const distributorStatus = session?.user?.distributorStatus;
+  if (role !== "distributor" || distributorStatus !== "approved") {
+    return (
+      <div className="max-w-3xl mx-auto p-8 sm:p-12">
+        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 sm:p-8">
+          <h1 className="text-2xl font-bold text-amber-900">Online ordering is only for approved distributors</h1>
+          <p className="mt-3 text-sm text-amber-800">
+            If you are a normal customer, please visit your nearest outlet and buy directly.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <Link href="/outlet" className="inline-flex rounded-lg bg-amber-700 px-4 py-2 text-sm font-semibold text-white hover:bg-amber-800">
+              Visit outlet
+            </Link>
+            <Link href="/register/distributor" className="inline-flex rounded-lg border border-amber-300 px-4 py-2 text-sm font-semibold text-amber-900 hover:bg-amber-100">
+              Become a distributor
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white text-gray-900 min-h-screen">
       <div className="bg-[#f8faf9] border-b border-gray-100">

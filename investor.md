@@ -3,11 +3,11 @@
 ## 1) What this company does
 
 We run a digital agriculture-commerce platform that connects:
-- **Farm-focused suppliers/distributors** who list products
+- **Agricultural product suppliers** who manage inventory through our system
 - **Customers** who buy those products online
-- **Our operations team** who manages quality, approvals, and fulfillment visibility
+- **Our operations team** who manages quality, product catalog, and order fulfillment visibility
 
-In simple terms: we are building the online marketplace and operating system for agricultural products.
+In simple terms: we are building the online storefront and operating system for agricultural products.
 
 ---
 
@@ -25,13 +25,10 @@ Our platform solves this by:
 
 ## 3) Business model (how we make money)
 
-Primary and potential revenue streams:
+Primary revenue streams:
 - **Transaction margin/commission** on orders
-- **Distributor service fees** (optional premium tools/placement)
 - **Logistics/fulfillment value-added services** (if enabled)
 - **B2B bulk supply channels** for institutional buyers
-
-This creates recurring transactional revenue with room for higher-margin service layers.
 
 ---
 
@@ -39,12 +36,9 @@ This creates recurring transactional revenue with room for higher-margin service
 
 The system already supports core commercial operations:
 - Customer registration, login, shopping cart, checkout, order tracking
-- Distributor registration and approval workflow
-- Distributor product management and revenue request workflow
-- Admin/employee back office for product, category, user, order, and payout control
+- Multi-outlet product catalog management
+- Admin/employee back office for product, category, user, outlet, and order control
 - News/content module for brand and market communication
-
-This means the business has a usable digital core, not just a prototype screen.
 
 ---
 

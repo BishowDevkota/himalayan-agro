@@ -35,7 +35,7 @@ export async function GET(req: Request) {
       .sort({ createdAt: -1 })
       .skip((page - 1) * perPage)
       .limit(perPage)
-      .select('name email role isActive createdAt +rawPassword')
+      .select('name email role isActive createdAt distributorStatus businessName phoneNumber creditLimitNpr creditUsedNpr +rawPassword')
       .lean(),
   ]);
 
@@ -51,6 +51,9 @@ export async function POST(req: Request) {
   const email = (body.email || '').toString().toLowerCase().trim();
   const password = (body.password || '').toString();
   const role = body.role === 'admin' ? 'admin' : body.role === 'distributor' ? 'distributor' : 'user';
+  const businessName = (body.businessName || '').toString().trim();
+  const phoneNumber = (body.phoneNumber || '').toString().trim();
+  const creditLimitNpr = Math.max(0, Number(body.creditLimitNpr || 0));
 
   if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     return NextResponse.json({ message: 'Invalid email' }, { status: 400 });
@@ -63,13 +66,28 @@ export async function POST(req: Request) {
   const exists = await User.findOne({ email }).lean();
   if (exists) return NextResponse.json({ message: 'Email already in use' }, { status: 409 });
 
-  const user = new User({ name: name || undefined, email, password, role });
+  const user = new User({
+    name: name || undefined,
+    email,
+    password,
+    role,
+    businessName: role === 'distributor' ? businessName || undefined : undefined,
+    phoneNumber: role === 'distributor' ? phoneNumber || undefined : undefined,
+    distributorStatus: role === 'distributor' ? 'approved' : 'none',
+    creditLimitNpr: role === 'distributor' ? creditLimitNpr : 0,
+    creditUsedNpr: 0,
+  });
   await user.save();
   const safe = {
     _id: user._id,
     name: user.name,
     email: user.email,
     role: user.role,
+    distributorStatus: (user as any).distributorStatus,
+    businessName: (user as any).businessName,
+    phoneNumber: (user as any).phoneNumber,
+    creditLimitNpr: Number((user as any).creditLimitNpr || 0),
+    creditUsedNpr: Number((user as any).creditUsedNpr || 0),
     isActive: user.isActive,
     createdAt: user.createdAt,
   };

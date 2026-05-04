@@ -12,8 +12,8 @@ This project includes:
 
 - **Public storefront** (product browsing, search, category filtering, product details)
 - **Customer flow** (register/login, cart, checkout, order history, order detail, order cancel)
-- **Distributor flow** (application, approval, distributor dashboard, distributor-owned product management, distributor revenue/payment requests)
-- **Admin flow** (dashboard + management for products, categories, distributors, users, employees, news, payment requests, orders)
+- **Outlet management** (multi-outlet product management and order tracking)
+- **Admin flow** (dashboard + management for products, categories, users, employees, outlets, news, orders)
 - **Employee sub-roles** with permission-based access to specific admin modules
 - **Content and communications** (news module, contact endpoint, webhook-based notifications)
 
@@ -37,16 +37,16 @@ This project includes:
 ### Roles
 
 - `user` — customer account
-- `distributor` — vendor/store owner (must be approved)
 - `admin` — full system access
 - `employee` — staff account with granular permissions
+- `outlet-admin` — outlet management access
 
 ### Employee permission sets
 
 Default permission groups are defined in `lib/permissions.ts`:
 
-- `accountant` → payment request read/write
-- `product_manager` → products/categories/distributors management
+- `accountant` → order management and reporting
+- `product_manager` → products/categories management
 - `reporter` → news management
 
 Middleware and API-level checks enforce access:

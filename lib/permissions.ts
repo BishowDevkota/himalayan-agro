@@ -1,5 +1,5 @@
 export const EMPLOYEE_ROLE_PERMISSIONS: Record<string, string[]> = {
-  accountant: ["payments:read", "payments:write", "orders:read", "orders:write"],
+  accountant: ["orders:read", "orders:write"],
   shopkeeper: ["products:read", "products:write", "categories:read", "categories:write"],
 };
 
@@ -49,14 +49,6 @@ export function permissionForAdminApi(pathname: string, method: string) {
     return ["products:write", "news:write"];
   }
 
-  if (pathname.startsWith("/api/admin/payment-requests")) {
-    return method === "GET" ? "payments:read" : "payments:write";
-  }
-
-  if (pathname.startsWith("/api/admin/distributors")) {
-    return method === "GET" ? "distributors:read" : "distributors:approve";
-  }
-
   if (pathname.startsWith("/api/admin/products")) {
     return method === "GET" ? "products:read" : "products:write";
   }
@@ -75,9 +67,7 @@ export function permissionForAdminApi(pathname: string, method: string) {
 export function adminLandingForPermissions(permissions: string[] = []) {
   if (permissions.includes("orders:read")) return "/admin/orders";
   if (permissions.includes("products:read")) return "/admin/products";
-  if (permissions.includes("payments:read")) return "/admin/payment-requests";
   if (permissions.includes("news:read")) return "/admin/news";
-  if (permissions.includes("distributors:read")) return "/admin/distributor";
   if (permissions.includes("categories:read")) return "/admin/categories";
   return "/admin/dashboard";
 }

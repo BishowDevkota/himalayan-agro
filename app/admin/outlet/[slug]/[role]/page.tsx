@@ -12,6 +12,7 @@ export default async function OutletEmployeeLandingPage({ params }: { params: { 
   const cards = role === "accountant"
     ? [
         { href: `${basePath}/order`, title: "Order management", desc: "Review, filter, and update outlet orders." },
+        { href: `${basePath}/revenue/payment`, title: "Receive payment", desc: "Reduce distributor credit after payment is received." },
       ]
     : [
         { href: `${basePath}/product`, title: "Product management", desc: "Create, update, and log products for this outlet." },

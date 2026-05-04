@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 function roleColor(r: string) {
   if (r === "admin") return "bg-amber-50 text-amber-700";
-  if (r === "distributor") return "bg-emerald-50 text-emerald-700";
+  if (r === "distributor") return "bg-cyan-50 text-cyan-700";
   return "bg-slate-100 text-slate-700";
 }
 
@@ -111,6 +111,9 @@ export default function AdminUsersClient({
   const [createEmail, setCreateEmail] = useState("");
   const [createPassword, setCreatePassword] = useState("");
   const [createRole, setCreateRole] = useState<"user" | "admin" | "distributor">("user");
+  const [createBusinessName, setCreateBusinessName] = useState("");
+  const [createPhoneNumber, setCreatePhoneNumber] = useState("");
+  const [createCreditLimitNpr, setCreateCreditLimitNpr] = useState("0");
 
   const fetchUsers = useCallback(async (opts: { page?: number; q?: string } = {}) => {
     setLoading(true);
@@ -152,7 +155,15 @@ export default function AdminUsersClient({
       const res = await fetch('/api/admin/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: createName || undefined, email: createEmail, password: createPassword, role: createRole }),
+        body: JSON.stringify({
+          name: createName || undefined,
+          email: createEmail,
+          password: createPassword,
+          role: createRole,
+          businessName: createRole === 'distributor' ? createBusinessName : undefined,
+          phoneNumber: createRole === 'distributor' ? createPhoneNumber : undefined,
+          creditLimitNpr: createRole === 'distributor' ? Number(createCreditLimitNpr || 0) : undefined,
+        }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.message || JSON.stringify(json));
@@ -161,6 +172,9 @@ export default function AdminUsersClient({
       setCreateEmail('');
       setCreatePassword('');
       setCreateRole('user');
+      setCreateBusinessName('');
+      setCreatePhoneNumber('');
+      setCreateCreditLimitNpr('0');
       setShowCreate(false);
       await fetchUsers({ page: 1 });
     } catch (err: any) {
@@ -228,6 +242,22 @@ export default function AdminUsersClient({
                 <option value="distributor">Distributor</option>
               </select>
             </div>
+            {createRole === 'distributor' && (
+              <>
+                <div>
+                  <label className="block text-[11px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">Business</label>
+                  <input className="w-44 rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all" placeholder="business name" value={createBusinessName} onChange={(e) => setCreateBusinessName(e.target.value)} />
+                </div>
+                <div>
+                  <label className="block text-[11px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">Phone</label>
+                  <input className="w-36 rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all" placeholder="phone" value={createPhoneNumber} onChange={(e) => setCreatePhoneNumber(e.target.value)} />
+                </div>
+                <div>
+                  <label className="block text-[11px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">Credit Limit NPR</label>
+                  <input type="number" min={0} className="w-36 rounded-lg border border-slate-200 bg-slate-50/50 px-3.5 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-500 outline-none transition-all" placeholder="0" value={createCreditLimitNpr} onChange={(e) => setCreateCreditLimitNpr(e.target.value)} />
+                </div>
+              </>
+            )}
             <button className="rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white px-4 py-2 text-sm font-medium transition-colors disabled:opacity-50" type="submit" disabled={creating}>
               {creating ? 'Creating…' : 'Create'}
             </button>
@@ -244,6 +274,7 @@ export default function AdminUsersClient({
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">User</th>
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Role</th>
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Status</th>
+              <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Distributor</th>
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Password</th>
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Joined</th>
               <th className="px-5 py-3 text-left text-[11px] uppercase tracking-wider text-slate-500 font-semibold">Actions</th>
@@ -251,10 +282,10 @@ export default function AdminUsersClient({
           </thead>
           <tbody className="divide-y divide-slate-100">
             {loading && (
-              <tr><td colSpan={6} className="px-5 py-12 text-center text-sm text-slate-400">Loading…</td></tr>
+              <tr><td colSpan={7} className="px-5 py-12 text-center text-sm text-slate-400">Loading…</td></tr>
             )}
             {!loading && users.length === 0 && (
-              <tr><td colSpan={6} className="px-5 py-12 text-center text-sm text-slate-400">No users found.</td></tr>
+              <tr><td colSpan={7} className="px-5 py-12 text-center text-sm text-slate-400">No users found.</td></tr>
             )}
             {!loading && users.map((u: any) => (
               <tr key={u._id} className="align-top hover:bg-cyan-50/30 transition-colors">
@@ -283,6 +314,28 @@ export default function AdminUsersClient({
                 </td>
 
                 <td className="px-5 py-3.5">
+                  {u.role === 'distributor' ? (
+                    <div className="text-xs space-y-1">
+                      <div className={`inline-flex items-center px-2 py-0.5 rounded-md font-semibold ${
+                        u.distributorStatus === 'approved'
+                          ? 'bg-emerald-50 text-emerald-700'
+                          : u.distributorStatus === 'pending'
+                            ? 'bg-amber-50 text-amber-700'
+                            : u.distributorStatus === 'rejected'
+                              ? 'bg-rose-50 text-rose-700'
+                              : 'bg-slate-100 text-slate-700'
+                      }`}>
+                        {u.distributorStatus || 'none'}
+                      </div>
+                      <div className="text-slate-500">Limit: NPR {Number(u.creditLimitNpr || 0).toFixed(0)}</div>
+                      <div className="text-slate-500">Used: NPR {Number(u.creditUsedNpr || 0).toFixed(0)}</div>
+                    </div>
+                  ) : (
+                    <span className="text-xs text-slate-400">—</span>
+                  )}
+                </td>
+
+                <td className="px-5 py-3.5">
                   <PasswordCell userId={u._id} rawPassword={u.rawPassword} />
                 </td>
 
@@ -291,7 +344,14 @@ export default function AdminUsersClient({
                 </td>
 
                 <td className="px-5 py-3.5">
-                  <UserActionsClient userId={u._id} initialRole={u.role} initialActive={u.isActive} />
+                  <UserActionsClient
+                    userId={u._id}
+                    initialRole={u.role}
+                    initialActive={u.isActive}
+                    distributorStatus={u.distributorStatus}
+                    creditLimitNpr={Number(u.creditLimitNpr || 0)}
+                    creditUsedNpr={Number(u.creditUsedNpr || 0)}
+                  />
                 </td>
               </tr>
             ))}

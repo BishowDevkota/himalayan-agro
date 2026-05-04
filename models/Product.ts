@@ -10,7 +10,6 @@ export interface IProduct extends Document {
   images: string[];
   stock: number;
   isActive: boolean;
-  distributor?: mongoose.Types.ObjectId;
   outlet?: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
@@ -27,7 +26,6 @@ const ProductSchema: Schema<IProduct> = new mongoose.Schema(
     images: { type: [String], default: [] },
     stock: { type: Number, required: true, default: 0 },
     isActive: { type: Boolean, default: true },
-    distributor: { type: mongoose.Schema.Types.ObjectId, ref: "Distributor", index: true },
     outlet: { type: mongoose.Schema.Types.ObjectId, ref: "Outlet", index: true },
   },
   { timestamps: true }

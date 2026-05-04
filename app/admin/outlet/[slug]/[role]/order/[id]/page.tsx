@@ -5,6 +5,7 @@ import Order from "../../../../../../../models/Order";
 import { orderBelongsToOutlet } from "../../../../../../../lib/order-access";
 import AdminOrderActions from "../../../../../../components/admin/AdminOrderActions";
 import { resolveOutletEmployeeRoute, outletEmployeeBasePath } from "../../_utils";
+import OutletOrderActionsClient from "../../../../../../components/outlet/OutletOrderActionsClient";
 
 export default async function OutletEmployeeOrderDetailPage({ params }: { params: { slug: string; role: string; id: string } } | { params: Promise<{ slug: string; role: string; id: string }> }) {
   const resolvedParams = params instanceof Promise ? await params : params;
@@ -13,7 +14,6 @@ export default async function OutletEmployeeOrderDetailPage({ params }: { params
   if ("redirectTo" in resolved) return redirect(resolved.redirectTo);
 
   const { slug, role, outlet } = resolved;
-  if (role !== "accountant") return redirect(outletEmployeeBasePath(slug, "accountant"));
 
   await connectToDatabase();
   const order = await Order.findById(id).populate("user", "email name").lean();
@@ -107,7 +107,13 @@ export default async function OutletEmployeeOrderDetailPage({ params }: { params
           </div>
 
           <aside id="actions">
-            <AdminOrderActions orderId={String(order._id)} initialOrderStatus={order.orderStatus} initialPaymentStatus={order.paymentStatus} />
+            <div className="bg-white/90 border border-slate-100 rounded-3xl p-6 shadow-sm space-y-4">
+              <h3 className="text-base font-semibold text-slate-900">Order Status</h3>
+              <OutletOrderActionsClient
+                orderId={String(order._id)}
+                currentStatus={order.orderStatus}
+              />
+            </div>
           </aside>
         </div>
       </div>

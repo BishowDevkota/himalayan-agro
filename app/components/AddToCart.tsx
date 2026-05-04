@@ -1,25 +1,40 @@
 "use client";
 
 import React, { useState } from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 export default function AddToCart({ product }: { product: any }) {
   const [qty, setQty] = useState(1);
   const { data: session } = useSession();
+  const role = (session as any)?.user?.role;
+  const distributorStatus = (session as any)?.user?.distributorStatus;
   const router = useRouter();
   const disabled = product.stock < 1;
 
+  function enforceDistributorAccess() {
+    if (!session) {
+      toast.info("Online purchase is for distributors only. Please sign in as a distributor account.");
+      router.push("/register/distributor");
+      return false;
+    }
+    if (role !== "distributor" || distributorStatus !== "approved") {
+      toast.error("Only approved distributors can buy online. Normal customers should buy from outlet.");
+      return false;
+    }
+    return true;
+  }
+
   function buyNow() {
+    if (!enforceDistributorAccess()) return;
     const safeQty = Math.max(1, Math.min(Number(product.stock) || 1, Number(qty) || 1));
     const checkoutUrl = `/checkout?buyNow=${encodeURIComponent(product._id)}&qty=${safeQty}`;
-    if (!session) return signIn(undefined, { callbackUrl: checkoutUrl });
     router.push(checkoutUrl);
   }
 
   async function add() {
-    if (!session) return signIn(undefined, { callbackUrl: `/product/${product._id}` });
+    if (!enforceDistributorAccess()) return;
     try {
       const res = await fetch(`/api/cart`, {
         method: "POST",

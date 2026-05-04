@@ -27,12 +27,16 @@ export interface IOrder extends Document {
   items: IOrderItem[];
   totalAmount: number;
   outlet?: mongoose.Types.ObjectId;
+  distributorCreditApplied?: boolean;
+  distributorCreditAmount?: number;
   paymentStatus: PaymentStatus;
   paymentMethod?: PaymentMethod;
   shippingAddress?: IShippingAddress;
   orderStatus: OrderStatus;
   inventoryApplied?: boolean;
   inventoryAppliedAt?: Date;
+  isManualOrder?: boolean;
+  createdBy?: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 
@@ -67,12 +71,16 @@ const OrderSchema: Schema<IOrder> = new mongoose.Schema(
     items: { type: [OrderItemSchema], required: true },
     totalAmount: { type: Number, required: true },
     outlet: { type: mongoose.Schema.Types.ObjectId, ref: "Outlet", index: true },
+    distributorCreditApplied: { type: Boolean, default: false },
+    distributorCreditAmount: { type: Number, default: 0, min: 0 },
     paymentMethod: { type: String, enum: ["cod", "card"], default: "cod" },
     shippingAddress: { type: ShippingSchema },
     paymentStatus: { type: String, enum: ["pending", "paid", "failed"], default: "pending" },
     orderStatus: { type: String, enum: ["pending", "processing", "shipped", "delivered", "cancelled"], default: "pending" },
     inventoryApplied: { type: Boolean, default: false },
     inventoryAppliedAt: { type: Date },
+    isManualOrder: { type: Boolean, default: false },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "Employee" },
   },
   { timestamps: true }
 );

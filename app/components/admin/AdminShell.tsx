@@ -85,28 +85,6 @@ const navItems: NavItem[] = [
     ),
   },
   {
-    href: "/admin/distributor",
-    label: "Distributors",
-    permission: "distributors:read",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 9l1.5-5h15L21 9M3 9h18M3 9v10a2 2 0 002 2h14a2 2 0 002-2V9" />
-        <path d="M9 21V13h6v8" />
-      </svg>
-    ),
-  },
-  {
-    href: "/admin/payment-requests",
-    label: "Payments",
-    permission: "payments:read",
-    icon: (
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
-        <line x1="1" y1="10" x2="23" y2="10" />
-      </svg>
-    ),
-  },
-  {
     href: "/admin/news",
     label: "News",
     permission: "news:read",

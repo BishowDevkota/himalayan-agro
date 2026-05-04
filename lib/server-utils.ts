@@ -24,13 +24,3 @@ export function requireAdmin(user: any) {
   }
   return user;
 }
-
-export function requireVendor(user: any) {
-  requireUser(user);
-  if (user.role !== "distributor") {
-    const err: any = new Error("Distributor role required");
-    err.status = 403;
-    throw err;
-  }
-  return user;
-}
