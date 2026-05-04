@@ -12,7 +12,7 @@ const slides = [
     btnText: "Explore Solutions",
     href: "/shop",
     accentColor: "#d97706",
-    img: "https://images.unsplash.com/photo-1605000797499-95a51c5269ae?auto=format&fit=crop&q=80&w=2000",
+    img: "/first_image_hnkcl.jpg",
     stats: [
       { value: "24K", label: "Connected Sensors", sublabel: "57 Active Nodes" },
       { value: "215", label: "Irrigated Zones", sublabel: "18 Modern Zones" },
