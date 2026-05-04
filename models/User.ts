@@ -13,6 +13,9 @@ export interface IUser extends Document {
   creditLimitNpr?: number;
   creditUsedNpr?: number;
   isActive?: boolean;
+  citizenshipFront?: string; // Cloudinary URL
+  citizenshipBack?: string; // Cloudinary URL
+  panCertificate?: string; // Cloudinary URL
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidate: string): Promise<boolean>;
@@ -31,6 +34,9 @@ const UserSchema: Schema<IUser> = new mongoose.Schema(
     creditLimitNpr: { type: Number, default: 0, min: 0 },
     creditUsedNpr: { type: Number, default: 0, min: 0 },
     isActive: { type: Boolean, default: true },
+    citizenshipFront: { type: String }, // Cloudinary URL
+    citizenshipBack: { type: String }, // Cloudinary URL
+    panCertificate: { type: String }, // Cloudinary URL
   },
   { timestamps: true }
 );

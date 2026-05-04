@@ -85,6 +85,15 @@ function IconWhatsApp({ size = 18 }: { size?: number }) {
   );
 }
 
+function IconLocation({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M12 21s6-5.2 6-11a6 6 0 10-12 0c0 5.8 6 11 6 11z" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="12" cy="10" r="2" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
 const aboutDropdownItems = [
   { label: "Who We Are", href: "/about-us/who-we-are", description: "Overview and mission" },
   { label: "Board of Directors", href: "/about-us/board-of-directors", description: "Governance and leadership" },
@@ -116,6 +125,10 @@ const navLinks = [
 ];
 
 const topBarContacts = {
+  location: {
+    label: "Dharapani Marga (Road), Pokhara",
+    href: "https://www.google.com/maps/search/?api=1&query=Dharapani%20Marga%20%28Road%29%2C%20Pokhara",
+  },
   phones: [
     { label: "+977-9851227052", href: "tel:+9779851227052" },
     { label: "+977-9851312052", href: "tel:+9779851312052" },
@@ -310,7 +323,22 @@ export default function Navbar() {
         className={`pointer-events-auto w-full overflow-hidden bg-[#D97706] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${hideTopBar ? "max-h-0 opacity-0 -translate-y-2" : "max-h-24 opacity-100 translate-y-0"}`}
       >
         <div className={`${topBarRow} min-h-[48px] py-2`}>
-          <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1 text-[11px] sm:text-sm font-semibold">
+          {/* Left: Location */}
+          <div className="flex items-center flex-shrink-0">
+            <Link
+              href={topBarContacts.location.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 hover:text-white/80 transition-colors duration-200"
+              aria-label={topBarContacts.location.label}
+            >
+              <IconLocation size={16} />
+              <span className="whitespace-nowrap text-[11px] sm:text-sm font-semibold">{topBarContacts.location.label}</span>
+            </Link>
+          </div>
+
+          {/* Center: Phones and Email */}
+          <div className="flex min-w-0 flex-1 justify-center flex-wrap items-center gap-x-4 gap-y-1 text-[11px] sm:text-sm font-semibold">
             {contactItems.map((item, index) => (
               <div key={item.label} className="flex items-center gap-3">
                 {index > 0 && <span className="text-white/70">|</span>}
@@ -320,16 +348,22 @@ export default function Navbar() {
               </div>
             ))}
           </div>
-          <div className="flex shrink-0 items-center gap-2">
+
+          {/* Right: Action icons */}
+          <div className="ml-3 flex shrink-0 items-center gap-3 sm:ml-5 sm:gap-4 lg:ml-8">
             <a
               href={topBarContacts.whatsappHref}
+              title="WhatsApp"
               className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors duration-200"
               aria-label="WhatsApp"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <IconWhatsApp size={16} />
             </a>
             <Link
               href={topBarContacts.email.href}
+              title="Email"
               className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white hover:bg-white/25 transition-colors duration-200"
               aria-label="Email"
             >
@@ -582,10 +616,6 @@ export default function Navbar() {
                   onClick={() => router.push("/login")}
                   className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200"
                 >Login</motion.button>
-                <motion.button whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
-                  onClick={() => router.push("/register/distributor")}
-                  className="px-4 py-2 text-sm font-semibold text-white rounded-full bg-[#0891b2] hover:bg-[#0e7490] transition-colors duration-200"
-                >Become a Distributor</motion.button>
               </div>
             )}
 

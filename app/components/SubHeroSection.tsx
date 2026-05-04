@@ -48,6 +48,8 @@ export default function SubHeroSection({
   overlay = 'light',
 }: SubHeroSectionProps) {
   const pathname = usePathname();
+  const hasStats = Boolean(stats && stats.length > 0);
+  const mobileStats = stats ?? [];
 
   const segments = pathname
     .split('/')
@@ -60,8 +62,8 @@ export default function SubHeroSection({
     <section
       className="relative z-0 w-full overflow-hidden"
       style={{
-        height: 'calc((100dvh - var(--top-bar-height, 0px)) * 0.6)',
-        minHeight: 'calc((100dvh - var(--top-bar-height, 0px)) * 0.6)',
+        height: hasStats ? 'calc((100dvh - var(--top-bar-height, 0px)) * 0.6)' : 'auto',
+        minHeight: hasStats ? 'calc((100dvh - var(--top-bar-height, 0px)) * 0.6)' : 'auto',
         backgroundColor: isDark ? '#0a1628' : '#f5f0e8',
       }}
     >
@@ -119,7 +121,9 @@ export default function SubHeroSection({
       />
 
       {/* ── Content ── */}
-      <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-start pt-24 sm:pt-28 lg:pt-32">
+      <div
+        className={`relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${hasStats ? 'h-full' : 'min-h-[22rem] sm:min-h-[24rem]'} flex items-start pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-0`}
+      >
         <div className="max-w-xl lg:max-w-lg py-0 sm:py-0">
           <motion.div
             variants={containerVariants}
@@ -219,12 +223,12 @@ export default function SubHeroSection({
             )}
 
             {/* Mobile stats row */}
-            {stats && stats.length > 0 && (
+            {hasStats && (
               <motion.div
                 variants={fadeUpVariants}
                 className="flex gap-4 sm:gap-6 mt-6 sm:mt-8 lg:hidden"
               >
-                {stats.map((stat, idx) => (
+                {mobileStats.map((stat, idx) => (
                   <div
                     key={idx}
                     className={idx > 0 ? 'pl-6' : ''}
