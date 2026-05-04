@@ -28,7 +28,13 @@ export default function StatsBar() {
       <div className="max-w-5xl mx-auto px-4 py-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {stats.map((s) => (
-            <motion.div key={s.label} initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center">
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="group rounded-2xl border border-gray-100 bg-white px-4 py-5 text-center shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#1C2B14]/15 hover:shadow-[0_16px_40px_rgba(28,43,20,0.08)]"
+            >
               <CountItem label={s.label} value={s.value} suffix={s.suffix} />
             </motion.div>
           ))}
@@ -42,8 +48,8 @@ function CountItem({ label, value, suffix }: { label: string; value: number; suf
   const count = useCount(value);
   return (
     <div>
-      <div className="text-2xl md:text-3xl font-bold text-gray-900">{count}{suffix || ""}</div>
-      <div className="mt-1 text-sm text-gray-600">{label}</div>
+      <div className="text-2xl font-bold text-gray-900 transition-colors duration-300 group-hover:text-[#1C2B14] md:text-3xl">{count}{suffix || ""}</div>
+      <div className="mt-1 text-sm text-gray-600 transition-colors duration-300 group-hover:text-gray-700">{label}</div>
     </div>
   );
 }

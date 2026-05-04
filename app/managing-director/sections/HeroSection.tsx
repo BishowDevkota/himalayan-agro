@@ -22,8 +22,8 @@ export default function HeroSection({ imageSrc }: Props) {
         transition={{ duration: 0.7, ease: "easeOut" }}
         className="mx-auto max-w-6xl px-4"
       >
-        <div className="overflow-hidden rounded-3xl border border-[#1C2B14]/10 bg-white shadow-[0_24px_60px_rgba(28,43,20,0.08)]">
-          <div className="grid gap-8 p-6 md:p-10 lg:grid-cols-[280px_1fr] lg:items-center">
+        <div className="group overflow-hidden rounded-3xl border border-[#1C2B14]/10 bg-white shadow-[0_24px_60px_rgba(28,43,20,0.08)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#1C2B14]/15 hover:shadow-[0_30px_80px_rgba(28,43,20,0.12)]">
+          <div className="grid gap-10 p-6 md:p-10 lg:grid-cols-[minmax(22rem,34rem)_1fr] lg:items-center xl:grid-cols-[minmax(24rem,36rem)_1fr]">
             <motion.div
               initial={{ opacity: 0, x: -18 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -31,18 +31,18 @@ export default function HeroSection({ imageSrc }: Props) {
               transition={{ duration: 0.7, ease: "easeOut" }}
               className="flex justify-center lg:justify-start"
             >
-              <div className="relative h-44 w-44 overflow-hidden rounded-full border-[10px] border-[#1C2B14]/10 bg-[#f6fbf4] shadow-[0_18px_50px_rgba(28,43,20,0.18)] md:h-56 md:w-56">
+              <div className="relative aspect-square w-full max-w-[24rem] overflow-hidden rounded-full border-[14px] border-[#1C2B14]/10 bg-[#f6fbf4] shadow-[0_22px_60px_rgba(28,43,20,0.18)] transition-transform duration-300 ease-out group-hover:scale-[1.015] sm:max-w-[26rem] md:max-w-[28rem] lg:max-w-[32rem] xl:max-w-[34rem]">
                 {imageSrc ? (
                   <Image
                     src={imageSrc}
                     alt="Dolindra Prasad Sharma"
                     fill
-                    sizes="(max-width: 768px) 176px, 224px"
+                    sizes="(max-width: 640px) 384px, (max-width: 1024px) 448px, 544px"
                     className="object-cover object-top"
                     priority
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-[#1C2B14] text-4xl font-black text-white md:text-5xl">
+                  <div className="flex h-full w-full items-center justify-center bg-[#1C2B14] text-5xl font-black text-white md:text-6xl">
                     DPS
                   </div>
                 )}
@@ -56,10 +56,6 @@ export default function HeroSection({ imageSrc }: Props) {
               transition={{ duration: 0.7, ease: "easeOut", delay: 0.08 }}
               className="space-y-4 text-center lg:text-left"
             >
-              <span className="inline-flex items-center rounded-full border border-[#1C2B14]/10 bg-[#1C2B14]/5 px-4 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-[#1C2B14]">
-                About the Managing Director
-              </span>
-
               <motion.h1
                 initial={{ opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -89,9 +85,9 @@ export default function HeroSection({ imageSrc }: Props) {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.45, delay: 0.08 * index }}
-                      className="flex items-center justify-center gap-2 rounded-2xl border border-[#1C2B14]/10 bg-[#1C2B14]/5 px-4 py-3 text-sm font-semibold text-[#1C2B14]"
+                      className="flex items-center justify-center gap-2 rounded-2xl border border-[#1C2B14]/10 bg-[#1C2B14]/5 px-4 py-3 text-sm font-semibold text-[#1C2B14] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#1C2B14]/20 hover:bg-[#1C2B14]/8 hover:shadow-[0_14px_35px_rgba(28,43,20,0.08)]"
                     >
-                      <Icon size={18} strokeWidth={1.9} className="text-[#4c6b3f]" />
+                      <Icon size={18} strokeWidth={1.9} className="text-[#4c6b3f] transition-transform duration-300 group-hover:scale-110" />
                       <span>{item.label}</span>
                     </motion.div>
                   );
