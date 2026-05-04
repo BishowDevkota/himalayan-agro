@@ -50,10 +50,11 @@ export default async function HomePage() {
     <main>
       <HeroCarousel />
 
-      {/* keep the rest of the home content (if any) below the hero */}
-      <OurMission />
-      <MessageFromManagingDirector />
+      {/* keep the rest of the home content (if any) below the hero */}<MessageFromManagingDirector />
+      
+      
       <Products products={safeProducts} />
+      <OurMission />
       {/* <ImpactVision /> */}
       <CorePillars />
       {/* <EcoBalance /> */}
