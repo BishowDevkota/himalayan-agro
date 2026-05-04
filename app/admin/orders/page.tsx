@@ -5,16 +5,37 @@ import { getServerSession } from "next-auth/next";
 import authOptions from "../../../lib/auth";
 import AdminOrdersClient from "../../components/admin/AdminOrdersClient";
 import { serializeMany } from "../../../lib/serialize";
+import { filterOrdersForOutlet } from "../../../lib/order-access";
 
 export default async function AdminOrdersPage() {
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "admin") return <div className="p-12">Unauthorized</div>;
+  
+  // Check authorization: admin or employee with orders:read permission
+  let isAuthorized = false;
+  let isEmployee = false;
+  
+  if (session?.user?.role === "admin") {
+    isAuthorized = true;
+  } else if (session?.user?.role === "employee") {
+    const permissions = Array.isArray(session.user.permissions) ? session.user.permissions : [];
+    if (permissions.includes("orders:read")) {
+      isAuthorized = true;
+      isEmployee = true;
+    }
+  }
+
+  if (!isAuthorized) return <div className="p-12">Unauthorized</div>;
 
   await connectToDatabase();
-  const orders = await Order.find({}).sort({ createdAt: -1 }).limit(200).lean();
+  let orders = await Order.find({}).sort({ createdAt: -1 }).limit(200).lean();
+
+  // If employee, filter orders for their outlet only
+  if (isEmployee && session?.user?.outletId) {
+    orders = await filterOrdersForOutlet(orders, String(session.user.outletId));
+  }
+
   const safe = serializeMany(orders as any[]);
 
-  const totalRevenue = safe.reduce((sum: number, o: any) => sum + (typeof o.totalAmount === 'number' ? o.totalAmount : 0), 0);
   const pendingCount = safe.filter((o: any) => o.orderStatus === 'pending').length;
   const processingCount = safe.filter((o: any) => o.orderStatus === 'processing').length;
   const deliveredCount = safe.filter((o: any) => o.orderStatus === 'delivered').length;

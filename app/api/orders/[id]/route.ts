@@ -17,11 +17,18 @@ export async function GET(req: Request, context: any) {
   const order = await Order.findById(id).populate("user", "email name").lean();
   if (!order) return NextResponse.json({ message: "Order not found" }, { status: 404 });
 
-  // admin can view any order; outlet-admins can view orders containing their products; users can view only their own
+  // admin can view any order; outlet-admins can view orders containing their products; employees with orders:read can view their outlet orders; users can view only their own
   if (user?.role === "admin") return NextResponse.json(order);
   if (user?.role === "outlet-admin" && user.outletId) {
     const allowed = await orderBelongsToOutlet(order, String(user.outletId));
     if (allowed) return NextResponse.json(order);
+  }
+  if (user?.role === "employee" && user.outletId) {
+    const permissions = Array.isArray(user.permissions) ? user.permissions : [];
+    if (permissions.includes("orders:read")) {
+      const allowed = await orderBelongsToOutlet(order, String(user.outletId));
+      if (allowed) return NextResponse.json(order);
+    }
   }
   requireUser(user);
   if (String(order.user?._id || order.user) !== String(user.id)) {
@@ -34,9 +41,18 @@ export async function PATCH(req: Request, context: any) {
   const params = context.params instanceof Promise ? await context.params : context.params;
   const { id } = params;
   const user = await getSessionUser();
-  if (!user || (user.role !== "admin" && user.role !== "outlet-admin")) {
+  if (!user || (user.role !== "admin" && user.role !== "outlet-admin" && user.role !== "employee")) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
   }
+
+  // Employees with orders:write permission can manage orders
+  if (user.role === "employee") {
+    const permissions = Array.isArray(user.permissions) ? user.permissions : [];
+    if (!permissions.includes("orders:write")) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+    }
+  }
+
   const body = await req.json().catch(() => ({}));
   const updates: any = {};
 
@@ -63,6 +79,14 @@ export async function PATCH(req: Request, context: any) {
   if (!existing) return NextResponse.json({ message: "Order not found" }, { status: 404 });
 
   if (user.role === "outlet-admin" && user.outletId) {
+    const allowed = await orderBelongsToOutlet(existing, String(user.outletId));
+    if (!allowed) return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+    if (Object.prototype.hasOwnProperty.call(updates, "paymentStatus")) {
+      delete updates.paymentStatus;
+    }
+  }
+
+  if (user.role === "employee" && user.outletId) {
     const allowed = await orderBelongsToOutlet(existing, String(user.outletId));
     if (!allowed) return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
     if (Object.prototype.hasOwnProperty.call(updates, "paymentStatus")) {

@@ -5,6 +5,13 @@ import { getSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { motion, AnimatePresence } from "framer-motion";
+import { outletEmployeeLandingPath } from "../../lib/permissions";
+
+type SessionUser = {
+  role?: string;
+  outletSlug?: string;
+  employeeRole?: string;
+};
 
 const ERROR_MESSAGES: Record<string, string> = {
   CredentialsSignin: "Invalid email or password.",
@@ -91,7 +98,7 @@ export default function LoginClient({ from, serverError }: { from: string; serve
     setError(null);
     const res = await signIn("credentials", { redirect: false, email: (email||"").toLowerCase().trim(), password });
     setLoading(false);
-    // @ts-ignore
+    // @ts-expect-error
     if (res?.error) {
       const msg = ERROR_MESSAGES[res.error] || res.error || ERROR_MESSAGES.Default;
       setError(msg);
@@ -100,8 +107,9 @@ export default function LoginClient({ from, serverError }: { from: string; serve
     }
 
     const session = await getSession();
-    const role = (session?.user as any)?.role;
-    const outletSlug = (session?.user as any)?.outletSlug;
+    const sessionUser = session?.user as SessionUser | undefined;
+    const role = sessionUser?.role;
+    const outletSlug = sessionUser?.outletSlug;
 
     if (role === "outlet-admin" && outletSlug) {
       router.push(`/admin/outlet-${outletSlug}`);
@@ -114,7 +122,7 @@ export default function LoginClient({ from, serverError }: { from: string; serve
     }
 
     if (role === "employee") {
-      router.push("/employee");
+      router.push(outletEmployeeLandingPath(sessionUser));
       return;
     }
 

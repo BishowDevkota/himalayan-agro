@@ -17,6 +17,15 @@ async function fetchData(id: string) {
   return { outlet: serialize(outlet), employees: serializeMany(employees as any[]), admins: serializeMany(admins as any[]) };
 }
 
+function extractGoogleMapsSrc(address?: string) {
+  if (!address) return null;
+  const srcMatch = address.match(/<iframe[^>]+src=["']([^"']+)["'][^>]*><\/iframe>/i);
+  if (srcMatch?.[1]) return srcMatch[1];
+  const openTagMatch = address.match(/<iframe[^>]+src=["']([^"']+)["'][^>]*>/i);
+  if (openTagMatch?.[1]) return openTagMatch[1];
+  return null;
+}
+
 export default async function OutletPage({ params }: { params: { id: string } } | { params: Promise<{ id: string }> }) {
   const resolved = params instanceof Promise ? await params : params;
   const { id } = resolved;
@@ -29,8 +38,8 @@ export default async function OutletPage({ params }: { params: { id: string } } 
 
   const { outlet, employees, admins } = data;
 
-  const mapQuery = encodeURIComponent(outlet.address || outlet.name || "");
-  const mapSrc = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+  const mapSrc = extractGoogleMapsSrc(outlet.address) || `https://www.google.com/maps?q=${encodeURIComponent(outlet.address || outlet.name || "")}&output=embed`;
+  const showAddressText = !extractGoogleMapsSrc(outlet.address) && !!outlet.address;
 
   return (
     <main className="max-w-5xl mx-auto px-4 py-10">
@@ -40,7 +49,7 @@ export default async function OutletPage({ params }: { params: { id: string } } 
             <h1 className="text-2xl font-bold">{outlet.name}</h1>
             {outlet.description && <p className="text-slate-600 mt-2">{outlet.description}</p>}
             <div className="mt-4 text-sm text-slate-500">
-              {outlet.address && <div><strong>Address:</strong> {outlet.address}</div>}
+              {showAddressText && <div><strong>Address:</strong> {outlet.address}</div>}
               {outlet.contactPhone && <div><strong>Phone:</strong> {outlet.contactPhone}</div>}
               {outlet.contactEmail && <div><strong>Email:</strong> {outlet.contactEmail}</div>}
             </div>

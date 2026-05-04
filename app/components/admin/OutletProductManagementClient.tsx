@@ -26,17 +26,20 @@ interface OutletProductManagementClientProps {
   initialProducts: Product[];
   categories: Category[];
   outletSlug: string;
+  basePath?: string;
 }
 
 export default function OutletProductManagementClient({
   initialProducts,
   categories,
   outletSlug,
+  basePath,
 }: OutletProductManagementClientProps) {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
+  const resolvedBasePath = basePath || `/admin/outlet-${outletSlug}/products`;
 
   const categoryNameById = useMemo(() => {
     return new Map(categories.map((category) => [category._id, category.name]));
@@ -72,8 +75,8 @@ export default function OutletProductManagementClient({
       setProducts((prev) => prev.filter((p) => p._id !== productId));
       toast.success("Product deleted");
       router.refresh();
-    } catch (error: any) {
-      toast.error(error.message || "Unable to delete product");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Unable to delete product");
     }
   }
 
@@ -161,13 +164,13 @@ export default function OutletProductManagementClient({
                 </div>
                 <div className="flex gap-2">
                   <Link
-                    href={`/admin/outlet-${outletSlug}/products/${product._id}`}
+                    href={`${resolvedBasePath}/${product._id}`}
                     className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-cyan-50 hover:bg-cyan-100 text-cyan-700 text-sm font-medium transition-colors"
                   >
                     View
                   </Link>
                   <a
-                    href={`/admin/outlet-${outletSlug}/products/${product._id}/edit`}
+                    href={`${resolvedBasePath}/${product._id}/edit`}
                     className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium transition-colors"
                   >
                     Edit

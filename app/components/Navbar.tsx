@@ -6,7 +6,14 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useCart } from "../../store/useCart";
 import { motion, AnimatePresence } from "framer-motion";
-import { adminLandingForPermissions } from "../../lib/permissions";
+import { adminLandingForPermissions, outletEmployeeLandingPath } from "../../lib/permissions";
+
+type SessionUser = {
+  role?: string;
+  permissions?: string[];
+  employeeRole?: string;
+  outletSlug?: string;
+};
 
 function IconSearch({ size = 20 }: { size?: number }) {
   return (
@@ -184,14 +191,16 @@ function isActivePath(pathname: string, href: string): boolean {
 
 export default function Navbar() {
   const { data: session } = useSession();
-  const role = (session as any)?.user?.role;
-  const permissions = (session as any)?.user?.permissions || [];
+  const sessionUser = session?.user as SessionUser | undefined;
+  const role = sessionUser?.role;
+  const permissions = sessionUser?.permissions || [];
   const canAccessAdmin = role === "admin" || (Array.isArray(permissions) && permissions.length > 0);
   const landingForPermissions = adminLandingForPermissions(permissions);
+  const employeeLanding = outletEmployeeLandingPath(sessionUser);
   const adminTarget = role === "admin"
     ? "/admin/dashboard"
-    : role === "employee" && landingForPermissions === "/admin/dashboard"
-      ? "/"
+    : role === "employee"
+      ? employeeLanding
       : landingForPermissions;
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
