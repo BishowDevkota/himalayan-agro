@@ -78,8 +78,8 @@ export async function POST(req: Request) {
     }
     const totalRounded = Math.round(total * 100) / 100;
 
-    // accept optional shipping/payment info (for now only COD supported)
-    const paymentMethod = body.paymentMethod === 'cod' ? 'cod' : 'cod';
+    // accept optional shipping/payment info (support COD and credit)
+    const paymentMethod = body.paymentMethod === 'credit' ? 'credit' : 'cod';
     const shipping = body.shippingAddress && typeof body.shippingAddress === 'object' ? body.shippingAddress : undefined;
 
     // basic validation for COD: require name and line1 and phone

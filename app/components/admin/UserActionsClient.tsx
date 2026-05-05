@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -8,12 +9,11 @@ export default function UserActionsClient({ userId, initialRole, initialActive, 
   const router = useRouter();
   const [role, setRole] = useState(initialRole);
   const [isActive, setIsActive] = useState(!!initialActive);
-  const [distStatus, setDistStatus] = useState(distributorStatus);
   const [limit, setLimit] = useState(Number(creditLimitNpr || 0));
   const [used, setUsed] = useState(Number(creditUsedNpr || 0));
   const [loading, setLoading] = useState(false);
 
-  async function patch(payload: any) {
+  async function patch(payload: Record<string, unknown>) {
     setLoading(true);
     try {
       const res = await fetch(`/api/admin/users/${userId}`, {
@@ -25,9 +25,10 @@ export default function UserActionsClient({ userId, initialRole, initialActive, 
       if (!res.ok) throw new Error(json?.message || JSON.stringify(json));
       toast.success(json?.message || "Updated");
       return json.user;
-    } catch (err: any) {
-      toast.error(err?.message || String(err));
-      throw err;
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      toast.error(message);
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -58,7 +59,6 @@ export default function UserActionsClient({ userId, initialRole, initialActive, 
   async function handleSetDistributorStatus(nextStatus: string) {
     const u = await patch({ role: 'distributor', distributorStatus: nextStatus });
     setRole(u.role);
-    setDistStatus(u.distributorStatus || nextStatus);
     router.refresh();
   }
 
@@ -97,8 +97,9 @@ export default function UserActionsClient({ userId, initialRole, initialActive, 
       if (!res.ok) throw new Error(json?.message || JSON.stringify(json));
       toast.success("User deleted");
       router.push('/admin');
-    } catch (err: any) {
-      toast.error(err?.message || String(err));
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -106,6 +107,14 @@ export default function UserActionsClient({ userId, initialRole, initialActive, 
 
   return (
     <div className="flex items-center gap-2 flex-wrap">
+      <Link
+        href={`/admin/users/${userId}`}
+        title={`Distributor status: ${distributorStatus}`}
+        className="rounded-full bg-slate-900 text-white px-3 py-1 text-xs font-medium hover:bg-slate-800 transition-colors"
+      >
+        View profile
+      </Link>
+
       {role === "admin" ? (
         <button className="rounded-full bg-amber-50 text-amber-800 px-3 py-1 text-xs font-medium" onClick={handleDemote} disabled={loading}>Demote</button>
       ) : (

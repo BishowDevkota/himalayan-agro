@@ -2,14 +2,46 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 
+type CheckoutProduct = {
+  _id: string;
+  name: string;
+  price: number;
+  images?: string[];
+  isActive?: boolean;
+  stock?: number;
+  outlet?: string;
+  brand?: string;
+  category?: string;
+};
+
+type CheckoutCartItem = {
+  product: CheckoutProduct;
+  quantity: number;
+};
+
+type CheckoutCart = {
+  items: CheckoutCartItem[];
+  checkoutMode?: 'buyNow' | 'cart';
+};
+
+type CheckoutUser = {
+  role?: string;
+  distributorStatus?: string;
+  creditLimitNpr?: number;
+  creditUsedNpr?: number;
+};
+
 export default function CheckoutClient() {
-  const [cart, setCart] = useState<any | null>(null);
+  const [cart, setCart] = useState<CheckoutCart | null>(null);
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [shipping, setShipping] = useState({ name: "", line1: "", city: "", postalCode: "", phone: "" });
-  const [paymentMethod, setPaymentMethod] = useState("cod");
+  const paymentMethod = "credit";
+  const { data: session } = useSession();
+  const currentUser = session?.user as CheckoutUser | undefined;
   const router = useRouter();
   const searchParams = useSearchParams();
   const buyNowProductId = searchParams.get("buyNow");
@@ -24,7 +56,7 @@ export default function CheckoutClient() {
       try {
         if (buyNowProductId) {
           const productRes = await fetch(`/api/products/${encodeURIComponent(buyNowProductId)}`);
-          const product = await productRes.json();
+          const product = (await productRes.json()) as CheckoutProduct & { message?: string };
           if (!productRes.ok || !product?._id) throw new Error(product?.message || 'Unable to load product');
           if (!product.isActive || (product.stock || 0) < 1) throw new Error('Product is not available');
 
@@ -35,14 +67,15 @@ export default function CheckoutClient() {
         }
 
         const res = await fetch('/api/cart');
-        const data = await res.json();
+        const data = (await res.json()) as { cart?: CheckoutCart; message?: string };
         if (!res.ok) throw new Error(data?.message || 'Unable to load cart');
         if (!mounted) return;
         setCart(data.cart || { items: [] });
-      } catch (err: any) {
+      } catch (err: unknown) {
         if (mounted) {
           setCart({ items: [] });
-          if (buyNowProductId) toast.error(err?.message || 'Unable to load buy now item');
+          const message = err instanceof Error ? err.message : 'Unable to load buy now item';
+          if (buyNowProductId) toast.error(message);
         }
       } finally {
         if (mounted) setLoading(false);
@@ -53,23 +86,32 @@ export default function CheckoutClient() {
     return () => { mounted = false; };
   }, [buyNowProductId, buyNowQty]);
 
+  // Prefer credit payment for approved distributors on Buy Now
   function updateField<K extends keyof typeof shipping>(k: K, v: string) {
     setShipping((s) => ({ ...s, [k]: v }));
   }
 
   async function placeOrder() {
-    if (paymentMethod === 'cod') {
-      if (!shipping.name || !shipping.line1 || !shipping.phone) {
-        toast.error('Please provide name, address line 1 and phone for delivery');
-        return;
-      }
+    if (!shipping.name || !shipping.line1 || !shipping.phone) {
+      toast.error('Please provide name, address line 1 and phone for delivery');
+      return;
     }
+
+    const currentUser = session?.user as CheckoutUser | undefined;
+    const creditLimit = Number(currentUser?.creditLimitNpr || 0);
+    const creditUsed = Number(currentUser?.creditUsedNpr || 0);
+    const available = Math.max(0, creditLimit - creditUsed);
+    if (available < subtotal) {
+      toast.error(`Insufficient available credit. Available: NPR ${available.toFixed(2)}`);
+      return;
+    }
+
     if (!cart || !cart.items?.length) {
       toast.error('Cart is empty');
       return;
     }
 
-    const items = cart.items.map((it: any) => ({ productId: it.product._id, quantity: it.quantity }));
+    const items = cart.items.map((it: CheckoutCartItem) => ({ productId: it.product._id, quantity: it.quantity }));
     setSubmitting(true);
     try {
       const res = await fetch('/api/orders', {
@@ -81,8 +123,9 @@ export default function CheckoutClient() {
       if (!res.ok) throw new Error(data.message || 'Order failed');
       toast.success('Order placed');
       router.push('/my-orders');
-    } catch (err: any) {
-      toast.error(err.message || 'Unable to place order');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unable to place order';
+      toast.error(message);
     } finally {
       setSubmitting(false);
     }
@@ -91,14 +134,14 @@ export default function CheckoutClient() {
   if (loading) return <div className="p-6 bg-[#f8faf9] border border-gray-100 rounded-2xl">Loading…</div>;
   if (!cart) return <div className="p-6 bg-[#f8faf9] border border-gray-100 rounded-2xl">Unable to load cart.</div>;
 
-  const subtotal = (cart.items || []).reduce((s: number, it: any) => s + (it.product?.price || 0) * (it.quantity || 0), 0);
+  const subtotal = cart.items.reduce((s: number, it: CheckoutCartItem) => s + (it.product?.price || 0) * (it.quantity || 0), 0);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-gray-900">
       <div className="lg:col-span-2 space-y-6">
         <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2 className="text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>Shipping Details</h2>
-          <p className="mt-2 text-sm text-gray-600">Enter the address where you'd like to receive this order.</p>
+          <p className="mt-2 text-sm text-gray-600">Enter the address where you would like to receive this order.</p>
 
           <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
             <label className="col-span-2">
@@ -136,23 +179,34 @@ export default function CheckoutClient() {
 
         <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2 className="text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>Payment</h2>
-          <p className="mt-2 text-sm text-gray-600">Select a payment method.</p>
+          <p className="mt-2 text-sm text-gray-600">This checkout uses your approved distributor credit account.</p>
 
           <div className="mt-4 space-y-3">
-            <label className="flex items-start gap-3 p-4 rounded-xl border border-[#059669]/20 bg-[#059669]/5">
-              <input className="mt-1" type="radio" name="payment" checked={paymentMethod === 'cod'} onChange={() => setPaymentMethod('cod')} />
-              <div>
-                <div className="font-semibold text-gray-900">Cash on delivery</div>
-                <div className="text-sm text-gray-600">Pay when the order is delivered</div>
+            <div className="rounded-xl border border-[#059669]/20 bg-[#f8faf9] p-4">
+              <div className="font-semibold text-gray-900">Distributor credit</div>
+              <p className="text-sm text-gray-600 mt-1">Payment will be charged against your approved distributor credit account.</p>
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3 text-sm text-gray-700">
+                <div className="rounded-lg bg-white border border-gray-200 p-3">
+                  <div className="text-xs uppercase tracking-wide text-gray-500">Credit limit</div>
+                  <div className="mt-1 font-semibold">NPR {Number(currentUser?.creditLimitNpr || 0).toFixed(2)}</div>
+                </div>
+                <div className="rounded-lg bg-white border border-gray-200 p-3">
+                  <div className="text-xs uppercase tracking-wide text-gray-500">Credit used</div>
+                  <div className="mt-1 font-semibold">NPR {Number(currentUser?.creditUsedNpr || 0).toFixed(2)}</div>
+                </div>
+                <div className="rounded-lg bg-white border border-gray-200 p-3">
+                  <div className="text-xs uppercase tracking-wide text-gray-500">Available credit</div>
+                  <div className="mt-1 font-semibold">NPR {Math.max(0, Number(currentUser?.creditLimitNpr || 0) - Number(currentUser?.creditUsedNpr || 0)).toFixed(2)}</div>
+                </div>
               </div>
-            </label>
+            </div>
           </div>
         </section>
 
         <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2 className="text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>Items</h2>
           <div className="mt-4 space-y-4">
-            {(cart.items || []).map((it: any) => (
+            {cart.items.map((it: CheckoutCartItem) => (
               <div key={it.product._id} className="flex items-center gap-4 p-3 rounded-xl border border-gray-100 bg-[#f8faf9]">
                 <div className="w-20 h-20 rounded-lg overflow-hidden bg-white border border-gray-100 flex-shrink-0">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -200,7 +254,7 @@ export default function CheckoutClient() {
           <div className="mt-6">
             <div className="flex items-center justify-between text-sm text-gray-600">
               <div>Payment</div>
-              <div className="font-medium text-gray-800">{paymentMethod === 'cod' ? 'Cash on delivery' : paymentMethod}</div>
+              <div className="font-medium text-gray-800">Distributor credit</div>
             </div>
 
             <div className="mt-4 text-right text-2xl font-bold">Total: ₹{subtotal.toFixed(2)}</div>

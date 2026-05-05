@@ -13,8 +13,13 @@ cloudinary.config({
 });
 
 export async function uploadImageFromBuffer(buffer: Buffer, opts: UploadApiOptions = {}): Promise<UploadApiResponse> {
+  const uploadOptions: UploadApiOptions = {
+    resource_type: "auto",
+    ...opts,
+  };
+
   return new Promise((resolve, reject) => {
-    const stream = cloudinary.uploader.upload_stream(opts, (err, res) => {
+    const stream = cloudinary.uploader.upload_stream(uploadOptions, (err, res) => {
       if (err) return reject(err);
       resolve(res as UploadApiResponse);
     });
