@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -12,7 +12,7 @@ type Order = {
   orderStatus?: string;
 };
 
-export default function EsewaTestPage() {
+function EsewaTestContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const orderId = searchParams.get("orderId");
@@ -118,5 +118,13 @@ export default function EsewaTestPage() {
         <div className="rounded-2xl border border-red-200 bg-red-50 p-6 text-red-700">Unable to load order details.</div>
       )}
     </div>
+  );
+}
+
+export default function EsewaTestPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-gray-900">Loading eSewa payment...</div>}>
+      <EsewaTestContent />
+    </Suspense>
   );
 }

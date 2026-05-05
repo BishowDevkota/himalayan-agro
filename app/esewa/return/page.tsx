@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -10,7 +10,7 @@ type VerifyResponse = {
   message?: string;
 };
 
-export default function EsewaReturnPage() {
+function EsewaReturnContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
@@ -150,5 +150,13 @@ export default function EsewaReturnPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function EsewaReturnPage() {
+  return (
+    <Suspense fallback={<div className="max-w-3xl mx-auto p-8 space-y-6">Loading eSewa payment result...</div>}>
+      <EsewaReturnContent />
+    </Suspense>
   );
 }

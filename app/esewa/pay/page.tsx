@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "react-toastify";
 
@@ -14,7 +14,7 @@ type Order = {
 
 const MERCHANT_CODE = process.env.NEXT_PUBLIC_ESEWA_MERCHANT_CODE || "";
 
-export default function EsewaPayPage() {
+function EsewaPayContent() {
   const params = useSearchParams();
   const orderId = params.get("orderId");
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -100,5 +100,13 @@ export default function EsewaPayPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function EsewaPayPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-gray-900">Preparing eSewa payment...</div>}>
+      <EsewaPayContent />
+    </Suspense>
   );
 }
