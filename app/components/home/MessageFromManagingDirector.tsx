@@ -26,7 +26,7 @@ export default function MessageFromManagingDirector() {
   }, []);
 
   return (
-    <section className="overflow-hidden bg-transparent px-4 py-3 md:px-6 md:py-4">
+    <section style={{ marginTop: '30px', marginBottom: '30px' }} className="overflow-hidden bg-transparent px-4 py-3 md:px-6 md:py-4">
       <div className="mx-auto max-w-6xl" ref={sectionRef}>
         <div className="flex flex-col lg:flex-row">
 
