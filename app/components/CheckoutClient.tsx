@@ -39,9 +39,11 @@ export default function CheckoutClient() {
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [shipping, setShipping] = useState({ name: "", line1: "", city: "", postalCode: "", phone: "" });
+  const [freshUser, setFreshUser] = useState<CheckoutUser | null>(null);
   const paymentMethod = "credit";
   const { data: session } = useSession();
-  const currentUser = session?.user as CheckoutUser | undefined;
+  const sessionUser = session?.user as CheckoutUser | undefined;
+  const currentUser = freshUser ?? sessionUser;
   const router = useRouter();
   const searchParams = useSearchParams();
   const buyNowProductId = searchParams.get("buyNow");
@@ -86,6 +88,24 @@ export default function CheckoutClient() {
     return () => { mounted = false; };
   }, [buyNowProductId, buyNowQty]);
 
+  useEffect(() => {
+    let mounted = true;
+    const loadUser = async () => {
+      if (!session) return;
+      try {
+        const res = await fetch('/api/user', { cache: 'no-store', credentials: 'include' });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (mounted) setFreshUser(data as CheckoutUser);
+      } catch {
+        // ignore stale user fetch errors
+      }
+    };
+
+    loadUser();
+    return () => { mounted = false; };
+  }, [session]);
+
   // Prefer credit payment for approved distributors on Buy Now
   function updateField<K extends keyof typeof shipping>(k: K, v: string) {
     setShipping((s) => ({ ...s, [k]: v }));
@@ -97,7 +117,6 @@ export default function CheckoutClient() {
       return;
     }
 
-    const currentUser = session?.user as CheckoutUser | undefined;
     const creditLimit = Number(currentUser?.creditLimitNpr || 0);
     const creditUsed = Number(currentUser?.creditUsedNpr || 0);
     const available = Math.max(0, creditLimit - creditUsed);

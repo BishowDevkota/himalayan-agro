@@ -3,6 +3,7 @@ import connectToDatabase from "../../../../lib/mongodb";
 import Order from "../../../../models/Order";
 import Product from "../../../../models/Product";
 import ProductLog from "../../../../models/ProductLog";
+import User from "../../../../models/User";
 import { getSessionUser, requireAdmin, requireUser } from "../../../../lib/server-utils";
 import { orderBelongsToOutlet } from "../../../../lib/order-access";
 
@@ -150,6 +151,17 @@ export async function PATCH(req: Request, context: any) {
 
   const updated = await Order.findByIdAndUpdate(id, { $set: updates }, { new: true, runValidators: true }).lean();
   if (!updated) return NextResponse.json({ message: "Order not found" }, { status: 404 });
+
+  if (
+    updates.orderStatus === "delivered" &&
+    existing.orderStatus !== "delivered" &&
+    existing.distributorCreditApplied &&
+    Number(existing.distributorCreditAmount || 0) > 0
+  ) {
+    await User.findByIdAndUpdate(existing.user, {
+      $inc: { creditUsedNpr: Number(existing.distributorCreditAmount || 0) },
+    });
+  }
 
   // emit webhook / email notification for order status changes (best-effort)
   try {

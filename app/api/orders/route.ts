@@ -53,9 +53,6 @@ export async function POST(req: Request) {
   const productMap: Record<string, any> = {};
   for (const product of products) productMap[String(product._id)] = product;
 
-  let creditReservedForUserId: string | null = null;
-  let creditReservedAmount = 0;
-
   try {
     let total = 0;
     const orderItems = [];
@@ -98,34 +95,14 @@ export async function POST(req: Request) {
       else throw new Error('Unable to resolve user for order');
     }
 
-    // Reserve distributor credit atomically before creating the order.
-    const reserved = await User.findOneAndUpdate(
-      {
-        _id: userIdForOrder,
-        role: "distributor",
-        distributorStatus: "approved",
-        isActive: true,
-        $expr: {
-          $lte: [
-            { $add: [{ $ifNull: ["$creditUsedNpr", 0] }, totalRounded] },
-            { $ifNull: ["$creditLimitNpr", 0] },
-          ],
-        },
-      },
-      { $inc: { creditUsedNpr: totalRounded } },
-      { new: true }
-    ).lean();
-
-    if (!reserved) {
-      const current = await User.findById(userIdForOrder).lean();
-      const available = availableDistributorCredit(current);
+    const distributor = await User.findById(userIdForOrder).lean();
+    if (!distributor) throw new Error('Unable to resolve distributor for order');
+    const available = availableDistributorCredit(distributor);
+    if (available < totalRounded) {
       throw new Error(
         `Credit limit exceeded. Available credit: NPR ${available.toFixed(2)}. Please reduce outstanding credit before placing this order.`
       );
     }
-
-    creditReservedForUserId = String(userIdForOrder);
-    creditReservedAmount = totalRounded;
 
     const order = await Order.create({
       user: userIdForOrder,
@@ -150,11 +127,6 @@ export async function POST(req: Request) {
 
     return NextResponse.json(order, { status: 201 });
   } catch (err: any) {
-    if (creditReservedForUserId && creditReservedAmount > 0) {
-      await User.findByIdAndUpdate(creditReservedForUserId, {
-        $inc: { creditUsedNpr: -Math.abs(creditReservedAmount) },
-      });
-    }
     return NextResponse.json({ message: err.message || "Order failed" }, { status: 400 });
   }
 }
