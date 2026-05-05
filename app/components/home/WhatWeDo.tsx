@@ -276,11 +276,10 @@ export default function OurMission() {
       className="relative overflow-hidden bg-scroll bg-center bg-cover bg-no-repeat py-16 sm:py-20 lg:py-28 xl:py-32 md:bg-fixed"
       style={{ backgroundImage: "url('/background_for_mission.jpeg')" }}
     >
-      <div className="absolute inset-0 bg-white/10" />
+      {/* Slightly stronger overlay for consistent contrast */}
+      <div className="absolute inset-0 bg-white/20" />
 
-      {/* Original background decorative circles — unchanged */}
-      <div className="absolute top-0 right-0 w-100 h-100 sm:w-125 sm:h-125 rounded-full bg-green-50 opacity-40 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 sm:w-100 sm:h-100 rounded-full bg-green-50 opacity-40 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
+      {/* Decorative circles removed per design request */}
 
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -296,10 +295,10 @@ export default function OurMission() {
             </span>
           </motion.div>
 
-          {/* Section Heading — unchanged */}
+          {/* Section Heading — wrapped for better legibility over the background */}
           <motion.h2
             variants={headingVariants}
-            className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-3 sm:mb-4"
+            className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-1 sm:mb-2"
             style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
           >
             Transforming Nepal&apos;s{' '}
@@ -323,22 +322,20 @@ export default function OurMission() {
           {/* Decorative divider — unchanged */}
           <motion.div
             variants={headingVariants}
-            className="flex items-center justify-center gap-3 mb-6 sm:mb-8"
+            className="flex items-center justify-center gap-3 mb-2 sm:mb-4"
           >
             <div className="h-px w-10 sm:w-12 bg-[#059669]/30" />
             <div className="w-2 h-2 rounded-full bg-[#059669]" />
             <div className="h-px w-10 sm:w-12 bg-[#059669]/30" />
           </motion.div>
 
-          {/* Mission Statement — unchanged */}
-          <motion.p
-            variants={headingVariants}
-            className="text-center text-sm sm:text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-10 sm:mb-12 sm:mb-16 px-2"
-          >
-            Himalaya Nepal Agriculture Company Limited is committed to modernizing
-            Nepal&apos;s agricultural sector through integrated farming, value addition,
-            global export, and farmer empowerment.
-          </motion.p>
+          {/* Mission Statement — stronger contrast and subtle panel for legibility */}
+          <div className="mx-auto max-w-3xl mb-10 sm:mb-12 sm:mb-16 px-2">
+            {/* Invisible spacer only — panel/background removed */}
+            <div className="px-4 py-4 sm:px-6 sm:py-6" aria-hidden="true">
+              <div className="min-h-[0.75rem] sm:min-h-[1.25rem] lg:min-h-[1.5rem]" />
+            </div>
+          </div>
 
           {/* ── Mobile Cards (below sm) ── */}
           <div className="grid grid-cols-1 gap-3.5 sm:hidden">
@@ -352,6 +349,10 @@ export default function OurMission() {
             {pillars.map((pillar, index) => (
               <TiltCard key={index} pillar={pillar} />
             ))}
+          </div>
+          {/* Invisible lower spacer to preserve overall component height */}
+          <div aria-hidden="true" className="mx-auto max-w-3xl px-2">
+            <div className="min-h-[3.75rem] sm:min-h-[3.25rem] lg:min-h-[4rem]" />
           </div>
         </motion.div>
       </div>

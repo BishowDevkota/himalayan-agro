@@ -311,8 +311,8 @@ export default function Navbar() {
       </div>
 
       <div className="mt-2 lg:mt-0 px-2 sm:px-4 lg:px-6">
-        <div className={`pointer-events-auto max-w-[96rem] mx-auto bg-white/80 sm:bg-white/90 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-0 rounded-2xl lg:rounded-none px-3 sm:px-5 lg:px-6 transition-shadow duration-300 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5 lg:shadow-none"}`}>
-          <div className="flex items-center justify-between h-[96px] sm:h-[88px] lg:h-20">
+        <div className={`pointer-events-auto max-w-[96rem] mx-auto bg-white/80 sm:bg-white/90 lg:bg-white backdrop-blur-md lg:backdrop-blur-0 rounded-2xl lg:rounded-none px-3 sm:px-5 lg:px-6 transition-shadow duration-300 border-b border-gray-100 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
+          <div className="flex items-center justify-between h-[112px] sm:h-[96px] lg:h-20">
 
           {/*  SECTION 1: Logo  */}
           <Link href="/" className="shrink-0 flex items-center" aria-label="Home">
@@ -329,7 +329,7 @@ export default function Navbar() {
               src="/logo_mobile_screen.png"
               alt="Himalaya"
               loading="eager"
-              className="h-[96px] sm:h-[88px] lg:hidden w-auto object-contain"
+              className="h-[96px] sm:h-[96px] lg:hidden w-auto object-contain"
               whileHover={{ scale: 1.04 }}
               transition={{ duration: 0.25 }}
               onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/logo_original.png"; }}
@@ -499,8 +499,8 @@ export default function Navbar() {
           <div className="flex items-center gap-1.5 sm:gap-2.5">
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.92 }}
               onClick={() => router.push("/search")}
-              className="p-2.5 sm:p-2 rounded-full text-gray-500 hover:text-[#0891b2] hover:bg-gray-50 transition-all duration-200" aria-label="Search"
-            ><Search className="h-5 w-5 sm:h-[18px] sm:w-[18px]" /></motion.button>
+              className="p-3 sm:p-2 rounded-full text-gray-500 hover:text-[#0891b2] hover:bg-gray-50 transition-all duration-200" aria-label="Search"
+            ><Search className="h-6 w-6 sm:h-[18px] sm:w-[18px]" /></motion.button>
 
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.92 }}
               onClick={() => router.push("/cart")}
@@ -571,7 +571,7 @@ export default function Navbar() {
 
             {/* Hamburger */}
             <motion.button whileTap={{ scale: 0.88 }}
-              className="lg:hidden p-2.5 sm:p-2 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-200"
+              className="lg:hidden p-3 sm:p-2 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-200"
               onClick={() => setMobileOpen((p) => !p)} aria-expanded={mobileOpen} aria-label="Toggle navigation"
             >
               <AnimatePresence mode="wait" initial={false}>
