@@ -273,13 +273,16 @@ export default function OurMission() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-white py-16 sm:py-20 lg:py-28 xl:py-32 overflow-hidden"
+      className="relative overflow-hidden bg-scroll bg-center bg-cover bg-no-repeat py-16 sm:py-20 lg:py-28 xl:py-32 md:bg-fixed"
+      style={{ backgroundImage: "url('/background_for_mission.jpeg')" }}
     >
+      <div className="absolute inset-0 bg-white/10" />
+
       {/* Original background decorative circles — unchanged */}
       <div className="absolute top-0 right-0 w-100 h-100 sm:w-125 sm:h-125 rounded-full bg-green-50 opacity-40 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-80 h-80 sm:w-100 sm:h-100 rounded-full bg-green-50 opacity-40 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={sectionVariants}
           initial="hidden"

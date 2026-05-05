@@ -3,7 +3,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-  --top-bar-height: 0px;
+  --top-bar-height: 136px;
   --site-header-height: 0px;
 
   /* Text color tokens (use these in components for predictable contrast) */

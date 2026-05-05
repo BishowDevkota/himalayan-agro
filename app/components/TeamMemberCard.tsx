@@ -29,23 +29,23 @@ export default function TeamMemberCard({ member }: TeamMemberCardProps) {
         />
       </div>
 
-      <div className="relative z-10 border-t border-slate-100 bg-white p-4 text-center transition-opacity duration-300 group-hover:opacity-0 group-focus-within:opacity-0">
-        <h3 className="text-xl font-bold text-slate-800">{member.name}</h3>
-        <p className="text-base font-medium text-slate-500">{member.role}</p>
+      <div className="relative z-10 border-t border-slate-100 bg-white p-5 sm:p-4 text-center transition-opacity duration-300 group-hover:opacity-0 group-focus-within:opacity-0">
+        <h3 className="text-2xl sm:text-xl font-bold text-slate-800">{member.name}</h3>
+        <p className="text-lg sm:text-base font-medium text-slate-500">{member.role}</p>
       </div>
 
-      <div className="pointer-events-none absolute inset-0 flex flex-col justify-end gap-2 bg-linear-to-t from-slate-900/80 via-slate-900/60 to-transparent p-4 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
-        <p className="text-lg font-bold uppercase tracking-[0.2em] text-white">Contact</p>
+      <div className="pointer-events-none absolute inset-0 flex flex-col justify-end gap-2 bg-linear-to-t from-slate-900/80 via-slate-900/60 to-transparent p-5 sm:p-4 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
+        <p className="text-lg sm:text-base font-bold uppercase tracking-[0.2em] text-white">Contact</p>
         <div className="mt-2 flex flex-col items-start gap-2 text-left">
-          <div className="flex items-center gap-2 text-base font-semibold">
+          <div className="flex items-center gap-2 text-base sm:text-sm font-semibold">
             <Phone className="h-5 w-5 text-white" />
             <span>{member.phone}</span>
           </div>
-          <div className="flex items-center gap-2 text-base">
+          <div className="flex items-center gap-2 text-base sm:text-sm">
             <Mail className="h-5 w-5 text-white" />
             <span>{member.email}</span>
           </div>
-          <div className="flex items-center gap-2 text-sm text-white/80">
+          <div className="flex items-center gap-2 text-sm sm:text-xs text-white/80">
             <MapPin className="h-4 w-4 text-white/80" />
             <span>{member.address}</span>
           </div>

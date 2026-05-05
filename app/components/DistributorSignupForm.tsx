@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { X } from "lucide-react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { uploadToCloudinary } from "../../lib/cloudinary-upload";
@@ -12,6 +13,9 @@ export default function DistributorSignupForm() {
   const [citizenshipFrontUrl, setCitizenshipFrontUrl] = useState<string>("");
   const [citizenshipBackUrl, setCitizenshipBackUrl] = useState<string>("");
   const [panCertificateUrl, setPanCertificateUrl] = useState<string>("");
+  const [frontInputKey, setFrontInputKey] = useState(0);
+  const [backInputKey, setBackInputKey] = useState(0);
+  const [panInputKey, setPanInputKey] = useState(0);
 
   async function handleFileUpload(file: File | null, fileType: "front" | "back" | "pan") {
     if (!file) return;
@@ -27,6 +31,21 @@ export default function DistributorSignupForm() {
       toast.error(err?.message || "Failed to upload file");
     } finally {
       setUploadingFile(null);
+    }
+  }
+
+  function clearUpload(fileType: "front" | "back" | "pan") {
+    if (fileType === "front") {
+      setCitizenshipFrontUrl("");
+      setFrontInputKey((k) => k + 1);
+    }
+    if (fileType === "back") {
+      setCitizenshipBackUrl("");
+      setBackInputKey((k) => k + 1);
+    }
+    if (fileType === "pan") {
+      setPanCertificateUrl("");
+      setPanInputKey((k) => k + 1);
     }
   }
 
@@ -75,7 +94,7 @@ export default function DistributorSignupForm() {
 
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 rounded-3xl bg-white p-6 sm:p-8 shadow-xl shadow-slate-200/70 border border-slate-100">
+    <form onSubmit={onSubmit} className="h-full space-y-4 rounded-3xl bg-white p-6 sm:p-8 shadow-xl shadow-slate-200/70 border border-slate-100">
       <div>
         <h2 className="text-2xl font-bold text-slate-900">Apply as a distributor</h2>
         <p className="mt-2 text-sm text-slate-500">Your account will be reviewed by the super admin before buying online.</p>
@@ -111,11 +130,25 @@ export default function DistributorSignupForm() {
         <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-slate-500">Upload documents (Max 200KB each)</p>
         
         <label className="block mb-4">
-          <span className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Citizenship Front
-            {citizenshipFrontUrl && <span className="text-green-600 text-[10px] font-bold">✓ Uploaded</span>}
-          </span>
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
+              Citizenship Front
+              {citizenshipFrontUrl && <span className="text-green-600 text-[10px] font-bold">✓ Uploaded</span>}
+            </span>
+            {citizenshipFrontUrl && (
+              <button
+                type="button"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); clearUpload("front"); }}
+                className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 hover:text-red-600 hover:border-red-200 transition-colors"
+                aria-label="Remove citizenship front"
+              >
+                <X className="h-3 w-3" />
+                Remove
+              </button>
+            )}
+          </div>
           <input
+            key={frontInputKey}
             type="file"
             accept="image/*,.pdf"
             onChange={(e) => handleFileUpload(e.currentTarget.files?.[0] || null, "front")}
@@ -126,11 +159,25 @@ export default function DistributorSignupForm() {
         </label>
 
         <label className="block mb-4">
-          <span className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
-            Citizenship Back
-            {citizenshipBackUrl && <span className="text-green-600 text-[10px] font-bold">✓ Uploaded</span>}
-          </span>
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
+              Citizenship Back
+              {citizenshipBackUrl && <span className="text-green-600 text-[10px] font-bold">✓ Uploaded</span>}
+            </span>
+            {citizenshipBackUrl && (
+              <button
+                type="button"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); clearUpload("back"); }}
+                className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 hover:text-red-600 hover:border-red-200 transition-colors"
+                aria-label="Remove citizenship back"
+              >
+                <X className="h-3 w-3" />
+                Remove
+              </button>
+            )}
+          </div>
           <input
+            key={backInputKey}
             type="file"
             accept="image/*,.pdf"
             onChange={(e) => handleFileUpload(e.currentTarget.files?.[0] || null, "back")}
@@ -141,11 +188,25 @@ export default function DistributorSignupForm() {
         </label>
 
         <label className="block mb-4">
-          <span className="mb-2 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
-            PAN Certificate
-            {panCertificateUrl && <span className="text-green-600 text-[10px] font-bold">✓ Uploaded</span>}
-          </span>
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <span className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-slate-500">
+              PAN Certificate
+              {panCertificateUrl && <span className="text-green-600 text-[10px] font-bold">✓ Uploaded</span>}
+            </span>
+            {panCertificateUrl && (
+              <button
+                type="button"
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); clearUpload("pan"); }}
+                className="inline-flex items-center gap-1 rounded-full border border-slate-200 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-500 hover:text-red-600 hover:border-red-200 transition-colors"
+                aria-label="Remove PAN certificate"
+              >
+                <X className="h-3 w-3" />
+                Remove
+              </button>
+            )}
+          </div>
           <input
+            key={panInputKey}
             type="file"
             accept="image/*,.pdf"
             onChange={(e) => handleFileUpload(e.currentTarget.files?.[0] || null, "pan")}

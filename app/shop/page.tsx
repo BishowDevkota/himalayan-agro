@@ -13,19 +13,28 @@ import SubHeroSection from "../components/SubHeroSection";
 
 export const revalidate = 30;
 
-export default async function ShopPage({ searchParams }: { searchParams?: { q?: string; page?: string; limit?: string } | Promise<{ q?: string; page?: string; limit?: string } | undefined> }) {
+type ShopSearchParams = {
+  q?: string;
+  page?: string;
+  limit?: string;
+  category?: string;
+  minPrice?: string;
+  maxPrice?: string;
+};
+
+export default async function ShopPage({ searchParams }: { searchParams?: ShopSearchParams }) {
   try {
     await connectToDatabase();
-    const sp = (searchParams && typeof (searchParams as any)?.then === "function") ? (await searchParams) : (searchParams || {});
-    const page = Math.max(1, Number((sp as any).page || 1));
-    const limit = Math.min(100, Number((sp as any).limit || 12));
+    const sp = searchParams || {};
+    const page = Math.max(1, Number(sp.page || 1));
+    const limit = Math.min(100, Number(sp.limit || 12));
     const filter: any = { isActive: true };
-    if ((sp as any).q) filter.$text = { $search: (sp as any).q };
+    if (sp.q) filter.$text = { $search: sp.q };
     // category filter (expects category name)
-    if ((sp as any).category) filter.category = (sp as any).category;
+    if (sp.category) filter.category = sp.category;
     // price filters
-    const minP = Number((sp as any).minPrice);
-    const maxP = Number((sp as any).maxPrice);
+    const minP = Number(sp.minPrice);
+    const maxP = Number(sp.maxPrice);
     if (!Number.isNaN(minP)) filter.price = { ...(filter.price || {}), $gte: minP };
     if (!Number.isNaN(maxP)) filter.price = { ...(filter.price || {}), $lte: maxP };
 
@@ -64,10 +73,10 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
           <div className="mb-8">
             <ShopFiltersClient
               categories={safeCats}
-              currentCategory={(sp as any).category}
-              minPrice={((sp as any).minPrice ? Number((sp as any).minPrice) : undefined)}
-              maxPrice={((sp as any).maxPrice ? Number((sp as any).maxPrice) : undefined)}
-              initialQuery={(sp as any).q}
+              currentCategory={sp.category}
+              minPrice={(sp.minPrice ? Number(sp.minPrice) : undefined)}
+              maxPrice={(sp.maxPrice ? Number(sp.maxPrice) : undefined)}
+              initialQuery={sp.q}
             />
           </div>
 
@@ -102,7 +111,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
           {totalPages > 1 && (
             <div className="flex items-center justify-center gap-2 mt-10">
               {page > 1 && (
-                <a href={`/shop?page=${page - 1}${(sp as any).category ? `&category=${(sp as any).category}` : ''}${(sp as any).minPrice ? `&minPrice=${(sp as any).minPrice}` : ''}${(sp as any).maxPrice ? `&maxPrice=${(sp as any).maxPrice}` : ''}`}
+                <a href={`/shop?page=${page - 1}${sp.category ? `&category=${sp.category}` : ''}${sp.minPrice ? `&minPrice=${sp.minPrice}` : ''}${sp.maxPrice ? `&maxPrice=${sp.maxPrice}` : ''}`}
                   className="px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg text-gray-600 hover:border-[#059669] hover:text-[#059669] transition-colors"
                 >
                   Previous
@@ -111,7 +120,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
               {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
                 const p = i + 1;
                 return (
-                  <a key={p} href={`/shop?page=${p}${(sp as any).category ? `&category=${(sp as any).category}` : ''}${(sp as any).minPrice ? `&minPrice=${(sp as any).minPrice}` : ''}${(sp as any).maxPrice ? `&maxPrice=${(sp as any).maxPrice}` : ''}`}
+                  <a key={p} href={`/shop?page=${p}${sp.category ? `&category=${sp.category}` : ''}${sp.minPrice ? `&minPrice=${sp.minPrice}` : ''}${sp.maxPrice ? `&maxPrice=${sp.maxPrice}` : ''}`}
                     className={`w-10 h-10 flex items-center justify-center text-sm font-medium rounded-lg transition-colors ${p === page ? 'bg-[#059669] text-white' : 'border border-gray-200 text-gray-600 hover:border-[#059669] hover:text-[#059669]'}`}
                   >
                     {p}
@@ -119,7 +128,7 @@ export default async function ShopPage({ searchParams }: { searchParams?: { q?: 
                 );
               })}
               {page < totalPages && (
-                <a href={`/shop?page=${page + 1}${(sp as any).category ? `&category=${(sp as any).category}` : ''}${(sp as any).minPrice ? `&minPrice=${(sp as any).minPrice}` : ''}${(sp as any).maxPrice ? `&maxPrice=${(sp as any).maxPrice}` : ''}`}
+                <a href={`/shop?page=${page + 1}${sp.category ? `&category=${sp.category}` : ''}${sp.minPrice ? `&minPrice=${sp.minPrice}` : ''}${sp.maxPrice ? `&maxPrice=${sp.maxPrice}` : ''}`}
                   className="px-4 py-2 text-sm font-medium border border-gray-200 rounded-lg text-gray-600 hover:border-[#059669] hover:text-[#059669] transition-colors"
                 >
                   Next

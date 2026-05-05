@@ -28,7 +28,7 @@ export default function AboutPage() {
         
         {/* 2. Macro-Economic Context Component */}
         <AnimatedSection
-          className="mt-28 py-20"
+          className="mt-12 sm:mt-20 lg:mt-28 py-20"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}

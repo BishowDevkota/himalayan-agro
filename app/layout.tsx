@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "flag-icons/css/flag-icons.min.css";
 // import BeautifulNavbar from "./components/BeautifulNavbar";
 import SessionProviderClient from "./providers/SessionProviderClient";
 import DevServiceWorkerCleanup from "./components/DevServiceWorkerCleanup";

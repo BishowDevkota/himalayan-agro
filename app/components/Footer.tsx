@@ -55,7 +55,7 @@ export default function Footer() {
               <img
                 src="/logo.jpeg"
                 alt="Himalaya Nepal Krishi"
-                className="h-16 sm:h-20 w-auto object-contain"
+                className="h-20 sm:h-24 lg:h-28 w-auto rounded-2xl object-contain"
                 onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                   e.currentTarget.onerror = null;
                   e.currentTarget.src = "/wide-logo.jpeg";

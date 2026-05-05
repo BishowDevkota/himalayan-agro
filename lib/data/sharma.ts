@@ -25,7 +25,7 @@ export const publications = [
 ];
 
 export const travels = [
-  "India","UAE (Dubai)","South Korea","Japan","Russia","Pakistan","Malaysia","United Kingdom","Australia","Bangladesh","Singapore"
+  "India","UAE (Dubai)","South Korea","Japan","Russia","Pakistan","Malaysia","United Kingdom","Australia","Bangladesh","Singapore","China"
 ];
 
 export const patronages = [
@@ -37,5 +37,5 @@ export const stats = [
   { label: "Years of Experience", value: 30, suffix: "+" },
   { label: "Master's Degrees", value: 2 },
   { label: "Countries Visited", value: 11 },
-  { label: "Publications", value: 6, suffix: "+" }
+  { label: "Awards Won & Given", value: 6, suffix: "+" }
 ];

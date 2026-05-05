@@ -43,6 +43,7 @@ const navLinks = [
   { label: "Knowledge Centre", href: "#", isDropdown: true },
   { label: "Outlet", href: "/outlet" },
   { label: "Shop", href: "/shop" },
+  { label: "Gallery", href: "/gallery" },
   { label: "News & Notices", href: "#", isDropdown: true },
   { label: "Contact", href: "/contact" },
 ];
@@ -155,8 +156,8 @@ export default function Navbar() {
   const cart = useCart((s) => s.items);
   const cartCount = cart.reduce((s, i) => s + (i.quantity || 0), 0);
   const router = useRouter();
-  const topBarRef = useRef<HTMLDivElement | null>(null);
-  const [topBarHeight, setTopBarHeight] = useState(0);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const [headerHeight, setHeaderHeight] = useState(0);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
@@ -172,6 +173,7 @@ export default function Navbar() {
           ? { label: "Distributor", href: "/register/distributor" }
         : null
     : { label: "Become a Distributor", href: "/register/distributor" };
+  const mobileCta = desktopCta && (session || desktopCta.label !== "Become a Distributor") ? desktopCta : null;
 
   function navigateAndClose(href: string) {
     setMobileOpen(false);
@@ -209,10 +211,10 @@ export default function Navbar() {
   useEffect(() => { setMobileOpen(false); setAboutMobileOpen(false); setKnowledgeMobileOpen(false); setNewsMobileOpen(false); }, [pathname]);
 
   useEffect(() => {
-    const node = topBarRef.current;
+    const node = headerRef.current;
     if (!node) return;
     const update = () => {
-      setTopBarHeight(node.getBoundingClientRect().height);
+      setHeaderHeight(node.getBoundingClientRect().height);
     };
     update();
     const observer = new ResizeObserver(update);
@@ -221,31 +223,31 @@ export default function Navbar() {
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", update);
-      setTopBarHeight(0);
+      setHeaderHeight(0);
     };
   }, []);
 
   useEffect(() => {
     document.documentElement.style.setProperty(
       "--top-bar-height",
-      hideTopBar ? "0px" : `${topBarHeight}px`
+      `${headerHeight}px`
     );
-  }, [hideTopBar, topBarHeight]);
+  }, [headerHeight]);
 
   const contactItems = [...topBarContacts.phones, topBarContacts.email];
 
   return (
     <motion.header
+      ref={headerRef}
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, ease: "easeOut" as const }}
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
     >
       <div
-        ref={topBarRef}
         className={`pointer-events-auto w-full overflow-hidden bg-[#D97706] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${hideTopBar ? "max-h-0 opacity-0 -translate-y-2" : "max-h-24 opacity-100 translate-y-0"}`}
       >
-        <div className={`${topBarRow} min-h-[42px] md:min-h-[48px] py-2 md:py-1 flex flex-row items-center justify-between gap-4 md:gap-0`}>
+        <div className={`${topBarRow} min-h-[52px] sm:min-h-[50px] md:min-h-[48px] py-2.5 sm:py-2 md:py-1 flex flex-row items-center justify-between gap-4 md:gap-0`}>
           {/* Left: Location */}
           <div className="flex items-center flex-shrink-0">
             <Link
@@ -308,9 +310,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="mt-2 px-2 sm:px-4 lg:px-6">
-        <div className={`pointer-events-auto max-w-[96rem] mx-auto bg-white/95 backdrop-blur-md rounded-2xl px-3 sm:px-5 lg:px-6 transition-shadow duration-300 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
-          <div className="flex items-center justify-between h-[72px] lg:h-20">
+      <div className="mt-2 lg:mt-0 px-2 sm:px-4 lg:px-6">
+        <div className={`pointer-events-auto max-w-[96rem] mx-auto bg-white/80 sm:bg-white/90 lg:bg-transparent backdrop-blur-md lg:backdrop-blur-0 rounded-2xl lg:rounded-none px-3 sm:px-5 lg:px-6 transition-shadow duration-300 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5 lg:shadow-none"}`}>
+          <div className="flex items-center justify-between h-[96px] sm:h-[88px] lg:h-20">
 
           {/*  SECTION 1: Logo  */}
           <Link href="/" className="shrink-0 flex items-center" aria-label="Home">
@@ -324,13 +326,13 @@ export default function Navbar() {
               onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/logo_original.png"; }}
             />
             <motion.img
-              src="/logo_original.png"
+              src="/logo_mobile_screen.png"
               alt="Himalaya"
               loading="eager"
-              className="h-[74px] sm:h-20 lg:hidden w-auto object-contain"
+              className="h-[96px] sm:h-[88px] lg:hidden w-auto object-contain"
               whileHover={{ scale: 1.04 }}
               transition={{ duration: 0.25 }}
-              onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/placeholder.png"; }}
+              onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/logo_original.png"; }}
             />
           </Link>
 
@@ -497,8 +499,8 @@ export default function Navbar() {
           <div className="flex items-center gap-1.5 sm:gap-2.5">
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.92 }}
               onClick={() => router.push("/search")}
-              className="p-2 rounded-full text-gray-500 hover:text-[#0891b2] hover:bg-gray-50 transition-all duration-200" aria-label="Search"
-            ><Search size={18} /></motion.button>
+              className="p-2.5 sm:p-2 rounded-full text-gray-500 hover:text-[#0891b2] hover:bg-gray-50 transition-all duration-200" aria-label="Search"
+            ><Search className="h-5 w-5 sm:h-[18px] sm:w-[18px]" /></motion.button>
 
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.92 }}
               onClick={() => router.push("/cart")}
@@ -569,13 +571,13 @@ export default function Navbar() {
 
             {/* Hamburger */}
             <motion.button whileTap={{ scale: 0.88 }}
-              className="lg:hidden p-2 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-200"
+              className="lg:hidden p-2.5 sm:p-2 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-200"
               onClick={() => setMobileOpen((p) => !p)} aria-expanded={mobileOpen} aria-label="Toggle navigation"
             >
               <AnimatePresence mode="wait" initial={false}>
                 {mobileOpen
-                  ? <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}><X size={22} /></motion.span>
-                  : <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}><Menu size={22} /></motion.span>}
+                  ? <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}><X className="h-6 w-6 sm:h-[22px] sm:w-[22px]" /></motion.span>
+                  : <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}><Menu className="h-6 w-6 sm:h-[22px] sm:w-[22px]" /></motion.span>}
               </AnimatePresence>
             </motion.button>
           </div>
@@ -610,8 +612,8 @@ export default function Navbar() {
                   <X size={18} />
                 </motion.button>
                 <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center justify-center">
-                  <img src="/logo.jpeg" alt="Himalaya" className="w-[200px] sm:w-[220px] h-auto object-contain"
-                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/wide-logo.jpeg"; }} />
+                  <img src="/logo_mobile_screen.png" alt="Himalaya" className="w-[210px] sm:w-[240px] h-auto object-contain"
+                    onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/logo.jpeg"; }} />
                 </Link>
                 <div className="mt-3 h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
               </div>
@@ -784,6 +786,8 @@ export default function Navbar() {
                     const icons: Record<string, React.ReactNode> = {
                       Home: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><polyline points="9 22 9 12 15 12 15 22" /></svg>,
                       Shop: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M6 6h15l-1.5 9h-12L4 2H2" /><circle cx="9" cy="20" r="1" /><circle cx="18" cy="20" r="1" /></svg>,
+                      Outlet: <Store size={18} />,
+                      Gallery: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="M21 15l-5-5L5 21" /></svg>,
                       Investor: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" /></svg>,
                       About: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><line x1="12" y1="16" x2="12" y2="12" /><line x1="12" y1="8" x2="12.01" y2="8" /></svg>,
                       News: <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M4 22h16a2 2 0 002-2V4a2 2 0 00-2-2H8a2 2 0 00-2 2v16a2 2 0 01-2 2zm0 0a2 2 0 01-2-2v-9c0-1.1.9-2 2-2h2" /><line x1="10" y1="6" x2="18" y2="6" /><line x1="10" y1="10" x2="18" y2="10" /><line x1="10" y1="14" x2="14" y2="14" /></svg>,
@@ -806,13 +810,13 @@ export default function Navbar() {
 
                 {/* Bottom auth section — admin style */}
                 <div className="shrink-0 px-3 py-3 space-y-1">
-                  {desktopCta && (
+                  {mobileCta && (
                     <button
-                      onClick={() => navigateAndClose(desktopCta.href)}
+                      onClick={() => navigateAndClose(mobileCta.href)}
                       className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-[13px] font-medium text-cyan-400 hover:bg-cyan-500/15 transition-all duration-200"
                     >
                       <span className="text-cyan-400"><Store size={18} /></span>
-                      {desktopCta.label}
+                      {mobileCta.label}
                     </button>
                   )}
                   {!session ? (

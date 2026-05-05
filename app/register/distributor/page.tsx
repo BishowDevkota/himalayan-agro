@@ -13,8 +13,8 @@ export default async function DistributorRegisterPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-cyan-50 px-4 pt-32 sm:pt-36 pb-12 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
-        <div className="rounded-[2rem] bg-slate-900 p-8 sm:p-10 text-white shadow-2xl shadow-slate-900/20 relative overflow-hidden">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-8 lg:grid-cols-[1fr_1fr] lg:items-stretch">
+        <div className="rounded-[2rem] bg-slate-900 p-8 sm:p-10 text-white shadow-2xl shadow-slate-900/20 relative overflow-hidden h-full flex flex-col">
           <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl" />
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-cyan-300">Distributor application</p>
           <h1 className="mt-4 text-3xl sm:text-5xl font-black leading-tight">Buy online with approved distributor credit.</h1>

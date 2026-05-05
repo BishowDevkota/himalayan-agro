@@ -14,12 +14,12 @@ export const metadata = {
 export default function ManagingDirectorPage() {
   return (
     <main>
-      <SubHeroSection
+      {/* <SubHeroSection
         title="About Managing Director"
         description="Our Leader's Vision for Agricultural Excellence"
         image="/managing-director.jpg"
         tag="Leadership"
-      />
+      /> */}
 
       <HeroSection imageSrc="/managing-director.jpg" />
 

@@ -73,7 +73,7 @@ export default function CorePillars() {
   const isInView = useInView(sectionRef, { once: true, margin: '-60px' });
 
   return (
-    <section ref={sectionRef} className="relative bg-white py-20 sm:py-28 lg:py-32 overflow-hidden">
+    <section ref={sectionRef} className="relative hidden sm:block bg-white py-20 sm:py-28 lg:py-32 overflow-hidden">
       {/* Subtle decorative blobs */}
       <div className="absolute top-0 right-0 w-100 h-100 rounded-full bg-cyan-50 opacity-35 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-87.5 h-87.5 rounded-full bg-orange-50 opacity-30 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
