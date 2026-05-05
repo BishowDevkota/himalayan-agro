@@ -56,7 +56,13 @@ export default function EsewaReturnPage() {
               const res = await fetch("/api/esewa/verify", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ pid: pidFromData, refId: refIdFromData, amt: String(amtFromData), scd: scdFromData }),
+                body: JSON.stringify({
+                  pid: pidFromData,
+                  refId: refIdFromData,
+                  amt: String(amtFromData),
+                  scd: scdFromData,
+                  responseData: decoded,
+                }),
               });
               const data = await res.json().catch(() => ({}));
               if (res.ok) {
