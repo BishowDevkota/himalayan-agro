@@ -40,7 +40,7 @@ export default function CheckoutClient() {
   const [submitting, setSubmitting] = useState(false);
   const [shipping, setShipping] = useState({ name: "", line1: "", city: "", postalCode: "", phone: "" });
   const [freshUser, setFreshUser] = useState<CheckoutUser | null>(null);
-  const paymentMethod = "credit";
+  const [paymentMethod, setPaymentMethod] = useState<'credit' | 'esewa'>('credit');
   const { data: session } = useSession();
   const sessionUser = session?.user as CheckoutUser | undefined;
   const currentUser = freshUser ?? sessionUser;
@@ -117,12 +117,14 @@ export default function CheckoutClient() {
       return;
     }
 
-    const creditLimit = Number(currentUser?.creditLimitNpr || 0);
-    const creditUsed = Number(currentUser?.creditUsedNpr || 0);
-    const available = Math.max(0, creditLimit - creditUsed);
-    if (available < subtotal) {
-      toast.error(`Insufficient available credit. Available: NPR ${available.toFixed(2)}`);
-      return;
+    if (paymentMethod === 'credit') {
+      const creditLimit = Number(currentUser?.creditLimitNpr || 0);
+      const creditUsed = Number(currentUser?.creditUsedNpr || 0);
+      const available = Math.max(0, creditLimit - creditUsed);
+      if (available < subtotal) {
+        toast.error(`Insufficient available credit. Available: NPR ${available.toFixed(2)}`);
+        return;
+      }
     }
 
     if (!cart || !cart.items?.length) {
@@ -141,7 +143,11 @@ export default function CheckoutClient() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Order failed');
       toast.success('Order placed');
-      router.push('/my-orders');
+      if (paymentMethod === 'esewa' && data?._id) {
+        router.push(`/esewa/pay?orderId=${encodeURIComponent(data._id)}`);
+      } else {
+        router.push('/my-orders');
+      }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Unable to place order';
       toast.error(message);
@@ -198,10 +204,46 @@ export default function CheckoutClient() {
 
         <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h2 className="text-xl font-bold text-gray-900" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>Payment</h2>
-          <p className="mt-2 text-sm text-gray-600">This checkout uses your approved distributor credit account.</p>
+          <p className="mt-2 text-sm text-gray-600">Choose how you want to pay for this order.</p>
 
-          <div className="mt-4 space-y-3">
-            <div className="rounded-xl border border-[#059669]/20 bg-[#f8faf9] p-4">
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            <label className={`rounded-2xl border p-4 cursor-pointer transition ${paymentMethod === 'credit' ? 'border-[#059669] bg-[#ecfdf5]' : 'border-gray-200 bg-white'}`}>
+              <div className="flex items-center gap-3">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="credit"
+                  checked={paymentMethod === 'credit'}
+                  onChange={() => setPaymentMethod('credit')}
+                  className="h-4 w-4 text-[#059669]"
+                />
+                <div>
+                  <div className="font-semibold text-gray-900">Distributor credit</div>
+                  <p className="text-sm text-gray-600">Pay from your approved distributor credit account.</p>
+                </div>
+              </div>
+            </label>
+
+            <label className={`rounded-2xl border p-4 cursor-pointer transition ${paymentMethod === 'esewa' ? 'border-[#0891b2] bg-[#eff6ff]' : 'border-gray-200 bg-white'}`}>
+              <div className="flex items-center gap-3">
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="esewa"
+                  checked={paymentMethod === 'esewa'}
+                  onChange={() => setPaymentMethod('esewa')}
+                  className="h-4 w-4 text-[#0891b2]"
+                />
+                <div>
+                  <div className="font-semibold text-gray-900">eSewa</div>
+                  <p className="text-sm text-gray-600">Pay using the eSewa sandbox payment flow.</p>
+                </div>
+              </div>
+            </label>
+          </div>
+
+          {paymentMethod === 'credit' ? (
+            <div className="mt-5 rounded-xl border border-[#059669]/20 bg-[#f8faf9] p-4">
               <div className="font-semibold text-gray-900">Distributor credit</div>
               <p className="text-sm text-gray-600 mt-1">Payment will be charged against your approved distributor credit account.</p>
               <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3 text-sm text-gray-700">
@@ -219,7 +261,12 @@ export default function CheckoutClient() {
                 </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="mt-5 rounded-xl border border-[#0891b2]/20 bg-[#eff6ff] p-4 text-sm text-gray-700">
+              <div className="font-semibold text-gray-900">eSewa sandbox payment</div>
+              <p className="mt-1 text-sm text-gray-600">After placing the order, you will be redirected to a test eSewa payment simulator.</p>
+            </div>
+          )}
         </section>
 
         <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">

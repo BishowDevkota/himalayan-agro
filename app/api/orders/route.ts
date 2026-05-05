@@ -75,14 +75,14 @@ export async function POST(req: Request) {
     }
     const totalRounded = Math.round(total * 100) / 100;
 
-    // accept optional shipping/payment info (support COD and credit)
-    const paymentMethod = body.paymentMethod === 'credit' ? 'credit' : 'cod';
+    // accept optional shipping/payment info (support COD, credit, and eSewa)
+    const paymentMethod = body.paymentMethod === 'esewa' ? 'esewa' : body.paymentMethod === 'credit' ? 'credit' : 'cod';
     const shipping = body.shippingAddress && typeof body.shippingAddress === 'object' ? body.shippingAddress : undefined;
 
-    // basic validation for COD: require name and line1 and phone
-    if (paymentMethod === 'cod') {
+    // basic validation for COD and eSewa: require name and line1 and phone
+    if (paymentMethod === 'cod' || paymentMethod === 'esewa') {
       if (!shipping || !shipping.name || !shipping.line1 || !shipping.phone) {
-        throw new Error('Shipping name, address line1 and phone are required for Cash-on-delivery');
+        throw new Error('Shipping name, address line1 and phone are required for this payment method');
       }
     }
 
@@ -97,14 +97,17 @@ export async function POST(req: Request) {
 
     const distributor = await User.findById(userIdForOrder).lean();
     if (!distributor) throw new Error('Unable to resolve distributor for order');
-    const available = availableDistributorCredit(distributor);
-    if (available < totalRounded) {
-      throw new Error(
-        `Credit limit exceeded. Available credit: NPR ${available.toFixed(2)}. Please reduce outstanding credit before placing this order.`
-      );
+
+    if (paymentMethod === 'credit') {
+      const available = availableDistributorCredit(distributor);
+      if (available < totalRounded) {
+        throw new Error(
+          `Credit limit exceeded. Available credit: NPR ${available.toFixed(2)}. Please reduce outstanding credit before placing this order.`
+        );
+      }
     }
 
-    const order = await Order.create({
+    const orderData: any = {
       user: userIdForOrder,
       items: orderItems,
       totalAmount: totalRounded,
@@ -112,14 +115,19 @@ export async function POST(req: Request) {
         const outletIds = Array.from(new Set(products.map((product: any) => String(product.outlet || "")).filter(Boolean)));
         return outletIds.length === 1 ? outletIds[0] : undefined;
       })(),
-      distributorCreditApplied: true,
-      distributorCreditAmount: totalRounded,
       paymentMethod,
       shippingAddress: shipping,
       paymentStatus: "pending",
       orderStatus: "pending",
       inventoryApplied: false,
-    });
+    };
+
+    if (paymentMethod === 'credit') {
+      orderData.distributorCreditApplied = true;
+      orderData.distributorCreditAmount = totalRounded;
+    }
+
+    const order = await Order.create(orderData);
 
     if (checkoutMode !== 'buyNow') {
       await Cart.deleteOne({ user: userIdForOrder });

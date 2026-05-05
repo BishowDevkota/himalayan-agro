@@ -2,7 +2,7 @@ import mongoose, { Document, Model, Schema } from "mongoose";
 
 export type PaymentStatus = "pending" | "paid" | "failed";
 export type OrderStatus = "pending" | "processing" | "shipped" | "delivered" | "cancelled";
-export type PaymentMethod = "cod" | "card" | "credit";
+export type PaymentMethod = "cod" | "card" | "credit" | "esewa";
 
 export interface IOrderItem {
   product: mongoose.Types.ObjectId;
@@ -73,7 +73,7 @@ const OrderSchema: Schema<IOrder> = new mongoose.Schema(
     outlet: { type: mongoose.Schema.Types.ObjectId, ref: "Outlet", index: true },
     distributorCreditApplied: { type: Boolean, default: false },
     distributorCreditAmount: { type: Number, default: 0, min: 0 },
-    paymentMethod: { type: String, enum: ["cod", "card", "credit"], default: "cod" },
+    paymentMethod: { type: String, enum: ["cod", "card", "credit", "esewa"], default: "cod" },
     shippingAddress: { type: ShippingSchema },
     paymentStatus: { type: String, enum: ["pending", "paid", "failed"], default: "pending" },
     orderStatus: { type: String, enum: ["pending", "processing", "shipped", "delivered", "cancelled"], default: "pending" },
