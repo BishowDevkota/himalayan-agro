@@ -15,13 +15,10 @@ export default function ManagingDirectorPage() {
   return (
     <main>
       <SubHeroSection
-        breadcrumbs={[
-          { label: 'Home', href: '/' },
-          { label: 'About Managing Director', href: '/managing-director', active: true },
-        ]}
         title="About Managing Director"
-        subtitle="Our Leader's Vision for Agricultural Excellence"
-        imageUrl="/managing-director.jpg"
+        description="Our Leader's Vision for Agricultural Excellence"
+        image="/managing-director.jpg"
+        tag="Leadership"
       />
 
       <HeroSection imageSrc="/managing-director.jpg" />
