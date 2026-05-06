@@ -111,7 +111,7 @@ export default function LoginClient({ from, serverError }: { from: string; serve
     const outletSlug = sessionUser?.outletSlug;
 
     if (role === "outlet-admin" && outletSlug) {
-      router.push(`/admin/outlet-${outletSlug}`);
+      router.push(`/admin/${outletSlug}`);
       return;
     }
 

@@ -73,7 +73,7 @@ export default function HeroSection({ imageSrc }: Props) {
                 </p>
 
                 <p className="mx-auto max-w-3xl text-sm leading-7 text-gray-700 lg:mx-0 md:text-base">
-                  Dolindra Prasad Sharma is a leader with a zealous spirit and a proven record in leading organisations through complex challenges while promoting agricultural development and public service.
+                  Dolindra Prasad Sharma is a person with zealous spirit and winning contour to overcome unbeatable challenges and business hazards. He is endowed with patience and decorum required to affect the functionality of commercial and social organizations. He is a man of integrity and honesty for easing the complication level and beautifying the substantial shape of thoughts and visions by bringing about ideas to reality.
                 </p>
 
                 <div className="grid gap-3 sm:grid-cols-3">

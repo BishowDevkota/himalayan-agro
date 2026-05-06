@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
@@ -130,6 +131,21 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const [open, setOpen] = React.useState(true);
   const { data: session, status } = useSession();
   const isSessionLoading = status === "loading";
+  const prefersReducedMotion = useReducedMotion();
+
+  const pageMotion = prefersReducedMotion
+    ? {
+        initial: false,
+        animate: { opacity: 1 },
+        exit: { opacity: 1 },
+        transition: { duration: 0 },
+      }
+    : {
+        initial: { opacity: 0, y: 12 },
+        animate: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: -8 },
+        transition: { duration: 0.22, ease: "easeOut" as const },
+      };
 
   const user = session?.user as ShellUser | undefined;
   const role = user?.role;
@@ -169,7 +185,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-clip">
       {/* Mobile overlay */}
       {open && (
         <div
@@ -297,11 +313,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       </aside>
 
       {/* Main content */}
-      <div
-        className={`min-h-screen transition-all duration-300 ease-in-out ${
-          open ? "lg:ml-[270px]" : "lg:ml-0"
-        }`}
-      >
+      <div className={`min-h-screen transition-all duration-300 ease-in-out ${open ? "lg:ml-[270px]" : "lg:ml-0"}`}>
         {/* Top bar */}
         <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-100">
           <div className="flex items-center gap-3 px-4 sm:px-6 h-14">
@@ -334,9 +346,15 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         </header>
 
         {/* Page content */}
-        <div className="p-4 sm:p-6 lg:p-8">
-          {children}
-        </div>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={pathname || "admin"}
+            className="p-4 sm:p-6 lg:p-8"
+            {...pageMotion}
+          >
+            {children}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -16,7 +16,15 @@ type Outlet = {
   galleryImages?: string[];
 };
 
-export default function OutletSettingsClient({ initialOutlet }: { initialOutlet: Outlet }) {
+export default function OutletSettingsClient({
+  initialOutlet,
+  updateEndpoint = "/api/outlet-admin/outlet",
+  uploadEndpoint = "/api/outlet-admin/upload",
+}: {
+  initialOutlet: Outlet;
+  updateEndpoint?: string;
+  uploadEndpoint?: string;
+}) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -36,7 +44,7 @@ export default function OutletSettingsClient({ initialOutlet }: { initialOutlet:
     setError("");
 
     try {
-      const res = await fetch("/api/outlet-admin/outlet", {
+      const res = await fetch(updateEndpoint, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -123,7 +131,7 @@ export default function OutletSettingsClient({ initialOutlet }: { initialOutlet:
                 images={formData.profileImage}
                 onChange={(next) => setFormData((prev) => ({ ...prev, profileImage: next.slice(0, 1) }))}
                 multiple={false}
-                uploadEndpoint="/api/outlet-admin/upload"
+                uploadEndpoint={uploadEndpoint}
                 label="Upload profile picture"
                 helpText="Upload one image for the outlet profile."
               />
@@ -134,7 +142,7 @@ export default function OutletSettingsClient({ initialOutlet }: { initialOutlet:
               <ImageUpload
                 images={formData.galleryImages}
                 onChange={(next) => setFormData((prev) => ({ ...prev, galleryImages: next }))}
-                uploadEndpoint="/api/outlet-admin/upload"
+                uploadEndpoint={uploadEndpoint}
                 label="Upload gallery images"
                 helpText="Upload multiple images for the outlet gallery."
               />

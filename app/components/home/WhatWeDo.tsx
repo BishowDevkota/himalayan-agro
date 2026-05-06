@@ -289,7 +289,7 @@ export default function OurMission() {
         >
           {/* Section Label — unchanged */}
           <motion.div variants={headingVariants} className="text-center mb-4 sm:mb-5">
-            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-1.5 sm:py-2 rounded-full bg-[#0891b2]/8 text-[#0891b2] text-xs sm:text-sm font-semibold tracking-widest uppercase border border-[#0891b2]/15">
+            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-1.5 sm:py-2 rounded-full bg-cyan-100/95 text-cyan-900 text-xs sm:text-sm font-semibold tracking-widest uppercase border border-cyan-300 shadow-sm shadow-cyan-200/60">
               <span className="w-2 h-2 rounded-full bg-[#0891b2] animate-pulse" />
               Our Mission
             </span>

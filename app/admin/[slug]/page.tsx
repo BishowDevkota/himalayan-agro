@@ -1,31 +1,35 @@
 import React from "react";
+import Link from "next/link";
 import { getServerSession } from "next-auth/next";
-import authOptions from "../../../../lib/auth";
 import { redirect } from "next/navigation";
-import connectToDatabase from "../../../../lib/mongodb";
-import Outlet from "../../../../models/Outlet";
-import Product from "../../../../models/Product";
-import Category from "../../../../models/Category";
-import { serialize } from "../../../../lib/serialize";
+import authOptions from "../../../lib/auth";
+import connectToDatabase from "../../../lib/mongodb";
+import Outlet from "../../../models/Outlet";
+import Product from "../../../models/Product";
+import Category from "../../../models/Category";
 
-export default async function OutletAdminDashboard({ params }: { params: { slug: string } } | { params: Promise<{ slug: string }> }) {
+export default async function AdminOutletDashboard({ params }: { params: { slug: string } } | { params: Promise<{ slug: string }> }) {
   const resolvedParams = params instanceof Promise ? await params : params;
   const { slug } = resolvedParams;
 
   const session = (await getServerSession(authOptions as any)) as any;
-  if (!session || session.user?.role !== "outlet-admin") {
-    return redirect("/login");
+  if (!session) {
+    return redirect(`/login?from=/admin/${slug}`);
   }
 
-  if (session.user?.outletSlug !== slug) {
-    return redirect("/login");
+  if (session.user?.role !== "admin" && session.user?.role !== "outlet-admin") {
+    return redirect("/admin/dashboard");
+  }
+
+  if (session.user?.role === "outlet-admin" && session.user?.outletSlug !== slug) {
+    return redirect(`/admin/${session.user?.outletSlug || "dashboard"}`);
   }
 
   await connectToDatabase();
 
   const outlet = await Outlet.findOne({ slug }).lean();
   if (!outlet) {
-    return redirect("/login");
+    return redirect("/admin/outlets");
   }
 
   const [totalProducts, activeProducts, outOfStock, categories] = await Promise.all([
@@ -34,8 +38,6 @@ export default async function OutletAdminDashboard({ params }: { params: { slug:
     Product.countDocuments({ outlet: outlet._id, stock: { $lte: 0 } }),
     Category.find().sort({ name: 1 }).lean(),
   ]);
-
-  serialize(outlet);
 
   return (
     <main className="pb-10">
@@ -64,37 +66,22 @@ export default async function OutletAdminDashboard({ params }: { params: { slug:
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          <a
-            href={`/admin/${slug}/products`}
-            className="bg-cyan-600 hover:bg-cyan-700 text-white p-6 rounded-2xl font-semibold transition-colors"
-          >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          <Link href={`/admin/${slug}/products`} className="bg-cyan-600 hover:bg-cyan-700 text-white p-6 rounded-2xl font-semibold transition-colors">
             Manage Products
-          </a>
-          <a
-            href={`/admin/${slug}/orders`}
-            className="bg-indigo-600 hover:bg-indigo-700 text-white p-6 rounded-2xl font-semibold transition-colors"
-          >
+          </Link>
+          <Link href={`/admin/${slug}/orders`} className="bg-indigo-600 hover:bg-indigo-700 text-white p-6 rounded-2xl font-semibold transition-colors">
             Manage Orders
-          </a>
-          <a
-            href={`/admin/${slug}/categories`}
-            className="bg-emerald-600 hover:bg-emerald-700 text-white p-6 rounded-2xl font-semibold transition-colors"
-          >
+          </Link>
+          <Link href={`/admin/${slug}/categories`} className="bg-emerald-600 hover:bg-emerald-700 text-white p-6 rounded-2xl font-semibold transition-colors">
             Manage Categories
-          </a>
-          <a
-            href={`/admin/${slug}/outlet-info`}
-            className="bg-slate-700 hover:bg-slate-800 text-white p-6 rounded-2xl font-semibold transition-colors"
-          >
+          </Link>
+          <Link href={`/admin/${slug}/outlet-info`} className="bg-slate-700 hover:bg-slate-800 text-white p-6 rounded-2xl font-semibold transition-colors">
             Outlet Info
-          </a>
-          <a
-            href={`/admin/${slug}/employees`}
-            className="bg-amber-600 hover:bg-amber-700 text-white p-6 rounded-2xl font-semibold transition-colors"
-          >
+          </Link>
+          <Link href={`/admin/${slug}/employees`} className="bg-amber-600 hover:bg-amber-700 text-white p-6 rounded-2xl font-semibold transition-colors">
             Employees
-          </a>
+          </Link>
         </div>
       </div>
     </main>
