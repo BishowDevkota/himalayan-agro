@@ -6,7 +6,6 @@ import authOptions from "../../../../../lib/auth";
 import connectToDatabase from "../../../../../lib/mongodb";
 import Order from "../../../../../models/Order";
 import Outlet from "../../../../../models/Outlet";
-import { serialize } from "../../../../../lib/serialize";
 import AdminOrderActions from "../../../../components/admin/AdminOrderActions";
 
 export default async function AdminOutletOrderDetailPage({ params }: { params: { slug: string; id: string } } | { params: Promise<{ slug: string; id: string }> }) {
@@ -40,7 +39,11 @@ export default async function AdminOutletOrderDetailPage({ params }: { params: {
             ← Back to orders
           </Link>
         </div>
-        <AdminOrderActions order={serialize(order) as any} />
+        <AdminOrderActions
+          orderId={String((order as any)._id)}
+          initialOrderStatus={String((order as any).orderStatus || "pending")}
+          initialPaymentStatus={String((order as any).paymentStatus || "pending")}
+        />
       </div>
     </main>
   );
