@@ -5,9 +5,10 @@ import Outlet from "../../models/Outlet";
 import SubHeroSection from "../components/SubHeroSection";
 import OutletListClient from "../components/OutletListClient";
 
-export default async function OutletListPage({ searchParams }: { searchParams?: { q?: string } }) {
+export default async function OutletListPage({ searchParams }: { searchParams?: Promise<{ q?: string }> }) {
   await connectToDatabase();
-  const q = (searchParams && searchParams.q) ? String(searchParams.q).trim() : "";
+  const resolvedSearchParams = await searchParams;
+  const q = resolvedSearchParams?.q ? String(resolvedSearchParams.q).trim() : "";
   const filter: any = { isActive: true };
   if (q) {
     filter.$or = [

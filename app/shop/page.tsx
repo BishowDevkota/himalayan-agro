@@ -3,8 +3,6 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Shop",
 };
-import { getServerSession } from "next-auth";
-import authOptions from "../../lib/auth";
 import connectToDatabase from "../../lib/mongodb";
 import Product from "../../models/Product";
 import ProductCard from "../components/ProductCard";
@@ -53,7 +51,6 @@ export default async function ShopPage({ searchParams }: { searchParams?: ShopSe
     const safeCats = serializeCats(cats as any[]);
 
     const totalPages = Math.ceil(total / limit);
-    const session = await getServerSession(authOptions);
 
     return (
       <main className="bg-white text-gray-900">
