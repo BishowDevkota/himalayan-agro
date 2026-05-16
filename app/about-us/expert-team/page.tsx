@@ -59,7 +59,6 @@ export default function ExpertTeamPage() {
     <>
       <SubHeroSection
         title="Expert Team"
-        tag="About Us"
         description="Our experts guide farming systems, advisory services, and technical problem-solving across the field network."
         image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=2000"
       />

@@ -58,7 +58,6 @@ export default async function ShopPage({ searchParams }: { searchParams?: ShopSe
           title="Our Products"
           description="Premium Nepalese agricultural products — from farm to your doorstep. Discover quality produce sourced directly from our partner farms."
           image="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&q=80&w=2000"
-          tag="Browse & Discover"
           stats={[
             { value: `${total}`, label: "Products Available" },
             { value: "340+", label: "Partner Farms" },

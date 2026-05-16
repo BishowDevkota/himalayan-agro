@@ -12,7 +12,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
   return (
     <>
       {!isDashboardArea && <Navbar />}
-      <main style={!isDashboardArea && !isHomePage ? { paddingTop: "var(--top-bar-height, 0px)" } : undefined}>
+      <main style={!isDashboardArea ? { paddingTop: "var(--site-header-height, 0px)" } : undefined}>
         {children}
       </main>
       {!isDashboardArea && <Footer />}

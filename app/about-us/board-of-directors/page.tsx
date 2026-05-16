@@ -59,7 +59,6 @@ export default function BoardOfDirectorsPage() {
     <>
       <SubHeroSection
         title="Board of Directors"
-        tag="About Us"
         description="The board provides governance, oversight, and long-term direction for the organisation's growth and accountability."
         image="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=2000"
       />

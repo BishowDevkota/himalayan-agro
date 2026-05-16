@@ -73,7 +73,7 @@ export default function CorePillars() {
   const isInView = useInView(sectionRef, { once: true, margin: '-60px' });
 
   return (
-    <section ref={sectionRef} className="relative hidden sm:block bg-white py-20 sm:py-28 lg:py-32 overflow-hidden">
+    <section ref={sectionRef} className="relative hidden sm:block bg-white py-12 sm:py-16 lg:py-20 overflow-hidden">
       {/* Subtle decorative blobs */}
       <div className="absolute top-0 right-0 w-100 h-100 rounded-full bg-cyan-50 opacity-35 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-87.5 h-87.5 rounded-full bg-orange-50 opacity-30 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
@@ -84,18 +84,10 @@ export default function CorePillars() {
           initial={false}
           animate={isInView ? 'visible' : 'hidden'}
         >
-          {/* Section Label */}
-          <motion.div variants={headingVariants} className="text-center mb-5">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0891b2]/8 text-[#0891b2] text-xs sm:text-sm font-semibold tracking-widest uppercase border border-[#0891b2]/15">
-              <span className="w-2 h-2 rounded-full bg-[#0891b2] animate-pulse" />
-              Our Core Pillars
-            </span>
-          </motion.div>
-
           {/* Section Heading */}
           <motion.h2
             variants={headingVariants}
-            className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-4"
+            className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-3"
             style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
           >
             Our Strategic{' '}
@@ -105,7 +97,7 @@ export default function CorePillars() {
           {/* Decorative divider */}
           <motion.div
             variants={headingVariants}
-            className="flex items-center justify-center gap-3 mb-4"
+            className="flex items-center justify-center gap-3 mb-3"
           >
             <div className="h-px w-12 bg-[#0891b2]/30" />
             <div className="w-2 h-2 rounded-full bg-[#d97706]" />
@@ -115,7 +107,7 @@ export default function CorePillars() {
           {/* Subtitle */}
           <motion.p
             variants={headingVariants}
-            className="text-center text-base sm:text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto mb-14 sm:mb-18"
+            className="text-center text-base sm:text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-12"
           >
             The strategic pillars that drive our mission to transform Nepal&apos;s agricultural landscape.
           </motion.p>

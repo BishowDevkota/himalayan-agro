@@ -9,7 +9,7 @@ export default async function CheckoutPage() {
   
   if (!session) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center px-4 py-8">
+      <div className="min-h-screen bg-linear-to-b from-slate-50 to-white flex items-center justify-center px-4 py-8">
         <div className="text-center max-w-md">
           <div className="mb-6">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-100 mb-4">
@@ -36,11 +36,11 @@ export default async function CheckoutPage() {
   
   if (role !== "distributor" || distributorStatus !== "approved") {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <div className="min-h-screen bg-linear-to-b from-slate-50 to-white">
         <div className="max-w-3xl mx-auto p-8 sm:p-12">
-          <div className="rounded-2xl border border-amber-200 bg-gradient-to-br from-amber-50 to-yellow-50 p-8 sm:p-12">
+          <div className="rounded-2xl border border-amber-200 bg-linear-to-br from-amber-50 to-yellow-50 p-8 sm:p-12">
             <div className="flex items-start gap-4">
-              <div className="flex-shrink-0">
+              <div className="shrink-0">
                 <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-amber-200">
                   <span className="text-xl">⚠️</span>
                 </div>
@@ -75,7 +75,7 @@ export default async function CheckoutPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+    <div className="min-h-screen bg-linear-to-b from-slate-50 via-white to-slate-50">
       {/* Header */}
       <div className="bg-white border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5">

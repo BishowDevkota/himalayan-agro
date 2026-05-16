@@ -75,13 +75,13 @@ const articles = [
 ];
 
 const categoryColors: Record<string, string> = {
-  Expansion: "bg-sky-100 text-sky-700",
-  Partnership: "bg-emerald-100 text-emerald-700",
-  Financial: "bg-amber-100 text-amber-700",
-  Infrastructure: "bg-violet-100 text-violet-700",
-  Community: "bg-rose-100 text-rose-700",
-  Technology: "bg-cyan-100 text-cyan-700",
-  Awards: "bg-yellow-100 text-yellow-700",
+  Expansion: "text-sky-700",
+  Partnership: "text-emerald-700",
+  Financial: "text-amber-700",
+  Infrastructure: "text-violet-700",
+  Community: "text-rose-700",
+  Technology: "text-cyan-700",
+  Awards: "text-yellow-700",
 };
 export default function NewsPage() {
   return (
@@ -90,7 +90,6 @@ export default function NewsPage() {
         title="News & Updates"
         description="Stay up to date with the latest developments, milestones, and stories from Himalaya Nepal Agriculture."
         image="https://images.unsplash.com/photo-1586339949216-35c2747cc36d?auto=format&fit=crop&q=80&w=2000"
-        tag="Latest From HNA"
         stats={[
           { value: "340+", label: "Partner Farms" },
           { value: "156K", label: "Hectares" },
@@ -114,7 +113,7 @@ export default function NewsPage() {
             <div className="p-8 lg:p-12">
               <div className="flex items-center gap-3 mb-4">
                 <span
-                  className={`text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full ${categoryColors[featuredArticle.category] || "bg-slate-100 text-slate-600"}`}
+                  className={`text-[11px] font-bold uppercase tracking-wider ${categoryColors[featuredArticle.category] || "text-slate-600"}`}
                 >
                   {featuredArticle.category}
                 </span>
@@ -152,7 +151,7 @@ export default function NewsPage() {
                   <div className="p-6 flex flex-col flex-1">
                     <div className="flex items-center gap-3 mb-3">
                       <span
-                        className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${categoryColors[article.category] || "bg-slate-100 text-slate-600"}`}
+                        className={`text-[10px] font-bold uppercase tracking-wider ${categoryColors[article.category] || "text-slate-600"}`}
                       >
                         {article.category}
                       </span>

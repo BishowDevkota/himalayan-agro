@@ -84,7 +84,7 @@ export default function CartClient() {
           if (!prod) {
             return (
               <article key={key} className="group bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden p-4 sm:p-5 flex items-start gap-4">
-                <div className="w-28 h-28 rounded-lg overflow-hidden bg-gray-50 flex-shrink-0 flex items-center justify-center text-gray-300">
+                <div className="w-28 h-28 rounded-lg overflow-hidden bg-gray-50 shrink-0 flex items-center justify-center text-gray-300">
                   <img src="/placeholder.png" alt="product removed" className="w-full h-full object-cover" />
                 </div>
 
@@ -118,7 +118,7 @@ export default function CartClient() {
           // product exists — render normally but use safe accessors
           return (
             <article key={key} className="group bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden p-4 sm:p-5 flex items-start gap-4">
-              <div className="w-28 h-28 rounded-xl overflow-hidden bg-[#f8faf9] flex-shrink-0 border border-gray-100">
+              <div className="w-28 h-28 rounded-xl overflow-hidden bg-[#f8faf9] shrink-0 border border-gray-100">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={prod.images?.[0] || '/placeholder.png'} alt={prod.name || 'product'} className="w-full h-full object-cover" />
               </div>

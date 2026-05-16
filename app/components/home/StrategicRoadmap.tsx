@@ -44,11 +44,11 @@ const VerticalRoadmap = () => {
   ];
 
   return (
-    <section className="bg-white py-24 px-[5%]">
+    <section className="bg-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
         
         {/* Header */}
-        <div className="mb-20 text-left border-l-4 border-[#2da8da] pl-6">
+        <div className="mb-8 text-left border-l-4 border-[#2da8da] pl-6">
           <span className="text-[#2da8da] font-black tracking-widest text-xs uppercase">ADS 2015-2035 Alignment</span>
           <h2 className="text-4xl md:text-6xl font-black uppercase text-black leading-none mt-2">
             Strategic <br /> Roadmap

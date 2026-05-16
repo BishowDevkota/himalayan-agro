@@ -366,7 +366,7 @@ export default function CheckoutClient() {
                 className="sr-only"
               />
               <div className="flex items-start gap-3">
-                <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${
+                <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center shrink-0 ${
                   paymentMethod === 'credit' ? 'border-emerald-500 bg-emerald-500' : 'border-slate-300'
                 }`}>
                   {paymentMethod === 'credit' && <CheckCircle2 className="w-4 h-4 text-white" />}
@@ -393,7 +393,7 @@ export default function CheckoutClient() {
                 className="sr-only"
               />
               <div className="flex items-start gap-3">
-                <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${
+                <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center shrink-0 ${
                   paymentMethod === 'esewa' ? 'border-[#0891b2] bg-[#0891b2]' : 'border-slate-300'
                 }`}>
                   {paymentMethod === 'esewa' && <CheckCircle2 className="w-4 h-4 text-white" />}
@@ -428,7 +428,7 @@ export default function CheckoutClient() {
               </div>
               {availableCredit < subtotal && (
                 <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm flex items-start gap-2">
-                  <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                   <span>Insufficient credit for this order</span>
                 </div>
               )}
@@ -454,7 +454,7 @@ export default function CheckoutClient() {
           <div className="space-y-4">
             {cart.items.map((it: CheckoutCartItem) => (
               <div key={it.product._id} className="flex gap-4 p-4 bg-slate-50 rounded-lg border border-slate-200">
-                <div className="w-16 h-16 rounded-lg overflow-hidden bg-white border border-slate-200 flex-shrink-0">
+                <div className="w-16 h-16 rounded-lg overflow-hidden bg-white border border-slate-200 shrink-0">
                   <img
                     src={it.product.images?.[0] || '/placeholder.png'}
                     alt={it.product.name}
@@ -466,7 +466,7 @@ export default function CheckoutClient() {
                   <p className="text-sm text-slate-600">Qty: {it.quantity}</p>
                   {it.product.brand && <p className="text-xs text-slate-500 mt-1">{it.product.brand}</p>}
                 </div>
-                <div className="text-right flex-shrink-0">
+                <div className="text-right shrink-0">
                   <p className="font-bold text-slate-900">NPR {(it.product.price * it.quantity).toFixed(2)}</p>
                   <p className="text-xs text-slate-600">@NPR {it.product.price.toFixed(2)}</p>
                 </div>
@@ -487,7 +487,7 @@ export default function CheckoutClient() {
 
       {/* Order Summary Sidebar */}
       <div className="lg:sticky lg:top-4 h-fit">
-        <div className="bg-gradient-to-b from-slate-900 to-slate-800 rounded-2xl p-8 text-white shadow-xl">
+        <div className="bg-linear-to-b from-slate-900 to-slate-800 rounded-2xl p-8 text-white shadow-xl">
           <h3 className="text-sm font-semibold text-slate-300 mb-6 uppercase tracking-wider">Order Summary</h3>
 
           <div className="space-y-4 mb-6 pb-6 border-b border-slate-700">

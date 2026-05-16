@@ -58,7 +58,6 @@ export default function CropCultivationPage() {
         title="Crop Cultivation"
         description="From seed selection to harvest management — delivering end-to-end crop solutions that transform Nepal's agricultural productivity."
         image="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?auto=format&fit=crop&q=80&w=2000"
-        tag="Seeds, Fertilizers & Crop Care"
         stats={[
           { value: "45+", label: "Seed Varieties" },
           { value: "12K", label: "Hectares Covered" },
@@ -98,9 +97,6 @@ export default function CropCultivationPage() {
         >
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
-              <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#0891b2]/5">
-                Our Focus Areas
-              </span>
               <h2 className="text-4xl lg:text-5xl font-black leading-[1.05] tracking-tight mb-6">
                 Crop Categories
               </h2>
@@ -149,9 +145,6 @@ export default function CropCultivationPage() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#0891b2]/5">
-              What We Offer
-            </span>
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Cultivation Services</h2>
             <p className="text-slate-400 mt-4 max-w-2xl mx-auto text-[15px] leading-relaxed">
               End-to-end support for every stage of the crop lifecycle.
@@ -229,9 +222,6 @@ export default function CropCultivationPage() {
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#0891b2]/15 blur-[120px] rounded-full -mr-40 -mt-40 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-6">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-8 bg-[#0891b2]/10">
-              Get Started
-            </span>
             <h2 className="text-4xl lg:text-5xl font-black mb-6 text-white tracking-tight">
               Ready to Transform Your Yield?
             </h2>

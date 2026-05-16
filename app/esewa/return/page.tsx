@@ -136,7 +136,7 @@ function EsewaReturnContent() {
   const order = result.order;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-linear-to-b from-slate-50 to-white py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-2xl mx-auto">
         {/* Loading State */}
         {loading && (
@@ -150,9 +150,9 @@ function EsewaReturnContent() {
         {/* Error State */}
         {!loading && error && (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-red-500 to-red-600 p-8">
+            <div className="bg-linear-to-r from-red-500 to-red-600 p-8">
               <div className="flex items-center gap-4">
-                <AlertCircle className="w-12 h-12 text-white flex-shrink-0" />
+                <AlertCircle className="w-12 h-12 text-white shrink-0" />
                 <div>
                   <h1 className="text-3xl font-bold text-white">Payment Error</h1>
                   <p className="text-red-100 mt-1">There was an issue processing your payment</p>
@@ -186,9 +186,9 @@ function EsewaReturnContent() {
         {/* Success State */}
         {!loading && isSuccess && (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 p-8">
+            <div className="bg-linear-to-r from-emerald-500 to-emerald-600 p-8">
               <div className="flex items-center gap-4">
-                <CheckCircle className="w-12 h-12 text-white flex-shrink-0" />
+                <CheckCircle className="w-12 h-12 text-white shrink-0" />
                 <div>
                   <h1 className="text-3xl font-bold text-white">Payment Successful!</h1>
                   <p className="text-emerald-100 mt-1">Your order has been confirmed</p>
@@ -213,7 +213,7 @@ function EsewaReturnContent() {
               {order && (
                 <div className="space-y-6">
                   {/* Order Total */}
-                  <div className="bg-gradient-to-br from-[#0891b2] to-[#0b78be] rounded-lg p-6 text-white">
+                  <div className="bg-linear-to-br from-[#0891b2] to-[#0b78be] rounded-lg p-6 text-white">
                     <p className="text-sm opacity-90">Order Total</p>
                     <p className="text-4xl font-bold mt-2">NPR {order.totalAmount?.toFixed(2) || "0.00"}</p>
                   </div>
@@ -267,7 +267,7 @@ function EsewaReturnContent() {
 
                   {/* Estimated Delivery */}
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                    <Clock className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold text-blue-900">Estimated Delivery</p>
                       <p className="text-sm text-blue-700 mt-1">Your order will be delivered within 2-3 business days</p>
@@ -304,9 +304,9 @@ function EsewaReturnContent() {
         {/* Pending/Other Status */}
         {!loading && !error && !isSuccess && result.paymentStatus && (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
-            <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-8">
+            <div className="bg-linear-to-r from-orange-500 to-orange-600 p-8">
               <div className="flex items-center gap-4">
-                <Clock className="w-12 h-12 text-white flex-shrink-0" />
+                <Clock className="w-12 h-12 text-white shrink-0" />
                 <div>
                   <h1 className="text-3xl font-bold text-white">Payment Pending</h1>
                   <p className="text-orange-100 mt-1">Your payment is being processed</p>
@@ -348,7 +348,7 @@ export default function EsewaReturnPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12 px-4 flex items-center justify-center">
+        <div className="min-h-screen bg-linear-to-b from-slate-50 to-white py-12 px-4 flex items-center justify-center">
           <div className="text-center">
             <Loader className="w-12 h-12 text-[#0891b2] mx-auto mb-4 animate-spin" />
             <p className="text-slate-600">Loading...</p>

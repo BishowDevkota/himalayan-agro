@@ -18,7 +18,6 @@ export default function ManagingDirectorPage() {
         title="About Managing Director"
         description="Our Leader's Vision for Agricultural Excellence"
         image="/managing-director.jpg"
-        tag="Leadership"
       /> */}
 
       <HeroSection imageSrc="/managing-director.jpg" />

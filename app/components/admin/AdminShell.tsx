@@ -278,7 +278,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
         {/* Bottom: Profile & Sign Out */}
         <div className="px-3 py-4 flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-700 text-cyan-400 text-sm font-bold flex-shrink-0">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-700 text-cyan-400 text-sm font-bold shrink-0">
             {profileInitial}
           </div>
           <div className="min-w-0 flex-1">
@@ -300,7 +300,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
               });
               window.location.href = "/login";
             }}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-red-500/15 hover:text-red-400 transition-all duration-200 flex-shrink-0"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-red-500/15 hover:text-red-400 transition-all duration-200 shrink-0"
             title="Sign out"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

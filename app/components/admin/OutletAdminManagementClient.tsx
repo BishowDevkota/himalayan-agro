@@ -329,7 +329,7 @@ export default function OutletAdminManagementClient({ outletId, initialAdmins, o
         transition={{ duration: 0.4, ease: "easeOut" }}
       >
         <AnimatedDiv
-          className="overflow-hidden rounded-[28px] border border-slate-200/70 bg-gradient-to-br from-white via-white to-cyan-50/40 shadow-sm"
+          className="overflow-hidden rounded-[28px] border border-slate-200/70 bg-linear-to-br from-white via-white to-cyan-50/40 shadow-sm"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
@@ -448,7 +448,7 @@ export default function OutletAdminManagementClient({ outletId, initialAdmins, o
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.25, ease: "easeOut", delay: 0.04 * index }}
                 >
-                  <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-cyan-500 via-emerald-400 to-amber-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-cyan-500 via-emerald-400 to-amber-300 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex min-w-0 items-start gap-3">

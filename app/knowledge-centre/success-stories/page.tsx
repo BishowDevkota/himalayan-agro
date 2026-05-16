@@ -40,7 +40,6 @@ export default function SuccessStoriesPage() {
     <>
       <SubHeroSection
         title="Success Stories"
-        tag="Knowledge Centre"
         description="Real-world case studies and outcomes from farms, cooperatives, and field programs will be showcased here."
         image="https://images.unsplash.com/photo-1530268729831-4b0b9e170218?auto=format&fit=crop&q=80&w=2000"
       />
@@ -55,8 +54,8 @@ export default function SuccessStoriesPage() {
 
           <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {stories.map((story) => (
-              <article key={story.title} className="rounded-3xl border border-slate-200 bg-gradient-to-br from-emerald-50 via-white to-sky-50 p-6 shadow-[0_16px_34px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_46px_rgba(15,23,42,0.1)]">
-                <div className="inline-flex rounded-full bg-emerald-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">
+              <article key={story.title} className="rounded-3xl border border-slate-200 bg-linear-to-br from-emerald-50 via-white to-sky-50 p-6 shadow-[0_16px_34px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_46px_rgba(15,23,42,0.1)]">
+                <div className="text-xs font-semibold uppercase tracking-[0.18em] text-emerald-700">
                   {story.impact}
                 </div>
                 <h3 className="mt-5 text-xl font-bold text-slate-900" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>

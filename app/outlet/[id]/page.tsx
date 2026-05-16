@@ -35,7 +35,7 @@ export default async function OutletPage({ params }: { params: { id: string } } 
   const data = await fetchData(id);
   if (!data) {
     return (
-      <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white flex items-center justify-center px-4">
+      <main className="min-h-screen bg-linear-to-b from-slate-50 to-white flex items-center justify-center px-4">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-slate-900 mb-2">Outlet Not Found</h1>
           <p className="text-slate-600 mb-6">We couldn't find the outlet you're looking for.</p>
@@ -56,7 +56,7 @@ export default async function OutletPage({ params }: { params: { id: string } } 
   const showAddressText = !extractGoogleMapsSrc(outlet.address) && !!outlet.address;
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50">
+    <main className="min-h-screen bg-linear-to-b from-slate-50 via-white to-slate-50">
       {/* Header with Hero Image */}
       <div className="relative h-80 sm:h-96 bg-slate-200 overflow-hidden">
         {outlet.profileImage ? (
@@ -68,11 +68,11 @@ export default async function OutletPage({ params }: { params: { id: string } } 
             priority
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-[#0891b2] to-[#059669] flex items-center justify-center">
+          <div className="w-full h-full bg-linear-to-br from-[#0891b2] to-[#059669] flex items-center justify-center">
             <div className="text-6xl text-white opacity-20">🏪</div>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
       </div>
 
       {/* Content */}

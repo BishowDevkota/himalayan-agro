@@ -52,7 +52,6 @@ export default function TrainingResourcesPage() {
     <>
       <SubHeroSection
         title="Training Resources"
-        tag="Knowledge Centre"
         description="CMS-managed guides, workshops, and learning materials will live here for farmers, staff, and partner networks."
         image="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?auto=format&fit=crop&q=80&w=2000"
       />
@@ -68,8 +67,8 @@ export default function TrainingResourcesPage() {
           <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             {trainingResources.map((resource) => (
               <article key={resource.title} className="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_16px_34px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_46px_rgba(15,23,42,0.1)]">
-                <div className={`h-32 bg-gradient-to-br ${resource.color} p-5 text-white`}>
-                  <div className="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white/90">
+                <div className={`h-32 bg-linear-to-br ${resource.color} p-5 text-white`}>
+                  <div className="text-xs font-semibold uppercase tracking-[0.18em] text-white/90">
                     {resource.type}
                   </div>
                   <div className="mt-8 text-xs font-semibold uppercase tracking-[0.2em] text-white/70">

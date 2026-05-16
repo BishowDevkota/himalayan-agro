@@ -24,7 +24,6 @@ export default async function OutletListPage({ searchParams }: { searchParams?: 
       <SubHeroSection
         title="Outlets"
         description="Find our outlets across Nepal. Filter by district or search by product availability."
-        tag="Find an outlet"
         image="https://images.unsplash.com/photo-1508780709619-79562169bc64?auto=format&fit=crop&q=80&w=2000"
         overlay="light"
       />

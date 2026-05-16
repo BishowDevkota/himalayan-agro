@@ -6,7 +6,6 @@ import { BarChart3, Globe } from 'lucide-react';
 
 const slides = [
   {
-    tag: "Precision Crop Management",
     title: "Precision Farming and Soil",
     titleLine2: "Health Monitoring",
     subtitle: "Seamlessly integrate IoT sensor data to make smarter decisions",
@@ -25,7 +24,6 @@ const slides = [
     hectares: { value: "156K", label: "Total Hectares", sublabel: "Monitored" },
   },
   {
-    tag: "Smart Agriculture Solutions",
     title: "Revolutionizing Poultry &",
     titleLine2: "Aquaculture",
     subtitle: "Leverage smart technologies to improve productivity and minimize resource loss.",
@@ -44,7 +42,6 @@ const slides = [
     hectares: { value: "200K", label: "Total Production", sublabel: "Units/Month" },
   },
   {
-    tag: "Sustainable Farming Initiative",
     title: "Global Impact Through",
     titleLine2: "Responsible Agriculture",
     subtitle: "Building a sustainable future with data-driven farming practices",
@@ -148,7 +145,10 @@ export default function Hero() {
       onMouseLeave={() => {
         swipeStart.current = null;
       }}
-      style={{ touchAction: "pan-y", height: "100dvh" }}
+      style={{
+        touchAction: "pan-y",
+        height: "calc(100dvh - var(--site-header-height, 0px))",
+      }}
     >
       {/* Background */}
       <AnimatePresence mode="wait">
@@ -170,7 +170,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center h-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-14 items-center w-full pt-20 pb-4 sm:pt-28 sm:pb-10 lg:pt-0 lg:pb-0">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8 lg:gap-14 items-center w-full py-10 sm:py-12 lg:py-14">
 
           {/* === LEFT: Text === */}
           <AnimatePresence mode="wait">
@@ -182,12 +182,6 @@ export default function Hero() {
               exit="hidden"
               className="max-w-lg order-2 lg:order-1"
             >
-              <motion.div variants={fadeUpVariants}>
-                <span className="inline-block px-4 py-1.5 rounded-full border border-[#c4b99a] text-[#5a4e3c] text-xs sm:text-sm font-medium tracking-wide mb-6 sm:mb-5">
-                  {slide.tag}
-                </span>
-              </motion.div>
-
               <motion.h1
                 variants={fadeUpVariants}
                 className="text-2xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-[#2a2018] leading-[1.12] tracking-tight mb-5 sm:mb-4"

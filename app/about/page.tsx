@@ -15,7 +15,6 @@ export default function AboutPage() {
         title="About Himalaya Nepal"
         description="Transitioning from subsistence farming to a competitive, export-oriented industrial system through land consolidation and technology."
         image="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&q=80&w=2000"
-        tag="Our 20-Year Strategic Plan"
         stats={[
           { value: "57.3%", label: "Pop. Dependent" },
           { value: "2035", label: "Strategic Horizon" },
@@ -28,7 +27,7 @@ export default function AboutPage() {
         
         {/* 2. Macro-Economic Context Component */}
         <AnimatedSection
-          className="mt-12 sm:mt-20 lg:mt-28 py-20"
+          className="mt-6 sm:mt-10 lg:mt-14 py-10"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
@@ -36,9 +35,6 @@ export default function AboutPage() {
         >
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
-              <span className="inline-block px-4 py-1.5 rounded-full border border-[#29A8DD]/20 text-[#29A8DD] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#29A8DD]/5">
-                The National Context
-              </span>
               <h2 className="text-4xl lg:text-5xl font-black leading-[1.05] tracking-tight mb-6">
                 Correcting the{" "}
                 <span className="bg-linear-to-r from-[#29A8DD] to-[#64cc98] bg-clip-text text-transparent">
@@ -100,29 +96,26 @@ export default function AboutPage() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#29A8DD]/20 text-[#29A8DD] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#29A8DD]/5">
-              Our Blueprint
-            </span>
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Ten Strategic Objectives</h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
             {[
-              { name: "Modernization", icon: "⚙️" },
-              { name: "Commercialization", icon: "📈" },
-              { name: "Land Consolidation", icon: "🗺️" },
-              { name: "Quality Testing", icon: "🔬" },
-              { name: "Farmer Welfare", icon: "🤝" },
-              { name: "Supply Chain", icon: "🔗" },
-              { name: "Export Promotion", icon: "🌍" },
-              { name: "R&D Innovation", icon: "💡" },
-              { name: "Digital Logistics", icon: "📱" },
-              { name: "Agri-Tourism", icon: "🏔️" },
+              { name: "Modernization", icon: "/objectives/icon 1.png" },
+              { name: "Commercialization", icon: "/objectives/icon 2.png" },
+              { name: "Land Consolidation", icon: "/objectives/icon 3.png" },
+              { name: "Quality Testing", icon: "/objectives/icon 4.png" },
+              { name: "Farmer Welfare", icon: "/objectives/icon 5.png" },
+              { name: "Supply Chain", icon: "/objectives/icon 6.png" },
+              { name: "Export Promotion", icon: "/objectives/icon 7.png" },
+              { name: "R&D Innovation", icon: "/objectives/icon 8.png" },
+              { name: "Digital Logistics", icon: "/objectives/icon 9.png" },
+              { name: "Agri-Tourism", icon: "/objectives/icon 10.jpeg" },
             ].map((obj, i) => (
               <div
                 key={i}
                 className="group relative p-6 rounded-2xl border border-slate-100 text-center transition-all duration-300 hover:border-[#29A8DD]/30 hover:bg-[#29A8DD]/3 hover:shadow-lg hover:shadow-[#29A8DD]/5 hover:-translate-y-1"
               >
-                <span className="text-2xl block mb-3 group-hover:scale-110 transition-transform duration-300">{obj.icon}</span>
+                <img src={obj.icon} alt={obj.name} className="h-8 w-auto mx-auto block mb-3 group-hover:scale-110 transition-transform duration-300" />
                 <span className="block text-[#29A8DD] font-black text-xs mb-1.5 tabular-nums">0{i + 1}</span>
                 <span className="text-[11px] font-bold uppercase tracking-tight text-slate-700">{obj.name}</span>
               </div>
@@ -183,9 +176,6 @@ export default function AboutPage() {
         >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-4">
             <div>
-              <span className="inline-block px-4 py-1.5 rounded-full border border-[#29A8DD]/20 text-[#29A8DD] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#29A8DD]/5">
-                Product Verticals
-              </span>
               <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Export-Grade Value Chains</h2>
             </div>
             <Link href="/shop" className="text-sm font-bold text-[#29A8DD] hover:text-[#0891b2] transition-colors flex items-center gap-1.5 shrink-0">
@@ -203,11 +193,6 @@ export default function AboutPage() {
                 <div className="relative overflow-hidden rounded-[28px] mb-6 aspect-square bg-slate-100">
                   <img src={product.img} alt={product.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" />
                   <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <div className="absolute bottom-5 left-5 right-5 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                    <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs font-bold">
-                      Explore <span>→</span>
-                    </span>
-                  </div>
                 </div>
                 <h4 className="text-lg font-bold mb-1.5 group-hover:text-[#29A8DD] transition-colors duration-300">{product.title}</h4>
                 <p className="text-slate-400 text-sm leading-relaxed">{product.desc}</p>
@@ -262,9 +247,6 @@ export default function AboutPage() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <div>
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#29A8DD]/20 text-[#29A8DD] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#29A8DD]/5">
-              Digital Infrastructure
-            </span>
             <h2 className="text-3xl lg:text-4xl font-black mb-6 tracking-tight">Digital Logistics & Traceability</h2>
             <p className="text-slate-500 mb-10 leading-relaxed text-[15px]">
               Every shipment is tracked via our digital logistics system, ensuring quality compliance and transparency from the farm gate to the international buyer.
@@ -353,9 +335,6 @@ export default function AboutPage() {
           <div className="absolute inset-px rounded-[47px] border border-slate-200/50 pointer-events-none" />
 
           <div className="relative z-10">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#29A8DD]/20 text-[#29A8DD] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#29A8DD]/5">
-              Governance
-            </span>
             <h2 className="text-4xl lg:text-5xl font-black mb-4 tracking-tight">Transparent Governance</h2>
             <p className="text-slate-400 mb-16 max-w-xl mx-auto text-[15px] leading-relaxed">Public shareholding ensures accountability and maintains strong community relations.</p>
             
@@ -453,9 +432,6 @@ export default function AboutPage() {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-175 border border-dashed border-white/3 rounded-full pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-6">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#29A8DD]/30 text-[#29A8DD] text-[11px] font-bold tracking-[3px] uppercase mb-8 bg-[#29A8DD]/10">
-              Join Our Mission
-            </span>
             <h2 className="text-4xl lg:text-6xl font-black mb-8 text-white tracking-tight leading-[1.05]">
               Paving the Way for{" "}
               <span className="bg-linear-to-r from-[#29A8DD] to-[#64cc98] bg-clip-text text-transparent">

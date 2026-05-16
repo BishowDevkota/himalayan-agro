@@ -167,7 +167,6 @@ export default function InvestorPage() {
         title="Investor Relations"
         description="Transparent growth. Strategic vision. Join us in transforming Nepal's agricultural future."
         image="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2000"
-        tag="Growth & Opportunity"
         stats={[
           { value: "NPR 1.2B", label: "FY 2025 Revenue" },
           { value: "+34%", label: "YoY Growth" },
@@ -254,7 +253,7 @@ export default function InvestorPage() {
         </AnimatedSection>
 
         <AnimatedSection className="mt-32" {...sectionMotion}>
-          <div className="relative overflow-hidden rounded-[48px] border border-slate-100 bg-gradient-to-br from-slate-50 via-white to-sky-50 p-10 lg:p-16">
+          <div className="relative overflow-hidden rounded-[48px] border border-slate-100 bg-linear-to-br from-slate-50 via-white to-sky-50 p-10 lg:p-16">
             <div className="absolute -top-16 -right-16 w-48 h-48 bg-sky-200/40 blur-[90px] rounded-full" />
             <div className="absolute -bottom-20 -left-20 w-56 h-56 bg-emerald-200/30 blur-[100px] rounded-full" />
 

@@ -39,7 +39,7 @@ const accentStyles: Record<AccentKey, { rail: string; badge: string; border: str
 export default function CareerTimeline() {
   return (
     <section id="career" className="relative overflow-hidden bg-slate-50 py-16 sm:py-20">
-      <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-white to-transparent" />
+      <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-white to-transparent" />
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
           <span className="inline-flex items-center rounded-full border border-[#1C2B14]/10 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.32em] text-[#1C2B14] shadow-sm">
@@ -67,14 +67,14 @@ export default function CareerTimeline() {
               >
                 <div className="md:pt-5">
                   <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm">
-                    <span className={`h-2.5 w-2.5 rounded-full bg-gradient-to-r ${accent.rail}`} />
+                    <span className={`h-2.5 w-2.5 rounded-full bg-linear-to-r ${accent.rail}`} />
                     <span>{item.period}</span>
                   </div>
                 </div>
 
                 <div className={`group relative overflow-hidden rounded-[1.75rem] border bg-white p-5 shadow-[0_10px_30px_rgba(15,23,42,0.06)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] ${accent.border}`}>
-                  <div className={`absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b ${accent.rail}`} />
-                  <div className={`absolute -right-16 -top-16 h-40 w-40 rounded-full bg-gradient-to-br ${accent.glow} blur-3xl`} />
+                  <div className={`absolute left-0 top-0 h-full w-1.5 bg-linear-to-b ${accent.rail}`} />
+                  <div className={`absolute -right-16 -top-16 h-40 w-40 rounded-full bg-linear-to-br ${accent.glow} blur-3xl`} />
 
                   <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                     <div className="space-y-2">
@@ -87,7 +87,7 @@ export default function CareerTimeline() {
                     </div>
 
                     <div className="flex items-center gap-2 self-start rounded-2xl bg-slate-50 px-4 py-2 text-sm font-medium text-slate-600 ring-1 ring-slate-100">
-                      <span className={`h-2.5 w-2.5 rounded-full bg-gradient-to-r ${accent.rail}`} />
+                      <span className={`h-2.5 w-2.5 rounded-full bg-linear-to-r ${accent.rail}`} />
                       <span>Leadership role</span>
                     </div>
                   </div>

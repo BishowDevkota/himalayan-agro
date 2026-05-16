@@ -26,7 +26,7 @@ export default function MessageFromManagingDirector() {
   }, []);
 
   return (
-    <section style={{ marginTop: '30px', marginBottom: '30px' }} className="overflow-hidden bg-transparent px-4 py-3 md:px-6 md:py-4">
+    <section className="overflow-hidden bg-transparent px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-6xl" ref={sectionRef}>
         <div className="flex flex-col lg:flex-row">
 
@@ -39,7 +39,7 @@ export default function MessageFromManagingDirector() {
             }}
             className="relative lg:w-2/5 border border-slate-200 rounded-t-xl lg:rounded-l-xl lg:rounded-tr-none overflow-hidden bg-slate-100 flex flex-col"
           >
-            <div className="flex-1 min-h-[260px] lg:min-h-0 overflow-hidden">
+            <div className="flex-1 min-h-65 lg:min-h-0 overflow-hidden">
               {!imageError ? (
                 <img
                   src="/managing-director.jpg"
@@ -76,13 +76,8 @@ export default function MessageFromManagingDirector() {
           >
             {/* Header — restored to original sizes */}
             <div className="mb-3 text-center">
-              <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#2da8da]/8 text-[#2da8da] text-xs sm:text-sm font-semibold tracking-widest uppercase border border-[#2da8da]/15">
-                <span className="w-2 h-2 rounded-full bg-[#2da8da] animate-pulse" />
-                Our Message
-              </span>
-
               <h2
-                className="mt-4 text-center text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-3"
+                className="text-center text-3xl sm:text-4xl md:text-5xl font-black tracking-tight mb-3"
                 style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
               >
                 <span className="block text-gray-900">Message</span>

@@ -43,7 +43,6 @@ export default function NoticesPage() {
     <>
       <SubHeroSection
         title="Notices"
-        tag="News & Notices"
         description="Official notices can be published as posters, PDFs, or attachments, depending on what the admin uploads."
         image="https://images.unsplash.com/photo-1485083269755-a7b559a4fe5e?auto=format&fit=crop&q=80&w=2000"
       />
@@ -63,13 +62,13 @@ export default function NoticesPage() {
                   <div className="relative h-56 overflow-hidden">
                     <img src={notice.image} alt={notice.title} className="h-full w-full object-cover" />
                     <div className="absolute inset-0 bg-linear-to-t from-slate-900/60 via-transparent to-transparent" />
-                    <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-800">
-                      <ImageIcon className="h-4 w-4 text-[#0d837f]" />
+                    <div className="absolute left-4 top-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/90">
+                      <ImageIcon className="h-4 w-4 text-[#67e8f9]" />
                       {notice.format}
                     </div>
                   </div>
                 ) : (
-                  <div className="flex h-56 items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-700 text-white">
+                  <div className="flex h-56 items-center justify-center bg-linear-to-br from-slate-900 via-slate-800 to-slate-700 text-white">
                     <div className="text-center">
                       <Paperclip className="mx-auto h-12 w-12 text-white/85" />
                       <div className="mt-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/70">

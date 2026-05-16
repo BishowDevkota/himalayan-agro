@@ -178,7 +178,7 @@ export default function OutletListClient({ initialOutlets }: { initialOutlets: O
           return (
             <article
               key={o._id}
-              className="relative min-h-[260px] rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-shadow"
+              className="relative min-h-65 rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-lg transition-shadow"
             >
               {bgImage ? (
                 <div
@@ -186,10 +186,10 @@ export default function OutletListClient({ initialOutlets }: { initialOutlets: O
                   style={{ backgroundImage: `url(${bgImage})` }}
                 />
               ) : (
-                <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-cyan-100 to-emerald-100" />
+                <div className="absolute inset-0 bg-linear-to-br from-sky-100 via-cyan-100 to-emerald-100" />
               )}
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-black/10" />
 
               <div className="relative z-10 h-full p-5 flex flex-col justify-end text-white">
                 <div className="flex items-start justify-between gap-4">

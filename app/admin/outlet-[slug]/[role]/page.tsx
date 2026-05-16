@@ -196,7 +196,7 @@ export default async function OutletAdminRolePage({
 
     roleContent = (
       <div className="space-y-8">
-        <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 border border-emerald-600 rounded-xl p-8 text-white">
+        <div className="bg-linear-to-br from-emerald-500 to-emerald-600 border border-emerald-600 rounded-xl p-8 text-white">
           <p className="text-sm font-medium opacity-90">Total Revenue</p>
           <p className="text-4xl font-bold mt-2">NPR {totalRevenue[0]?.total?.toFixed(2) || "0.00"}</p>
           <p className="text-sm opacity-75 mt-2">From completed orders</p>
@@ -222,7 +222,7 @@ export default async function OutletAdminRolePage({
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <main className="min-h-screen bg-linear-to-b from-slate-50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="mb-8">

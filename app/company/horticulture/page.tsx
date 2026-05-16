@@ -53,7 +53,6 @@ export default function HorticulturePage() {
         title="Horticulture"
         description="Cultivating Nepal's horticultural potential — high-value fruits, flowers, and vegetables through science-backed growing practices."
         image="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?auto=format&fit=crop&q=80&w=2000"
-        tag="Fruits, Flowers & Vegetables"
         stats={[
           { value: "2.8K", label: "Grower Network" },
           { value: "18", label: "Crop Varieties" },
@@ -93,9 +92,6 @@ export default function HorticulturePage() {
         >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-4">
             <div>
-              <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#0891b2]/5">
-                Our Verticals
-              </span>
               <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Horticultural Segments</h2>
             </div>
             <Link href="/shop" className="text-sm font-bold text-[#0891b2] hover:text-[#0e7490] transition-colors flex items-center gap-1.5 shrink-0">
@@ -132,9 +128,6 @@ export default function HorticulturePage() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#0891b2]/5">
-              Advanced Techniques
-            </span>
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Growing Technologies</h2>
             <p className="text-slate-400 mt-4 max-w-2xl mx-auto text-[15px] leading-relaxed">
               Modern horticultural practices that maximize quality, yield, and market value.
@@ -177,9 +170,6 @@ export default function HorticulturePage() {
                 </div>
               </div>
               <div className="text-white">
-                <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#0891b2]/10">
-                  Planning
-                </span>
                 <h2 className="text-3xl lg:text-4xl font-black mb-6 tracking-tight leading-tight">Seasonal Crop Calendar</h2>
                 <p className="text-white/50 mb-10 leading-relaxed text-[15px]">
                   Our agronomists plan cultivation schedules that ensure continuous production and market availability throughout the year.
@@ -220,9 +210,6 @@ export default function HorticulturePage() {
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#0891b2]/15 blur-[120px] rounded-full -ml-40 -mb-40 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-6">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-8 bg-[#0891b2]/10">
-              Grow With Us
-            </span>
             <h2 className="text-4xl lg:text-5xl font-black mb-6 text-white tracking-tight">
               Cultivate Premium Produce
             </h2>

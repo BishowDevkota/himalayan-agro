@@ -40,7 +40,7 @@ export default function ImpactVision() {
   const isInView = useInView(sectionRef, { once: true, margin: '-60px' });
 
   return (
-    <section ref={sectionRef} className="relative bg-gray-900 py-20 sm:py-28 lg:py-32 overflow-hidden">
+    <section ref={sectionRef} className="relative bg-gray-900 py-12 sm:py-16 lg:py-20 overflow-hidden">
       {/* Subtle radial glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(8,145,178,0.08),transparent_60%)] pointer-events-none" />
 
@@ -50,17 +50,9 @@ export default function ImpactVision() {
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
         >
-          {/* Section Label */}
-          <motion.div variants={headingVariants} className="text-center mb-5">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0891b2]/10 text-[#0891b2] text-xs sm:text-sm font-semibold tracking-widest uppercase border border-[#0891b2]/20">
-              <span className="w-2 h-2 rounded-full bg-[#0891b2] animate-pulse" />
-              Our Impact
-            </span>
-          </motion.div>
-
           <motion.h2
             variants={headingVariants}
-            className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4"
+            className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-3"
             style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
           >
             Our Impact{' '}
@@ -70,7 +62,7 @@ export default function ImpactVision() {
           {/* Decorative divider */}
           <motion.div
             variants={headingVariants}
-            className="flex items-center justify-center gap-3 mb-4"
+            className="flex items-center justify-center gap-3 mb-3"
           >
             <div className="h-px w-12 bg-[#0891b2]/40" />
             <div className="w-2 h-2 rounded-full bg-[#0891b2]" />
@@ -79,7 +71,7 @@ export default function ImpactVision() {
 
           <motion.p
             variants={headingVariants}
-            className="text-center text-base sm:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto mb-16"
+            className="text-center text-base sm:text-lg text-gray-400 leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-12"
           >
             Building the future of Nepalese agriculture — one milestone at a time.
           </motion.p>
@@ -103,14 +95,14 @@ export default function ImpactVision() {
                   >
                     {stat.value}
                   </motion.h3>
-                  <p className="text-sm sm:text-base text-gray-400 leading-snug max-w-[160px] mx-auto">
+                  <p className="text-sm sm:text-base text-gray-400 leading-snug max-w-40 mx-auto">
                     {stat.label}
                   </p>
                 </motion.div>
 
                 {/* Vertical divider (not after last item) */}
                 {index < stats.length - 1 && (
-                  <div className="hidden sm:block w-px h-20 bg-gray-700/60 flex-shrink-0" />
+                  <div className="hidden sm:block w-px h-20 bg-gray-700/60 shrink-0" />
                 )}
                 {/* Horizontal divider for mobile */}
                 {index < stats.length - 1 && (

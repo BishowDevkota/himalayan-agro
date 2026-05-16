@@ -65,7 +65,6 @@ export default function AgriTechPage() {
         title="Agri-Tech Solutions"
         description="Harnessing IoT, AI, and data analytics to bring precision agriculture to every Nepali farm — smarter inputs, better yields, lower costs."
         image="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=2000"
-        tag="IoT Sensors & Smart Tools"
         stats={[
           { value: "15K+", label: "IoT Devices" },
           { value: "2M+", label: "Data Points/Day" },
@@ -104,9 +103,6 @@ export default function AgriTechPage() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#0891b2]/5">
-              Smart Agriculture
-            </span>
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Our Technology Suite</h2>
             <p className="text-slate-400 mt-4 max-w-2xl mx-auto text-[15px] leading-relaxed">
               Integrated hardware and software solutions designed for the unique challenges of Nepali agriculture.
@@ -140,9 +136,6 @@ export default function AgriTechPage() {
         >
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
-              <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#0891b2]/5">
-                Architecture
-              </span>
               <h2 className="text-4xl lg:text-5xl font-black leading-[1.05] tracking-tight mb-6">
                 Technology Stack
               </h2>
@@ -190,9 +183,6 @@ export default function AgriTechPage() {
         >
           <div className="p-10 lg:p-16 rounded-[40px] border border-white/6">
             <div className="text-center text-white mb-14">
-              <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#0891b2]/10">
-                Real-World Impact
-              </span>
               <h2 className="text-3xl lg:text-4xl font-black tracking-tight">Use Cases</h2>
               <p className="text-white/40 mt-3 max-w-xl mx-auto text-[15px]">How our technology translates to measurable outcomes on the ground.</p>
             </div>
@@ -261,9 +251,6 @@ export default function AgriTechPage() {
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-sky-500/10 blur-[100px] rounded-full -mr-32 -mb-32 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-6">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-8 bg-[#0891b2]/10">
-              Get Connected
-            </span>
             <h2 className="text-4xl lg:text-5xl font-black mb-6 text-white tracking-tight">
               Modernize Your Farm Today
             </h2>

@@ -41,7 +41,7 @@ export default function CategoryRow({ category }: { category: any }) {
   return (
     <div className="flex items-center justify-between gap-4 border border-slate-100 bg-slate-50/40 hover:bg-slate-50 rounded-xl px-4 py-3 transition-colors">
       <div className="flex items-center gap-3 min-w-0">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-100 text-cyan-600 flex-shrink-0">
+        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-100 text-cyan-600 shrink-0">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
         </div>
         {editing ? (
@@ -52,7 +52,7 @@ export default function CategoryRow({ category }: { category: any }) {
           </div>
         )}
       </div>
-      <div className="flex items-center gap-2 flex-shrink-0">
+      <div className="flex items-center gap-2 shrink-0">
         {editing ? (
           <>
             <button className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 transition-colors" onClick={save} disabled={loading}>{loading ? 'Saving…' : 'Save'}</button>

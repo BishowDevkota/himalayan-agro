@@ -11,7 +11,7 @@ const EcoBalance = () => {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden py-32 px-[5%]">
+    <section className="relative flex items-center overflow-hidden py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8">
       
       {/* --- BACKGROUND LAYER --- */}
       <div 

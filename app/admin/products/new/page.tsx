@@ -60,15 +60,15 @@ export default async function NewProductPage() {
               </div>
               <ul className="p-5 space-y-3 text-sm text-slate-600">
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
+                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
                   Use high-quality square images (800×800 or larger).
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
+                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
                   Keep description short and benefit-focused.
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-cyan-400 flex-shrink-0" />
+                  <span className="mt-1 w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
                   Set accurate stock to avoid oversells.
                 </li>
               </ul>
@@ -90,7 +90,7 @@ export default async function NewProductPage() {
               <div className="space-y-3">
                 {recent.map((r: any) => (
                   <div key={String(r._id)} className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-50 transition-colors">
-                    <div className="w-11 h-11 rounded-xl bg-slate-100 overflow-hidden flex-shrink-0">
+                    <div className="w-11 h-11 rounded-xl bg-slate-100 overflow-hidden shrink-0">
                       <img src={(r.images && r.images[0]) || '/placeholder.png'} alt={r.name} className="w-full h-full object-cover" />
                     </div>
                     <div className="min-w-0 flex-1">

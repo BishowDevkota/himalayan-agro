@@ -228,10 +228,8 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--top-bar-height",
-      `${headerHeight}px`
-    );
+    document.documentElement.style.setProperty("--top-bar-height", `${headerHeight}px`);
+    document.documentElement.style.setProperty("--site-header-height", `${headerHeight}px`);
   }, [headerHeight]);
 
   const contactItems = [...topBarContacts.phones, topBarContacts.email];
@@ -247,9 +245,9 @@ export default function Navbar() {
       <div
         className={`pointer-events-auto w-full overflow-hidden bg-[#D97706] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${hideTopBar ? "max-h-0 opacity-0 -translate-y-2" : "max-h-28 opacity-100 translate-y-0"}`}
       >
-        <div className={`${topBarRow} min-h-[52px] sm:min-h-[50px] md:min-h-[48px] py-2.5 sm:py-2 md:py-1`}>
+        <div className={`${topBarRow} py-1.5 sm:py-2`}>
           {/* Left: Location */}
-          <div className="flex min-w-0 flex-1 items-center flex-shrink-0 md:flex-none md:w-auto">
+          <div className="flex items-center shrink-0">
             <Link
               href={topBarContacts.location.href}
               target="_blank"
@@ -257,20 +255,20 @@ export default function Navbar() {
               className="inline-flex min-w-0 items-center gap-1 hover:text-white/80 transition-colors duration-200"
               aria-label={topBarContacts.location.label}
             >
-              <MapPin size={14} className="flex-shrink-0 md:size-4" />
-              <span className="block min-w-0 truncate text-[11px] font-semibold leading-none sm:text-[12px] md:whitespace-nowrap md:text-xs">{topBarContacts.location.label}</span>
+              <MapPin size={15} className="shrink-0 md:size-4" />
+              <span className="whitespace-nowrap text-xs font-semibold">{topBarContacts.location.label}</span>
             </Link>
           </div>
 
           {/* Mobile Only: Right Email */}
-          <div className="flex min-w-0 flex-none items-center flex-shrink-0 md:hidden">
+          <div className="flex md:hidden items-center shrink-0">
             <Link
               href={topBarContacts.email.href}
               className="inline-flex min-w-0 items-center gap-1 hover:text-white/80 transition-colors duration-200"
               aria-label={topBarContacts.email.label}
             >
-              <Mail size={14} className="flex-shrink-0" />
-              <span className="block min-w-0 truncate text-[11px] font-semibold leading-none sm:text-[12px]">{topBarContacts.email.label}</span>
+              <Mail size={15} className="shrink-0" />
+              <span className="whitespace-nowrap text-xs font-semibold">{topBarContacts.email.label}</span>
             </Link>
           </div>
 
@@ -310,9 +308,9 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="mt-2 lg:mt-0 px-2 sm:px-4 lg:px-6">
-        <div className={`pointer-events-auto max-w-[96rem] mx-auto bg-white/80 sm:bg-white/90 lg:bg-white backdrop-blur-md lg:backdrop-blur-0 rounded-2xl lg:rounded-none px-3 sm:px-5 lg:px-6 transition-shadow duration-300 border-b border-gray-100 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
-          <div className="flex items-center justify-between gap-2 h-[96px] sm:h-[88px] lg:h-[76px] xl:h-20">
+      <div className="mt-0 px-2 sm:px-4 lg:px-6">
+        <div className={`pointer-events-auto max-w-384 mx-auto bg-white/90 lg:bg-white backdrop-blur-md lg:backdrop-blur-0 rounded-2xl lg:rounded-none px-3 sm:px-5 lg:px-6 transition-shadow duration-300 border-b border-gray-100 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
+          <div className="flex items-center justify-between gap-2 h-20">
 
           {/*  SECTION 1: Logo  */}
           <Link href="/" className="shrink-0 flex items-center" aria-label="Home">
@@ -320,7 +318,7 @@ export default function Navbar() {
               src="/wide-logo.jpeg"
               alt="Himalaya"
               loading="eager"
-              className="hidden min-[1200px]:block h-10 xl:h-12 2xl:h-14 w-auto max-w-[180px] xl:max-w-[220px] 2xl:max-w-[240px] object-contain"
+              className="hidden min-[1200px]:block h-10 xl:h-12 2xl:h-14 w-auto max-w-45 xl:max-w-55 2xl:max-w-60 object-contain"
               whileHover={{ scale: 1.04 }}
               transition={{ duration: 0.25 }}
               onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/logo_original.png"; }}
@@ -329,7 +327,7 @@ export default function Navbar() {
               src="/logo_mobile_screen.png"
               alt="Himalaya"
               loading="eager"
-              className="h-[72px] sm:h-[78px] min-[1200px]:hidden w-auto object-contain"
+              className="h-18 sm:h-19.5 min-[1200px]:hidden w-auto object-contain"
               whileHover={{ scale: 1.04 }}
               transition={{ duration: 0.25 }}
               onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/logo_original.png"; }}
@@ -500,7 +498,7 @@ export default function Navbar() {
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.92 }}
               onClick={() => router.push("/search")}
               className="p-3 sm:p-2 rounded-full text-gray-500 hover:text-[#0891b2] hover:bg-gray-50 transition-all duration-200" aria-label="Search"
-            ><Search className="h-6 w-6 sm:h-[18px] sm:w-[18px]" /></motion.button>
+              ><Search className="h-6 w-6 sm:h-4.5 sm:w-4.5" /></motion.button>
 
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.92 }}
               onClick={() => router.push("/cart")}
@@ -576,8 +574,8 @@ export default function Navbar() {
             >
               <AnimatePresence mode="wait" initial={false}>
                 {mobileOpen
-                  ? <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}><X className="h-6 w-6 sm:h-[22px] sm:w-[22px]" /></motion.span>
-                  : <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}><Menu className="h-6 w-6 sm:h-[22px] sm:w-[22px]" /></motion.span>}
+                  ? <motion.span key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}><X className="h-6 w-6 sm:h-5.5 sm:w-5.5" /></motion.span>
+                  : <motion.span key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}><Menu className="h-6 w-6 sm:h-5.5 sm:w-5.5" /></motion.span>}
               </AnimatePresence>
             </motion.button>
           </div>
@@ -604,7 +602,7 @@ export default function Navbar() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="min-[1200px]:hidden fixed top-0 left-0 bottom-0 z-50 w-[270px] sm:w-[300px] shadow-2xl flex flex-col pointer-events-auto"
+              className="min-[1200px]:hidden fixed top-0 left-0 bottom-0 z-50 w-67.5 sm:w-75 shadow-2xl flex flex-col pointer-events-auto"
             >
               {/* White logo header */}
               <div className="flex flex-col items-center justify-center px-5 py-6 bg-white shrink-0 relative">
@@ -612,10 +610,10 @@ export default function Navbar() {
                   <X size={18} />
                 </motion.button>
                 <Link href="/" onClick={() => setMobileOpen(false)} className="flex items-center justify-center">
-                  <img src="/logo_mobile_screen.png" alt="Himalaya" className="w-[210px] sm:w-[240px] h-auto object-contain"
+                  <img src="/logo_mobile_screen.png" alt="Himalaya" className="w-52.5 sm:w-60 h-auto object-contain"
                     onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/logo.jpeg"; }} />
                 </Link>
-                <div className="mt-3 h-[2px] w-full bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
+                <div className="mt-3 h-0.5 w-full bg-linear-to-r from-transparent via-cyan-500/30 to-transparent" />
               </div>
 
               {/* Dark body — matches admin sidebar */}
@@ -855,7 +853,7 @@ export default function Navbar() {
                 {/* Profile / Sign out — bottom of panel */}
                 {session && (
                   <div className="shrink-0 px-3 py-4 flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-700 text-cyan-400 text-sm font-bold flex-shrink-0">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-700 text-cyan-400 text-sm font-bold shrink-0">
                       {(session as any).user?.image
                         ? <img src={(session as any).user.image} alt="" className="w-9 h-9 rounded-full object-cover" />
                         : <span>{(session as any).user?.name?.[0]?.toUpperCase() ?? "U"}</span>}
@@ -866,7 +864,7 @@ export default function Navbar() {
                     </div>
                     <button
                       onClick={() => { setMobileOpen(false); signOut(); }}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-red-500/15 hover:text-red-400 transition-all duration-200 flex-shrink-0"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-500 hover:bg-red-500/15 hover:text-red-400 transition-all duration-200 shrink-0"
                       title="Sign out"
                     >
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>

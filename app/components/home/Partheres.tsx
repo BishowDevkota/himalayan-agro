@@ -14,18 +14,18 @@ const Partners = () => {
   ];
 
   return (
-    <section className="bg-[#f8fbfc] py-24 px-[5%] relative overflow-hidden">
+    <section className="bg-[#f8fbfc] py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       {/* Decorative Gradient Blurs - Re-colored to match your Blue theme */}
       <div className="absolute top-[-10%] right-[-5%] w-96 h-96 bg-[#2da8da]/5 blur-[100px] rounded-full" />
       <div className="absolute bottom-[-10%] left-[-5%] w-96 h-96 bg-[#2da8da]/10 blur-[100px] rounded-full" />
 
-      <div className="max-w-[1200px] mx-auto">
+      <div className="max-w-300 mx-auto">
         
         {/* --- HEADER --- */}
-        <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
+        <div className="flex flex-col md:flex-row items-end justify-between mb-8 gap-6">
           <div className="max-w-xl">
             <div className="flex items-center gap-3 mb-4">
-              <span className="h-[2px] w-8 bg-[#2da8da]" />
+              <span className="h-0.5 w-8 bg-[#2da8da]" />
               <span className="text-[#2da8da] font-black tracking-[4px] text-[10px] uppercase">Stakeholder Ecosystem</span>
             </div>
             <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-[#0a0a0a] leading-[0.9]">
@@ -83,7 +83,7 @@ const Partners = () => {
         </div>
 
         {/* --- STATS RIBBON --- */}
-        <div className="mt-16 flex flex-wrap justify-center gap-12 border-t border-gray-100 pt-12">
+        <div className="mt-8 flex flex-wrap justify-center gap-8 border-t border-gray-100 pt-6">
           <div className="text-center">
             <div className="text-2xl font-black text-[#0a0a0a]">753</div>
             <div className="text-[9px] uppercase tracking-widest font-bold text-[#2da8da]">Local Centers</div>

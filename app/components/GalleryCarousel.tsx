@@ -156,7 +156,7 @@ export default function GalleryCarousel({ images, interval = 5000 }: GalleryCaro
                   </motion.div>
                 </AnimatePresence>
 
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-linear-to-t from-slate-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                 <div className="absolute bottom-4 left-4 right-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                   <div className="flex items-center justify-between">
@@ -182,7 +182,7 @@ export default function GalleryCarousel({ images, interval = 5000 }: GalleryCaro
               }}
               className={`transition-all duration-300 rounded-full ${
                 index === currentIndex || (index === currentIndex + 1)
-                  ? 'w-8 h-3 bg-gradient-to-r from-[#0891b2] to-[#0b78be]'
+                  ? 'w-8 h-3 bg-linear-to-r from-[#0891b2] to-[#0b78be]'
                   : 'w-3 h-3 bg-slate-300 hover:bg-[#0891b2]/60'
               }`}
             />

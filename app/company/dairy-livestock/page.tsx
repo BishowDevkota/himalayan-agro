@@ -58,7 +58,6 @@ export default function DairyLivestockPage() {
         title="Dairy & Livestock"
         description="Building a resilient animal husbandry ecosystem — from breed selection and veterinary care to processing and market distribution."
         image="https://images.unsplash.com/photo-1516467508483-a7212febe31a?auto=format&fit=crop&q=80&w=2000"
-        tag="Animal Husbandry Products"
         stats={[
           { value: "8.5K", label: "Dairy Farmers" },
           { value: "120+", label: "Collection Points" },
@@ -97,9 +96,6 @@ export default function DairyLivestockPage() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#0891b2]/5">
-              Livestock Verticals
-            </span>
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Our Livestock Programs</h2>
             <p className="text-slate-400 mt-4 max-w-2xl mx-auto text-[15px] leading-relaxed">
               Comprehensive support across six major animal husbandry segments.
@@ -147,9 +143,6 @@ export default function DairyLivestockPage() {
               </div>
             </div>
             <div>
-              <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#0891b2]/5">
-                Core Services
-              </span>
               <h2 className="text-4xl lg:text-5xl font-black leading-[1.05] tracking-tight mb-6">
                 End-to-End Livestock Support
               </h2>
@@ -183,9 +176,6 @@ export default function DairyLivestockPage() {
         >
           <div className="p-10 lg:p-16 rounded-[40px] border border-white/6">
             <div className="text-center text-white mb-14">
-              <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#0891b2]/10">
-                Value Chain
-              </span>
               <h2 className="text-3xl lg:text-4xl font-black tracking-tight">Farm to Consumer Pipeline</h2>
               <p className="text-white/40 mt-3 max-w-xl mx-auto text-[15px]">Quality assurance at every touchpoint in the dairy and livestock supply chain.</p>
             </div>
@@ -219,9 +209,6 @@ export default function DairyLivestockPage() {
           <div className="absolute top-0 left-0 w-80 h-80 bg-[#0891b2]/15 blur-[120px] rounded-full -ml-40 -mt-40 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-6">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-8 bg-[#0891b2]/10">
-              Partner With Us
-            </span>
             <h2 className="text-4xl lg:text-5xl font-black mb-6 text-white tracking-tight">
               Strengthen Your Livestock Operation
             </h2>

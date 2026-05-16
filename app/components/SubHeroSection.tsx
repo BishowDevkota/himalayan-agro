@@ -9,7 +9,6 @@ export type SubHeroSectionProps = {
   title?: string;
   description?: string;
   image?: string;
-  tag?: string;
   stats?: { value: string; label: string }[];
   btnText?: string;
   btnHref?: string;
@@ -41,7 +40,6 @@ export default function SubHeroSection({
   title = 'Page Title',
   description,
   image = DEFAULT_IMAGE,
-  tag,
   stats,
   btnText,
   btnHref,
@@ -62,8 +60,8 @@ export default function SubHeroSection({
     <section
       className="relative z-0 w-full overflow-hidden"
       style={{
-        height: hasStats ? 'calc((100dvh - var(--top-bar-height, 0px)) * 0.6)' : 'auto',
-        minHeight: hasStats ? 'calc((100dvh - var(--top-bar-height, 0px)) * 0.6)' : 'auto',
+        height: hasStats ? 'calc((100dvh - var(--site-header-height, 0px)) * 0.6)' : 'auto',
+        minHeight: hasStats ? 'calc((100dvh - var(--site-header-height, 0px)) * 0.6)' : 'auto',
         backgroundColor: isDark ? '#0a1628' : '#f5f0e8',
       }}
     >
@@ -122,7 +120,7 @@ export default function SubHeroSection({
 
       {/* ── Content ── */}
       <div
-        className={`relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${hasStats ? 'h-full' : 'min-h-[22rem] sm:min-h-[24rem]'} flex items-start pt-24 sm:pt-28 lg:pt-32 pb-8 sm:pb-0`}
+        className={`relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${hasStats ? 'h-full' : 'min-h-88 sm:min-h-96'} flex items-start pt-8 sm:pt-12 lg:pt-16 pb-8 sm:pb-0`}
       >
         <div className="max-w-xl lg:max-w-lg py-0 sm:py-0">
           <motion.div
@@ -165,24 +163,6 @@ export default function SubHeroSection({
                 ))}
               </ol>
             </motion.nav>
-
-            {/* Tag pill */}
-            {tag && (
-              <motion.div variants={fadeUpVariants}>
-                <span
-                  className="inline-block px-3.5 py-1 rounded-full text-[10px] sm:text-xs font-medium tracking-wide mb-3 sm:mb-4"
-                  style={{
-                    border: isDark
-                      ? '1px solid rgba(41,168,221,0.3)'
-                      : '1px solid #c4b99a',
-                    color: isDark ? '#29A8DD' : '#5a4e3c',
-                    background: isDark ? 'rgba(41,168,221,0.05)' : 'transparent',
-                  }}
-                >
-                  {tag}
-                </span>
-              </motion.div>
-            )}
 
             {/* Title */}
             <motion.h1
@@ -260,7 +240,7 @@ export default function SubHeroSection({
       </div>
 
       {/* ── Bottom fade to white ── */}
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-linear-to-t from-white to-transparent pointer-events-none z-30" />
+      <div className="absolute bottom-0 left-0 right-0 h-20 pointer-events-none z-10 bg-linear-to-t from-white to-transparent" />
     </section>
   );
 }

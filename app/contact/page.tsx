@@ -14,7 +14,6 @@ export default function ContactPage() {
         title="Contact Us"
         description="Connect with our team to bring your vision to life. We are ready when you are."
         image="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=2000"
-        tag="Get In Touch"
         stats={[
           { value: "753", label: "Sales Centers" },
           { value: "12", label: "Countries" },

@@ -310,7 +310,7 @@ export default function ProductForm({ initial = null, redirectTo = "/admin/produ
               <div className="space-y-2">
                 {checks.map((c, i) => (
                   <div key={i} className="flex items-center gap-2.5">
-                    <div className={`w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 ${
+                    <div className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 ${
                       c.ok ? "bg-emerald-100 text-emerald-600" : "bg-slate-100 text-slate-300"
                     }`}>
                       {c.ok ? (

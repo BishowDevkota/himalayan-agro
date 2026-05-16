@@ -69,11 +69,11 @@ export default function NewsMedia() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-white py-20 sm:py-28 lg:py-32 overflow-hidden"
+      className="relative bg-white py-12 sm:py-16 lg:py-20 overflow-hidden"
     >
       {/* Decorative blobs */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full bg-cyan-50 opacity-30 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[350px] h-[350px] rounded-full bg-amber-50 opacity-25 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
+      <div className="absolute top-0 right-0 w-100 h-100 rounded-full bg-cyan-50 opacity-30 -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-87.5 h-87.5 rounded-full bg-amber-50 opacity-25 translate-y-1/2 -translate-x-1/3 pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -81,17 +81,9 @@ export default function NewsMedia() {
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
         >
-          {/* Section Label */}
-          <motion.div variants={headingVariants} className="text-center mb-5">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0891b2]/8 text-[#0891b2] text-xs sm:text-sm font-semibold tracking-widest uppercase border border-[#0891b2]/15">
-              <span className="w-2 h-2 rounded-full bg-[#0891b2] animate-pulse" />
-              Latest Updates
-            </span>
-          </motion.div>
-
           <motion.h2
             variants={headingVariants}
-            className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-4"
+            className="text-center text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-tight mb-3"
             style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
           >
             News &{' '}
@@ -101,7 +93,7 @@ export default function NewsMedia() {
           {/* Decorative divider */}
           <motion.div
             variants={headingVariants}
-            className="flex items-center justify-center gap-3 mb-4"
+            className="flex items-center justify-center gap-3 mb-3"
           >
             <div className="h-px w-12 bg-[#0891b2]/30" />
             <div className="w-2 h-2 rounded-full bg-[#0891b2]" />
@@ -110,7 +102,7 @@ export default function NewsMedia() {
 
           <motion.p
             variants={headingVariants}
-            className="text-center text-base sm:text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto mb-14"
+            className="text-center text-base sm:text-lg text-gray-500 leading-relaxed max-w-2xl mx-auto mb-8 sm:mb-12"
           >
             Stay up to date with our latest milestones, initiatives, and industry recognition.
           </motion.p>
@@ -135,13 +127,10 @@ export default function NewsMedia() {
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   {/* Dark overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-gray-900/40 to-transparent" />
 
-                  {/* Category badge */}
-                  <span
-                    className="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-semibold tracking-wider uppercase text-white"
-                    style={{ backgroundColor: article.color }}
-                  >
+                  {/* Category label */}
+                  <span className="absolute top-4 left-4 text-[11px] font-semibold tracking-wider uppercase text-white/95 drop-shadow-[0_1px_2px_rgba(0,0,0,0.55)]">
                     {article.category}
                   </span>
                 </div>
@@ -183,7 +172,7 @@ export default function NewsMedia() {
 
                 {/* Bottom accent bar */}
                 <div
-                  className="absolute bottom-0 left-0 right-0 h-[3px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                  className="absolute bottom-0 left-0 right-0 h-0.75 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
                   style={{ backgroundColor: article.color }}
                 />
               </motion.article>

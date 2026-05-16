@@ -46,7 +46,6 @@ export default function FarmerFriendlyArticlesPage() {
     <>
       <SubHeroSection
         title="Farmer-Friendly Articles"
-        tag="Knowledge Centre"
         description="Short, practical reads designed to answer day-to-day farm questions in simple, accessible language."
         image="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&q=80&w=2000"
       />
@@ -63,7 +62,7 @@ export default function FarmerFriendlyArticlesPage() {
             {articles.map((article, index) => (
               <article key={article.title} className="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_16px_34px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_46px_rgba(15,23,42,0.1)]">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="inline-flex rounded-full bg-[#0d837f]/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-[#0d837f]">
+                  <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#0d837f]">
                     {article.topic}
                   </span>
                   <span className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">

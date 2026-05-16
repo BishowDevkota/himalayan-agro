@@ -67,10 +67,10 @@ export default function Products({ products }: { products?: ProductCard[] }) {
   };
 
   return (
-    <section ref={sectionRef} className="relative bg-[#f8fafb] py-20 sm:py-28 lg:py-32 overflow-hidden">
+    <section ref={sectionRef} className="relative bg-[#f8fafb] py-12 sm:py-16 lg:py-20 overflow-hidden">
       {/* Subtle decorative background elements — consistent with WhatWeDo */}
-      <div className="absolute top-0 left-0 w-[400px] h-[400px] rounded-full bg-cyan-50 opacity-40 -translate-y-1/2 -translate-x-1/3 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-[350px] h-[350px] rounded-full bg-blue-50 opacity-40 translate-y-1/2 translate-x-1/3 pointer-events-none" />
+      <div className="absolute top-0 left-0 w-100 h-100 rounded-full bg-cyan-50 opacity-40 -translate-y-1/2 -translate-x-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-87.5 h-87.5 rounded-full bg-blue-50 opacity-40 translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -78,14 +78,6 @@ export default function Products({ products }: { products?: ProductCard[] }) {
           initial={false}
           animate={isInView ? 'visible' : 'hidden'}
         >
-          {/* Section Label — pill badge matching WhatWeDo */}
-          <motion.div variants={headingVariants} className="text-center mb-5">
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0891b2]/8 text-[#0891b2] text-xs sm:text-sm font-semibold tracking-widest uppercase border border-[#0891b2]/15">
-              <span className="w-2 h-2 rounded-full bg-[#0891b2] animate-pulse" />
-              Our Catalog
-            </span>
-          </motion.div>
-
           {/* Section Heading — Georgia serif like WhatWeDo & Hero */}
           <motion.h2
             variants={headingVariants}
@@ -99,7 +91,7 @@ export default function Products({ products }: { products?: ProductCard[] }) {
           {/* Decorative divider — matching WhatWeDo */}
           <motion.div
             variants={headingVariants}
-            className="flex items-center justify-center gap-3 mb-4"
+            className="flex items-center justify-center gap-3 mb-3"
           >
             <div className="h-px w-12 bg-[#0891b2]/30" />
             <div className="w-2 h-2 rounded-full bg-[#0891b2]" />
@@ -109,13 +101,13 @@ export default function Products({ products }: { products?: ProductCard[] }) {
           {/* Subtitle */}
           <motion.p
             variants={headingVariants}
-            className="text-center text-base sm:text-lg text-gray-500 leading-relaxed max-w-xl mx-auto mb-12 sm:mb-16"
+            className="text-center text-base sm:text-lg text-gray-500 leading-relaxed max-w-xl mx-auto mb-8 sm:mb-12"
           >
             Handpicked from our catalog — updated in real time.
           </motion.p>
 
           {/* Carousel Navigation */}
-          <motion.div variants={headingVariants} className="flex justify-end gap-2.5 mb-6">
+          <motion.div variants={headingVariants} className="flex justify-end gap-2.5 mb-4">
             <button
               onClick={() => scroll(-1)}
               aria-label="Scroll left"
@@ -152,7 +144,7 @@ export default function Products({ products }: { products?: ProductCard[] }) {
                 <div className="absolute top-0 left-0 right-0 h-1 bg-[#0891b2] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-10" />
 
                 {/* Image */}
-                <div className="relative h-[210px] overflow-hidden">
+                <div className="relative h-52.5 overflow-hidden">
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
                     style={{ backgroundImage: `url(${(product.images && product.images[0]) || '/placeholder.png'})` }}
@@ -161,7 +153,7 @@ export default function Products({ products }: { products?: ProductCard[] }) {
                 </div>
 
                 {/* Content */}
-                <div className="p-5 sm:p-6 flex flex-col justify-between h-[190px]">
+                <div className="p-5 sm:p-6 flex flex-col justify-between h-47.5">
                   <div>
                     <h3
                       className="text-base font-bold text-gray-900 mb-2 truncate tracking-tight group-hover:text-[#0891b2] transition-colors duration-300"
@@ -196,7 +188,7 @@ export default function Products({ products }: { products?: ProductCard[] }) {
                 </div>
 
                 {/* Bottom accent line — matching WhatWeDo cards */}
-                <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-[#0891b2] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.75 bg-[#0891b2] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
               </motion.div>
             ))}
           </div>

@@ -54,7 +54,6 @@ export default function IrrigationWaterPage() {
         title="Irrigation & Water"
         description="Smart water management solutions — drip systems, sprinklers, and solar pumps that maximize every drop for Nepali agriculture."
         image="https://images.unsplash.com/photo-1560493676-04071c5f467b?auto=format&fit=crop&q=80&w=2000"
-        tag="Drip, Sprinkler & Pumps"
         stats={[
           { value: "60%", label: "Water Saved" },
           { value: "3.2K", label: "Installations" },
@@ -94,9 +93,7 @@ export default function IrrigationWaterPage() {
         >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-4">
             <div>
-              <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#0891b2]/5">
-                Our Systems
-              </span>
+              
               <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Irrigation Solutions</h2>
             </div>
             <Link href="/shop" className="text-sm font-bold text-[#0891b2] hover:text-[#0e7490] transition-colors flex items-center gap-1.5 shrink-0">
@@ -133,9 +130,7 @@ export default function IrrigationWaterPage() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <div className="text-center mb-16">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#0891b2]/5">
-              Product Range
-            </span>
+            
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Equipment & Supplies</h2>
             <p className="text-slate-400 mt-4 max-w-2xl mx-auto text-[15px] leading-relaxed">
               Complete irrigation infrastructure — from emitters to automation controllers.
@@ -178,9 +173,7 @@ export default function IrrigationWaterPage() {
                 </div>
               </div>
               <div className="text-white">
-                <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#0891b2]/10">
-                  Our Approach
-                </span>
+                
                 <h2 className="text-3xl lg:text-4xl font-black mb-6 tracking-tight leading-tight">Every Drop Counts</h2>
                 <p className="text-white/50 mb-10 leading-relaxed text-[15px]">
                   We design complete water management solutions — from source assessment and system design to installation, training, and ongoing maintenance support.
@@ -254,9 +247,7 @@ export default function IrrigationWaterPage() {
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#0891b2]/15 blur-[120px] rounded-full -mr-40 -mt-40 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-6">
-            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-8 bg-[#0891b2]/10">
-              Get a Quote
-            </span>
+            
             <h2 className="text-4xl lg:text-5xl font-black mb-6 text-white tracking-tight">
               Upgrade Your Water Infrastructure
             </h2>

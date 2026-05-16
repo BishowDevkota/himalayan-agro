@@ -34,7 +34,7 @@ export default function StatsBar() {
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="group rounded-3xl border border-slate-100 bg-gradient-to-br from-white via-white to-slate-50/70 px-5 py-6 text-center shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#1C2B14]/15 hover:shadow-[0_20px_50px_rgba(15,23,42,0.12)]"
+              className="group rounded-3xl border border-slate-100 bg-linear-to-br from-white via-white to-slate-50/70 px-5 py-6 text-center shadow-sm transition-all duration-300 ease-out hover:-translate-y-1 hover:border-[#1C2B14]/15 hover:shadow-[0_20px_50px_rgba(15,23,42,0.12)]"
             >
               <CountItem label={s.label} value={s.value} suffix={s.suffix} />
             </motion.div>

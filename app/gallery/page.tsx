@@ -53,7 +53,6 @@ export default async function GalleryPage() {
     <main className="bg-white text-slate-900">
       <SubHeroSection
         title="Gallery"
-        tag="Our Journey"
         description="A clean visual gallery from our farms, facilities, and field operations."
         image="https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&q=80&w=2000"
         overlay="light"

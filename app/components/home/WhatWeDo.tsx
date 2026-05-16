@@ -5,7 +5,7 @@ import { Sprout, Box, TrendingUp, Users } from 'lucide-react';
 
 const pillars = [
   {
-    title: 'Integrated Farming',
+    title: 'Modern Farming',
     description:
       'Building modern agricultural systems through land consolidation, smart ICT-based farming, and high-yield crop diversification across Nepal.',
     accent: '#0891b2',
@@ -273,10 +273,9 @@ export default function OurMission() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-scroll bg-center bg-cover bg-no-repeat py-16 sm:py-20 lg:py-28 xl:py-32 md:bg-fixed"
+      className="relative overflow-hidden bg-scroll bg-center bg-cover bg-no-repeat py-12 sm:py-16 lg:py-20 xl:py-24 md:bg-fixed"
       style={{ backgroundImage: "url('/background_for_mission.jpeg')" }}
     >
-      {/* Slightly stronger overlay for consistent contrast */}
       <div className="absolute inset-0 bg-white/20" />
 
       {/* Decorative circles removed per design request */}
@@ -287,18 +286,10 @@ export default function OurMission() {
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
         >
-          {/* Section Label — unchanged */}
-          <motion.div variants={headingVariants} className="text-center mb-4 sm:mb-5">
-            <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-1.5 sm:py-2 rounded-full bg-cyan-100/95 text-cyan-900 text-xs sm:text-sm font-semibold tracking-widest uppercase border border-cyan-300 shadow-sm shadow-cyan-200/60">
-              <span className="w-2 h-2 rounded-full bg-[#0891b2] animate-pulse" />
-              Our Mission
-            </span>
-          </motion.div>
-
-          {/* Section Heading — wrapped for better legibility over the background */}
+          {/* Section Heading */}
           <motion.h2
             variants={headingVariants}
-            className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-1 sm:mb-2"
+            className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight mb-0 sm:mb-1"
             style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}
           >
             Transforming Nepal&apos;s{' '}
@@ -319,21 +310,19 @@ export default function OurMission() {
             </span>
           </motion.h2>
 
-          {/* Decorative divider — unchanged */}
+          {/* Decorative divider */}
           <motion.div
             variants={headingVariants}
-            className="flex items-center justify-center gap-3 mb-2 sm:mb-4"
+            className="flex items-center justify-center gap-3 mb-1 sm:mb-2"
           >
-            <div className="h-px w-10 sm:w-12 bg-[#059669]/30" />
             <div className="w-2 h-2 rounded-full bg-[#059669]" />
             <div className="h-px w-10 sm:w-12 bg-[#059669]/30" />
           </motion.div>
 
-          {/* Mission Statement — stronger contrast and subtle panel for legibility */}
-          <div className="mx-auto max-w-3xl mb-10 sm:mb-12 sm:mb-16 px-2">
-            {/* Invisible spacer only — panel/background removed */}
-            <div className="px-4 py-4 sm:px-6 sm:py-6" aria-hidden="true">
-              <div className="min-h-[0.75rem] sm:min-h-[1.25rem] lg:min-h-[1.5rem]" />
+          {/* Mission Statement spacer */}
+          <div className="mx-auto max-w-3xl mb-0 sm:mb-1 px-2">
+            <div className="px-0 py-0" aria-hidden="true">
+              <div className="min-h-0" />
             </div>
           </div>
 
@@ -350,9 +339,10 @@ export default function OurMission() {
               <TiltCard key={index} pillar={pillar} />
             ))}
           </div>
-          {/* Invisible lower spacer to preserve overall component height */}
+
+          {/* Invisible lower spacer */}
           <div aria-hidden="true" className="mx-auto max-w-3xl px-2">
-            <div className="min-h-[3.75rem] sm:min-h-[3.25rem] lg:min-h-[4rem]" />
+            <div className="min-h-4 sm:min-h-6 lg:min-h-8" />
           </div>
         </motion.div>
       </div>

@@ -64,6 +64,7 @@ export default function OrganicFarmingPage() {
         title="Organic Farming"
         description="Championing chemical-free agriculture — certified organic inputs, sustainable practices, and premium market access for Nepali farmers."
         image="https://images.unsplash.com/photo-1500076656116-558758c991c1?auto=format&fit=crop&q=80&w=2000"
+        tag="Certified Organic Supplies"
         stats={[
           { value: "4.2K", label: "Organic Farmers" },
           { value: "100%", label: "Chemical Free" },
@@ -103,7 +104,9 @@ export default function OrganicFarmingPage() {
         >
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div>
-              
+              <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#0891b2]/5">
+                Global Standards
+              </span>
               <h2 className="text-4xl lg:text-5xl font-black leading-[1.05] tracking-tight mb-6">
                 Certifications We Support
               </h2>
@@ -152,7 +155,9 @@ export default function OrganicFarmingPage() {
           viewport={{ once: true, margin: "-100px" }}
         >
           <div className="text-center mb-16">
-            
+            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#0891b2]/5">
+              Sustainable Methods
+            </span>
             <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Organic Practices</h2>
             <p className="text-slate-400 mt-4 max-w-2xl mx-auto text-[15px] leading-relaxed">
               Science-backed organic methods that nurture soil health and deliver premium produce.
@@ -184,7 +189,9 @@ export default function OrganicFarmingPage() {
         >
           <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-4">
             <div>
-              
+              <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/20 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-5 bg-[#0891b2]/5">
+                Featured
+              </span>
               <h2 className="text-4xl lg:text-5xl font-black tracking-tight">Organic Product Lines</h2>
             </div>
             <Link href="/shop" className="text-sm font-bold text-[#0891b2] hover:text-[#0e7490] transition-colors flex items-center gap-1.5 shrink-0">
@@ -226,7 +233,9 @@ export default function OrganicFarmingPage() {
           <div className="p-10 lg:p-16 rounded-[40px] border border-white/6">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="text-white">
-                
+                <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-6 bg-[#0891b2]/10">
+                  Our Philosophy
+                </span>
                 <h2 className="text-3xl lg:text-4xl font-black mb-6 tracking-tight leading-tight">Soil First. Always.</h2>
                 <p className="text-white/50 mb-10 leading-relaxed text-[15px]">
                   Healthy soil is the foundation of organic agriculture. Our programs focus on rebuilding soil biology, increasing organic matter, and creating self-sustaining farm ecosystems.
@@ -274,7 +283,9 @@ export default function OrganicFarmingPage() {
           <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 blur-[120px] rounded-full -mr-40 -mt-40 pointer-events-none" />
 
           <div className="relative z-10 max-w-3xl mx-auto px-6">
-            
+            <span className="inline-block px-4 py-1.5 rounded-full border border-[#0891b2]/30 text-[#0891b2] text-[11px] font-bold tracking-[3px] uppercase mb-8 bg-[#0891b2]/10">
+              Go Organic
+            </span>
             <h2 className="text-4xl lg:text-5xl font-black mb-6 text-white tracking-tight">
               Start Your Organic Journey
             </h2>
