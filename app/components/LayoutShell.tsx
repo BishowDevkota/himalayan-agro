@@ -7,11 +7,12 @@ import Footer from "./Footer";
 export default function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isDashboardArea = pathname?.startsWith("/admin");
+  const isHomePage = pathname === "/";
 
   return (
     <>
       {!isDashboardArea && <Navbar />}
-      <main style={!isDashboardArea ? { paddingTop: "var(--top-bar-height, 0px)" } : undefined}>
+      <main style={!isDashboardArea && !isHomePage ? { paddingTop: "var(--top-bar-height, 0px)" } : undefined}>
         {children}
       </main>
       {!isDashboardArea && <Footer />}

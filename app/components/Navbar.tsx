@@ -62,7 +62,7 @@ const topBarContacts = {
   whatsappHref: "https://wa.me/9779851227052",
 };
 
-const topBarRow = "mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 sm:px-7 lg:px-8";
+const topBarRow = "mx-auto flex w-full max-w-7xl flex-row items-center justify-between gap-2 px-3 sm:px-4 md:gap-3 md:px-6 lg:px-8";
 
 // Unique background colors per mobile nav item (hex for inline styles)
 const mobileBgColors = [
@@ -245,37 +245,37 @@ export default function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
     >
       <div
-        className={`pointer-events-auto w-full overflow-hidden bg-[#D97706] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${hideTopBar ? "max-h-0 opacity-0 -translate-y-2" : "max-h-24 opacity-100 translate-y-0"}`}
+        className={`pointer-events-auto w-full overflow-hidden bg-[#D97706] text-white transition-[max-height,opacity,transform] duration-300 ease-out ${hideTopBar ? "max-h-0 opacity-0 -translate-y-2" : "max-h-28 opacity-100 translate-y-0"}`}
       >
-        <div className={`${topBarRow} min-h-[52px] sm:min-h-[50px] md:min-h-[48px] py-2.5 sm:py-2 md:py-1 flex flex-row items-center justify-between gap-4 md:gap-0`}>
+        <div className={`${topBarRow} min-h-[52px] sm:min-h-[50px] md:min-h-[48px] py-2.5 sm:py-2 md:py-1`}>
           {/* Left: Location */}
-          <div className="flex items-center flex-shrink-0">
+          <div className="flex min-w-0 flex-1 items-center flex-shrink-0 md:flex-none md:w-auto">
             <Link
               href={topBarContacts.location.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 hover:text-white/80 transition-colors duration-200"
+              className="inline-flex min-w-0 items-center gap-1 hover:text-white/80 transition-colors duration-200"
               aria-label={topBarContacts.location.label}
             >
-              <MapPin size={15} className="flex-shrink-0 md:size-4" />
-              <span className="whitespace-nowrap text-xs font-semibold">{topBarContacts.location.label}</span>
+              <MapPin size={14} className="flex-shrink-0 md:size-4" />
+              <span className="block min-w-0 truncate text-[11px] font-semibold leading-none sm:text-[12px] md:whitespace-nowrap md:text-xs">{topBarContacts.location.label}</span>
             </Link>
           </div>
 
           {/* Mobile Only: Right Email */}
-          <div className="flex md:hidden items-center flex-shrink-0">
+          <div className="flex min-w-0 flex-none items-center flex-shrink-0 md:hidden">
             <Link
               href={topBarContacts.email.href}
-              className="inline-flex items-center gap-1.5 hover:text-white/80 transition-colors duration-200"
+              className="inline-flex min-w-0 items-center gap-1 hover:text-white/80 transition-colors duration-200"
               aria-label={topBarContacts.email.label}
             >
-              <Mail size={15} className="flex-shrink-0" />
-              <span className="whitespace-nowrap text-xs font-semibold">{topBarContacts.email.label}</span>
+              <Mail size={14} className="flex-shrink-0" />
+              <span className="block min-w-0 truncate text-[11px] font-semibold leading-none sm:text-[12px]">{topBarContacts.email.label}</span>
             </Link>
           </div>
 
           {/* Desktop Only: Center Phones and Email */}
-          <div className="hidden md:flex min-w-0 flex-1 justify-center items-center gap-3 text-xs font-semibold flex-wrap">
+          <div className="hidden md:flex min-w-0 flex-1 items-center justify-center gap-2 text-[11px] font-semibold flex-wrap lg:gap-3 lg:text-xs">
             {contactItems.map((item, index) => (
               <div key={item.label} className="flex items-center gap-2">
                 {index > 0 && <span className="text-white/70 text-[8px]">|</span>}
@@ -287,7 +287,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Only: Right Action icons */}
-          <div className="hidden md:flex shrink-0 items-center gap-3 lg:ml-8">
+          <div className="hidden md:flex shrink-0 items-center gap-2 lg:ml-6 lg:gap-3">
             <a
               href={topBarContacts.whatsappHref}
               title="WhatsApp"
@@ -312,7 +312,7 @@ export default function Navbar() {
 
       <div className="mt-2 lg:mt-0 px-2 sm:px-4 lg:px-6">
         <div className={`pointer-events-auto max-w-[96rem] mx-auto bg-white/80 sm:bg-white/90 lg:bg-white backdrop-blur-md lg:backdrop-blur-0 rounded-2xl lg:rounded-none px-3 sm:px-5 lg:px-6 transition-shadow duration-300 border-b border-gray-100 ${scrolled ? "shadow-lg shadow-black/10" : "shadow-md shadow-black/5"}`}>
-          <div className="flex items-center justify-between h-[112px] sm:h-[96px] lg:h-20">
+          <div className="flex items-center justify-between gap-2 h-[96px] sm:h-[88px] lg:h-[76px] xl:h-20">
 
           {/*  SECTION 1: Logo  */}
           <Link href="/" className="shrink-0 flex items-center" aria-label="Home">
@@ -320,7 +320,7 @@ export default function Navbar() {
               src="/wide-logo.jpeg"
               alt="Himalaya"
               loading="eager"
-              className="hidden lg:block h-12 xl:h-14 w-auto max-w-[240px] object-contain"
+              className="hidden min-[1200px]:block h-10 xl:h-12 2xl:h-14 w-auto max-w-[180px] xl:max-w-[220px] 2xl:max-w-[240px] object-contain"
               whileHover={{ scale: 1.04 }}
               transition={{ duration: 0.25 }}
               onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/logo_original.png"; }}
@@ -329,7 +329,7 @@ export default function Navbar() {
               src="/logo_mobile_screen.png"
               alt="Himalaya"
               loading="eager"
-              className="h-[96px] sm:h-[96px] lg:hidden w-auto object-contain"
+              className="h-[72px] sm:h-[78px] min-[1200px]:hidden w-auto object-contain"
               whileHover={{ scale: 1.04 }}
               transition={{ duration: 0.25 }}
               onError={(e: React.SyntheticEvent<HTMLImageElement>) => { e.currentTarget.onerror = null; e.currentTarget.src = "/logo_original.png"; }}
@@ -337,7 +337,7 @@ export default function Navbar() {
           </Link>
 
           {/*  SECTION 2: Desktop Nav  */}
-          <nav className="hidden lg:flex items-center gap-1 whitespace-nowrap" onMouseLeave={() => setHoveredLink(null)}>
+          <nav className="hidden min-[1200px]:flex min-w-0 flex-1 items-center justify-center gap-0.5 xl:gap-1 whitespace-nowrap" onMouseLeave={() => setHoveredLink(null)}>
             {(() => {
               // Find the FIRST nav link whose href matches the current path — avoids multiple active underlines
               const activeLabel = navLinks.find(
@@ -357,7 +357,7 @@ export default function Navbar() {
                       >
                         <button
                           onClick={() => setAboutOpen((p) => !p)}
-                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200 whitespace-nowrap"
+                          className="relative flex items-center gap-1 px-2 py-2 text-[10px] font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200 whitespace-nowrap xl:px-3 xl:text-[12px] 2xl:px-4 2xl:text-sm"
                         >
                           {link.label}
                           <motion.span animate={{ rotate: aboutOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
@@ -401,7 +401,7 @@ export default function Navbar() {
                       >
                         <button
                           onClick={() => setKnowledgeOpen((p) => !p)}
-                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200 whitespace-nowrap"
+                          className="relative flex items-center gap-1 px-2 py-2 text-[10px] font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200 whitespace-nowrap xl:px-3 xl:text-[12px] 2xl:px-4 2xl:text-sm"
                         >
                           {link.label}
                           <motion.span animate={{ rotate: knowledgeOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
@@ -445,7 +445,7 @@ export default function Navbar() {
                       >
                         <button
                           onClick={() => setNewsOpen((p) => !p)}
-                          className="relative flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200 whitespace-nowrap"
+                          className="relative flex items-center gap-1 px-2 py-2 text-[10px] font-medium text-gray-600 hover:text-[#0891b2] transition-colors duration-200 whitespace-nowrap xl:px-3 xl:text-[12px] 2xl:px-4 2xl:text-sm"
                         >
                           {link.label}
                           <motion.span animate={{ rotate: newsOpen ? 180 : 0 }} transition={{ duration: 0.2 }} className="inline-flex">
@@ -485,7 +485,7 @@ export default function Navbar() {
                 return (
                   <Link key={link.label} href={link.href}
                     onMouseEnter={() => setHoveredLink(link.label)}
-                    className={`relative px-4 py-2 text-sm font-medium transition-colors duration-200 whitespace-nowrap ${active || hoveredLink === link.label ? "text-[#0891b2]" : "text-gray-600 hover:text-[#0891b2]"}`}
+                    className={`relative px-2 py-2 text-[10px] font-medium transition-colors duration-200 whitespace-nowrap ${active || hoveredLink === link.label ? "text-[#0891b2]" : "text-gray-600 hover:text-[#0891b2]"} xl:px-3 xl:text-[12px] 2xl:px-4 2xl:text-sm`}
                   >
                     {link.label}
                     {underlineTarget === link.label && <NavUnderline />}
@@ -562,7 +562,7 @@ export default function Navbar() {
                 whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(8,145,178,0.4)" }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() => router.push(desktopCta.href)}
-                className="hidden lg:inline-flex items-center gap-1.5 px-5 py-2 text-sm font-semibold text-white rounded-full bg-[#0891b2] hover:bg-[#0e7490] shadow-md shadow-cyan-200/50 transition-all duration-300"
+                className="hidden min-[1200px]:inline-flex items-center gap-1.5 px-4 py-1.5 text-[11px] font-semibold text-white rounded-full bg-[#0891b2] hover:bg-[#0e7490] shadow-md shadow-cyan-200/50 transition-all duration-300 xl:px-5 xl:py-2 xl:text-sm"
               >
                 <Store size={15} />
                 {desktopCta.label}
@@ -571,7 +571,7 @@ export default function Navbar() {
 
             {/* Hamburger */}
             <motion.button whileTap={{ scale: 0.88 }}
-              className="lg:hidden p-3 sm:p-2 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-200"
+              className="min-[1200px]:hidden p-3 sm:p-2 rounded-full text-gray-600 hover:bg-gray-50 transition-colors duration-200"
               onClick={() => setMobileOpen((p) => !p)} aria-expanded={mobileOpen} aria-label="Toggle navigation"
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -595,7 +595,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="lg:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm pointer-events-auto"
+              className="min-[1200px]:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm pointer-events-auto"
               onClick={() => setMobileOpen(false)}
             />
             {/* Sliding panel — admin-style dark sidebar */}
@@ -604,7 +604,7 @@ export default function Navbar() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="lg:hidden fixed top-0 left-0 bottom-0 z-50 w-[270px] sm:w-[300px] shadow-2xl flex flex-col pointer-events-auto"
+              className="min-[1200px]:hidden fixed top-0 left-0 bottom-0 z-50 w-[270px] sm:w-[300px] shadow-2xl flex flex-col pointer-events-auto"
             >
               {/* White logo header */}
               <div className="flex flex-col items-center justify-center px-5 py-6 bg-white shrink-0 relative">

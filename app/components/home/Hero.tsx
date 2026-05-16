@@ -148,7 +148,7 @@ export default function Hero() {
       onMouseLeave={() => {
         swipeStart.current = null;
       }}
-      style={{ touchAction: "pan-y", height: "calc(100dvh - var(--top-bar-height, 0px))" }}
+      style={{ touchAction: "pan-y", height: "100dvh" }}
     >
       {/* Background */}
       <AnimatePresence mode="wait">
