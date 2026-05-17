@@ -2,6 +2,13 @@ import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
 import SectionHeading from '../../components/SectionHeading';
 import TeamMemberCard, { TeamMember } from '../../components/TeamMemberCard';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Executive Team - Himalaya Agro Nepal",
+  description: "Meet the executive leadership team at Himalaya Agro Nepal. Our management brings expertise in agriculture, operations, finance, sales, and technology to transform Nepali farming.",
+  keywords: "Himalaya Agro Nepal, executive team, leadership, Nepal agriculture management, farming executives, COO, Managing Director, Sales Director",
+};
 
 const executiveTeam: TeamMember[] = [
   {

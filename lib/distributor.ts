@@ -36,6 +36,27 @@ export async function validateApprovedDistributor(sessionUser: any): Promise<Dis
   return { ok: true, status: 200, message: "ok", user: distributor };
 }
 
+export async function validateUser(sessionUser: any): Promise<DistributorValidationResult> {
+  if (!sessionUser) {
+    return { ok: false, status: 401, message: "Authentication required" };
+  }
+
+  if (sessionUser.role !== "user") {
+    return {
+      ok: false,
+      status: 403,
+      message: "Only regular users can access this feature.",
+    };
+  }
+
+  const user = await User.findById(sessionUser.id).lean();
+  if (!user || user.isActive === false) {
+    return { ok: false, status: 403, message: "User account is inactive" };
+  }
+
+  return { ok: true, status: 200, message: "ok", user };
+}
+
 export function availableDistributorCredit(user: any): number {
   const limit = Number(user?.creditLimitNpr || 0);
   const used = Number(user?.creditUsedNpr || 0);

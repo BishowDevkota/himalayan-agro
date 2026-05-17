@@ -2,10 +2,12 @@ import Link from "next/link";
 import SubHeroSection from "../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../components/AnimatedClient";
 import WhatWeDo from "../components/home/WhatWeDo";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "About",
-  description: "A comprehensive overview of our 20-year strategic plan for agricultural transformation.",
+export const metadata: Metadata = {
+  title: "About Us - Himalaya Agro Nepal",
+  description: "Learn about Himalaya Agro Nepal's mission to transform Nepali agriculture through sustainable farming, land consolidation, and modern technology. Supporting farmers across Nepal since our inception.",
+  keywords: "Himalaya Agro Nepal, about us, Nepali agriculture, sustainable farming, land reform Nepal, agricultural transformation, farmer support Nepal",
 };
 
 export default function AboutPage() {

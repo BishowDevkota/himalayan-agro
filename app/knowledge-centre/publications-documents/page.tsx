@@ -1,6 +1,13 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
 import SectionHeading from '../../components/SectionHeading';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Publications & Documents - Himalaya Agro Nepal",
+  description: "Access Himalaya Agro Nepal's library of publications, research papers, annual reports, and technical documents. Download guides and bulletins for sustainable agriculture practices.",
+  keywords: "Himalaya Agro Nepal, publications, documents, annual report, research papers, agricultural guides, Nepal farming documents, organic certification",
+};
 
 const publications = [
   {

@@ -21,8 +21,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "HNKCL",
-    template: "%s-HNKCL",
+    default: "Himalaya Agro Nepal",
+    template: "%s - Himalaya Agro Nepal",
   },
   description: "Premium Nepalese agricultural products — from farm to your doorstep.",
   icons: {
@@ -48,17 +48,17 @@ export default function RootLayout({
           <script
             dangerouslySetInnerHTML={{
               __html: `(() => {
-  try {
-    const FILTER_RE = /workbox|_rsc=|workbox-\w+/i;
-    ['log','info','warn','error','debug'].forEach((m) => {
-      const orig = console[m];
-      console[m] = function(...args){
-        try { if (args.length && typeof args[0] === 'string' && FILTER_RE.test(args[0])) return; } catch(e){}
-        return orig.apply(console, args);
-      };
-    });
-  } catch(e){}
-})();`,
+            try {
+              const FILTER_RE = /workbox|_rsc=|workbox-\w+/i;
+              ['log','info','warn','error','debug'].forEach((m) => {
+                const orig = console[m];
+                console[m] = function(...args){
+                  try { if (args.length && typeof args[0] === 'string' && FILTER_RE.test(args[0])) return; } catch(e){}
+                  return orig.apply(console, args);
+                };
+              });
+            } catch(e){}
+          })();`,
             }}
           />
         ) : null}

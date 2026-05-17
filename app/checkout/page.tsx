@@ -34,7 +34,8 @@ export default async function CheckoutPage() {
   const role = session?.user?.role;
   const distributorStatus = session?.user?.distributorStatus;
   
-  if (role !== "distributor" || distributorStatus !== "approved") {
+  // Check if distributor is approved
+  if (role === "distributor" && distributorStatus !== "approved") {
     return (
       <div className="min-h-screen bg-linear-to-b from-slate-50 to-white">
         <div className="max-w-3xl mx-auto p-8 sm:p-12">
@@ -47,10 +48,10 @@ export default async function CheckoutPage() {
               </div>
               <div className="flex-1">
                 <h1 className="text-2xl sm:text-3xl font-bold text-amber-900 mb-2">
-                  Online ordering is only for approved distributors
+                  Your distributor account is pending approval
                 </h1>
                 <p className="text-amber-800 mb-6">
-                  If you are a normal customer, please visit your nearest outlet and buy directly. Alternatively, you can apply to become a distributor.
+                  Please wait for admin approval. You can also register as a regular user to buy products.
                 </p>
                 <div className="flex flex-wrap gap-3">
                   <Link 
@@ -60,14 +61,28 @@ export default async function CheckoutPage() {
                     🏪 Visit Outlet
                   </Link>
                   <Link 
-                    href="/register/distributor" 
+                    href="/register/user" 
                     className="inline-flex rounded-lg border-2 border-amber-300 bg-amber-100 hover:bg-amber-200 px-6 py-3 text-sm font-semibold text-amber-900 transition-colors"
                   >
-                    📝 Become a Distributor
+                    👤 Register as User
                   </Link>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Both approved distributors and regular users can proceed to checkout
+  if (role !== "distributor" && role !== "user") {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+        <div className="max-w-3xl mx-auto p-8 sm:p-12">
+          <div className="rounded-2xl border border-red-200 bg-gradient-to-br from-red-50 to-pink-50 p-8 sm:p-12">
+            <h1 className="text-2xl font-bold text-red-900 mb-2">Access Denied</h1>
+            <p className="text-red-800">Only distributors and registered users can place orders.</p>
           </div>
         </div>
       </div>

@@ -13,9 +13,12 @@ import Partners from "./components/home/Partheres";
 import connectToDatabase from "../lib/mongodb";
 import Product from "../models/Product";
 import StrategicRoadmap from "./components/home/StrategicRoadmap";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Home",
+export const metadata: Metadata = {
+  title: "Himalaya Agro Nepal - Sustainable Agriculture Solutions",
+  description: "Himalaya Agro Nepal transforms Nepali agriculture through land consolidation, modern technology, and export-grade value chains. Supporting farmers with organic farming, horticulture, and agri-tech solutions.",
+  keywords: "Himalaya Agro Nepal, agriculture Nepal, organic farming, horticulture, agri-tech, sustainable farming, Nepal exports, farmer welfare, land consolidation",
 };
 
 export default async function HomePage() {

@@ -4,16 +4,28 @@ import connectToDatabase from "../../../lib/mongodb";
 import Cart from "../../../models/Cart";
 import Product from "../../../models/Product";
 import { getSessionUser, requireUser } from "../../../lib/server-utils";
-import { validateApprovedDistributor } from "../../../lib/distributor";
+import { validateApprovedDistributor, validateUser } from "../../../lib/distributor";
 
 export async function GET() {
   const user = await getSessionUser();
   requireUser(user);
   await connectToDatabase();
-  const distributorCheck = await validateApprovedDistributor(user);
-  if (!distributorCheck.ok) {
-    return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+  
+  // Allow both approved distributors and regular users
+  if (user.role === "distributor") {
+    const distributorCheck = await validateApprovedDistributor(user);
+    if (!distributorCheck.ok) {
+      return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+    }
+  } else if (user.role === "user") {
+    const userCheck = await validateUser(user);
+    if (!userCheck.ok) {
+      return NextResponse.json({ message: userCheck.message }, { status: userCheck.status });
+    }
+  } else {
+    return NextResponse.json({ message: "Access denied" }, { status: 403 });
   }
+  
   if (!mongoose.Types.ObjectId.isValid(user.id)) return NextResponse.json({ cart: { items: [] } });
   const cart = await Cart.findOne({ user: user.id }).populate("items.product", "name price images stock isActive").lean();
   return NextResponse.json({ cart: cart || { items: [] } });
@@ -23,10 +35,22 @@ export async function POST(req: Request) {
   const user = await getSessionUser();
   requireUser(user);
   await connectToDatabase();
-  const distributorCheck = await validateApprovedDistributor(user);
-  if (!distributorCheck.ok) {
-    return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+  
+  // Allow both approved distributors and regular users
+  if (user.role === "distributor") {
+    const distributorCheck = await validateApprovedDistributor(user);
+    if (!distributorCheck.ok) {
+      return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+    }
+  } else if (user.role === "user") {
+    const userCheck = await validateUser(user);
+    if (!userCheck.ok) {
+      return NextResponse.json({ message: userCheck.message }, { status: userCheck.status });
+    }
+  } else {
+    return NextResponse.json({ message: "Access denied" }, { status: 403 });
   }
+  
   if (!mongoose.Types.ObjectId.isValid(user.id)) return NextResponse.json({ message: "Invalid user ID for cart" }, { status: 400 });
   const body = await req.json();
   const { productId, quantity } = body;
@@ -44,7 +68,7 @@ export async function POST(req: Request) {
     return NextResponse.json(created, { status: 201 });
   }
 
-  const existingIndex = cart.items.findIndex((it) => it.product.toString() === productId);
+  const existingIndex = cart.items.findIndex((it: any) => it.product.toString() === productId);
   if (existingIndex > -1) {
     cart.items[existingIndex].quantity = qty;
   } else {
@@ -58,17 +82,29 @@ export async function DELETE(req: Request) {
   const user = await getSessionUser();
   requireUser(user);
   await connectToDatabase();
-  const distributorCheck = await validateApprovedDistributor(user);
-  if (!distributorCheck.ok) {
-    return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+  
+  // Allow both approved distributors and regular users
+  if (user.role === "distributor") {
+    const distributorCheck = await validateApprovedDistributor(user);
+    if (!distributorCheck.ok) {
+      return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+    }
+  } else if (user.role === "user") {
+    const userCheck = await validateUser(user);
+    if (!userCheck.ok) {
+      return NextResponse.json({ message: userCheck.message }, { status: userCheck.status });
+    }
+  } else {
+    return NextResponse.json({ message: "Access denied" }, { status: 403 });
   }
+  
   if (!mongoose.Types.ObjectId.isValid(user.id)) return NextResponse.json({ success: true });
   const body = await req.json().catch(() => ({}));
   const cart = await Cart.findOne({ user: user.id });
   if (!cart) return NextResponse.json({ success: true });
 
   if (body.productId) {
-    cart.items = cart.items.filter((it) => it.product.toString() !== String(body.productId));
+    cart.items = cart.items.filter((it: any) => it.product.toString() !== String(body.productId));
     await cart.save();
     return NextResponse.json(cart);
   }

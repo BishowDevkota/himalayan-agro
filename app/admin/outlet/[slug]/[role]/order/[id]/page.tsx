@@ -45,6 +45,13 @@ export default async function OutletEmployeeOrderDetailPage({ params }: { params
             <h1 className="mt-3 text-4xl font-black text-slate-900">Order #{String(order._id).slice(-8)}</h1>
             <p className="mt-3 text-sm text-slate-500">
               {order.items.length} item{order.items.length !== 1 ? 's' : ''} ·{' '}
+              {order.orderSource && (
+                <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold mr-1 ${
+                  order.orderSource === 'distributor' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
+                }`}>
+                  {order.orderSource === 'distributor' ? 'D' : 'U'}
+                </span>
+              )}
               <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${statusColor(order.orderStatus)}`}>{order.orderStatus}</span>{' '}
               <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium ${paymentColor(order.paymentStatus)}`}>{order.paymentStatus}</span>
             </p>

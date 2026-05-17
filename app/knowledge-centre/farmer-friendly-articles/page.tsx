@@ -1,6 +1,13 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
 import SectionHeading from '../../components/SectionHeading';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Farmer-Friendly Articles - Himalaya Agro Nepal",
+  description: "Read practical, easy-to-understand articles on sustainable farming, soil health, crop management, and post-harvest techniques. Expert guidance for farmers across Nepal.",
+  keywords: "Himalaya Agro Nepal, farmer articles, farming tips, soil health, crop management, post-harvest techniques, organic farming Nepal, agricultural advice",
+};
 
 const articles = [
   {

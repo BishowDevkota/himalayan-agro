@@ -2,6 +2,13 @@ import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
 import SectionHeading from '../../components/SectionHeading';
 import TeamMemberCard, { TeamMember } from '../../components/TeamMemberCard';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Expert Team - Himalaya Agro Nepal",
+  description: "Meet our team of agricultural experts specializing in agronomy, livestock, irrigation, organic farming, quality assurance, and market linkages. Supporting Nepali farmers with technical expertise.",
+  keywords: "Himalaya Agro Nepal, expert team, agronomy specialist, livestock expert, irrigation advisor, organic farming consultant, Nepal agriculture experts",
+};
 
 const expertTeam: TeamMember[] = [
   {

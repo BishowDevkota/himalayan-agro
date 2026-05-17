@@ -51,10 +51,11 @@ export default function CheckoutClient() {
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [shipping, setShipping] = useState({ name: "", line1: "", city: "", postalCode: "", phone: "" });
   const [freshUser, setFreshUser] = useState<CheckoutUser | null>(null);
-  const [paymentMethod, setPaymentMethod] = useState<'credit' | 'esewa'>('credit');
+  const [paymentMethod, setPaymentMethod] = useState<'credit' | 'esewa'>('esewa');
   const { data: session } = useSession();
   const sessionUser = session?.user as CheckoutUser | undefined;
   const currentUser = freshUser ?? sessionUser;
+  const isDistributor = currentUser?.role === 'distributor';
   const router = useRouter();
   const searchParams = useSearchParams();
   const buyNowProductId = searchParams.get("buyNow");
@@ -161,7 +162,8 @@ export default function CheckoutClient() {
       return;
     }
 
-    if (paymentMethod === 'credit') {
+    // Only validate credit for distributors
+    if (paymentMethod === 'credit' && isDistributor) {
       const creditLimit = Number(currentUser?.creditLimitNpr || 0);
       const creditUsed = Number(currentUser?.creditUsedNpr || 0);
       const available = Math.max(0, creditLimit - creditUsed);
@@ -350,6 +352,7 @@ export default function CheckoutClient() {
           </div>
           <p className="text-slate-600 mb-6">How would you like to pay for this order?</p>
 
+<<<<<<< Updated upstream
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
             {/* Credit Option */}
             <label className={`relative rounded-xl border-2 p-5 cursor-pointer transition-all ${
@@ -370,14 +373,81 @@ export default function CheckoutClient() {
                   paymentMethod === 'credit' ? 'border-emerald-500 bg-emerald-500' : 'border-slate-300'
                 }`}>
                   {paymentMethod === 'credit' && <CheckCircle2 className="w-4 h-4 text-white" />}
+=======
+          {isDistributor ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              {/* Credit Option - Only for distributors */}
+              <label className={`relative rounded-xl border-2 p-5 cursor-pointer transition-all ${
+                paymentMethod === 'credit'
+                  ? 'border-emerald-500 bg-emerald-50'
+                  : 'border-slate-200 hover:border-slate-300'
+              }`}>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="credit"
+                  checked={paymentMethod === 'credit'}
+                  onChange={() => setPaymentMethod('credit')}
+                  className="sr-only"
+                />
+                <div className="flex items-start gap-3">
+                  <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${
+                    paymentMethod === 'credit' ? 'border-emerald-500 bg-emerald-500' : 'border-slate-300'
+                  }`}>
+                    {paymentMethod === 'credit' && <CheckCircle2 className="w-4 h-4 text-white" />}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900">Distributor Credit</p>
+                    <p className="text-sm text-slate-600 mt-1">Pay from your approved credit account</p>
+                  </div>
+>>>>>>> Stashed changes
                 </div>
-                <div>
-                  <p className="font-semibold text-slate-900">Distributor Credit</p>
-                  <p className="text-sm text-slate-600 mt-1">Pay from your approved credit account</p>
+              </label>
+
+              {/* eSewa Option */}
+              <label className={`relative rounded-xl border-2 p-5 cursor-pointer transition-all ${
+                paymentMethod === 'esewa'
+                  ? 'border-[#0891b2] bg-[#0891b2]/5'
+                  : 'border-slate-200 hover:border-slate-300'
+              }`}>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="esewa"
+                  checked={paymentMethod === 'esewa'}
+                  onChange={() => setPaymentMethod('esewa')}
+                  className="sr-only"
+                />
+                <div className="flex items-start gap-3">
+                  <div className={`w-5 h-5 rounded-full border-2 mt-0.5 flex items-center justify-center flex-shrink-0 ${
+                    paymentMethod === 'esewa' ? 'border-[#0891b2] bg-[#0891b2]' : 'border-slate-300'
+                  }`}>
+                    {paymentMethod === 'esewa' && <CheckCircle2 className="w-4 h-4 text-white" />}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900">eSewa Payment</p>
+                    <p className="text-sm text-slate-600 mt-1">Pay online via eSewa gateway</p>
+                  </div>
+                </div>
+              </label>
+            </div>
+          ) : (
+            <div className="mb-6">
+              <div className="rounded-xl border-2 border-[#0891b2] bg-[#0891b2]/5 p-5">
+                <div className="flex items-start gap-3">
+                  <div className="w-5 h-5 rounded-full border-2 border-[#0891b2] bg-[#0891b2] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <CheckCircle2 className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900">eSewa Payment</p>
+                    <p className="text-sm text-slate-600 mt-1">Pay online via eSewa gateway. You will need to visit the outlet to collect your order.</p>
+                  </div>
                 </div>
               </div>
-            </label>
+            </div>
+          )}
 
+<<<<<<< Updated upstream
             {/* eSewa Option */}
             <label className={`relative rounded-xl border-2 p-5 cursor-pointer transition-all ${
               paymentMethod === 'esewa'
@@ -408,6 +478,10 @@ export default function CheckoutClient() {
 
           {/* Payment Info */}
           {paymentMethod === 'credit' && (
+=======
+          {/* Payment Info - Credit */}
+          {paymentMethod === 'credit' && isDistributor && (
+>>>>>>> Stashed changes
             <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
               <p className="text-sm text-emerald-900 font-semibold mb-3">Your Credit Information</p>
               <div className="grid grid-cols-3 gap-3">
@@ -435,10 +509,12 @@ export default function CheckoutClient() {
             </div>
           )}
 
+          {/* Payment Info - eSewa */}
           {paymentMethod === 'esewa' && (
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
               <p className="text-sm text-blue-900">
                 You will be redirected to eSewa to complete the payment after placing your order.
+                {!isDistributor && <span className="block mt-1 font-medium">Visit your selected outlet to collect the order after payment.</span>}
               </p>
             </div>
           )}
@@ -514,7 +590,7 @@ export default function CheckoutClient() {
 
           <button
             onClick={placeOrder}
-            disabled={submitting || (paymentMethod === 'credit' && availableCredit < subtotal)}
+            disabled={submitting || (isDistributor && paymentMethod === 'credit' && availableCredit < subtotal)}
             className="w-full px-6 py-4 rounded-lg bg-[#0891b2] hover:bg-[#0b78be] disabled:bg-slate-600 disabled:cursor-not-allowed text-white font-semibold transition-colors flex items-center justify-center gap-2"
           >
             {submitting ? (

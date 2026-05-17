@@ -1,6 +1,13 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
 import SectionHeading from '../../components/SectionHeading';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Training Resources - Himalaya Agro Nepal",
+  description: "Access training materials, workshops, guides, and learning resources from Himalaya Agro Nepal. Download practical handbooks and templates for sustainable farming practices.",
+  keywords: "Himalaya Agro Nepal, training resources, farming guides, agricultural workshops, farmer training, organic farming handbook, irrigation training, Nepal agriculture training",
+};
 
 const trainingResources = [
   {

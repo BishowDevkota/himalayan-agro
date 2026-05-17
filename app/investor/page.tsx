@@ -1,11 +1,12 @@
 import Link from "next/link";
 import SubHeroSection from "../components/SubHeroSection";
 import { Section as AnimatedSection, Div as AnimatedDiv } from "../components/AnimatedClient";
+import type { Metadata } from "next";
 
-export const metadata = {
-  title: "Investor Relations",
-  description:
-    "Explore investment opportunities, financial performance, and shareholder information for Himalaya Nepal Agriculture.",
+export const metadata: Metadata = {
+  title: "Investor Relations - Himalaya Agro Nepal",
+  description: "Explore investment opportunities with Himalaya Agro Nepal. Discover our financial performance, growth metrics, and strategic vision for transforming Nepal's agricultural sector.",
+  keywords: "Himalaya Agro Nepal, investor relations, agriculture investment, Nepal agriculture funding, sustainable farming investment, agri-tech investors, agricultural transformation Nepal",
 };
 
 const highlights = [

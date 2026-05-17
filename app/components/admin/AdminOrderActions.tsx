@@ -7,10 +7,23 @@ import { useRouter } from "next/navigation";
 const ORDER_STATUSES = ["pending", "processing", "shipped", "delivered", "cancelled"];
 const PAYMENT_STATUSES = ["pending", "paid", "failed"];
 
-export default function AdminOrderActions({ orderId, initialOrderStatus, initialPaymentStatus }: { orderId: string; initialOrderStatus: string; initialPaymentStatus: string }) {
+export default function AdminOrderActions({
+  orderId,
+  initialOrderStatus,
+  initialPaymentStatus,
+  canDelete = false,
+  afterDeleteRedirect = "/admin/orders",
+}: {
+  orderId: string;
+  initialOrderStatus: string;
+  initialPaymentStatus: string;
+  canDelete?: boolean;
+  afterDeleteRedirect?: string;
+}) {
   const [orderStatus, setOrderStatus] = useState(initialOrderStatus);
   const [paymentStatus, setPaymentStatus] = useState(initialPaymentStatus);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const router = useRouter();
 
   async function save() {
@@ -29,6 +42,25 @@ export default function AdminOrderActions({ orderId, initialOrderStatus, initial
       toast.error(err.message || 'Unable to update order');
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function deleteOrder() {
+    if (!confirm("Delete this order permanently? This action cannot be undone.")) return;
+
+    setDeleting(true);
+    try {
+      const res = await fetch(`/api/orders/${orderId}`, { method: "DELETE" });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.message || "Delete failed");
+
+      toast.success("Order deleted");
+      router.push(afterDeleteRedirect);
+      router.refresh();
+    } catch (err: any) {
+      toast.error(err.message || "Unable to delete order");
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -56,6 +88,17 @@ export default function AdminOrderActions({ orderId, initialOrderStatus, initial
         <div className="pt-2">
           <button className="w-full rounded-full bg-slate-900 text-white py-2.5 text-sm font-medium" disabled={saving} onClick={save}>{saving ? 'Saving…' : 'Save changes'}</button>
         </div>
+        {canDelete && (
+          <div className="pt-1">
+            <button
+              className="w-full rounded-full bg-red-600 text-white py-2.5 text-sm font-medium disabled:opacity-60"
+              disabled={deleting || saving}
+              onClick={deleteOrder}
+            >
+              {deleting ? "Deleting…" : "Delete order"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

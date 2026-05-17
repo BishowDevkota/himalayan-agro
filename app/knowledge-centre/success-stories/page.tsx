@@ -1,6 +1,13 @@
 import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
 import SectionHeading from '../../components/SectionHeading';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Success Stories - Himalaya Agro Nepal",
+  description: "Read inspiring success stories from Himalaya Agro Nepal's farming communities. Discover how our sustainable agriculture practices have transformed yields and livelihoods across Nepal.",
+  keywords: "Himalaya Agro Nepal, success stories, farming success, agricultural transformation, farmer stories Nepal, organic farming results, agricultural impact",
+};
 
 const stories = [
   {

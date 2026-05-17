@@ -43,6 +43,8 @@ export default async function AdminOutletOrderDetailPage({ params }: { params: {
           orderId={String((order as any)._id)}
           initialOrderStatus={String((order as any).orderStatus || "pending")}
           initialPaymentStatus={String((order as any).paymentStatus || "pending")}
+          canDelete={session.user?.role === "admin"}
+          afterDeleteRedirect={`/admin/${slug}/orders`}
         />
       </div>
     </main>

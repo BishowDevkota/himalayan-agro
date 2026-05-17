@@ -13,28 +13,29 @@ export default function AddToCart({ product }: { product: any }) {
   const router = useRouter();
   const disabled = product.stock < 1;
 
-  function enforceDistributorAccess() {
+  function enforceAccess() {
     if (!session) {
-      toast.info("Online purchase is for distributors only. Please sign in as a distributor account.");
-      router.push("/register/distributor");
+      toast.info("Please sign in to buy products.");
+      router.push("/login");
       return false;
     }
-    if (role !== "distributor" || distributorStatus !== "approved") {
+    if (role === "distributor" && distributorStatus !== "approved") {
       toast.error("Only approved distributors can buy online. Normal customers should buy from outlet.");
       return false;
     }
+    // Users are now allowed - they pay via eSewa
     return true;
   }
 
   function buyNow() {
-    if (!enforceDistributorAccess()) return;
+    if (!enforceAccess()) return;
     const safeQty = Math.max(1, Math.min(Number(product.stock) || 1, Number(qty) || 1));
     const checkoutUrl = `/checkout?buyNow=${encodeURIComponent(product._id)}&qty=${safeQty}`;
     router.push(checkoutUrl);
   }
 
   async function add() {
-    if (!enforceDistributorAccess()) return;
+    if (!enforceAccess()) return;
     try {
       const res = await fetch(`/api/cart`, {
         method: "POST",

@@ -44,9 +44,16 @@ export async function POST(req: Request) {
   if (!items.length) return NextResponse.json({ message: "No items" }, { status: 400 });
 
   await connectToDatabase();
-  const distributorCheck = await validateApprovedDistributor(user);
-  if (!distributorCheck.ok) {
-    return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+
+  const isDistributor = user.role === "distributor";
+  const isRegularUser = user.role === "user";
+
+  // Validate distributor approval if user is a distributor
+  if (isDistributor) {
+    const distributorCheck = await validateApprovedDistributor(user);
+    if (!distributorCheck.ok) {
+      return NextResponse.json({ message: distributorCheck.message }, { status: distributorCheck.status });
+    }
   }
 
   const products = await Product.find({ _id: { $in: items.map((item: any) => item.productId) } }).lean();
@@ -75,14 +82,20 @@ export async function POST(req: Request) {
     }
     const totalRounded = Math.round(total * 100) / 100;
 
-    // accept optional shipping/payment info (support COD, credit, and eSewa)
-    const paymentMethod = body.paymentMethod === 'esewa' ? 'esewa' : body.paymentMethod === 'credit' ? 'credit' : 'cod';
+    // For users, only eSewa is allowed; for distributors, credit is default but eSewa also allowed
+    let paymentMethod = 'esewa';
+    if (isDistributor && body.paymentMethod === 'credit') {
+      paymentMethod = 'credit';
+    } else if (body.paymentMethod === 'esewa') {
+      paymentMethod = 'esewa';
+    }
+
     const shipping = body.shippingAddress && typeof body.shippingAddress === 'object' ? body.shippingAddress : undefined;
 
-    // basic validation for COD and eSewa: require name and line1 and phone
-    if (paymentMethod === 'cod' || paymentMethod === 'esewa') {
+    // For users, shipping info is required
+    if (isRegularUser) {
       if (!shipping || !shipping.name || !shipping.line1 || !shipping.phone) {
-        throw new Error('Shipping name, address line1 and phone are required for this payment method');
+        throw new Error('Shipping name, address line1 and phone are required');
       }
     }
 
@@ -95,11 +108,12 @@ export async function POST(req: Request) {
       else throw new Error('Unable to resolve user for order');
     }
 
-    const distributor = await User.findById(userIdForOrder).lean();
-    if (!distributor) throw new Error('Unable to resolve distributor for order');
+    const dbUser = await User.findById(userIdForOrder).lean();
+    if (!dbUser) throw new Error('Unable to resolve user for order');
 
+    // For credit payment, check available credit (distributors only)
     if (paymentMethod === 'credit') {
-      const available = availableDistributorCredit(distributor);
+      const available = availableDistributorCredit(dbUser);
       if (available < totalRounded) {
         throw new Error(
           `Credit limit exceeded. Available credit: NPR ${available.toFixed(2)}. Please reduce outstanding credit before placing this order.`
@@ -115,6 +129,7 @@ export async function POST(req: Request) {
         const outletIds = Array.from(new Set(products.map((product: any) => String(product.outlet || "")).filter(Boolean)));
         return outletIds.length === 1 ? outletIds[0] : undefined;
       })(),
+      orderSource: isDistributor ? 'distributor' : 'user',
       paymentMethod,
       shippingAddress: shipping,
       paymentStatus: "pending",

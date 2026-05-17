@@ -2,11 +2,34 @@ import React from "react";
 import { notFound } from "next/navigation";
 import connectToDatabase from "../../../lib/mongodb";
 import News from "../../../models/News";
+import type { Metadata } from "next";
 
 function formatDate(dateValue?: Date | null) {
   if (!dateValue) return "";
   return new Date(dateValue).toLocaleDateString();
 }
+
+export const metadata = async ({
+  params
+}: { params: { slug: string } }): Promise<Metadata> => {
+  await connectToDatabase();
+  
+  const resolvedParams = params instanceof Promise ? await params : params;
+  const slug = resolvedParams.slug;
+  
+  const item = await News.findOne({ slug, status: "published" }).lean();
+  if (!item) {
+    return {
+      title: "News Not Found - Himalaya Agro Nepal",
+      description: "The news article you're looking for could not be found. - Himalaya Agro Nepal"
+    };
+  }
+  
+  return {
+    title: `${item.title} - Himalaya Agro Nepal`,
+    description: `${item.title} - Himalaya Agro Nepal`
+  };
+};
 
 export default async function NewsDetailPage({ params }: { params: { slug: string } } | { params: Promise<{ slug: string }> }) {
   const resolvedParams = params instanceof Promise ? await params : params;

@@ -4,7 +4,7 @@ import Order from "../../../../models/Order";
 import Product from "../../../../models/Product";
 import ProductLog from "../../../../models/ProductLog";
 import User from "../../../../models/User";
-import { getSessionUser, requireAdmin, requireUser } from "../../../../lib/server-utils";
+import { getSessionUser, requireUser } from "../../../../lib/server-utils";
 import { orderBelongsToOutlet } from "../../../../lib/order-access";
 
 const ALLOWED_ORDER_STATUSES = ["pending", "processing", "shipped", "delivered", "cancelled"] as const;
@@ -172,4 +172,23 @@ export async function PATCH(req: Request, context: any) {
   }
 
   return NextResponse.json(updated);
+}
+
+export async function DELETE(_req: Request, context: any) {
+  const params = context.params instanceof Promise ? await context.params : context.params;
+  const { id } = params;
+
+  const user = await getSessionUser();
+  if (!user || user.role !== "admin") {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+  }
+
+  await connectToDatabase();
+
+  const deleted = await Order.findByIdAndDelete(id).lean();
+  if (!deleted) {
+    return NextResponse.json({ message: "Order not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({ message: "Order deleted" });
 }

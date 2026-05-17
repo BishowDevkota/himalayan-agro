@@ -27,6 +27,7 @@ export interface IOrder extends Document {
   items: IOrderItem[];
   totalAmount: number;
   outlet?: mongoose.Types.ObjectId;
+  orderSource?: "user" | "distributor";
   distributorCreditApplied?: boolean;
   distributorCreditAmount?: number;
   paymentStatus: PaymentStatus;
@@ -71,6 +72,7 @@ const OrderSchema: Schema<IOrder> = new mongoose.Schema(
     items: { type: [OrderItemSchema], required: true },
     totalAmount: { type: Number, required: true },
     outlet: { type: mongoose.Schema.Types.ObjectId, ref: "Outlet", index: true },
+    orderSource: { type: String, enum: ["user", "distributor"], default: "user", index: true },
     distributorCreditApplied: { type: Boolean, default: false },
     distributorCreditAmount: { type: Number, default: 0, min: 0 },
     paymentMethod: { type: String, enum: ["cod", "card", "credit", "esewa"], default: "cod" },

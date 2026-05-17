@@ -98,10 +98,19 @@ export default function AdminOrdersClient({
                     <p className="text-[11px] text-slate-400 mt-0.5">{o.items.length} item{o.items.length !== 1 ? 's' : ''}</p>
                   </td>
 
-                  <td className="px-4 py-3.5">
-                    <p className="font-medium text-slate-800 text-sm">{o.shippingAddress?.name || o.email || '—'}</p>
-                    <p className="text-[11px] text-slate-400 mt-0.5 truncate max-w-[180px]">{o.shippingAddress?.phone || o.shippingAddress?.email || ''}</p>
-                  </td>
+<td className="px-4 py-3.5">
+                     <p className="font-medium text-slate-800 text-sm">{o.shippingAddress?.name || o.email || '—'}</p>
+                     <div className="flex items-center gap-2 mt-0.5">
+                       {o.orderSource && (
+                         <span className={`inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                           o.orderSource === 'distributor' ? 'bg-purple-100 text-purple-700' : 'bg-blue-100 text-blue-700'
+                         }`}>
+                           {o.orderSource === 'distributor' ? 'D' : 'U'}
+                         </span>
+                       )}
+                       <p className="text-[11px] text-slate-400 truncate max-w-[180px]">{o.shippingAddress?.phone || o.shippingAddress?.email || ''}</p>
+                     </div>
+                   </td>
 
                   <td className="px-4 py-3.5 text-sm text-slate-700">{o.items.length}</td>
 

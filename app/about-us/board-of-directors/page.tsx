@@ -2,6 +2,13 @@ import React from 'react';
 import SubHeroSection from '../../components/SubHeroSection';
 import SectionHeading from '../../components/SectionHeading';
 import TeamMemberCard, { TeamMember } from '../../components/TeamMemberCard';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Board of Directors - Himalaya Agro Nepal",
+  description: "Meet the Board of Directors at Himalaya Agro Nepal. Our governance team provides strategic oversight and accountability for sustainable agricultural transformation in Nepal.",
+  keywords: "Himalaya Agro Nepal, board of directors, corporate governance, agricultural leadership, Nepal agriculture board, organizational oversight",
+};
 
 const boardMembers: TeamMember[] = [
   {

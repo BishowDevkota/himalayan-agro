@@ -2,6 +2,13 @@ import React from 'react';
 import { CalendarDays, FileText, Image as ImageIcon, Paperclip } from 'lucide-react';
 import SubHeroSection from '../components/SubHeroSection';
 import SectionHeading from '../components/SectionHeading';
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Notices - Himalaya Agro Nepal",
+  description: "Official notices, announcements, and updates from Himalaya Agro Nepal. Stay informed about tenders, training sessions, office holidays, and important company announcements.",
+  keywords: "Himalaya Agro Nepal, notices, announcements, tenders, training sessions, official updates, Nepal agriculture notices",
+};
 
 const notices = [
   {
